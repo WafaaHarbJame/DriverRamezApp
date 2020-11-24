@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/_15sdp"
+    android:layout_marginEnd="@dimen/_15sdp"
+    android:layout_marginBottom="@dimen/_8sdp"
+    android:paddingStart="@dimen/_16sdp"
+    android:paddingLeft="@dimen/_16sdp"
+    android:paddingTop="@dimen/_5sdp"
+    android:paddingEnd="@dimen/_16sdp"
+    android:paddingRight="@dimen/_16sdp"
+    android:paddingBottom="@dimen/_5sdp"
+    android:orientation="vertical">
+
+    <com.ramez.ramez.SpichalViews.STextViewBold
+        android:layout_width="match_parent"
+        android:id="@+id/infoTitle"
+        android:layout_marginTop="@dimen/_16ssp"
+        android:text="@string/dummy2"
+        android:paddingStart="@dimen/_12sdp"
+        android:paddingTop="@dimen/_16ssp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:paddingEnd="@dimen/_12sdp"
+        android:paddingBottom="@dimen/_16ssp"
+        android:layout_height="wrap_content" />
+
+    <com.ramez.ramez.SpichalViews.STextView
+        android:id="@+id/infoTv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:inputType="textMultiLine"
+        android:background="@drawable/round_corner_white_welcom"
+        android:minHeight="@dimen/_150sdp"
+        android:text="@string/dummy"
+        android:paddingStart="@dimen/_12sdp"
+        android:paddingTop="@dimen/_4sdp"
+        android:textColor="@color/gray3"
+        android:paddingEnd="@dimen/_12sdp"
+        android:paddingBottom="@dimen/_4sdp"
+        />
+
+    <com.ramez.ramez.SpichalViews.STextView
+        android:id="@+id/infoTv2"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:text="@string/dummy1"
+        android:paddingStart="@dimen/_12sdp"
+        android:paddingTop="@dimen/_16ssp"
+        android:paddingEnd="@dimen/_12sdp"
+        android:paddingBottom="@dimen/_16ssp"
+        android:textColor="@color/gray3"
+        android:layout_height="wrap_content" />
+</LinearLayout>

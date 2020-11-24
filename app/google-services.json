@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "457290329020",
+    "firebase_url": "https://ramez-app.firebaseio.com",
+    "project_id": "ramez-app",
+    "storage_bucket": "ramez-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:457290329020:android:e8dbcca5c4f039f4ad19b9",
+        "android_client_info": {
+          "package_name": "com.ramez.ramez"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "457290329020-h4od44qgre4ct38ulp31rb9obsk70kol.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHCuTu0x4j8m3bkJu8uvqUs1ZXVTlcwis"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "457290329020-h4od44qgre4ct38ulp31rb9obsk70kol.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "457290329020-1tiafk0rolbos4di8fl8pa8ecka1ipke.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.companyname.NotificationSample"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:457290329020:android:40d17e2f967546c4ad19b9",
+        "android_client_info": {
+          "package_name": "com.ramez.shopp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "457290329020-h4od44qgre4ct38ulp31rb9obsk70kol.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHCuTu0x4j8m3bkJu8uvqUs1ZXVTlcwis"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "457290329020-h4od44qgre4ct38ulp31rb9obsk70kol.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "457290329020-1tiafk0rolbos4di8fl8pa8ecka1ipke.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.companyname.NotificationSample"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
