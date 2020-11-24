@@ -4,11 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.ramez.ramez.Classes.Constants;
+import com.ramez.ramez.Classes.UtilityApp;
 import com.ramez.ramez.databinding.ActivityChangeLanguageBinding;
 
 public class ChangeLanguageActivity extends ActivityBase {
     private ActivityChangeLanguageBinding binding;
-    private boolean toggleShowLang = false;
 
 
     @Override
@@ -26,6 +27,8 @@ public class ChangeLanguageActivity extends ActivityBase {
         binding.containerArabic.setOnClickListener(view1 -> {
             binding.imgEnglishTick.setVisibility(View.INVISIBLE);
             binding.imgArabicTick.setVisibility(View.VISIBLE);
+            UtilityApp.setLanguage(Constants.Arabic);
+            UtilityApp.setAppLanguage();
             GoToChooseCity();
 
         });
@@ -33,6 +36,8 @@ public class ChangeLanguageActivity extends ActivityBase {
         binding.containerEnglish.setOnClickListener(view1 -> {
             binding.imgEnglishTick.setVisibility(View.VISIBLE);
             binding.imgArabicTick.setVisibility(View.INVISIBLE);
+            UtilityApp.setLanguage(Constants.English);
+            UtilityApp.setAppLanguage();
             GoToChooseCity();
 
         });

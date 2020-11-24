@@ -207,7 +207,7 @@
 
     <string name="text_title_change_language">تغيير  اللغة</string>
 
-    <string name="text_title_select_language">اختر لغتك</string>
+    <string name="text_title_select_language"> الرجاء اختيار اللغة</string>
 
 
     -<array name="array_coupon">
@@ -680,5 +680,6 @@
     <string name="share_with">share_with</string>
     <string name="no_address">no_address</string>
     <string name="choose_country">الرجاء أختيار البلد</string>
+    <string name="choose_nearest">الرجاء  اختيار الفرع الأقرب </string>
 
 </resources>

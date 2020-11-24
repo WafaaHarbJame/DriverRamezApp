@@ -48,7 +48,7 @@
                     android:drawableStart="@drawable/location_icon"
                     android:drawablePadding="10dp"
                     android:gravity="start|center_vertical"
-                    android:text="@string/choose_country"
+                    android:text="@string/choose_nearest"
                     android:textColor="@color/colorLoginText" />
 
 
@@ -103,17 +103,17 @@
                 android:layout_marginTop="10dp"
                 android:background="#DCD6D6" />
 
-       <androidx.recyclerview.widget.RecyclerView
-           android:layout_width="match_parent"
-           android:id="@+id/recycler"
-           tools:itemCount="3"
-           tools:listitem="@layout/row_item_city"
-           app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-           android:layout_height="wrap_content"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:id="@+id/recycler"
+                tools:itemCount="3"
+                tools:listitem="@layout/row_item_city"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_height="wrap_content"/>
 
-
-            </LinearLayout>
 
         </LinearLayout>
+
     </LinearLayout>
+</LinearLayout>
 

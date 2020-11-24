@@ -130,7 +130,7 @@
     <string name="text_title_price_checker">Price Checker</string>
     <string name="text_title_otp_verification">OTP Verification</string>
     <string name="text_title_change_language">Change Your Language</string>
-    <string name="text_title_select_language">Select Your Language</string>
+    <string name="text_title_select_language">Please Select Language</string>
 
     <string name="text_title_set_new_password">Set New Password</string>
     <string name="text_title_forgot_password">Forgot Password</string>
@@ -402,5 +402,6 @@
     <string name="share_with">share_with</string>
     <string name="no_address">no_address</string>
     <string name="choose_country">please Choose Country </string>
+    <string name="choose_nearest">please Choose Nearest  Branch </string>
 
 </resources>

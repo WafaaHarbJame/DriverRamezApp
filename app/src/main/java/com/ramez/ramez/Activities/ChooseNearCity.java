@@ -7,12 +7,12 @@ import android.view.View;
 import com.ramez.ramez.Adapter.CountriesAdapter;
 import com.ramez.ramez.Models.CountryModel;
 import com.ramez.ramez.R;
-import com.ramez.ramez.databinding.ActivityChooseCityBinding;
+import com.ramez.ramez.databinding.ActivityChooseNearstCityBinding;
 
 import java.util.ArrayList;
 
-public class ChooseCityActivity extends ActivityBase implements CountriesAdapter.OnItemClick {
-    private ActivityChooseCityBinding binding;
+public class ChooseNearCity extends ActivityBase implements CountriesAdapter.OnItemClick {
+   ActivityChooseNearstCityBinding binding;
     private CountriesAdapter countriesAdapter;
     ArrayList<CountryModel> countries;
 
@@ -20,7 +20,7 @@ public class ChooseCityActivity extends ActivityBase implements CountriesAdapter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityChooseCityBinding.inflate(getLayoutInflater());
+        binding = ActivityChooseNearstCityBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         countries=new ArrayList<>();
@@ -49,8 +49,8 @@ public class ChooseCityActivity extends ActivityBase implements CountriesAdapter
 
     }
 
-    private void GoToChooseNearCity() {
-        Intent intent = new Intent(getActiviy(), ChooseNearCity.class);
+    private void GoToChooseCity() {
+        Intent intent = new Intent(getActiviy(), ChooseCityActivity.class);
         startActivity(intent);
         finish();
 
@@ -63,6 +63,6 @@ public class ChooseCityActivity extends ActivityBase implements CountriesAdapter
 
     @Override
     public void onItemClicked(int position, CountryModel countryModel) {
-        GoToChooseNearCity();
+
     }
 }

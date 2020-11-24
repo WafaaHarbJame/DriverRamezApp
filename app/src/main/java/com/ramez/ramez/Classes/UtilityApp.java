@@ -136,25 +136,8 @@ public class UtilityApp {
 
     }
 
-//    public static void startLoginUserActivity(Context context) {
-//        User user = UtilityBakkalti.getUserData();
-//        logCrashAnaliseUser(user.getUsername(), user.getApiToken());
-//        Intent intent = new Intent();
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//        intent.setAction(Intent.ACTION_MAIN);
-//        intent.addCategory(Intent.CATEGORY_HOME);
-//        switch (user.getUserType()) {
-//            case Constants.OWNER:
-//                intent.setClass(context, OwnerActivity.class);
-//                break;
-//            case Constants.BUYER:
-//                intent.setClass(context, OrderTypeActivity.class);
-//                break;
-//            case Constants.SELLER:
-//                intent.setClass(context, SellerDashboardActivity.class);
-//        }
-//        context.startActivity(intent);
-//    }
+
+
 
 
 }
