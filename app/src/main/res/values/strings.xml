@@ -423,6 +423,6 @@
     <string name="enter_code">Please enter the code To change the password</string>
     <string name="enter_code1">Please enter the code</string>
     <string name="enter_phone">Please enter the registered mobile number To retrieve the password</string>
-    <string name="confirm_phone">تاكيد رقم الجوال</string>
+    <string name="confirm_phone">Confirm Phone Number </string>
 
 </resources>
