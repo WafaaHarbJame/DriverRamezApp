@@ -74,5 +74,6 @@
     <color name="green1">#11FF92</color>
     <color name="green7">#279f4e</color>
     <color name="transparent">#00ffffff</color>
+    <color name="status_color">#EE1D23</color>
 
 </resources>

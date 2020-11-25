@@ -83,7 +83,7 @@
     <!--Login-->
 
 
-    <string name="text_login_phone_number">"رقم الجوال"</string>
+    <string name="text_login_phone_number">رقم الجوال </string>
 
     <string name="text_login_enter_your_phone_number">"أدخل رقم هاتفك"</string>
 
@@ -154,7 +154,7 @@
 
     <string name="text_profile_date_of_birth">"تاريخ الميلاد:"</string>
 
-    <string name="text_profile_phone_number">رقم الهاتف</string>
+    <string name="text_profile_phone_number">رقم الجوال </string>
 
     <string name="text_profile_address">"عنوان"</string>
 
@@ -700,5 +700,10 @@
     <string name="rest_password">كلمة المرور الجديدة</string>
     <string name="confirm">تأكيد</string>
     <string name="reset_pass">إعادة تعين كلمة المرور</string>
+    <string name="enter_code">الرجاء ادخال الكود  لتغيير كلمة المرور</string>
+    <string name="forget_pass">نسيت كلمة المرور</string>
+    <string name="enter_phone">الرجاء ادخال رقم الجوال المسجل  لاسترجاع كلمة المرور</string>
+    <string name="enter_code1">الرجاء ادخال الكود    </string>
+    <string name="confirm_phone">تأكيد رقم الجوال </string>
 
 </resources>
