@@ -25,7 +25,7 @@ public class ConfirmPhoneActivity extends ActivityBase {
         binding.confirmBut.setOnClickListener(view1 -> {
             GoToConfirm();
         });
-        binding.toolBar.mainTitleTxt.setText(getString(R.string.text_profile_phone_number));
+        binding.toolBar.mainTitleTxt.setText(getString(R.string.forget_pass));
         binding.toolBar.backBtn.setOnClickListener(view1 -> {
             onBackPressed();
         });

@@ -703,5 +703,7 @@
     <string name="enter_code">الرجاء ادخال الكود  لتغيير كلمة المرور</string>
     <string name="forget_pass">نسيت كلمة المرور</string>
     <string name="enter_phone">الرجاء ادخال رقم الجوال المسجل  لاسترجاع كلمة المرور</string>
+    <string name="enter_code1">الرجاء ادخال الكود    </string>
+    <string name="confirm_phone">تأكيد رقم الجوال </string>
 
 </resources>

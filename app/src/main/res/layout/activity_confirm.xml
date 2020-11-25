@@ -36,7 +36,7 @@
                     android:layout_marginBottom="@dimen/_30sdp"
                     android:gravity="center"
                     android:padding="@dimen/_12sdp"
-                    android:text="@string/enter_code"
+                    android:text="@string/enter_code1"
                     android:textColor="@color/text_color"
                     />
             </LinearLayout>
