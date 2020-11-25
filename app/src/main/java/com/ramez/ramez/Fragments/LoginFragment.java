@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ramez.ramez.Activities.ConfirmPhoneActivity;
 import com.ramez.ramez.Activities.RegisterLoginActivity;
 import com.ramez.ramez.Activities.ResetPasswordActivity;
 import com.ramez.ramez.Activities.SplashScreenActivity;
@@ -51,7 +52,7 @@ public class LoginFragment extends FragmentBase {
         binding = null;
     }
     private void startRestPassword(){
-        startActivity(new Intent(getActivityy(), ResetPasswordActivity.class));
+        startActivity(new Intent(getActivityy(), ConfirmPhoneActivity.class));
 
     }
 
