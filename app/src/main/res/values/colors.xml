@@ -10,6 +10,7 @@
 
     <color name="colorLoginText">#4c4c4c</color>
     <color name="colorTextHint">#9e9e9e</color>
+    <color name="text_color">#6D727B</color>
     <color name="colorDivider">#dedede</color>
     <color name="colorThemeDivider">#e7e7e7</color>
     <color name="white">#FFFFFF</color>
@@ -60,4 +61,18 @@
     <!--Side Menu-->
     <color name="colorSelect">#ce2325</color>
     <color name="colorUnSelect">#232323</color>
+    <color name="green">#35A348</color>
+
+    <color name="gray4">#666666</color>
+    <color name="gray5">#FAFAFA</color>
+    <color name="gray6">#afafaf</color>
+    <color name="gray7">#8BECE4FD</color>
+    <color name="gray8">#F3F5FA</color>
+    <color name="gray16">#7381A6</color>
+    <color name="gray13">#545454</color>
+    <color name="grey14">#E4E9F3</color>
+    <color name="green1">#11FF92</color>
+    <color name="green7">#279f4e</color>
+    <color name="transparent">#00ffffff</color>
+
 </resources>

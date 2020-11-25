@@ -187,6 +187,8 @@ public class Constants {
     public static final String PICK = "pick";
     public static final String SAVE = "save";
     public static final String CLEAR = "clear";
+    public static final String LOGIN = "LOGIN";
+    public static final String REGISTER = "REGISTER";
 
 
 }

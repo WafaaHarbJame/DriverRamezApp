@@ -45,7 +45,7 @@ public class ChooseCityActivity extends ActivityBase implements CountriesAdapter
         initAdapter();
 
 
-        binding.toolBar.homeBtn.setVisibility(View.GONE);
+        binding.toolBar.backBtn.setVisibility(View.GONE);
 
     }
 

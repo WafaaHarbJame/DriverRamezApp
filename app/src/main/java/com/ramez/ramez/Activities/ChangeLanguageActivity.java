@@ -42,7 +42,7 @@ public class ChangeLanguageActivity extends ActivityBase {
 
         });
 
-        binding.toolBar.homeBtn.setVisibility(View.GONE);
+        binding.toolBar.backBtn.setVisibility(View.GONE);
 
     }
 

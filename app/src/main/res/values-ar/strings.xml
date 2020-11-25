@@ -87,19 +87,19 @@
 
     <string name="text_login_enter_your_phone_number">"أدخل رقم هاتفك"</string>
 
-    <string name="text_login_password">"كلمه السر"</string>
+    <string name="text_login_password"> كلمه المرور</string>
 
     <string name="text_login_enter_your_password">"أدخل كلمة السر "</string>
 
-    <string name="text_login_forgot_password">"نسيت كلمة المرور؟"</string>
+    <string name="text_login_forgot_password"> نسيت كلمة المرور؟</string>
 
-    <string name="text_login_login">"تسجيل الدخول"</string>
+    <string name="text_login_login">تسجيل الدخول</string>
 
     <string name="text_login_or_login_with">"أو تسجيل الدخول باستخدام"</string>
 
     <string name="text_sign_in_with">أو تسجيل الدخول باستخدام</string>
 
-    <string name="text_login_dont_have_an_account">"ليس لديك حساب ؟"</string>
+    <string name="text_login_dont_have_an_account">هل لديك حساب؟ </string>
 
     <string name="text_login_guest_user">"زائر"</string>
 
@@ -154,7 +154,7 @@
 
     <string name="text_profile_date_of_birth">"تاريخ الميلاد:"</string>
 
-    <string name="text_profile_phone_number">"رقم الجوال"</string>
+    <string name="text_profile_phone_number">رقم الهاتف</string>
 
     <string name="text_profile_address">"عنوان"</string>
 
@@ -679,7 +679,26 @@
     <string name="title_dashboard">tii</string>
     <string name="share_with">share_with</string>
     <string name="no_address">no_address</string>
+    <string name="title_home">title_home</string>
+    <string name="title_notifications">title_notifications</string>
+    <string name="by_app">by_app</string>
     <string name="choose_country">الرجاء أختيار البلد</string>
-    <string name="choose_nearest">الرجاء  اختيار الفرع الأقرب </string>
+    <string name="choose_nearest">الرجاءاختيار الفرع الأقرب </string>
+    <string name="create_account">انشاء حساب </string>
+    <string name="remember">تذكر</string>
+    <string name="skip_register">تخطي عملية التسجيل</string>
+    <string name="new_member"> عضو جديد ؟</string>
+    <string name="register_now">سجل الأن </string>
+    <string name="first_name">الاسم الأول</string>
+    <string name="text_family">اسم العائلة </string>
+    <string name="text_confirm_password">تأكيد كلمة المرور</string>
+    <string name="login_now"> سجل دخولك الأن</string>
+    <string name="terms1"> من خلال النقر على تسجيل وقبول ، فإنك تقر بأنك قد قرأت  </string>
+    <string name="terms2">سياسة الخصوصية</string>
+    <string name="terms3">وتوافق على</string>
+    <string name="terms4">شروط تطبيق رامز</string>
+    <string name="rest_password">كلمة المرور الجديدة</string>
+    <string name="confirm">تأكيد</string>
+    <string name="reset_pass">إعادة تعين كلمة المرور</string>
 
 </resources>

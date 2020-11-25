@@ -102,7 +102,7 @@
     <string name="text_profile_gained_points">Gained points :</string>
     <string name="text_profile_gender">Gender :</string>
     <string name="text_profile_date_of_birth">Date of birth :</string>
-    <string name="text_profile_phone_number">Phone number :</string>
+    <string name="text_profile_phone_number">Phone number </string>
     <string name="text_profile_address">Address</string>
 
     <!--Page Title-->
@@ -403,5 +403,21 @@
     <string name="no_address">no_address</string>
     <string name="choose_country">please Choose Country </string>
     <string name="choose_nearest">please Choose Nearest  Branch </string>
+    <string name="create_account">Create Account</string>
+    <string name="remember">Remember</string>
+    <string name="skip_register">Skip Register</string>
+    <string name="new_member">New Member</string>
+    <string name="register_now">Register Now</string>
+    <string name="first_name">First Name</string>
+    <string name="text_family">Family Name</string>
+    <string name="text_confirm_password">Confirm Passward</string>
+    <string name="login_now">Login Now</string>
+    <string name="terms1"> By clicking on Register and Accept, you acknowledge that you have read </string>
+    <string name="terms2">Privacy policy</string>
+    <string name="terms3">and agree to</string>
+    <string name="terms4">the terms of  Ramez</string>
+    <string name="rest_password">New Password </string>
+    <string name="confirm">Confirm</string>
+    <string name="reset_pass">Reset Password</string>
 
 </resources>

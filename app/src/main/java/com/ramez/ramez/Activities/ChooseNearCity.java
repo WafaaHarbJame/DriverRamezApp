@@ -45,7 +45,7 @@ public class ChooseNearCity extends ActivityBase implements CountriesAdapter.OnI
         initAdapter();
 
 
-        binding.toolBar.homeBtn.setVisibility(View.GONE);
+        binding.toolBar.backBtn.setVisibility(View.GONE);
 
     }
 

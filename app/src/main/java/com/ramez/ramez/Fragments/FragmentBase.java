@@ -61,5 +61,10 @@ public class FragmentBase extends Fragment {
         Toast.makeText(getActivity(), getActivity().getString(resId), Toast.LENGTH_SHORT).show();
     }
 
+    protected Activity getActivityy() {
+        return getActivity();
+    }
+
+
 
 }
