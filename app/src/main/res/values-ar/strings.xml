@@ -83,7 +83,7 @@
     <!--Login-->
 
 
-    <string name="text_login_phone_number">"رقم الجوال"</string>
+    <string name="text_login_phone_number">رقم الجوال </string>
 
     <string name="text_login_enter_your_phone_number">"أدخل رقم هاتفك"</string>
 
@@ -154,7 +154,7 @@
 
     <string name="text_profile_date_of_birth">"تاريخ الميلاد:"</string>
 
-    <string name="text_profile_phone_number">رقم الهاتف</string>
+    <string name="text_profile_phone_number">رقم الجوال </string>
 
     <string name="text_profile_address">"عنوان"</string>
 
