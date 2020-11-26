@@ -125,10 +125,17 @@ public class NumberHandler {
         return (double) tmp / factor;
     }
 
-    public static String formatDouble(double value) {
-        DecimalFormat df = new DecimalFormat("####0.00");
-        return df.format(value);
-//        System.out.println("Value: " + df.format(value));
+
+
+
+    public static String formatDouble(Object number) {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+        DecimalFormat stringFormater = new DecimalFormat("##.########", symbols);
+        stringFormater.setMaximumFractionDigits(3);
+        stringFormater.setMinimumFractionDigits(3);
+
+        return stringFormater.format(number);
+
     }
 
     /**
@@ -152,5 +159,7 @@ public class NumberHandler {
     public static float convertPixelsToDp(float px, Context context){
         return px / ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
+
+
 
 }

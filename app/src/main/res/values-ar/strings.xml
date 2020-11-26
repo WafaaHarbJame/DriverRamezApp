@@ -396,7 +396,7 @@
     <!-- Menu Items-->
 
 
-    <string name="string_menu_home">"الصفحة الرئيسية"</string>
+    <string name="string_menu_home"> الرئيسية</string>
 
     <string name="string_menu_bills">"الفواتير"</string>
 
@@ -705,5 +705,18 @@
     <string name="enter_phone">الرجاء ادخال رقم الجوال المسجل  لاسترجاع كلمة المرور</string>
     <string name="enter_code1">الرجاء ادخال الكود    </string>
     <string name="confirm_phone">تأكيد رقم الجوال </string>
+    <string name="search_product">  ابحث عن منتج  من هنا</string>
+    <string name="view_all">عرض الكل</string>
+    <string name="best_products">المنتجات المتميزة</string>
+    <string name="best_sell">المنتجات الأكثر مبيعا</string>
+    <string name="offers">منتجات العروض</string>
+    <string name="product_name">اسم الصنف اسم الصنف اسم الصنف </string>
+    <string name="_10220_aed">1.935</string>
+    <string name="_10220_aed1">1.995</string>
+    <string name="_50_off">50 % OFF</string>
+    <string name="category">الفئات</string>
+    <string name="cart">العربة</string>
+    <string name="myaccount">حسابي </string>
+    <string name="offer_text">العروض </string>
 
 </resources>

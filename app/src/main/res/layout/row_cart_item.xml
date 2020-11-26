@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/_8sdp">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:background="@drawable/round_corner_white"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_height="@dimen/_100sdp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@drawable/favorite_icon"
+                android:layout_gravity="top|start"
+                android:id="@+id/favBut"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/productImg"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_gravity="center"
+                android:padding="@dimen/_8sdp"
+                android:background="@color/transparent"
+                android:src="@drawable/image_product"
+                android:scaleType="centerCrop"
+                app:riv_corner_radius="@dimen/_16sdp" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/productNameTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="2"
+            android:text="@string/product_name"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/discountTv"
+            android:text="@string/_50_off"
+            android:lines="2"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:paddingEnd="@dimen/_16sdp"
+            android:paddingStart="@dimen/_16sdp"
+            android:textSize="@dimen/_10ssp"
+            android:background="@drawable/round_corner_green"
+            android:textColor="@color/colorAppRed"
+            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/productPriceTv"
+                android:text="@string/_10220_aed"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:paddingEnd="@dimen/_4sdp"
+                android:textSize="@dimen/_8sdp"
+                android:textStyle="bold"
+                android:textColor="@color/green"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="@string/_10220_aed"
+                android:id="@+id/productPriceBeforeTv"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textSize="@dimen/_8sdp"
+                android:textStyle="bold"
+                android:textColor="@color/gray3"
+                android:layout_height="wrap_content"/>
+            <Space
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:id="@+id/cartBut"
+                android:src="@drawable/cart_icon"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+
+
+</layout>
+

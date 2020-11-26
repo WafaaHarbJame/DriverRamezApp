@@ -45,7 +45,7 @@ public class SplashScreenActivity extends ActivityBase {
 
                     } else {
 
-                        Intent intent = new Intent(getActiviy(), RegisterLoginActivity.class);
+                        Intent intent = new Intent(getActiviy(), MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                         finish();
