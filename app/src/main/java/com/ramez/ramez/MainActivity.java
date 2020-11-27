@@ -54,8 +54,8 @@ public class MainActivity extends ActivityBase {
         });
 
         binding.categoryBut.setOnClickListener(view1 -> {
+            binding.toolBar.background.setVisibility(View.GONE);
             binding.toolBar.mainTitleTxt.setText(getString(R.string.category));
-            binding.toolBar.background.setVisibility(View.VISIBLE);
             binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_icon));
             binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.category_click));
             binding.cartBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.cart_icon_before));
@@ -81,7 +81,7 @@ public class MainActivity extends ActivityBase {
 
         binding.offerBut.setOnClickListener(view1 -> {
             binding.toolBar.mainTitleTxt.setText(getString(R.string.offer_text));
-            binding.toolBar.background.setVisibility(View.VISIBLE);
+            binding.toolBar.background.setVisibility(View.GONE);
             binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_icon));
             binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.category_icon));
             binding.cartBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.cart_icon_before));

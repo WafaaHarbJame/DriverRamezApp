@@ -437,5 +437,8 @@
     <string name="cart">Cart</string>
     <string name="myaccount">My Account</string>
     <string name="offer_text">Offers </string>
+    <string name="fail_to_get_data">Fail to get data</string>
+    <string name="reload">Reload</string>
+    <string name="no_data">No Data</string>
 
 </resources>

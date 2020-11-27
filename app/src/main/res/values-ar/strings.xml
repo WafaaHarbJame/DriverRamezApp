@@ -718,5 +718,8 @@
     <string name="cart">العربة</string>
     <string name="myaccount">حسابي </string>
     <string name="offer_text">العروض </string>
+    <string name="fail_to_get_data">خطأ في البيانات</string>
+    <string name="reload">إعادة</string>
+    <string name="no_data">لا يوجد بيانات</string>
 
 </resources>

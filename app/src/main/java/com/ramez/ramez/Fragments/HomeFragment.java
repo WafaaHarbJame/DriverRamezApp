@@ -30,6 +30,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
 
 
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
@@ -83,6 +84,10 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         binding.bestProductRecycler.setLayoutManager(bestProductGridLayoutManager);
         binding.offerRecycler.setLayoutManager(bestOfferGridLayoutManager);
 
+        binding.offerRecycler.setHasFixedSize(true);
+        binding.bestProductRecycler.setHasFixedSize(true);
+        binding.bestSellerRecycler.setHasFixedSize(true);
+
 
         initAdapter();
 
@@ -95,10 +100,6 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         productBestAdapter = new ProductAdapter(getActivityy(), this, productBestList);
         productSellerAdapter = new ProductAdapter(getActivityy(), this, productSellerList);
         productOfferAdapter = new ProductAdapter(getActivityy(), this, productOffersList);
-
-        binding.offerRecycler.setHasFixedSize(true);
-        binding.bestProductRecycler.setHasFixedSize(true);
-        binding.bestSellerRecycler.setHasFixedSize(true);
 
         binding.bestProductRecycler.setAdapter(productBestAdapter);
         binding.bestSellerRecycler.setAdapter(productSellerAdapter);
