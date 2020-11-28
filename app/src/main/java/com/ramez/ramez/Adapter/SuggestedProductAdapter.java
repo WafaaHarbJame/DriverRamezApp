@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -23,36 +24,38 @@ import com.ramez.ramez.Classes.UtilityApp;
 import com.ramez.ramez.Models.ProductModel;
 import com.ramez.ramez.R;
 import com.ramez.ramez.Utils.NumberHandler;
-import com.ramez.ramez.databinding.RowCartItemBinding;
+import com.ramez.ramez.databinding.RowSuggestedProductItemBinding;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.CountryViewHolder> {
+public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProductAdapter.Holder> {
     private Context context;
     private  OnItemClick onItemClick;
     private ArrayList<ProductModel> productModels;
     private double discount = 0.0;
     private String currency="AED";
+    private  int limit = 2;
 
 
 
-    public OfferAdapter(Context context, OnItemClick onItemClick, ArrayList<ProductModel> productModels) {
+    public SuggestedProductAdapter(Context context, OnItemClick onItemClick, ArrayList<ProductModel> productModels, int limit) {
         this.context = context;
         this.onItemClick = onItemClick;
         this.productModels = productModels;
+        this.limit=limit;
     }
 
     @Override
-    public CountryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        RowCartItemBinding itemView = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.row_cart_item, parent, false);
-        return new CountryViewHolder(itemView);
+        RowSuggestedProductItemBinding itemView = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.row_suggested_product_item, parent, false);
+        return new Holder(itemView);
     }
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(CountryViewHolder holder, int position) {
+    public void onBindViewHolder(Holder holder, int position) {
         ProductModel productModel = productModels.get(position);
         if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
             if(UtilityApp.getLanguage().equals(Constants.Arabic))
@@ -86,8 +89,10 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.CountryViewH
         } else {
             if (productModel.getPro_price() != null) {
                 holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(productModel.getPro_price())) + " " + currency + "");
-                holder.binding.productPriceBeforeTv.setVisibility(View.GONE);
+                holder.binding.productPriceBeforeTv.setVisibility(View.INVISIBLE);
                 holder.binding.discountTv.setVisibility(View.INVISIBLE);
+
+
             }
         }
 
@@ -113,17 +118,21 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.CountryViewH
 
     @Override
     public int getItemCount() {
+        if(limit==2)
+            return Math.min(productModels.size(), limit);
+        else
+            return productModels.size();
 
-        return productModels!=null?productModels.size():0;
+
 
     }
 
 
-    public class CountryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        RowCartItemBinding binding;
+        RowSuggestedProductItemBinding binding;
 
-        CountryViewHolder(RowCartItemBinding view) {
+        Holder(RowSuggestedProductItemBinding view) {
             super(view.getRoot());
             binding = view;
             itemView.setOnClickListener(this);

@@ -721,5 +721,10 @@
     <string name="fail_to_get_data">خطأ في البيانات</string>
     <string name="reload">إعادة</string>
     <string name="no_data">لا يوجد بيانات</string>
+    <string name="suggested_product">المنتجات المقترحة</string>
+    <string name="product_desc">مواصفات المنتج</string>
+    <string name="desc"> صفة \n صفة  \n صفة </string>
+    <string name="add_to_cart">أضف المنتج للسلة</string>
+    <string name="product_review">اراء العملاء</string>
 
 </resources>

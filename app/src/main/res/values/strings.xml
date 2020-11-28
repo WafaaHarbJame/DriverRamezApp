@@ -440,5 +440,10 @@
     <string name="fail_to_get_data">Fail to get data</string>
     <string name="reload">Reload</string>
     <string name="no_data">No Data</string>
+    <string name="suggested_product">Suggested Products</string>
+    <string name="product_desc">Product Features</string>
+    <string name="desc">Desc \n Desc \n Desc \n Dec</string>
+    <string name="product_review">Customer Reviews</string>
+    <string name="add_to_cart">Add Product To Cart</string>
 
 </resources>

@@ -17,6 +17,7 @@
     <color name="gray">#EDECEC</color>
     <color name="gray1">#C6C6C6</color>
     <color name="gray3">#787878</color>
+    <color name="gray2">#F3F3F3</color>
 
     <!--Side Menu-->
     <color name="colorSideMenuBg">#232323</color>
@@ -75,5 +76,6 @@
     <color name="green7">#279f4e</color>
     <color name="transparent">#00ffffff</color>
     <color name="status_color">#EE1D23</color>
+    <color name="gray_view">#d8d8d8</color>
 
 </resources>

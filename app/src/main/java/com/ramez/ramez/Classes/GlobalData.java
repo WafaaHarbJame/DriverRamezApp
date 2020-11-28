@@ -13,7 +13,7 @@ import com.ramez.ramez.RootApplication;
 
 public class GlobalData {
 
-    public static final String BetaBaseURL = "http://abdullah.sahaba.tech/jazan/public_html/apiV2.php/";
+    public static final String BetaBaseURL = "https://risteh.com/BH/GroceryStoreApi/";
     public static final String ReleaseBaseURL = "https://estates-jazan.com/";
     public static final String BaseURL = ReleaseBaseURL;
     public static final String ApiURL = BaseURL + "api/";

@@ -1,6 +1,8 @@
 package com.ramez.ramez.Models;
 
-public class ProductModel {
+import java.io.Serializable;
+
+public class ProductModel  implements Serializable {
 
     private int pro_id = 0;
     private String pro_name_ar = "pro_name";

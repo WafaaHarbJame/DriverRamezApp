@@ -6,191 +6,202 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-        <androidx.core.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
-
-            <FrameLayout
+            <LinearLayout
+                android:id="@+id/back1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="@dimen/_70sdp"
+                android:background="@drawable/toolbar_back1"
+                android:orientation="vertical"/>
+
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:id="@+id/back1"
-                android:orientation="vertical"
-                android:background="@drawable/toolbar_back1"
-                android:layout_height="@dimen/_70sdp">
-            </LinearLayout>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_34sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
 
 
+                    <com.ramez.ramez.SpichalViews.STextView
+                        android:id="@+id/location_icon"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/round_corner_grey"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:gravity="start|center_vertical"
+                        android:hint="@string/search_product"
+                        android:maxLines="1"
+                        android:padding="@dimen/_10sdp"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp"
+                        app:drawableEndCompat="@drawable/search_product" />
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleX="@integer/scaleX"
+                        android:scaleY="@integer/scaleX"
+                        android:src="@drawable/cat_icon"
+                        android:textSize="@dimen/_18ssp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/layout_pre_loading" />
+
+                    <include layout="@layout/layout_fail_get_data" />
+
+
+                    <com.ramez.ramez.SpichalViews.STextViewBold
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:gravity="start|center_vertical"
+                        android:maxLines="1"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:text="@string/best_products"
+                        android:textAlignment="viewStart"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <com.ramez.ramez.SpichalViews.STextView
+                        android:id="@+id/moreBestBut"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:gravity="start|center_vertical"
+                        android:maxLines="1"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:text="@string/view_all"
+                        android:textAlignment="viewStart"
+                        android:textSize="@dimen/_12ssp" />
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/bestProductRecycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_4sdp" />
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <com.ramez.ramez.SpichalViews.STextViewBold
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_16sdp"
-                        android:layout_marginEnd="@dimen/_8sdp"
-                        android:visibility="visible"
-                        android:layout_marginTop="@dimen/_34sdp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:layout_weight="1"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:gravity="start|center_vertical"
+                        android:maxLines="1"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:text="@string/best_sell"
+                        android:textAlignment="viewStart"
+                        android:textSize="@dimen/_12ssp" />
 
+                    <com.ramez.ramez.SpichalViews.STextView
+                        android:id="@+id/moreBoughtBut"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:gravity="start|center_vertical"
+                        android:maxLines="1"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:text="@string/view_all"
+                        android:textAlignment="viewStart"
+                        android:textSize="@dimen/_12ssp" />
 
-                        <com.ramez.ramez.SpichalViews.STextView
-                            android:id="@+id/location_icon"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/round_corner_grey"
-                            android:drawablePadding="@dimen/_8sdp"
-                            android:gravity="start|center_vertical"
-                            android:hint="@string/search_product"
-                            android:maxLines="1"
-                            android:padding="@dimen/_10sdp"
-                            android:textAlignment="viewStart"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_12ssp"
-                            app:drawableEndCompat="@drawable/search_product" />
-
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:scaleX="@integer/scaleX"
-                            android:scaleY="@integer/scaleX"
-                            android:src="@drawable/cat_icon"
-                            android:textSize="@dimen/_18ssp" />
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_gravity="center"
-                        android:layout_height="wrap_content">
-
-                        <include layout="@layout/layout_pre_loading" />
-
-                        <include layout="@layout/layout_fail_get_data" />
-
-
-                        <com.ramez.ramez.SpichalViews.STextViewBold
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawablePadding="@dimen/_8sdp"
-                            android:gravity="start|center_vertical"
-                            android:text="@string/best_products"
-                            android:maxLines="1"
-                            android:paddingStart="@dimen/_10sdp"
-                            android:paddingEnd="@dimen/_10sdp"
-                            android:paddingTop="@dimen/_10sdp"
-                            android:textAlignment="viewStart"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <com.ramez.ramez.SpichalViews.STextView
-                            android:id="@+id/moreBestBut"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawablePadding="@dimen/_8sdp"
-                            android:gravity="start|center_vertical"
-                            android:text="@string/view_all"
-                            android:maxLines="1"
-                            android:paddingStart="@dimen/_10sdp"
-                            android:paddingEnd="@dimen/_10sdp"
-                            android:paddingTop="@dimen/_10sdp"
-                            android:textAlignment="viewStart"
-                            android:textSize="@dimen/_12ssp" />
-
-                    </LinearLayout>
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/bestProductRecycler"
-                        android:layout_marginStart="@dimen/_4sdp"
-                        android:layout_marginEnd="@dimen/_4sdp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_height="wrap_content">
-
-                        <com.ramez.ramez.SpichalViews.STextViewBold
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawablePadding="@dimen/_8sdp"
-                            android:gravity="start|center_vertical"
-                            android:text="@string/best_sell"
-                            android:maxLines="1"
-                            android:paddingStart="@dimen/_10sdp"
-                            android:paddingEnd="@dimen/_10sdp"
-                            android:paddingTop="@dimen/_10sdp"                            android:textAlignment="viewStart"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <com.ramez.ramez.SpichalViews.STextView
-                            android:id="@+id/moreBoughtBut"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawablePadding="@dimen/_8sdp"
-                            android:gravity="start|center_vertical"
-                            android:text="@string/view_all"
-                            android:maxLines="1"
-                            android:paddingStart="@dimen/_10sdp"
-                            android:paddingEnd="@dimen/_10sdp"
-                            android:paddingTop="@dimen/_10sdp"                            android:textAlignment="viewStart"
-                            android:textSize="@dimen/_12ssp" />
-
-                    </LinearLayout>
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/bestSellerRecycler"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_height="wrap_content">
-
-                        <com.ramez.ramez.SpichalViews.STextViewBold
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawablePadding="@dimen/_8sdp"
-                            android:gravity="start|center_vertical"
-                            android:maxLines="1"
-                            android:paddingStart="@dimen/_10sdp"
-                            android:paddingEnd="@dimen/_10sdp"
-                            android:paddingTop="@dimen/_10sdp"                            android:text="@string/offers"
-                            android:textAlignment="viewStart"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <com.ramez.ramez.SpichalViews.STextView
-                            android:id="@+id/moreOfferBut"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawablePadding="@dimen/_8sdp"
-                            android:gravity="start|center_vertical"
-                            android:text="@string/view_all"
-                            android:maxLines="1"
-                            android:paddingStart="@dimen/_10sdp"
-                            android:paddingEnd="@dimen/_10sdp"
-                            android:paddingTop="@dimen/_10sdp"                            android:textAlignment="viewStart"
-                            android:textSize="@dimen/_12ssp" />
-
-                    </LinearLayout>
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/offerRecycler"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
                 </LinearLayout>
-            </FrameLayout>
 
-        </androidx.core.widget.NestedScrollView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/bestSellerRecycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_4sdp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.ramez.ramez.SpichalViews.STextViewBold
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:gravity="start|center_vertical"
+                        android:maxLines="1"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:text="@string/offers"
+                        android:textAlignment="viewStart"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <com.ramez.ramez.SpichalViews.STextView
+                        android:id="@+id/moreOfferBut"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:gravity="start|center_vertical"
+                        android:maxLines="1"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:text="@string/view_all"
+                        android:textAlignment="viewStart"
+                        android:textSize="@dimen/_12ssp" />
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/offerRecycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_4sdp" />
+            </LinearLayout>
+        </FrameLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 
 </LinearLayout>

@@ -23,9 +23,6 @@ import okhttp3.TlsVersion;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * Created by wokman on 11/4/2016.
- */
 
 public class ApiClient {
 

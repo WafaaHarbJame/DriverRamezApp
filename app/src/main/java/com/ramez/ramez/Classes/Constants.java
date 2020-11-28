@@ -22,7 +22,7 @@ public class Constants {
 
     public static final String NORMAL_FONT = "Cairo-Regular.ttf";
     public static final String BOLD_FONT = "Cairo-Bold.ttf";
-    public static final String ICON_AWSM_FONT = "fa-light-300.ttf";
+    public static final String ICON_AWSM_FONT = "fa_light_300.otf";
     public static final String ICON_AWSM_BRAND_FONT = "fa-brands-400.ttf";
     public static final String ICON_OLD_AWSM_FONT = "fontawesome-webfont.ttf";
     public static final String ICON_MOON_FONT = "icomoon.ttf";
@@ -182,6 +182,8 @@ public class Constants {
     public static final String DB_Pages = "30";
     public static final String DB_Packages = "31";
     public static final String DB_PackageSpecs = "32";
+    public static final String DB_productModel = "DB_PRODUCT_MODEL";
+
 
     public static final String CAPTURE = "capture";
     public static final String PICK = "pick";
