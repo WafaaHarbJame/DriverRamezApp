@@ -30,6 +30,7 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:gravity="center"
+                android:layout_marginBottom="@dimen/_20sdp"
                 android:text="@string/add_rate_product"
                 android:textColor="@color/colorLoginText" />
 
@@ -56,6 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start"
+                    android:background="@color/transparent"
                     android:inputType="textMultiLine"
                     android:minHeight="@dimen/_100sdp"
                     />
