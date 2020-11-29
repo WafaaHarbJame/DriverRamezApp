@@ -23,7 +23,14 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/ProjectTheme">
-        <activity android:name=".Activities.ProductDetailsActivity"></activity>
+        <activity android:name=".Activities.RateProductActivity"></activity>
+        <activity android:name=".Activities.RatingActivity" />
+        <activity
+            android:name=".Activities.AboutActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Activities.ConditionActivity" />
+        <activity android:name=".Activities.TermsActivity" />
+        <activity android:name=".Activities.ProductDetailsActivity" />
         <activity
             android:name=".Activities.ResetPasswordActivity"
             android:screenOrientation="portrait"

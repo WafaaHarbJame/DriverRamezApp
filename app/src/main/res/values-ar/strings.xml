@@ -5,7 +5,7 @@
     <!--App Message-->
 
 
-    <string name="app_name">"رامز"</string>
+    <string name="app_name">رامز</string>
 
     <string name="message_no_internet">\تحقق من اتصالك بالإنترنت</string>
 
@@ -199,7 +199,7 @@
 
     <string name="text_title_theme">الوان العرض</string>
 
-    <string name="text_title_about_us">"نبذه عنا"</string>
+    <string name="text_title_about_us">من نحن </string>
 
     <string name="text_title_price_checker">استعلام عن الاسعار</string>
 
@@ -338,7 +338,7 @@
 
     <string name="text_registration_confirm_number">"رقم التأكيد"</string>
 
-    <string name="text_registration_change_password">"تغيير كلمة السر"</string>
+    <string name="text_registration_change_password">تغيير كلمة السر</string>
 
     <string name="text_registration_enter_old_password">"أدخل كلمة المرور القديمة"</string>
 
@@ -677,7 +677,7 @@
 نص تجريبي نص تجريبي نص تجريبي </string>
     <string name="dummy" >نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي </string>
     <string name="title_dashboard">tii</string>
-    <string name="share_with">share_with</string>
+    <string name="share_with">انشر التطبيق </string>
     <string name="no_address">no_address</string>
     <string name="title_home">title_home</string>
     <string name="title_notifications">title_notifications</string>
@@ -726,5 +726,20 @@
     <string name="desc"> صفة \n صفة  \n صفة </string>
     <string name="add_to_cart">أضف المنتج للسلة</string>
     <string name="product_review">اراء العملاء</string>
+    <string name="fav_products">المنتجات المفضلة</string>
+    <string name="my_order">طلباتي</string>
+    <string name="address">العناوين</string>
+    <string name="customer_service">خدمة العملاء</string>
+    <string name="lang_setting">إعدادات اللغة والعملة</string>
+    <string name="change_city_branch">تغير المدينة والفرع </string>
+    <string name="rate_app">قيم التطبيق</string>
+    <string name="logout">تسجيل الخروج</string>
+    <string name="conditions">الشروط والأحكام </string>
+    <string name="dummy_text">هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق. هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق. هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق.</string>
+    <string name="app_version">رقم الاصدار</string>
+    <string name="accept">موافق</string>
+    <string name="add_rate">الرجاء إضافة تقييم لخدمات التطبيق</string>
+    <string name="add_rate_product">الرجاء إضافة تقييم على المنتج</string>
+    <string name="rate_product">تقييم المنتج</string>
 
 </resources>
