@@ -38,7 +38,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
 
 
-    public ProductAdapter(Context context, OnItemClick onItemClick, ArrayList<ProductModel> productModels,int limit) {
+    public ProductAdapter(Context context,ArrayList<ProductModel> productModels,OnItemClick onItemClick,int limit) {
         this.context = context;
         this.onItemClick = onItemClick;
         this.productModels = productModels;

@@ -100,9 +100,9 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
     public void initAdapter(){
 
-        productBestAdapter = new ProductAdapter(getActivityy(), this, productBestList,2);
-        productSellerAdapter = new ProductAdapter(getActivityy(), this, productSellerList,2);
-        productOfferAdapter = new ProductAdapter(getActivityy(), this, productOffersList,2);
+        productBestAdapter = new ProductAdapter(getActivityy(), productBestList,this,2);
+        productSellerAdapter = new ProductAdapter(getActivityy(), productSellerList,this,2);
+        productOfferAdapter = new ProductAdapter(getActivityy(), productOffersList,this,2);
 
         binding.bestProductRecycler.setAdapter(productBestAdapter);
         binding.bestSellerRecycler.setAdapter(productSellerAdapter);

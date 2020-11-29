@@ -11,7 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ramez.ramez.Activities.AboutActivity;
+import com.ramez.ramez.Activities.ChangePassActivity;
 import com.ramez.ramez.Activities.ConditionActivity;
+import com.ramez.ramez.Activities.FavoriteActivity;
+import com.ramez.ramez.Activities.MyOrderActivity;
 import com.ramez.ramez.Activities.RatingActivity;
 import com.ramez.ramez.Activities.SplashScreenActivity;
 import com.ramez.ramez.Activities.TermsActivity;
@@ -55,7 +58,26 @@ public class MyAccountFragment extends FragmentBase {
 
         });
 
+        binding.changePassBtn.setOnClickListener(view1 -> {
+            startChangeActivity();
+
+        });
+
+        binding.favProductBut.setOnClickListener(view1 -> {
+            startFavProductActivity();
+
+        });
+
+        binding.myOrderBut.setOnClickListener(view1 -> {
+            startOrderActivity();
+
+        });
         return view;
+    }
+
+    private void startOrderActivity() {
+        Intent intent=new Intent(getActivityy(), MyOrderActivity.class);
+        startActivity(intent);
     }
 
     private void startTermsActivity(){
@@ -74,6 +96,14 @@ public class MyAccountFragment extends FragmentBase {
 
     private void startRateAppActivity(){
         Intent intent=new Intent(getActivityy(), RatingActivity.class);
+        startActivity(intent);
+    }
+    private void startChangeActivity(){
+        Intent intent=new Intent(getActivityy(), ChangePassActivity.class);
+        startActivity(intent);
+    }
+    private void startFavProductActivity(){
+        Intent intent=new Intent(getActivityy(), FavoriteActivity.class);
         startActivity(intent);
     }
 }

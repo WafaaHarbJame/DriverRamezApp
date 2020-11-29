@@ -191,6 +191,7 @@ public class Constants {
     public static final String CLEAR = "clear";
     public static final String LOGIN = "LOGIN";
     public static final String REGISTER = "REGISTER";
+    public static final String inv_id = "inv_id";
 
 
 }

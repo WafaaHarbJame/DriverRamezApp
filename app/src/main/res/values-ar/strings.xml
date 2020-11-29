@@ -741,5 +741,16 @@
     <string name="add_rate">الرجاء إضافة تقييم لخدمات التطبيق</string>
     <string name="add_rate_product">الرجاء إضافة تقييم على المنتج</string>
     <string name="rate_product">تقييم المنتج</string>
+    <string name="Edit">تعديل</string>
+    <string name="complete_request">الطلبات المكتملة</string>
+    <string name="DeliveryTime1">وقت  التوصيل : </string>
+    <string name="order_sent">تم استلام الطلب </string>
+    <string name="rateRequest">تقييم الطلب </string>
+    <string name="request_no">رقم الطلب : </string>
+    <string name="ordered">طلبت </string>
+    <string name="order_send">يتم ارسال الطلب </string>
+    <string name="orderDetails">تفاصيل الطلب</string>
+    <string name="current_orders">طلبات قيد التنفيذ </string>
+    <string name="krof">كارفور</string>
 
 </resources>

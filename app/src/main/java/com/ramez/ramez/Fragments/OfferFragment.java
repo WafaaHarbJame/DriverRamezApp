@@ -70,7 +70,7 @@ public class OfferFragment extends FragmentBase implements ProductAdapter.OnItem
 
     public void initAdapter(){
 
-        productOfferAdapter = new ProductAdapter(getActivityy(), this, productOffersList,productOffersList.size());
+        productOfferAdapter = new ProductAdapter(getActivityy(), productOffersList,this,productOffersList.size());
         binding.offerRecycler.setAdapter(productOfferAdapter);
     }
 

@@ -23,7 +23,10 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/ProjectTheme">
-        <activity android:name=".Activities.RateProductActivity"></activity>
+        <activity android:name=".Activities.OrderDetailsActivity"></activity>
+        <activity android:name=".Activities.MyOrderActivity" />
+        <activity android:name=".Activities.FavoriteActivity" />
+        <activity android:name=".Activities.RateProductActivity" />
         <activity android:name=".Activities.RatingActivity" />
         <activity
             android:name=".Activities.AboutActivity"
