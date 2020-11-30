@@ -13,7 +13,7 @@
     android:paddingBottom="@dimen/_5sdp"
     android:orientation="vertical">
 
-    <com.ramez.ramez.SpichalViews.STextViewBold
+    <com.ramez.shopp.SpichalViews.STextViewBold
         android:layout_width="match_parent"
         android:id="@+id/infoTitle"
         android:layout_marginTop="@dimen/_16ssp"
@@ -26,7 +26,7 @@
         android:paddingBottom="@dimen/_16ssp"
         android:layout_height="wrap_content" />
 
-    <com.ramez.ramez.SpichalViews.STextView
+    <com.ramez.shopp.SpichalViews.STextView
         android:id="@+id/infoTv1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
         android:paddingBottom="@dimen/_4sdp"
         />
 
-    <com.ramez.ramez.SpichalViews.STextView
+    <com.ramez.shopp.SpichalViews.STextView
         android:id="@+id/infoTv2"
         android:layout_width="match_parent"
         android:gravity="center"

@@ -49,9 +49,9 @@
 
     <string name="message_are_you_sure_delete_itemList">المنتج موجود في القائمة! هل أنت متأكد؟</string>
 
-    <string name="message_yes">"نعم فعلا"</string>
+    <string name="message_yes">نعم </string>
 
-    <string name="message_no">"لا"</string>
+    <string name="message_no">لا</string>
 
     <string name="message_empty_old_password">"كلمة المرور القديمة فارغة "</string>
 
@@ -74,7 +74,7 @@
     <!--Common-->
 
 
-    <string name="text_save">"حفظ"</string>
+    <string name="text_save">حفظ</string>
 
     <string name="text_ok">"حسنا"</string>
 
@@ -278,7 +278,7 @@
 
     <string name="text_registration_enter_your_email_id">"أدخل معرف البريد الإلكتروني"</string>
 
-    <string name="text_registration_email_id">"عنوان البريد الالكتروني"</string>
+    <string name="text_registration_email_id">الايميل</string>
 
     <string name="text_registration_enter_a_password">"أدخل كلمة مرور"</string>
 
@@ -752,5 +752,28 @@
     <string name="orderDetails">تفاصيل الطلب</string>
     <string name="current_orders">طلبات قيد التنفيذ </string>
     <string name="krof">كارفور</string>
+    <string name="old_pass">كلمة المرور القديمة </string>
+    <string name="new_pass">كلمة المرور الجديدة </string>
+    <string name="name">الاسم</string>
+    <string name="add_new_address">إضافة عنوان جديد</string>
+    <string name="new_address">عنوان جديد</string>
+    <string name="lat_line">خط الطول</string>
+    <string name="address_in_map">العنوان في الخريطة</string>
+    <string name="lng_line">خط العرض</string>
+    <string name="region">المنطقة </string>
+    <string name="block">مجمع</string>
+    <string name="street_num">رقم الشارع</string>
+    <string name="building">البناية</string>
+    <string name="flat">الشقة</string>
+    <string name="choose_address_gps"> تحديد العنوان عن طريق GPS   </string>
+    <string name="textZoomIn">Zoom In</string>
+    <string name="loading">Loading</string>
+    <string name="phonePermissionExplain">لقد رفضت للتو الحصول على إذن مكالمة هاتفية ، لا يمكنك إجراء أي اتصال حتى تقبل الإذن</string>
+    <string name="ok">Ok</string>
+    <string name="no_internet_connection">No Internet Connection</string>
+    <string name="open_gallery">Open Gallery</string>
+    <string name="take_pic">Take Photo</string>
+    <string name="empty_cart">عربة التسوق الخاصة بك فارغة</string>
+    <string name="do_yo_want"> هل تريد التسوق الان؟!</string>ng>
 
 </resources>

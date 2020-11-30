@@ -44,10 +44,11 @@
                         android:layout_width="@dimen/_15sdp"
                         android:layout_gravity="bottom"
                         android:src="@drawable/edit_photo"
+                        android:id="@+id/editProfileBut"
                         android:layout_height="@dimen/_15sdp"/>
                 </FrameLayout>
 
-                <com.ramez.ramez.SpichalViews.STextViewBold
+                <com.ramez.shopp.SpichalViews.STextViewBold
                     android:id="@+id/usernameTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -58,7 +59,7 @@
                     android:text="Wafaa Jame"
                     android:textSize="@dimen/_12ssp" />
 
-                <com.ramez.ramez.SpichalViews.STextView
+                <com.ramez.shopp.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/usernameTV"
@@ -67,7 +68,7 @@
                     android:text="wafaa@gmail.com"
                     android:textSize="@dimen/_10ssp" />
 
-                <com.ramez.ramez.SpichalViews.STextView
+                <com.ramez.shopp.SpichalViews.STextView
                     android:id="@+id/editBut"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -97,7 +98,7 @@
                     android:src="@drawable/favorite_menu_icon"
                     android:textSize="@dimen/_15ssp" />
 
-                <com.ramez.ramez.SpichalViews.STextView
+                <com.ramez.shopp.SpichalViews.STextView
                     android:id="@+id/item_title_user"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -112,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <com.ramez.ramez.SpichalViews.STextViewIcon
+                <com.ramez.shopp.SpichalViews.STextViewIcon
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleX="@integer/scaleX"
@@ -147,7 +148,7 @@
                     android:src="@drawable/my_order_menu"
                     android:textSize="@dimen/_15ssp" />
 
-                <com.ramez.ramez.SpichalViews.STextView
+                <com.ramez.shopp.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="start|center_vertical"
@@ -162,7 +163,7 @@
 
                 </Space>
 
-                <com.ramez.ramez.SpichalViews.STextViewIcon
+                <com.ramez.shopp.SpichalViews.STextViewIcon
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleX="@integer/scaleX"
@@ -196,7 +197,7 @@
                     android:src="@drawable/my_address_menu"
                     android:textSize="@dimen/_15ssp" />
 
-                <com.ramez.ramez.SpichalViews.STextView
+                <com.ramez.shopp.SpichalViews.STextView
                     android:id="@+id/item_title_password"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -212,7 +213,7 @@
 
                 </Space>
 
-                <com.ramez.ramez.SpichalViews.STextViewIcon
+                <com.ramez.shopp.SpichalViews.STextViewIcon
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleX="@integer/scaleX"
@@ -249,7 +250,7 @@
                     android:text="@string/fa_file_contract"
                     android:textSize="@dimen/_15ssp" />
 
-                <com.ramez.ramez.SpichalViews.STextView
+                <com.ramez.shopp.SpichalViews.STextView
                     android:id="@+id/item_title3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -265,7 +266,7 @@
 
                 </Space>
 
-                <com.ramez.ramez.SpichalViews.STextViewIcon
+                <com.ramez.shopp.SpichalViews.STextViewIcon
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleX="@integer/scaleX"
@@ -299,7 +300,7 @@
                     android:src="@drawable/support_icon"
                     android:textSize="@dimen/_15ssp" />
 
-                <com.ramez.ramez.SpichalViews.STextView
+                <com.ramez.shopp.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/customer_service"
@@ -310,7 +311,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <com.ramez.ramez.SpichalViews.STextViewIcon
+                <com.ramez.shopp.SpichalViews.STextViewIcon
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
@@ -345,7 +346,7 @@
                     android:textSize="@dimen/_15ssp"
                     app:tint="@color/green" />
 
-                <com.ramez.ramez.SpichalViews.STextView
+                <com.ramez.shopp.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/lang_setting"
@@ -356,7 +357,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <com.ramez.ramez.SpichalViews.STextViewIcon
+                <com.ramez.shopp.SpichalViews.STextViewIcon
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleX="@integer/scaleX"
@@ -389,7 +390,7 @@
                     android:src="@drawable/change_city"
                     android:textSize="@dimen/_15ssp" />
 
-                <com.ramez.ramez.SpichalViews.STextView
+                <com.ramez.shopp.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/change_city_branch"
@@ -400,7 +401,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <com.ramez.ramez.SpichalViews.STextViewIcon
+                <com.ramez.shopp.SpichalViews.STextViewIcon
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleX="@integer/scaleX"
@@ -433,7 +434,7 @@
                     android:src="@drawable/terms_icon"
                     android:textSize="@dimen/_15ssp" />
 
-                <com.ramez.ramez.SpichalViews.STextView
+                <com.ramez.shopp.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/terms2"
@@ -444,7 +445,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <com.ramez.ramez.SpichalViews.STextViewIcon
+                <com.ramez.shopp.SpichalViews.STextViewIcon
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleX="@integer/scaleX"
@@ -477,7 +478,7 @@
                     android:src="@drawable/condition_icon"
                     android:textSize="@dimen/_15ssp" />
 
-                <com.ramez.ramez.SpichalViews.STextView
+                <com.ramez.shopp.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/conditions"
@@ -488,7 +489,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <com.ramez.ramez.SpichalViews.STextViewIcon
+                <com.ramez.shopp.SpichalViews.STextViewIcon
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleX="@integer/scaleX"
@@ -521,7 +522,7 @@
                     android:src="@drawable/about_icon"
                     android:textSize="@dimen/_15ssp" />
 
-                <com.ramez.ramez.SpichalViews.STextView
+                <com.ramez.shopp.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/text_title_about_us"
@@ -532,7 +533,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <com.ramez.ramez.SpichalViews.STextViewIcon
+                <com.ramez.shopp.SpichalViews.STextViewIcon
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleX="@integer/scaleX"
@@ -565,7 +566,7 @@
                     android:src="@drawable/share_icon"
                     android:textSize="@dimen/_15ssp" />
 
-                <com.ramez.ramez.SpichalViews.STextView
+                <com.ramez.shopp.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/share_with"
@@ -576,7 +577,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <com.ramez.ramez.SpichalViews.STextViewIcon
+                <com.ramez.shopp.SpichalViews.STextViewIcon
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleX="@integer/scaleX"
@@ -609,7 +610,7 @@
                     android:src="@drawable/rate_icon"
                     android:textSize="@dimen/_15ssp" />
 
-                <com.ramez.ramez.SpichalViews.STextView
+                <com.ramez.shopp.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/rate_app"
@@ -620,7 +621,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <com.ramez.ramez.SpichalViews.STextViewIcon
+                <com.ramez.shopp.SpichalViews.STextViewIcon
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleX="@integer/scaleX"
@@ -653,7 +654,7 @@
                     android:src="@drawable/exit_icon"
                     android:textSize="@dimen/_15ssp" />
 
-                <com.ramez.ramez.SpichalViews.STextView
+                <com.ramez.shopp.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/logout"

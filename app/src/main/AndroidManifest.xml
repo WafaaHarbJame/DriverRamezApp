@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ramez.ramez">
-    <!-- android:icon="@mipmap/ic_launcher" -->
-    <!-- android:roundIcon="@mipmap/ic_launcher_round" -->
+    package="com.ramez.shopp">
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -15,7 +13,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
-        android:name=".RootApplication"
+        android:name="com.ramez.shopp.RootApplication"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@drawable/ic_lunch_512"
@@ -23,39 +21,74 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/ProjectTheme">
-        <activity android:name=".Activities.OrderDetailsActivity"></activity>
-        <activity android:name=".Activities.MyOrderActivity" />
-        <activity android:name=".Activities.FavoriteActivity" />
-        <activity android:name=".Activities.RateProductActivity" />
-        <activity android:name=".Activities.RatingActivity" />
         <activity
-            android:name=".Activities.AboutActivity"
+            android:name="com.ramez.shopp.Activities.MapActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activities.ConditionActivity" />
-        <activity android:name=".Activities.TermsActivity" />
-        <activity android:name=".Activities.ProductDetailsActivity" />
         <activity
-            android:name=".Activities.ResetPasswordActivity"
+            android:name="com.ramez.shopp.Activities.MapsActivity"
+            android:screenOrientation="portrait" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/mapKey" />
+
+        <activity
+            android:name="com.ramez.shopp.Activities.AddNewAddressActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ramez.shopp.Activities.AddressActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ramez.shopp.Activities.EditProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ramez.shopp.Activities.OrderDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ramez.shopp.Activities.MyOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ramez.shopp.Activities.FavoriteActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ramez.shopp.Activities.RateProductActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ramez.shopp.Activities.RatingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ramez.shopp.Activities.AboutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ramez.shopp.Activities.ConditionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ramez.shopp.Activities.TermsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ramez.shopp.Activities.ProductDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ramez.shopp.Activities.ResetPasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".Activities.RegisterLoginActivity"
+            android:name="com.ramez.shopp.Activities.RegisterLoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".Activities.ChooseNearCity"
+            android:name="com.ramez.shopp.Activities.ChooseNearCity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".Activities.ChooseCityActivity"
+            android:name="com.ramez.shopp.Activities.ChooseCityActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".Activities.ChangeLanguageActivity"
+            android:name="com.ramez.shopp.Activities.ChangeLanguageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".Activities.WelcomeActivity"
+            android:name="com.ramez.shopp.Activities.WelcomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/welcomeStyle">
             <intent-filter>
@@ -65,29 +98,30 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.SplashScreenActivity"
+            android:name="com.ramez.shopp.Activities.SplashScreenActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".Activities.ConfirmPhoneActivity"
+            android:name="com.ramez.shopp.Activities.ConfirmPhoneActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.ChangePassActivity"
+            android:name="com.ramez.shopp.Activities.ChangePassActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".Activities.ConfirmActivity"
+            android:name="com.ramez.shopp.Activities.ConfirmActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.ramez.shopp.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

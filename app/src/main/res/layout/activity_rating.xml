@@ -25,7 +25,7 @@
          >
 
 
-            <com.ramez.ramez.SpichalViews.STextView
+            <com.ramez.shopp.SpichalViews.STextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
@@ -53,7 +53,7 @@
                 android:background="@color/white"
                 app:cardUseCompatPadding="true"
                 android:layout_height="wrap_content">
-                <com.ramez.ramez.SpichalViews.SEditText
+                <com.ramez.shopp.SpichalViews.SEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start"
@@ -63,7 +63,7 @@
                     />
             </androidx.cardview.widget.CardView>
 
-            <com.ramez.ramez.SpichalViews.STextViewBold
+            <com.ramez.shopp.SpichalViews.STextViewBold
                 android:id="@+id/rateBut"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
