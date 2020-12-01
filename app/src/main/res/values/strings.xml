@@ -2,72 +2,29 @@
 
     <string name="mapKey" templateMergeStrategy="preserve" translatable="false">AIzaSyA5uUx-4-7OvkBDOCVJyFu23Wp4TgYUTzA</string>
 
-
-    <!--App Message-->
     <string name="app_name">Ramez</string>
     <string name="message_yes">Yes</string>
     <string name="message_no">No</string>
-
-    <!--Common-->
     <string name="text_save">Save</string>
-
-    <!--Login-->
     <string name="text_login_password">Password</string>
     <string name="text_login_forgot_password">Forgot Password?</string>
     <string name="text_login_login">Login</string>
     <string name="text_sign_in_with">OR Sign in with</string>
     <string name="text_login_dont_have_an_account">Don\'t have an account ?</string>
-
-
-    <!--OTP-->
-
-    <!--Country-->
     <string name="text_country_bahrain" translatable="false">Bahrain</string>
-
-    <!--Home Page-->
     <string name="text_profile_phone_number">Phone number </string>
-
-    <!--Page Title-->
     <string name="text_title_edit_profile">Edit Profile</string>
     <string name="text_title_about_us">About Us</string>
     <string name="text_title_select_language">Please Select Language</string>
-
-    <!--Shopping List-->
-
-    <!-- Registration-->
-
     <string name="text_registration_email_id">Email Id</string>
-
     <string name="text_registration_change_password">Change password</string>
     <string name="text_registration_country">Country</string>
-
-    <!--  Theme-->
-
-    <!-- Menu Items-->
     <string name="string_menu_home">Home</string>
-
-    <!--Coupons-->
-
     <string name="text_langiage_english">English</string>
     <string name="text_language_arabic">Arabic</string>
-
     <string name="text_edit_profile_change_password">Change Password</string>
-
-    <!--Camera & Gallery-->
-
-
-    <!--Cropper-->
-
-    <!--BarChart-->
-
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
-
-    <!--Settings Fragment-->
-
-
-    <!-- Preview Activity -->
-
     <string name="cancel_label">Cancel</string>
     <string name="skip">skip</string>
     <string name="next">next</string>

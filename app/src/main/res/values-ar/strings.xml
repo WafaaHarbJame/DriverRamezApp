@@ -1,101 +1,28 @@
 <?xml version="1.0"?>
 
 <resources>
-
-    <!--App Message-->
-
-
     <string name="app_name">رامز</string>
-
     <string name="message_yes">نعم </string>
-
     <string name="message_no">لا</string>
-
-    <!--Common-->
-
-
     <string name="text_save">حفظ</string>
-
-    <!--Login-->
-
-
     <string name="text_login_password"> كلمه المرور</string>
-
     <string name="text_login_forgot_password"> نسيت كلمة المرور؟</string>
-
     <string name="text_login_login">تسجيل الدخول</string>
-
     <string name="text_sign_in_with">أو تسجيل الدخول باستخدام</string>
-
     <string name="text_login_dont_have_an_account">هل لديك حساب؟ </string>
-
-    <!--OTP-->
-
-
-    <!--Country-->
-
-
     <string name="text_country_bahrain">"البحرين"</string>
-
-    <!--Home Page-->
-
-
     <string name="text_profile_phone_number">رقم الجوال </string>
-
-    <!--Page Title-->
-
-
     <string name="text_title_edit_profile">"تعديل الملف الشخصي"</string>
-
     <string name="text_title_about_us">من نحن </string>
-
     <string name="text_title_select_language"> الرجاء اختيار اللغة</string>
-
-
-    -
-
-    <!--Shopping List-->
-
-
-    <!-- Registration-->
-
-
     <string name="text_registration_email_id">الايميل</string>
-
     <string name="text_registration_change_password">تغيير كلمة السر</string>
-
     <string name="text_registration_country"> البلد</string>
-
-    <!-- Theme-->
-
-
-    <!-- Menu Items-->
-
-
     <string name="string_menu_home"> الرئيسية</string>
-
-    <!--Coupons-->
-
-
     <string name="text_langiage_english">اللغة الانجليزية </string>
-
     <string name="text_language_arabic">اللغة العربية </string>
-
     <string name="text_edit_profile_change_password">تغيير كلمة السر</string>
-
-    <!--Camera & Gallery-->
-
-
-    <!--Cropper-->
-
-
-    <!--BarChart-->
-
-
     <string name="cancel_label">إلغاء</string>
-
-    <!--Settings Fragment-->
-
     <string name="skip">تخطي </string>
     <string name="next">التالي</string>
     <string name="dummy2" translatable="false">جولة في التطبيق  </string>
