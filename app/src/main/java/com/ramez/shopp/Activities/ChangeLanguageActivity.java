@@ -18,6 +18,7 @@ public class ChangeLanguageActivity extends ActivityBase {
         binding = ActivityChangeLanguageBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
         binding.chooseLangTv.setOnClickListener(view1 -> {
             binding.langContainer.setVisibility(View.VISIBLE);
             binding.chooseLangTv.setVisibility(View.GONE);

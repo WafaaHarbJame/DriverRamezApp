@@ -2,6 +2,7 @@ package com.ramez.shopp.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.provider.SyncStateContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ramez.shopp.Activities.InvoiceInfoActivity;
 import com.ramez.shopp.Activities.OrderDetailsActivity;
 import com.ramez.shopp.Activities.RatingActivity;
 import com.ramez.shopp.Classes.Constants;
@@ -151,6 +153,13 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 context.startActivity(intent);
 
 
+            });
+
+            holder.binding.orderDetailsBut.setOnClickListener(view -> {
+                Intent intent = new Intent(context, InvoiceInfoActivity.class);
+                intent.putExtra(Constants.inv_id, ordersDM.getInvID() + "");
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
             });
 
 

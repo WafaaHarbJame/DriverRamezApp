@@ -17,8 +17,7 @@ public class UtilityApp {
 
     public static String getUnique() {
 
-        String android_id = Settings.Secure.getString(RootApplication.getInstance().getContentResolver(),
-                Settings.Secure.ANDROID_ID);
+        String android_id = Settings.Secure.getString(RootApplication.getInstance().getContentResolver(), Settings.Secure.ANDROID_ID);
 
         return android_id;
     }
@@ -126,12 +125,9 @@ public class UtilityApp {
     }
 
 
-
-
     public static void setAppLanguage() {
         String lang = getLanguage();
-        if (lang == null)
-            lang = Constants.English;
+        if (lang == null) lang = Constants.English;
         LocaleUtils.setLocale(new Locale(lang));
         LocaleUtils.updateConfig(RootApplication.getInstance(), RootApplication.getInstance().getResources().getConfiguration());
 
@@ -146,6 +142,15 @@ public class UtilityApp {
         String userJsonData = RootApplication.getInstance().getSharedPManger().getDataString(Constants.KEY_MEMBER);
         MemberModel user = new Gson().fromJson(userJsonData, MemberModel.class);
         return user;
+    }
+
+
+
+    public static Boolean isEnglish() {
+        Boolean isEnglish = false;
+        if (UtilityApp.getLanguage().equals(Constants.English))  isEnglish = true;
+        return isEnglish;
+
     }
 
 

@@ -193,5 +193,6 @@ public class Constants {
     public static final String REGISTER = "REGISTER";
     public static final String inv_id = "inv_id";
 
-
+    public static String latitude = "latitude";
+    public static String longitude = "longitude";
 }

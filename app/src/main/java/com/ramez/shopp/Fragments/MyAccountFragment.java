@@ -11,8 +11,11 @@ import android.view.ViewGroup;
 
 import com.ramez.shopp.Activities.AboutActivity;
 import com.ramez.shopp.Activities.AddressActivity;
+import com.ramez.shopp.Activities.ChangeCityBranchActivity;
+import com.ramez.shopp.Activities.ChangeLangCurrencyActivity;
 import com.ramez.shopp.Activities.ChangePassActivity;
 import com.ramez.shopp.Activities.ConditionActivity;
+import com.ramez.shopp.Activities.ContactSupportActivity;
 import com.ramez.shopp.Activities.EditProfileActivity;
 import com.ramez.shopp.Activities.FavoriteActivity;
 import com.ramez.shopp.Activities.MyOrderActivity;
@@ -79,8 +82,33 @@ public class MyAccountFragment extends FragmentBase {
             startAddressActivity();
 
         });
+        binding.changeCityBtn.setOnClickListener(view1 -> {
+            startChangeBranch();
+        });
 
+        binding.changeLangBtn.setOnClickListener(view1 -> {
+            startChangeLang();
+        });
+
+        binding.SupportBtn.setOnClickListener(view1 -> {
+            startSupport();
+        });
         return view;
+    }
+
+    private void startSupport() {
+        Intent intent=new Intent(getActivityy(), ContactSupportActivity.class);
+        startActivity(intent);
+    }
+
+    private void startChangeLang() {
+        Intent intent=new Intent(getActivityy(), ChangeLangCurrencyActivity.class);
+        startActivity(intent);
+    }
+
+    private void startChangeBranch() {
+        Intent intent=new Intent(getActivityy(), ChangeCityBranchActivity.class);
+        startActivity(intent);
     }
 
     private void startAddressActivity() {
