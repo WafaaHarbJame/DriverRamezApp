@@ -59,8 +59,6 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:scaleX="@integer/scaleX"
-                        android:scaleY="@integer/scaleX"
                         android:src="@drawable/cat_icon"
                         android:textSize="@dimen/_18ssp" />
 

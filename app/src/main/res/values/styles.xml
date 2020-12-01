@@ -20,23 +20,6 @@
         <item name="colorControlActivated">@color/colorPrimary</item>
     </style>
 
-    <style name="AppThemeSeven" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorAsh</item>
-        <item name="colorPrimaryDark">@color/colorAshDark</item>
-        <item name="colorAccent">@color/colorAsh</item>
-    </style>
-
-    <style name="PreviewButtonsStyle">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:gravity">center_horizontal</item>
-        <item name="android:background">?attr/selectableItemBackground</item>
-        <item name="android:textSize">10dp</item>
-        <item name="android:clickable">true</item>
-
-    </style>
-
     <style name="welcomeStyle" parent="ProjectTheme">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@color/gray</item>
@@ -55,96 +38,10 @@
         <item name="colorControlNormal">@color/gray6</item>
     </style>
 
-    <style name="RadioButtonStyle" parent="Base.Theme.AppCompat">
-        <item name="colorControlNormal">@color/gray6</item>
-        <item name="colorControlActivated">@color/colorPrimaryDark</item>
-    </style>
-
-    <style name="ProgressWhiteStyle">
-        <item name="colorControlNormal">@color/white</item>
-        <item name="colorControlActivated">@color/white</item>
-    </style>
-
     <!--    <style name="SwitchButtonStyle" parent="Base.Theme.AppCompat">-->
     <!--        <item name="colorControlNormal">@color/gray4</item>-->
     <!--        <item name="colorControlActivated">@color/colorPrimaryDark</item>-->
     <!--    </style>-->
 
-    <style name="SwitchButtonStyle" parent="Theme.AppCompat.Light">
-    <!-- active thumb & track color (30% transparency) -->
-    <item name="colorControlActivated">@color/colorPrimaryDark</item>
-    <item name="colorControlNormal">@color/gray3</item>
-
-    <!-- inactive thumb color -->
-    <item name="colorSwitchThumbNormal">@color/colorAccent</item>
-
-    <!-- inactive track color (30% transparency) -->
-    <item name="android:colorForeground">@color/gray4</item>
-
-</style>
-
-    <style name="spinner_trans_style">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingTop">@dimen/_10sdp</item>
-        <item name="android:paddingBottom">@dimen/_10sdp</item>
-        <item name="android:minHeight">@dimen/_40sdp</item>
-        <!--<item name="android:background">@drawable/trans_spinner</item>-->
-        <item name="android:background">@color/transparent</item>
-        <item name="android:popupBackground">#FFFFFF</item>
-    </style>
-
-    <style name="editTextStyle">
-        <item name="android:textColor">@color/colorAccent</item>
-        <item name="android:paddingStart">@dimen/_10sdp</item>
-        <item name="android:paddingEnd">@dimen/_10sdp</item>
-        <item name="android:paddingTop">@dimen/_15sdp</item>
-        <item name="android:paddingBottom">@dimen/_15sdp</item>
-        <item name="android:textSize">@dimen/_12ssp</item>
-
-    </style>
-
-    <style name="TextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-        <!--        <item name="android:textColorHint">@color/gray6</item>-->
-        <item name="boxBackgroundMode">outline</item>
-        <item name="hintTextColor">@color/colorPrimaryDark</item>
-        <!--        <item name="android:background">@drawable/round_corner_gray_fill</item>-->
-        <!--        <item name="boxCollapsedPaddingTop">@dimen/_5sdp</item>-->
-        <item name="boxCornerRadiusBottomEnd">@dimen/round_corner_thin</item>
-        <item name="boxCornerRadiusBottomStart">@dimen/round_corner_thin</item>
-        <item name="boxCornerRadiusTopEnd">@dimen/round_corner_thin</item>
-        <item name="boxCornerRadiusTopStart">@dimen/round_corner_thin</item>
-        <item name="boxStrokeColor">@color/colorPrimaryDark</item>
-        <item name="boxStrokeWidth">1dp</item>
-        <item name="hintTextAppearance">@style/hintTextColor</item>
-
-    </style>
-
-    <style name="hintTextColor" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">@color/colorAccent</item>
-    </style>
-
-
-    <style name="spinnerItemStyle" parent="android:Widget.TextView.SpinnerItem">
-        <item name="android:gravity">start</item>
-        <item name="android:textColor">@color/gray4</item>
-        <!--<item name="android:paddingTop">@dimen/_10sdp</item>-->
-        <!--<item name="android:paddingEnd">@dimen/_10sdp</item>-->
-
-    </style>
-
-    <style name="spinnerDropDownItemStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
-        <item name="android:layout_marginStart">10dp</item>
-        <item name="android:paddingStart">15dp</item>
-        <item name="android:paddingEnd">15dp</item>
-        <item name="android:paddingTop">5dp</item>
-        <item name="android:gravity">start|center_vertical</item>
-    </style>
-
-    <style name="DialogAnimation">
-        <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
-        <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
-    </style>
 
 </resources>

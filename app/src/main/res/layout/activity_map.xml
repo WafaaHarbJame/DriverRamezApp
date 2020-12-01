@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
+
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
 
         <fragment
             android:id="@+id/map"
@@ -17,25 +20,40 @@
             android:layout_height="match_parent" />
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
             android:layout_gravity="center"
-            android:src="@drawable/location_icons" />
+            android:src="@drawable/location_icons"
+            app:tint="@color/colorPrimaryDark" />
 
     </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="@drawable/round_corner_grey"
-        >
-
-        <fragment
-            android:id="@+id/place_autocomplete_fragment"
-            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <include
+            android:id="@+id/tool_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="@dimen/_80sdp"
+            layout="@layout/tool_bar_with_back" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:background="@drawable/round_corner_dark">
+
+            <fragment
+                android:id="@+id/place_autocomplete_fragment"
+                android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
@@ -44,6 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_margin="8dp"
+        android:background="@drawable/round_corner_white_fil1"
         android:orientation="vertical"
         android:padding="4dp">
 
@@ -62,13 +81,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:gravity="center"
-            android:background="@drawable/round_corner_next"
-            android:padding="@dimen/_12sdp"
-            android:layout_marginBottom="@dimen/_8sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:layout_marginStart="@dimen/_50sdp"
-            android:layout_marginEnd="@dimen/_50sdp"
+            android:background="@drawable/round_corner_primary_small"
             android:text="@string/confirm"
             android:textColor="@color/white" />
     </LinearLayout>

@@ -1,405 +1,79 @@
 <resources>
 
-    <string name="facebook_app_id" translatable="false">1545102798941136</string>
-    <string name="fb_login_protocol_scheme" translatable="false">fb1545102798941136</string>
     <string name="mapKey" templateMergeStrategy="preserve" translatable="false">AIzaSyA5uUx-4-7OvkBDOCVJyFu23Wp4TgYUTzA</string>
 
 
     <!--App Message-->
     <string name="app_name">Ramez</string>
-    <string name="message_no_internet">Check your internet connection</string>
-    <string name="message_api_retry_error">Please retry!</string>
-    <string name="message_api_default_error">Something wrong happened!</string>
-    <string name="message_some_error">Some Error Occurred!</string>
-    <string name="message_connection_error">Internet connection lost!</string>
-    <string name="coming_soon">Coming Soon...</string>
-    <string name="message_please_click_again_to_exit">Please click again to exit</string>
-    <string name="text_dummy">Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s</string>
-    <string name="message_please_enter_name">Please Enter Name</string>
-    <string name="length_exceeds_limit">Length Exceeds the Limit</string>
-    <string name="message_please_enter_item_name">Please Enter Item Name</string>
-    <string name="message_please_enter_item_quantity">Please Enter Item Quantity</string>
-    <string name="message_please_enter_item_unit">Please Enter Item Unit</string>
-    <string name="message_please_enter_otp">Please Enter OTP</string>
-    <string name="message_please_enter_valid_password">Enter Valid Password</string>
-    <string name="message_please_enter_valid_password_length">Your password must be a single word between 6 and 20 characters in length</string>
-    <string name="message_please_enter_valid_confirm_password">Enter Valid Confirm Password</string>
-    <string name="message_please_password_not_match">Password does not match with the confirm password</string>
-    <string name="message_please_enter_valid_phone_number">Enter Valid Phone Number</string>
-    <string name="message_please_enter_valid_email">Enter Valid Email</string>
-    <string name="message_are_you_sure">Are You Sure?</string>
-    <string name="message_are_you_sure_delete_itemList">Item exist on the list! Are you sure?</string>
     <string name="message_yes">Yes</string>
     <string name="message_no">No</string>
-    <string name="message_empty_old_password">Empty Old Password</string>
-    <string name="message_empty_new_password">Empty New Password</string>
-    <string name="message_empty_confirm_password">Empty Confirm Password</string>
-    <string name="message_password_mismatch">Password Mismatch</string>
-    <string name="message_location_service_not_active">Location Services Not Active</string>
-    <string name="message_enable_location_service">Please Enable Location Services and GPS</string>
-    <string name="message_data_not_available">Data Not Available</string>
-    <string name="message_perms_missing">Sorry,We cannot proceed without permission!</string>
-
-    <string name="message_enter_phone_or_email">Please Enter Phone Number Or Email</string>
-
-    <string name="please_wait">Please Wait...</string>
 
     <!--Common-->
     <string name="text_save">Save</string>
-    <string name="text_ok">Ok</string>
-    <string name="text_update">Update</string>
 
     <!--Login-->
-    <string name="text_login_phone_number">Phone Number</string>
-    <string name="text_login_enter_your_phone_number">Enter your phone number</string>
     <string name="text_login_password">Password</string>
-    <string name="text_login_enter_your_password">Enter your password</string>
     <string name="text_login_forgot_password">Forgot Password?</string>
     <string name="text_login_login">Login</string>
-    <string name="text_login_or_login_with">OR Login with</string>
     <string name="text_sign_in_with">OR Sign in with</string>
     <string name="text_login_dont_have_an_account">Don\'t have an account ?</string>
-    <string name="text_login_guest_user">Guest User</string>
 
 
     <!--OTP-->
-    <string name="text_enter_otp">Enter Otp</string>
-    <string name="text_enter_otp_code">Enter Otp Code</string>
-    <string name="text_dont_receive_the_otp">Don\'t receive the OTP ?</string>
-    <string name="text_resend_otp">RESEND OTP</string>
-    <string name="text_verify">Verify</string>
-    <string name="text_otp_has_been_sent_to_you_on_your_mobile_phone">OTP has been sent to you on your \n mobile phone</string>
-    <string name="text_otp_has_been_sent_to_you_on_your_mobile_phone_or_email">OTP has been sent to you on your \n mobile phone or email</string>
 
     <!--Country-->
-    <string name="text_country_united_arab_emirates_uae">United Arab Emirates (UAE)</string>
     <string name="text_country_bahrain" translatable="false">Bahrain</string>
-    <string name="text_country_kuwait">Kuwait</string>
-    <string name="text_country_saudi_arabia">Saudi Arabia</string>
-    <string name="text_country_oman">Oman</string>
-    <string name="text_country_qatar">Qatar</string>
-    <string name="text_country_thailand">Thailand</string>
-
-    <string name="text_country_select_your_country">Select Your Country</string>
-    <string name="text_country_code_qat" translatable="false">QAT</string>
-    <string name="text_country_code_omn" translatable="false">OMN</string>
-    <string name="text_country_code_sau" translatable="false">SAU</string>
-    <string name="text_country_code_kwt" translatable="false">KWT</string>
-    <string name="text_country_code_bhr" translatable="false">BHR</string>
-    <string name="text_country_code_uae" translatable="false">UAE</string>
-    <string name="text_country_code_tha" translatable="false">THA</string>
-
-    <string name="text_country_phone_code_qat" translatable="false">+974</string>
-    <string name="text_country_phone_code_omn" translatable="false">+968</string>
-    <string name="text_country_phone_code_sau" translatable="false">+966</string>
-    <string name="text_country_phone_code_kwt" translatable="false">+965</string>
-    <string name="text_country_phone_code_bhr" translatable="false">+973</string>
-    <string name="text_country_phone_code_uae" translatable="false">+971</string>
-    <string name="text_country_phone_code_tha" translatable="false">+66</string>
 
     <!--Home Page-->
-    <string name="text_home_card_code">Card Code :</string>
-    <string name="text_home_gained_points">Reward Points :</string>
-    <string name="text_profile_card_code">Card code :</string>
-    <string name="text_profile_gained_points">Gained points :</string>
-    <string name="text_profile_gender">Gender :</string>
-    <string name="text_profile_date_of_birth">Date of birth :</string>
     <string name="text_profile_phone_number">Phone number </string>
-    <string name="text_profile_address">Address</string>
 
     <!--Page Title-->
-    <string name="text_title_privilege_coupons">Privilege Coupons</string>
-    <string name="text_title_my_profile">My Profile</string>
-    <string name="text_title_dashboard">Dashboard</string>
-    <string name="text_title_shopping_list">Shopping List</string>
-    <string name="text_title_registration">Registration</string>
-    <string name="text_title_create_new_list">Create New List</string>
-    <string name="text_title_list_details">List Details</string>
-    <string name="text_title_new_user_registration">New User Registration</string>
-    <string name="text_title_card_holder_registration">Card Holder Registration</string>
     <string name="text_title_edit_profile">Edit Profile</string>
-    <string name="text_title_set_location">Set Location</string>
-    <string name="text_title_search_store">Search Store</string>
-    <string name="text_title_bills">Bills</string>
-    <string name="text_title_coupons">Coupons</string>
-    <string name="text_title_my_points">My Points</string>
-    <string name="text_title_notifications">Notifications</string>
-    <string name="text_title_offers">Offers</string>
-    <string name="text_title_member_offers">Member Offers</string>
-    <string name="text_title_general_offers">General Offers</string>
-    <string name="text_title_theme">Theme</string>
     <string name="text_title_about_us">About Us</string>
-    <string name="text_title_price_checker">Price Checker</string>
-    <string name="text_title_otp_verification">OTP Verification</string>
-    <string name="text_title_change_language">Change Your Language</string>
     <string name="text_title_select_language">Please Select Language</string>
 
-    <string name="text_title_set_new_password">Set New Password</string>
-    <string name="text_title_forgot_password">Forgot Password</string>
-    <array name="array_coupon">
-        <item>My Coupons</item>
-        <item>Privileges</item>
-    </array>
-
     <!--Shopping List-->
-    <string name="text_shopping_create_new_list">Create New List</string>
-    <string name="text_shopping_create_from_previous_bill">Create From Previous Bill</string>
-    <string name="text_shopping_add_new_shopping_list">Add New Shopping List</string>
-    <string name="text_shopping_enter_list_name">Enter List Name</string>
-    <string name="text_shopping_edit_name">Edit Shopping List name</string>
-    <string name="text_shopping_add_name">Add Shopping List name</string>
-    <string name="text_shopping_list_name">Shopping List Name</string>
-    <string name="text_shopping_edit_shopping_item_list">Edit Item</string>
-    <string name="text_shopping_add_shopping_item_list">Add Item to Shopping List</string>
-    <string name="text_shopping_list_item_name">List Item Name</string>
-    <string name="text_shopping_enter_item_name">Enter Item name</string>
-    <string name="text_shopping_item_quantity">Item Quantity</string>
-    <string name="text_shopping_enter_item_quantity">Enter Item Quantity</string>
-    <string name="text_shopping_enter_unit">Enter Unit</string>
 
     <!-- Registration-->
-    <string name="text_registration_are_you_a_existing_card_holder">Are you an existing card Holder?</string>
-    <string name="text_registration_enter_your_name">Enter your name</string>
-    <string name="text_registration_name">Name</string>
 
-    <string name="text_registration_gender">Gender</string>
-    <string name="text_registration_male">Male</string>
-    <string name="text_registration_female">Female</string>
-    <string name="text_registration_card_nuber">Card Number</string>
-    <string name="text_registration_cpr_number">CPR Number</string>
-    <string name="text_registration_enter_your_phone_number">Enter your phone number</string>
-    <string name="text_registration_enter_your_dob">Date of birth</string>
-    <string name="text_registration_phone">Phone number</string>
-    <string name="text_registration_dob">Date of birth</string>
-    <string name="text_registration_enter_your_email_id">Enter your email id</string>
     <string name="text_registration_email_id">Email Id</string>
-    <string name="text_registration_enter_a_password">Enter a password</string>
-    <string name="text_registration_password">Password</string>
-    <string name="text_registration_confirm_password">Confirm password</string>
-    <string name="text_registration_send_otp">Send OTP</string>
-    <string name="text_registration_submit">Submit</string>
-    <string name="text_registration_please_enter_card_number">Please Enter Card Number</string>
-    <string name="text_registration_card_number">Card Number</string>
-    <string name="text_registration_or">OR</string>
-    <string name="text_registration_please_enter_your_cpr_number">Please Enter CPR Number or Personal Number</string>
-    <string name="text_registration_please_your_cpr_number">CPR Number or Personal Number</string>
-    <string name="text_registration_change_your_country">Change your country</string>
-    <string name="text_registration_select_your_country">Select your country</string>
-    <string name="text_registration_address_line_one">House name/number</string>
-    <string name="text_registration_enter_address_line_one">Enter house name/number</string>
-    <string name="text_registration_address_line_two">Street/Road number</string>
-    <string name="text_registration_enter_address_line_two">Enter street/road number</string>
-    <string name="text_registration_enter_city">Enter city/municipality</string>
-    <string name="text_registration_city">City/Municipality</string>
-    <string name="text_registration_enter_state">Enter state</string>
-    <string name="text_registration_state">State</string>
-    <string name="text_registration_enter_zip">Enter postal code</string>
-    <string name="text_registration_zip">Postal code</string>
-
-    <string name="text_registration_edit_phone_number">Edit Phone Number</string>
-    <string name="text_registration_otp_verification">OTP Verification</string>
-    <string name="text_registration_enter_old_number">Enter Your Old Number</string>
-    <string name="text_registration_old_number">Old Number</string>
-    <string name="text_registration_enter_new_number">Enter your new number</string>
-    <string name="text_registration_new_number">New number</string>
-    <string name="text_registration_enter_confirm_number">Confirm Your Number</string>
-    <string name="text_registration_confirm_number">Confirm Number</string>
 
     <string name="text_registration_change_password">Change password</string>
-    <string name="text_registration_enter_old_password">Enter your old password</string>
-    <string name="text_registration_old_password">Old password</string>
-    <string name="text_registration_enter_new_password">Enter your new password</string>
-    <string name="text_registration_new_password">New password</string>
-    <string name="text_registration_enter_confirm_password">Confirm password</string>
-    <string name="text_registration_enter_address_manually">Enter Address Manually</string>
     <string name="text_registration_country">Country</string>
-    <string name="text_registration_enter_country">Enter country</string>
-    <string name="text_registration_find_your_location">Find your Location</string>
-    <string name="text_registration_search_location">Search your store</string>
-    <string name="text_registration_enter_any_search_key">Enter Search Key</string>
-    <string name="text_registration_no_result_found">No Result Found</string>
-
-    <string name="text_registration_enter_valid_card">Enter Valid Card Number</string>
-    <string name="text_registration_enter_valid_cpr">Enter Valid CPR Number</string>
 
     <!--  Theme-->
-    <string name="text_theme_select_your_app_theme">Select Your App Theme</string>
-    <string name="text_color_red">Red</string>
-    <string name="text_color_yellow">Yellow</string>
-    <string name="text_color_blue">Blue</string>
-    <string name="text_color_green">Green</string>
-    <string name="text_color_purple">Purple</string>
-    <string name="text_color_pink">Turquoise</string>
-    <string name="text_button_generate">Generate</string>
-
-    <string name="dummy_text_address">Lorem Ipsum is simply\ndummy text of the printing and \ntypesetting industry-45656
- </string>
-    <string name="text_male">Male</string>
-    <string name="text_female">Female</string>
 
     <!-- Menu Items-->
     <string name="string_menu_home">Home</string>
-    <string name="string_menu_bills">Bills</string>
-    <string name="string_menu_my_points">My Points</string>
-    <string name="string_menu_coupons">Coupons</string>
-    <string name="string_menu_offers">Offers</string>
-    <string name="string_menu_notifications">Notifications</string>
-    <string name="string_menu_themes">Themes</string>
-    <string name="string_menu_about_us">About Us</string>
-    <string name="string_menu_change_language">Change Language</string>
-    <string name="string_menu_price_checker">Price Checker</string>
-    <string name="string_menu_settings">Settings</string>
-    <string name="string_menu_log_out">Log Out</string>
 
     <!--Coupons-->
-    <string name="text_generate_coupon">Generate Coupon</string>
-    <string name="text_button_generate_coupon">Generate Coupon</string>
-    <string name="text_hint_enter_point">Enter Point</string>
-    <string name="text_enter_coupon_points">Enter Coupon Points</string>
-    <string name="text_total_points">Total Points : </string>
-    <string name="text_coupons_poits_get">points get</string>
-    <string name="text_minimum_points_needed">( Minimum Points Needed %s )</string>
-    <string name="text_coupon_points">Coupon Points:</string>
-    <string name="text_no_coupons_found">No Coupons Found</string>
-    <string name="text_select_coupons_points">Select Coupons Points</string>
 
-    <string name="text_camera">Camera</string>
-    <string name="text_gallery">Gallery</string>
-    <string name="text_choose_image_from">Choose Image From</string>
-    <string name="text_permission_denied">permission denied</string>
-    <string name="text_offers_offers_for_you">Offers for you</string>
-    <string name="text_offers_offers_only_for_you">Offers only for you</string>
-    <string name="text_offers_we_have_selected_some_products_for_you">We have selected some products for you </string>
-    <string name="text_offers_we_have_selected_some_products_only_for_you">We have selected some products only for you </string>
-    <string name="text_offers_no_offers_found">No Offers Found</string>
-    <string name="text_select_your_store">Select your Store</string>
-    <string name="text_all">All</string>
-    <string name="text_no_stores_found">No Stores Found</string>
-    <string name="text_no_shopping_list_found">No Shopping List Found</string>
-    <string name="text_no_shopping_list_item_found">No Items Found</string>
-    <string name="text_no_shopping_list_item_found_add_new">Press + button to add item</string>
-    <string name="text_sign_up_with_us_and_avail_exciting_offers_and_benefits">Sign Up with us and avail exciting \n offers and benefits</string>
-    <string name="text_guest_join_us">Join Us</string>
-    <string name="text_guest_about_us">About Us</string>
-    <string name="text_guest_find_stores">Find Stores</string>
-    <string name="text_guest_language">Language</string>
-    <string name="text_guest_general_offers">General Offers</string>
-    <string name="text_guest_themes">Themes</string>
-    <string name="text_hello">Hello</string>
-    <string name="text_guest">Guest</string>
-    <string name="text_no_points">No earned points</string>
-    <string name="text_my_points_balance_points">Balance Points</string>
-    <string name="text_my_points_used_points">Used Points</string>
-    <string name="text_know_your_product">Know your Product</string>
-
-    <string name="text_bills_add_to_shopping_list">Add to shopping list</string>
-    <string name="text_no_items_selected">No items selected </string>
-    <string name="text_bills_details">Bills Details</string>
-    <string name="text_bills_bill_number">Bill Number</string>
-    <string name="text_bills_point_gained">Point Gained</string>
-    <string name="text_no_bills_found">No Bills Found</string>
-    <string name="text_search_store_nearest_stores">Nearest Stores</string>
-    <string name="text_change_language">Change Language</string>
-    <string name="text_menu_code">Code:</string>
     <string name="text_langiage_english">English</string>
     <string name="text_language_arabic">Arabic</string>
-    <string name="text_confirm">Confirm</string>
 
-    <string name="text_please_connect_to_store_wifi">Please Connect to Store WiFi</string>
-    <string name="text_scan_again">Scan Again</string>
-    <string name="text_bill_number">Bill Number</string>
-    <string name="text_user_name">User name :</string>
-    <string name="text_km">km</string>
-    <string name="text_close">Close</string>
-    <string name="text_edit_profile_set_location">Set Location</string>
-    <string name="text_date">Date :</string>
-    <string name="text_user_since">User since :</string>
-
-    <string name="text_forgot_password">Forgot Password</string>
-    <string name="text_set_password">Set Password</string>
-    <string name="text_quantity">Quantity :</string>
-    <string name="text_points">Points</string>
-    <string name="text_points_earned">Points Earned</string>
-    <string name="text_offers_available_in">Offers available in</string>
-    <string name="text_offers_no_images_found">No Images Found</string>
-    <string name="text_page">Page</string>
-    <string name="text_pages">Pages</string>
-    <string name="text_working_hrs">Working hours:</string>
-    <string name="text_email">Mail Us</string>
-    <string name="text_delete_sucess">Deleted...</string>
-    <string name="text_item_detail">Item Details</string>
-    <string name="text_item_amount">Amount</string>
-    <string name="text_item">Item: </string>
-    <string name="text_item_total_amount">Total Amount: </string>
-    <string name="text_no_empty_notification">No Notification Found</string>
-    <string name="text_invoice_number">Invoice Number : </string>
-    <string name="text_bills_date">Date</string>
-    <string name="text_bills_total_amount">Total Amount</string>
-    <string name="text_bills_points">Points</string>
     <string name="text_edit_profile_change_password">Change Password</string>
-    <string name="text_my_points_graph_details">Graph Details</string>
-    <string name="text_my_points_months">Months</string>
-    <string name="text_my_points">Points</string>
-    <string name="no_countries_found" translatable="false">No Countries Found</string>
 
     <!--Camera & Gallery-->
-    <string name="select_image_from_gallery">Select Image From Gallery</string>
-    <string name="text_crop_image">CROP IMAGE</string>
-    <string name="toast_error_camera_preview">Can\'t initialize camera preview.</string>
-    <string name="toast_error_save_picture">Can\'t save picture on external storage.</string>
-    <string name="content_description_take_picture">Take picture</string>
-    <string name="camera">CAMERA</string>
-    <string name="retake">Retake</string>
-    <string name="done">Done</string>
-    <string name="gallery">GALLERY</string>
 
 
     <!--Cropper-->
-    <string name="crop_image_activity_title" translatable="false"></string>
-    <string name="crop_image_menu_rotate_left">Rotate counter clockwise</string>
-    <string name="crop_image_menu_rotate_right">Rotate</string>
-    <string name="crop_image_menu_crop">Crop</string>
-    <string name="crop_image_menu_flip">Flip</string>
-    <string name="crop_image_menu_flip_horizontally">Flip horizontally</string>
-    <string name="crop_image_menu_flip_vertically">Flip vertically</string>
-    <string name="pick_image_intent_chooser_title">Select source</string>
-    <string name="crop_image_activity_no_permissions">Cancelling, required permissions are not granted</string>
 
     <!--BarChart-->
-    <string name="barchart_x_axis">Points</string>
-    <string name="barchart_y_axis">Monthly earned points</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 
     <!--Settings Fragment-->
-    <string name="settings_push_notification">Push Notification</string>
-
-    <string name="settings_notification_sound">Notification Sound</string>
 
 
     <!-- Preview Activity -->
-    <string name="preview_controls_confirm">Save</string>
-    <string name="preview_controls_retake">Repeat</string>
-    <string name="preview_controls_cancel">Cancel</string>
-    <string name="preview_controls_crop" translatable="false">Crop</string>
-    <string name="preview_controls_original_ratio_label">Original</string>
-
-    <string name="settings_video_quality_title">Video size %s</string>
-    <string name="settings_photo_quality_title">Photo size</string>
 
     <string name="cancel_label">Cancel</string>
-    <string name="ok_label" translatable="false">Ok</string>
-    <string name="title_activity_change_language_option" translatable="false">ChangeLanguageOption</string>
-    <string name="text_point_error">You don\'t have sufficient points to generate the coupon.</string>
     <string name="skip">skip</string>
     <string name="next">next</string>
     <string name="dummy">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500</string>
     <string name="dummy1">Lorem Ipsum is simply dummy text </string>
     <string name="dummy2" translatable="false">A tour of the application </string>
-    <string name="title_dashboard">tii</string>
-    <string name="title_home">title_home</string>
-    <string name="title_notifications">title_notifications</string>
     <string name="by_app">by_app</string>
     <string name="share_with">share_with</string>
     <string name="no_address">no_address</string>
@@ -418,11 +92,9 @@
     <string name="terms2">Privacy policy</string>
     <string name="terms3">and agree to</string>
     <string name="terms4">the terms of  Ramez</string>
-    <string name="rest_password">New Password </string>
     <string name="confirm">Confirm</string>
     <string name="reset_pass">Reset Password</string>
     <string name="forget_pass">Forget Password</string>
-    <string name="enter_code">Please enter the code To change the password</string>
     <string name="enter_code1">Please enter the code</string>
     <string name="enter_phone">Please enter the registered mobile number To retrieve the password</string>
     <string name="confirm_phone">Confirm Phone Number </string>
@@ -441,7 +113,6 @@
     <string name="offer_text">Offers </string>
     <string name="fail_to_get_data">Fail to get data</string>
     <string name="reload">Reload</string>
-    <string name="no_data">No Data</string>
     <string name="suggested_product">Suggested Products</string>
     <string name="product_desc">Product Features</string>
     <string name="desc">Desc \n Desc \n Desc \n Dec</string>
@@ -465,7 +136,6 @@
     <string name="Edit">edit</string>
     <string name="complete_request">Complete Order</string>
     <string name="DeliveryTime1">Delivery Time </string>
-    <string name="order_sent">Order Sent</string>
     <string name="rateRequest">Rate Order</string>
     <string name="request_no">Order Number:</string>
     <string name="ordered">ordered</string>
@@ -487,7 +157,6 @@
     <string name="building">Building Number</string>
     <string name="flat">Flat</string>
     <string name="choose_address_gps">Choose Location Using GPS</string>
-    <string name="textZoomIn">Zoom In</string>
     <string name="loading">Loading</string>
     <string name="phonePermissionExplain">You have just denied phone call permission,
         You can\'t make any call until you accept the permission</string>
@@ -495,6 +164,23 @@
     <string name="no_internet_connection">No Internet Connection</string>
     <string name="open_gallery">Open Gallery</string>
     <string name="take_pic">Take Photo</string>
-    <string name="empty_cart">عربة التسوق الخاصة بك فارغة</string>
-    <string name="do_yo_want"> هل تريد التسوق الان؟!</string>
+    <string name="empty_cart">Your cart is empty</string>
+    <string name="do_yo_want">Do you want to shop now ?!</string>
+    <string name="please_login">Please log in to log in to  </string>
+    <string name="account_data">Your account information</string>
+    <string name="register">Register</string>
+    <string name="choose_branch">Please Choose Branch</string>
+    <string name="choose_city">Please Choose City</string>
+    <string name="choose_currency">Please Choose currency</string>
+    <string name="english_lang" translatable="false">English</string>
+    <string name="dollar" translatable="false">dollar</string>
+    <string name="pound" translatable="false">pound</string>
+    <string name="euro" translatable="false">euro</string>
+    <string name="dollar_ar" translatable="false">دولار </string>
+    <string name="pound_ar" translatable="false">جنيه</string>
+    <string name="euro_ar" translatable="false">يورور</string>
+    <string name="invoice_details">Invoice Details </string>
+    <string name="total">Total</string>
+    <string name="reorder_cart">Reorder Cart</string>
+    <string name="reorder_product">Re Order Product</string>
 </resources>

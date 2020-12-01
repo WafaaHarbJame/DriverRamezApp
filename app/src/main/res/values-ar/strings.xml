@@ -7,680 +7,103 @@
 
     <string name="app_name">رامز</string>
 
-    <string name="message_no_internet">\تحقق من اتصالك بالإنترنت</string>
-
-    <string name="message_api_retry_error">"الرجاء اعادة المحاولة!"</string>
-
-    <string name="message_api_default_error">حدث خطأ!</string>
-
-    <string name="message_some_error">حدث خطأ!</string>
-
-    <string name="message_connection_error">"فقد الاتصال بالإنترنت!"</string>
-
-    <string name="coming_soon">قريبا</string>
-
-    <string name="message_please_click_again_to_exit">"الرجاء النقر مرة أخرى للخروج"</string>
-
-    <string name="text_dummy">"وكان أبجد هوز نص الدمية القياسية في هذه الصناعة من أي وقت مضى منذ 1500s، </string>
-
-    <string name="message_please_enter_name">"الرجاء إدخال الاسم"</string>
-
-    <string name="length_exceeds_limit">طول يتجاوز الحد</string>
-
-    <string name="message_please_enter_item_name">"الرجاء إدخال اسم العنصر"</string>
-
-    <string name="message_please_enter_item_quantity">"الرجاء إدخال كمية البند"</string>
-
-    <string name="message_please_enter_item_unit">"الرجاء إدخال وحدة البند"</string>
-
-    <string name="message_please_enter_otp">"الرجاء إدخال أوتب"</string>
-
-    <string name="message_please_enter_valid_password">"أدخل كلمة مرور صالحة"</string>
-
-    <string name="message_please_enter_valid_confirm_password">أدخل تأكيد كلمة المرور</string>
-
-    <string name="message_please_password_not_match">كلمة المرور لا تتطابق مع كلمة التأكيد</string>
-
-    <string name="message_please_enter_valid_phone_number">"أدخل رقم الهاتف "</string>
-
-    <string name="message_please_enter_valid_email">أدخل بريدا إلكترونيا</string>
-
-    <string name="message_are_you_sure">هل أنت متأكد ؟</string>
-
-    <string name="message_are_you_sure_delete_itemList">المنتج موجود في القائمة! هل أنت متأكد؟</string>
-
     <string name="message_yes">نعم </string>
 
     <string name="message_no">لا</string>
-
-    <string name="message_empty_old_password">"كلمة المرور القديمة فارغة "</string>
-
-    <string name="message_empty_new_password">كلمة مرور الجديدة فارغة</string>
-
-    <string name="message_empty_confirm_password">تأكيد كلمة المرور</string>
-
-    <string name="message_password_mismatch">"عدم تطابق كلمه المرور"</string>
-
-    <string name="message_location_service_not_active">"خدمات الموقع غير نشطة"</string>
-
-    <string name="message_enable_location_service">"الرجاء تمكين خدمات الموقع ونظام تحديد المواقع العالمي (غس)"</string>
-
-    <string name="message_data_not_available">"البيانات غير متوفرة"</string>
-
-    <string name="message_perms_missing">"عذرا، لا يمكننا المتابعة بدون إذن!"</string>
-
-    <string name="please_wait">أرجو الإنتظار...</string>
 
     <!--Common-->
 
 
     <string name="text_save">حفظ</string>
 
-    <string name="text_ok">"حسنا"</string>
-
-    <string name="text_update">تحديث</string>
-
     <!--Login-->
 
 
-    <string name="text_login_phone_number">رقم الجوال </string>
-
-    <string name="text_login_enter_your_phone_number">"أدخل رقم هاتفك"</string>
-
     <string name="text_login_password"> كلمه المرور</string>
-
-    <string name="text_login_enter_your_password">"أدخل كلمة السر "</string>
 
     <string name="text_login_forgot_password"> نسيت كلمة المرور؟</string>
 
     <string name="text_login_login">تسجيل الدخول</string>
 
-    <string name="text_login_or_login_with">"أو تسجيل الدخول باستخدام"</string>
-
     <string name="text_sign_in_with">أو تسجيل الدخول باستخدام</string>
 
     <string name="text_login_dont_have_an_account">هل لديك حساب؟ </string>
 
-    <string name="text_login_guest_user">"زائر"</string>
-
     <!--OTP-->
 
-
-    <string name="text_enter_otp">أدخل رمز التحقق</string>
-
-    <string name="text_enter_otp_code">أدخل رمز التحقق</string>
-
-    <string name="text_dont_receive_the_otp">لم يصل رمز التحقق؟</string>
-
-    <string name="text_resend_otp">إعادة إرسال رمز التحقق</string>
-
-    <string name="text_verify">"تحقق"</string>
-
-    <string name="text_otp_has_been_sent_to_you_on_your_mobile_phone">تم إرسال رمز التحقق إلى الهاتف المحمول الخاص بك</string>
-
-    <string name="text_otp_has_been_sent_to_you_on_your_mobile_phone_or_email">تم إرسالها إلى هاتفك المحمول أو البريد الإلكتروني</string>
 
     <!--Country-->
 
 
-    <string name="text_country_united_arab_emirates_uae">"الامارات العربية المتحدة"</string>
-
     <string name="text_country_bahrain">"البحرين"</string>
-
-    <string name="text_country_kuwait">"الكويت"</string>
-
-    <string name="text_country_saudi_arabia">"المملكة العربية السعودية"</string>
-
-    <string name="text_country_oman">"سلطنة عمان"</string>
-
-    <string name="text_country_qatar">"قطر"</string>
-
-    <string name="text_country_thailand">"تايلاند"</string>
-
-    <string name="text_country_select_your_country">"اختر بلدك"</string>
 
     <!--Home Page-->
 
 
-    <string name="text_home_card_code">"رمز البطاقة:"</string>
-
-    <string name="text_home_gained_points">"نقاط مكافأة:"</string>
-
-    <string name="text_profile_card_code">"رمز البطاقة:"</string>
-
-    <string name="text_profile_gained_points">"النقاط المكتسبة:"</string>
-
-    <string name="text_profile_gender">الجنس</string>
-
-    <string name="text_profile_date_of_birth">"تاريخ الميلاد:"</string>
-
     <string name="text_profile_phone_number">رقم الجوال </string>
-
-    <string name="text_profile_address">"عنوان"</string>
 
     <!--Page Title-->
 
 
-    <string name="text_title_my_profile">"ملفي الشخصي"</string>
-
-    <string name="text_title_dashboard">"لوحة القيادة"</string>
-
-    <string name="text_title_shopping_list">"قائمة التسوق"</string>
-
-    <string name="text_title_registration">"التسجيل"</string>
-
-    <string name="text_title_create_new_list">"إنشاء قائمة جديدة"</string>
-
-    <string name="text_title_list_details">"تفاصيل القائمة"</string>
-
-    <string name="text_title_new_user_registration">"تسجيل مستخدم جديد"</string>
-
-    <string name="text_title_card_holder_registration">"تسجيل حامل البطاقة"</string>
-
     <string name="text_title_edit_profile">"تعديل الملف الشخصي"</string>
 
-    <string name="text_title_set_location">"تحديد المكان"</string>
-
-    <string name="text_title_search_store">البحث عن متاجرنا</string>
-
-    <string name="text_title_bills">"الفواتير"</string>
-
-    <string name="text_title_coupons">"الكوبونات"</string>
-
-    <string name="text_title_my_points">"نقاطي"</string>
-
-    <string name="text_title_notifications">"الإشعارات"</string>
-
-    <string name="text_title_offers">"العروض"</string>
-
-    <string name="text_title_member_offers">"عروض الأعضاء"</string>
-
-    <string name="text_title_general_offers">"العروض العامة"</string>
-
-    <string name="text_title_theme">الوان العرض</string>
-
     <string name="text_title_about_us">من نحن </string>
-
-    <string name="text_title_price_checker">استعلام عن الاسعار</string>
-
-    <string name="text_title_otp_verification">التحقق من رقم الهاتف</string>
-
-    <string name="text_title_change_language">تغيير  اللغة</string>
 
     <string name="text_title_select_language"> الرجاء اختيار اللغة</string>
 
 
-    -<array name="array_coupon">
-
-    <item>بلدي كوبونات</item>
-
-    <item>امتيازات</item>
-
-</array>
+    -
 
     <!--Shopping List-->
 
 
-    <string name="text_shopping_create_new_list">"إنشاء قائمة جديدة"</string>
-
-    <string name="text_shopping_create_from_previous_bill">إنشاء من فاتورة سابقة</string>
-
-    <string name="text_shopping_add_new_shopping_list">"إضافة قائمة تسوق جديدة"</string>
-
-    <string name="text_shopping_enter_list_name">"أدخل اسم القائمة"</string>
-
-    <string name="text_shopping_edit_name">قم بتحرير اسم قائمة التسوق</string>
-
-    <string name="text_shopping_add_name">إضافة اسم قائمة التسوق</string>
-
-    <string name="text_shopping_list_name">"اسم قائمة التسوق"</string>
-
-    <string name="text_shopping_edit_shopping_item_list">تعديل منتج</string>
-
-    <string name="text_shopping_add_shopping_item_list">إضافة منتج الى قائمة التسوق</string>
-
-    <string name="text_shopping_list_item_name">قائمة المنتجات</string>
-
-    <string name="text_shopping_enter_item_name">أدخل اسم المنتج</string>
-
-    <string name="text_shopping_item_quantity">الكمية</string>
-
-    <string name="text_shopping_enter_item_quantity">أدخل كمية المنتج</string>
-
-    <string name="text_shopping_enter_unit">"أدخل الوحدة"</string>
-
     <!-- Registration-->
 
 
-    <string name="text_registration_are_you_a_existing_card_holder">هل لديك بطاقة من قبل  ؟</string>
-
-    <string name="text_registration_enter_your_name">"أدخل أسمك"</string>
-
-    <string name="text_registration_name">"اسم"</string>
-
-    <string name="text_registration_gender">"جنس"</string>
-
-    <string name="text_registration_male">"ذكر"</string>
-
-    <string name="text_registration_female">انثى</string>
-
-    <string name="text_registration_card_nuber">"رقم البطاقة"</string>
-
-    <string name="text_registration_cpr_number">الرقم السكاني</string>
-
-    <string name="text_registration_enter_your_phone_number">"أدخل رقم هاتفك"</string>
-
-    <string name="text_registration_enter_your_dob">"تاريخ الولادة"</string>
-
-    <string name="text_registration_phone">"هاتف"</string>
-
-    <string name="text_registration_dob">"تاريخ الولادة"</string>
-
-    <string name="text_registration_enter_your_email_id">"أدخل معرف البريد الإلكتروني"</string>
-
     <string name="text_registration_email_id">الايميل</string>
-
-    <string name="text_registration_enter_a_password">"أدخل كلمة مرور"</string>
-
-    <string name="text_registration_password">كلمة السر</string>
-
-    <string name="text_registration_confirm_password">"أكِّد كلمة السر"</string>
-
-    <string name="text_registration_send_otp">إرسال رمز التحقق</string>
-
-    <string name="text_registration_submit">"عرض"</string>
-
-    <string name="text_registration_please_enter_card_number">"الرجاء إدخال رقم البطاقة"</string>
-
-    <string name="text_registration_card_number">"رقم البطاقة"</string>
-
-    <string name="text_registration_or">"أو"</string>
-
-    <string name="text_registration_please_enter_your_cpr_number">الرجاء إدخال رقم البطاقة أو الرقم السكاني</string>
-
-    <string name="text_registration_please_your_cpr_number">الرقم السكاني أو الرقم  شخصي</string>
-
-    <string name="text_registration_change_your_country">"تغيير بلدك"</string>
-
-    <string name="text_registration_address_line_one">"اسم المنزل / الرقم"</string>
-
-    <string name="text_registration_enter_address_line_one">"أدخل اسم / رقم المنزل"</string>
-
-    <string name="text_registration_address_line_two">شارع / رقم الطريق</string>
-
-    <string name="text_registration_enter_address_line_two">أدخل رقم الشارع / الطريق</string>
-
-    <string name="text_registration_enter_city">"أدخل المدينة / البلدية"</string>
-
-    <string name="text_registration_city">"مدينة / بلدية"</string>
-
-    <string name="text_registration_enter_state">"إدخال الدولة"</string>
-
-    <string name="text_registration_state">"حالة"</string>
-
-    <string name="text_registration_enter_zip">"أدخل الرمز البريدي"</string>
-
-    <string name="text_registration_zip">"الرمز البريدي"</string>
-
-    <string name="text_registration_edit_phone_number">"تحرير رقم الهاتف"</string>
-
-    <string name="text_registration_otp_verification">التحقق عبر رقم الهاتف</string>
-
-    <string name="text_registration_enter_old_number">"أدخل رقمك القديم"</string>
-
-    <string name="text_registration_old_number">"رقم قديم"</string>
-
-    <string name="text_registration_enter_new_number">"أدخل رقمك الجديد"</string>
-
-    <string name="text_registration_new_number">"رقم جديد"</string>
-
-    <string name="text_registration_enter_confirm_number">"قم بتاكيد رقمك"</string>
-
-    <string name="text_registration_confirm_number">"رقم التأكيد"</string>
 
     <string name="text_registration_change_password">تغيير كلمة السر</string>
 
-    <string name="text_registration_enter_old_password">"أدخل كلمة المرور القديمة"</string>
-
-    <string name="text_registration_old_password">كلمة المرور القديمة</string>
-
-    <string name="text_registration_enter_new_password">"أدخل كلمة المرور الجديدة"</string>
-
-    <string name="text_registration_new_password">"كلمة المرور الجديدة"</string>
-
-    <string name="text_registration_enter_confirm_password">"تأكيد كلمة المرور"</string>
-
-    <string name="text_registration_enter_address_manually">"أدخل العنوان يدويا"</string>
-
     <string name="text_registration_country"> البلد</string>
-
-    <string name="text_registration_enter_country">"أدخل البلد"</string>
-
-    <string name="text_registration_find_your_location">"ابحث عن موقعك"</string>
-
-    <string name="text_registration_search_location">بحث متجرك</string>
-
-    <string name="text_registration_enter_any_search_key">"أدخل مفتاح البحث"</string>
-
-    <string name="text_registration_no_result_found">"لم يتم العثور على نتائج"</string>
-
-    <string name="text_registration_enter_valid_card">"أدخل رقم البطاقة الصحيحة"</string>
-
-    <string name="text_registration_enter_valid_cpr">أدخل رقم شخصي صالح</string>
 
     <!-- Theme-->
 
-
-    <string name="text_theme_select_your_app_theme">حدد الوان العرض الخاص بك</string>
-
-    <string name="text_color_red">"أحمر "</string>
-
-    <string name="text_color_yellow">"الأصفر"</string>
-
-    <string name="text_color_blue">"أزرق "</string>
-
-    <string name="text_color_green">"أخضر"</string>
-
-    <string name="text_color_purple">"ارجواني"</string>
-
-    <string name="text_color_pink">فيروز</string>
-
-    <string name="text_button_generate">توليد</string>
-
-    <string name="dummy_text_address">"أبجد هوز هو ببساطة نص غريب من الطباعة و نتبسيتينغ الصناعة -45656 "</string>
-
-    <string name="text_male">"الذكر"</string>
-
-    <string name="text_female">"أنثى "</string>
 
     <!-- Menu Items-->
 
 
     <string name="string_menu_home"> الرئيسية</string>
 
-    <string name="string_menu_bills">"الفواتير"</string>
-
-    <string name="string_menu_my_points">"نقاطي"</string>
-
-    <string name="string_menu_coupons">"الكوبونات"</string>
-
-    <string name="string_menu_offers">"العروض"</string>
-
-    <string name="string_menu_notifications">الاشعارات</string>
-
-    <string name="string_menu_themes">"المظهر العام"</string>
-
-    <string name="string_menu_about_us">"نبذه عنا"</string>
-
-    <string name="string_menu_change_language">"تغيير اللغة؟"</string>
-
-    <string name="string_menu_price_checker">فاحص الاسعار</string>
-
-    <string name="string_menu_settings">إعدادات</string>
-
-    <string name="string_menu_log_out">تسجيل الخروج</string>
-
     <!--Coupons-->
 
-
-    <string name="text_generate_coupon">"إنشاء القسيمة"</string>
-
-    <string name="text_button_generate_coupon">"إنشاء القسيمة"</string>
-
-    <string name="text_hint_enter_point">أدخل النقاط</string>
-
-    <string name="text_enter_coupon_points">"أدخل نقاط القسيمة"</string>
-
-    <string name="text_total_points">مجمل النقاط :</string>
-
-    <string name="text_coupons_poits_get">"النقاط"</string>
-
-    <string name="text_minimum_points_needed">(الحد الادنى من النقاط المطلوبة %s )</string>
-
-    <string name="text_coupon_points">"نقاط القسيمة:"</string>
-
-    <string name="text_no_coupons_found">"لم يتم العثور على كوبونات!"</string>
-
-    <string name="text_select_coupons_points">حدد نقاط الكوبونات</string>
-
-    <string name="text_camera">"الكاميرا"</string>
-
-    <string name="text_gallery">معرض الصور</string>
-
-    <string name="text_choose_image_from">"اختر إيماج فروم"</string>
-
-    <string name="text_permission_denied">"طلب مرفوض"</string>
-
-    <string name="text_offers_offers_for_you">عروض لك</string>
-
-    <string name="text_offers_offers_only_for_you">يقدم لك فقط</string>
-
-    <string name="text_offers_we_have_selected_some_products_for_you">"لقد اخترنا بعض المنتجات بالنسبة لك"</string>
-
-    <string name="text_offers_we_have_selected_some_products_only_for_you">لقد اخترنا بعض المنتجات فقط بالنسبة لك</string>
-
-    <string name="text_offers_no_offers_found">"لم يتم العثور على أي عروض"</string>
-
-    <string name="text_select_your_store">"حدد المتجر"</string>
-
-    <string name="text_all">"الكل "</string>
-
-    <string name="text_no_stores_found">"لم يتم العثور على متاجر"</string>
-
-    <string name="text_no_shopping_list_found">"لم يتم العثور على قائمة تسوق"</string>
-
-    <string name="text_no_shopping_list_item_found">"لا يوجد نتائج.."</string>
-
-    <string name="text_no_shopping_list_item_found_add_new">اضغط على زر + لإضافة عنصر</string>
-
-    <string name="text_sign_up_with_us_and_avail_exciting_offers_and_benefits">"الاشتراك معنا والاستفادة مثيرة \ ن العروض والفوائد"</string>
-
-    <string name="text_guest_join_us">"إنضم إلينا"</string>
-
-    <string name="text_guest_about_us">"نبذه عنا"</string>
-
-    <string name="text_guest_find_stores">"البحث عن المتاجر"</string>
-
-    <string name="text_guest_language">"لغة"</string>
-
-    <string name="text_guest_general_offers">"العروض العامة"</string>
-
-    <string name="text_guest_themes">"السم"</string>
-
-    <string name="text_hello">"مرحباً"</string>
-
-    <string name="text_guest">زائر</string>
-
-    <string name="text_my_points_used_points">"النقاط المستخدمة"</string>
-
-    <string name="text_know_your_product">"تعرف على منتجك"</string>
-
-    <string name="text_bills_add_to_shopping_list">"إضافة إلى قائمة التسوق"</string>
-
-    <string name="text_no_items_selected">لم يتم تحديد أية عناصر</string>
-
-    <string name="text_bills_details">"تفاصيل الفواتير"</string>
-
-    <string name="text_bills_bill_number">"رقم الفاتوره"</string>
-
-    <string name="text_bills_point_gained">"نقطة المكتسبة"</string>
-
-    <string name="text_no_bills_found">"لم يتم العثور على فواتير"</string>
-
-    <string name="text_search_store_nearest_stores">"أقرب المتاجر"</string>
-
-    <string name="text_change_language">"تغيير اللغة؟"</string>
-
-    <string name="text_menu_code">"الرمز:"</string>
 
     <string name="text_langiage_english">اللغة الانجليزية </string>
 
     <string name="text_language_arabic">اللغة العربية </string>
 
-    <string name="text_confirm">تؤكد</string>
-
-    <string name="text_please_connect_to_store_wifi">يرجى الاتصال في  واي فاي المتجر</string>
-
-    <string name="text_scan_again">"امسح مجددا"</string>
-
-    <string name="text_bill_number">"رقم الفاتوره"</string>
-
-    <string name="text_user_name">اسم المستخدم :</string>
-
-    <string name="text_km">كم</string>
-
-    <string name="text_close"> اغلاق</string>
-
-    <string name="text_edit_profile_set_location">تحديد المكان</string>
-
-    <string name="text_date">تاريخ :</string>
-
-    <string name="text_user_since">مستخدم منذ:</string>
-
-    <string name="message_enter_phone_or_email">الرجاء إدخال رقم الهاتف أو البريد الإلكتروني</string>
-
-    <string name="text_forgot_password">هل نسيت كلمة المرور</string>
-
-    <string name="text_set_password">ضبط كلمة السر</string>
-
-    <string name="text_title_forgot_password">هل نسيت كلمة المرور</string>
-
-    <string name="text_title_set_new_password">تعيين كلمة مرور جديدة</string>
-
-    <string name="text_quantity">الكمية:</string>
-
-    <string name="text_points">نقاط</string>
-
-    <string name="text_points_earned">النقاط التي اكتسبتها</string>
-
-    <string name="text_page">صفحة</string>
-
-    <string name="text_pages">صفحات</string>
-
-    <string name="text_offers_available_in">العروض متوفرة في</string>
-
-    <string name="text_offers_no_images_found">لم يتم العثور على أية صور</string>
-
-    <string name="text_working_hrs">ساعات العمل:</string>
-
-    <string name="text_email">البريد بنا</string>
-
-    <string name="text_delete_sucess">تم الحذف...</string>
-
-    <string name="text_item_amount">كمية</string>
-
-    <string name="text_no_empty_notification">لم يتم العثور على إشعار</string>
-
-    <string name="text_item_detail">تفاصيل العنصر</string>
-
-    <string name="text_item">بند: </string>
-
-    <string name="text_item_total_amount">المبلغ الإجمالي: </string>
-
-    <string name="text_invoice_number">"رقم الفاتورة: "</string>
-
-    <string name="message_please_enter_valid_password_length">يجب أن تكون كلمة المرور كلمة واحدة تتراوح بين 6 و 20 حرفا</string>
-
-    <string name="text_bills_date">تاريخ</string>
-
-    <string name="text_bills_points">نقاط</string>
-
-    <string name="text_bills_total_amount">المبلغ الإجمالي:</string>
-
     <string name="text_edit_profile_change_password">تغيير كلمة السر</string>
-
-    <string name="text_registration_select_your_country">اختر بلدك</string>
-
-    <string name="text_no_points">لا النقاط المكتسبة</string>
-
-    <string name="text_my_points">نقاط</string>
-
-    <string name="text_my_points_graph_details">تفاصيل الرسم البياني</string>
-
-    <string name="text_my_points_months">الشهور</string>
-
-    <string name="text_my_points_balance_points">نقاط التوازن</string>
 
     <!--Camera & Gallery-->
 
 
-    <string name="select_image_from_gallery">حدد صورة من المعرض</string>
-
-    <string name="text_crop_image">قص الصوره</string>
-
-    <string name="toast_error_camera_preview">لا يمكن تهيئة معاينة الكاميرا.</string>
-
-    <string name="toast_error_save_picture">لا يمكن حفظ الصورة على وحدة التخزين الخارجية.</string>
-
-    <string name="content_description_take_picture">التقاط صورة</string>
-
-    <string name="camera">الة تصوير</string>
-
-    <string name="retake">استعادة</string>
-
-    <string name="done">فعله</string>
-
-    <string name="gallery">صالة عرض</string>
-
     <!--Cropper-->
 
-
-    <string name="crop_image_menu_rotate_left">تدوير عكس اتجاه عقارب الساعة</string>
-
-    <string name="crop_image_menu_rotate_right">استدارة</string>
-
-    <string name="crop_image_menu_crop">قص</string>
-
-    <string name="crop_image_menu_flip">يواجه</string>
-
-    <string name="crop_image_menu_flip_horizontally">الوجه أفقيا</string>
-
-    <string name="crop_image_menu_flip_vertically">الوجه عموديا</string>
-
-    <string name="pick_image_intent_chooser_title">اختر مصدر</string>
-
-    <string name="crop_image_activity_no_permissions">الإلغاء، لم  يتم منح الأذونات المطلوبة</string>
 
     <!--BarChart-->
 
 
-    <string name="barchart_x_axis">نقاط</string>
-
-    <string name="barchart_y_axis">النقاط المكتسبة شهريا</string>
-
-    <string name="text_title_privilege_coupons">قسيمة الامتيازات</string>
-
     <string name="cancel_label">إلغاء</string>
 
-    <string name="preview_controls_cancel">إلغاء</string>
-
-    <string name="preview_controls_original_ratio_label">أصلي</string>
-
-    <string name="preview_controls_retake">كرر</string>
-
-    <string name="preview_controls_confirm">حفظ</string>
-
-    <string name="settings_photo_quality_title">حجم الصورة</string>
-
-    <string name="settings_video_quality_title">حجم الفيديو٪ s</string>
-
-    <string name="text_point_error">لم يكن لديك نقاط كافية لتوليد القسيمة.</string>
-
     <!--Settings Fragment-->
-    <string name="settings_push_notification">تفعيل التنبيهات</string>
 
-    <string name="settings_notification_sound">صوت التنبية</string>
     <string name="skip">تخطي </string>
     <string name="next">التالي</string>
     <string name="dummy2" translatable="false">جولة في التطبيق  </string>
     <string name="dummy1">نص تجريبي نص تجريبي
 نص تجريبي نص تجريبي نص تجريبي </string>
     <string name="dummy" >نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي </string>
-    <string name="title_dashboard">tii</string>
     <string name="share_with">انشر التطبيق </string>
     <string name="no_address">no_address</string>
-    <string name="title_home">title_home</string>
-    <string name="title_notifications">title_notifications</string>
     <string name="by_app">by_app</string>
     <string name="choose_country">الرجاء أختيار البلد</string>
     <string name="choose_nearest">الرجاءاختيار الفرع الأقرب </string>
@@ -697,10 +120,8 @@
     <string name="terms2">سياسة الخصوصية</string>
     <string name="terms3">وتوافق على</string>
     <string name="terms4">شروط تطبيق رامز</string>
-    <string name="rest_password">كلمة المرور الجديدة</string>
     <string name="confirm">تأكيد</string>
     <string name="reset_pass">إعادة تعين كلمة المرور</string>
-    <string name="enter_code">الرجاء ادخال الكود  لتغيير كلمة المرور</string>
     <string name="forget_pass">نسيت كلمة المرور</string>
     <string name="enter_phone">الرجاء ادخال رقم الجوال المسجل  لاسترجاع كلمة المرور</string>
     <string name="enter_code1">الرجاء ادخال الكود    </string>
@@ -720,7 +141,6 @@
     <string name="offer_text">العروض </string>
     <string name="fail_to_get_data">خطأ في البيانات</string>
     <string name="reload">إعادة</string>
-    <string name="no_data">لا يوجد بيانات</string>
     <string name="suggested_product">المنتجات المقترحة</string>
     <string name="product_desc">مواصفات المنتج</string>
     <string name="desc"> صفة \n صفة  \n صفة </string>
@@ -744,7 +164,6 @@
     <string name="Edit">تعديل</string>
     <string name="complete_request">الطلبات المكتملة</string>
     <string name="DeliveryTime1">وقت  التوصيل : </string>
-    <string name="order_sent">تم استلام الطلب </string>
     <string name="rateRequest">تقييم الطلب </string>
     <string name="request_no">رقم الطلب : </string>
     <string name="ordered">طلبت </string>
@@ -766,14 +185,22 @@
     <string name="building">البناية</string>
     <string name="flat">الشقة</string>
     <string name="choose_address_gps"> تحديد العنوان عن طريق GPS   </string>
-    <string name="textZoomIn">Zoom In</string>
     <string name="loading">Loading</string>
     <string name="phonePermissionExplain">لقد رفضت للتو الحصول على إذن مكالمة هاتفية ، لا يمكنك إجراء أي اتصال حتى تقبل الإذن</string>
     <string name="ok">Ok</string>
     <string name="no_internet_connection">No Internet Connection</string>
-    <string name="open_gallery">Open Gallery</string>
-    <string name="take_pic">Take Photo</string>
+    <string name="take_pic">التقاط صورة</string>
+    <string name="open_gallery">فتح المعرض</string>
     <string name="empty_cart">عربة التسوق الخاصة بك فارغة</string>
-    <string name="do_yo_want"> هل تريد التسوق الان؟!</string>ng>
-
+    <string name="do_yo_want"> هل تريد التسوق الان؟!</string>
+    <string name="please_login">الرجاء تسجيل الدخول للدخول الى</string>
+    <string name="account_data"> بيانات الحساب الخاصة بك</string>
+    <string name="register">التسجيل</string>
+    <string name="choose_branch">الرجاء اختيار الفرع</string>
+    <string name="choose_city">الرجاء اختيار المدينة </string>
+    <string name="choose_currency">الرجاء اختيار العملة</string>
+    <string name="invoice_details">تفاصيل الفاتورة</string>
+    <string name="total">المجموع</string>
+    <string name="reorder_cart">إعادة طلب السلة </string>
+    <string name="reorder_product">إعادة طلب المنتج</string>
 </resources>
