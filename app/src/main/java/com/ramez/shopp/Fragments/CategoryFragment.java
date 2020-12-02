@@ -45,6 +45,8 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
         categoryModelList.add(new CategoryModel(1,"الأغذية المعلبة","Canned food","https://cdn.images.express.co.uk/img/dynamic/130/590x/can-605163.jpg"));
         categoryModelList.add(new CategoryModel(1,"مشروبات","drinks","https://www.supermama.me/system/App/Entities/Article/images/000/065/491/web-watermarked-large/%D9%85%D8%B4%D8%B1%D9%88%D8%A8%D8%A7%D8%AA-%D8%AD%D8%A7%D8%B1%D9%82%D8%A9-%D9%84%D9%84%D8%AF%D9%87%D9%88%D9%86.jpg"));
         gridLayoutManager=new GridLayoutManager(getActivityy(),3);
+
+
         initAdapter();
 
         return view;

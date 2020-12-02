@@ -31,7 +31,7 @@ public class MainActivity extends ActivityBase {
 
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.mainContainer);
         binding.toolBar.mainTitleTxt.setText(getString(R.string.string_menu_home));
-
+        binding.toolBar.backBtn.setVisibility(View.GONE);
 
         binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_icon));
         binding.homeButn.setOnClickListener(view1 -> {

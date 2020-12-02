@@ -140,4 +140,25 @@
     <string name="total">Total</string>
     <string name="reorder_cart">Reorder Cart</string>
     <string name="reorder_product">Re Order Product</string>
+    <string name="price">price</string>
+    <string name="total1">Total </string>
+    <string name="pieces">Pieces</string>
+    <string name="product_count">Product Count</string>
+    <string name="product_cost">Product Cost</string>
+    <string name="textContinuePurchaseBtn">Pay Now</string>
+    <string name="add_card">Add Card</string>
+    <string name="text_card_name">Card Holder Name</string>
+    <string name="text_card_num">Card Number</string>
+    <string name="text_card_date">Card Expire Date</string>
+    <string name="default_card">Using The Default Card</string>
+    <string name="choose_card_type">Choose Card Type</string>
+    <string name="enter_amount">Determine how much credit you want Add it to the wallet</string>
+    <string name="AED">AED</string>
+    <string name="follow">Follow</string>
+    <string name="add_balance">Add Balance</string>
+    <string name="no_balance">Sorry !!</string>
+    <string name="no_balance1">You do not have enough balance Click here to add credit</string>
+    <string name="Hello">hello</string>
+    <string name="enter_message">Enter Message</string>
+
 </resources>

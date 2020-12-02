@@ -23,7 +23,7 @@ import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
-import com.ramez.shopp.databinding.RowCartItemBinding;
+import com.ramez.shopp.databinding.RowProductsItemBinding;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        RowCartItemBinding itemView = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.row_cart_item, parent, false);
+        RowProductsItemBinding itemView = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.row_products_item, parent, false);
         return new Holder(itemView);
     }
 
@@ -128,9 +128,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        RowCartItemBinding binding;
+        RowProductsItemBinding binding;
 
-        Holder(RowCartItemBinding view) {
+        Holder(RowProductsItemBinding view) {
             super(view.getRoot());
             binding = view;
             itemView.setOnClickListener(this);

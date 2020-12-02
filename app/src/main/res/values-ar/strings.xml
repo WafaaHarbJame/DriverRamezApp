@@ -130,4 +130,25 @@
     <string name="total">المجموع</string>
     <string name="reorder_cart">إعادة طلب السلة </string>
     <string name="reorder_product">إعادة طلب المنتج</string>
+    <string name="price">السعر :</string>
+    <string name="total1">الإجمالي :</string>
+    <string name="pieces">الكمية : </string>
+    <string name="product_count">عدد المنتجات </string>
+    <string name="product_cost">تكلفة  المنتجات </string>
+    <string name="textContinuePurchaseBtn">تابع عملية الشراء </string>
+    <string name="add_card">اضافة بطاقة </string>
+    <string name="text_card_name">اسم حامل البطاقة</string>
+    <string name="text_card_num">رقم البطاقة</string>
+    <string name="text_card_date">تاريخ انتهاء البطاقة</string>
+    <string name="default_card">استخدام البطاقة كافتراضية</string>
+    <string name="choose_card_type">اختر نوع البطاقة</string>
+    <string name="enter_amount">حدد مقدار الرصيد الذي تريد  اضافته للمحفظة</string>
+    <string name="AED">درهم</string>
+    <string name="follow">متابعة</string>
+    <string name="add_balance">اضافة رصيد </string>
+    <string name="no_balance">نأسف !! </string>
+    <string name="no_balance1">لا يوجد لديك رصيد كافي  اضغط هنا لاضافة رصيد</string>
+    <string name="Hello">مرحبا</string>
+    <string name="enter_message">اكتب هنا </string>
+
 </resources>

@@ -8,36 +8,36 @@ import android.view.ViewGroup;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ramez.shopp.Models.CurrencyModel;
-import com.ramez.shopp.Models.LanguageModel;
+import com.ramez.shopp.Models.CardModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.RowLangItemBinding;
 
 import java.util.ArrayList;
 
-public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.ViewHolder> {
+public class CardTypesAdapter extends RecyclerView.Adapter<CardTypesAdapter.CountryViewHolder> {
     private Context context;
-    private OnCurrencyClick onLangClick;
-    private ArrayList<CurrencyModel> list;
+    private OnCardTypeClick onCardTypeClick;
+    private ArrayList<CardModel> list;
     private int lastIndex = 0;
 
-    public CurrencyAdapter(Context context, ArrayList<CurrencyModel> list, OnCurrencyClick onCurrencyClick) {
+    public CardTypesAdapter(Context context, ArrayList<CardModel> list, OnCardTypeClick onCardTypeClick) {
         this.context = context;
-        this.onLangClick = onCurrencyClick;
+        this.onCardTypeClick = onCardTypeClick;
         this.list = list;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CountryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         RowLangItemBinding itemView = RowLangItemBinding.inflate(LayoutInflater.from(context), parent, false);
-        return new ViewHolder(itemView);
+        return new CountryViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        CurrencyModel currencyModel = list.get(position);
-        holder.binding.nameTxt.setText(currencyModel.getName().trim());
+    public void onBindViewHolder(CountryViewHolder holder, int position) {
+        CardModel cardModel = list.get(position);
+
+        holder.binding.nameTxt.setText(cardModel.getName().trim());
 
 
         if (lastIndex == position) {
@@ -68,18 +68,17 @@ public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.ViewHo
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class CountryViewHolder extends RecyclerView.ViewHolder {
 
         RowLangItemBinding binding;
 
-        ViewHolder(RowLangItemBinding view) {
+        CountryViewHolder(RowLangItemBinding view) {
             super(view.getRoot());
             binding = view;
 
 
-
             itemView.setOnClickListener(v -> {
-                onLangClick.onCurrencyClicked(getAdapterPosition(), list.get(getAdapterPosition()));
+                onCardTypeClick.OnCardTypeClicked(getAdapterPosition(), list.get(getAdapterPosition()));
                 lastIndex = getAdapterPosition();
                 notifyDataSetChanged();
             });
@@ -90,7 +89,8 @@ public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.ViewHo
 
     }
 
-    public interface OnCurrencyClick {
-        void onCurrencyClicked(int position, CurrencyModel currencyModel);
+    public interface OnCardTypeClick {
+        void OnCardTypeClicked(int position,CardModel cardModel);
     }
+
 }

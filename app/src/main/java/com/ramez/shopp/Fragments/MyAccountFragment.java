@@ -73,7 +73,7 @@ public class MyAccountFragment extends FragmentBase {
 
         });
 
-        binding.editProfileBut.setOnClickListener(view1 -> {
+        binding.editProfileBu.setOnClickListener(view1 -> {
             startEditProfileActivity();
 
         });

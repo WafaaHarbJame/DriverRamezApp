@@ -18,7 +18,6 @@ public class LangAdapter extends RecyclerView.Adapter<LangAdapter.CountryViewHol
     private Context context;
     private OnLangClick onLangClick;
     private ArrayList<LanguageModel> langList;
-    private LanguageModel selectLang;
     private int lastIndex = 0;
 
     public LangAdapter(Context context, ArrayList<LanguageModel> list, OnLangClick onLangClick) {
@@ -37,12 +36,6 @@ public class LangAdapter extends RecyclerView.Adapter<LangAdapter.CountryViewHol
     @Override
     public void onBindViewHolder(CountryViewHolder holder, int position) {
         LanguageModel languageModel = langList.get(position);
-//
-//        if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
-//            holder.binding.textCountry.setText(languageModel.getName_en().trim());
-//        } else {
-//            holder.binding.textCountry.setText(languageModel.getName_ar().trim());
-//        }
 
         holder.binding.nameTxt.setText(languageModel.getName().trim());
 

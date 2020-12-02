@@ -22,7 +22,10 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/ProjectTheme">
-        <activity android:name=".Activities.InvoiceInfoActivity"></activity>
+        <activity android:name=".Activities.NoBalanceActivity"></activity>
+        <activity android:name=".Activities.AddBalanceActivity" />
+        <activity android:name=".Activities.AddCardActivity" />
+        <activity android:name=".Activities.InvoiceInfoActivity" />
         <activity android:name=".Activities.ContactSupportActivity" />
         <activity android:name=".Activities.ChangeLangCurrencyActivity" />
         <activity android:name=".Activities.ChangeCityBranchActivity" />

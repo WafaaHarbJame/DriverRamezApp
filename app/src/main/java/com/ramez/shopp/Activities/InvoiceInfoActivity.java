@@ -13,11 +13,12 @@ import com.ramez.shopp.Models.OrderProductsModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.ActivityChooseCityBinding;
 import com.ramez.shopp.databinding.ActivityContactSupportBinding;
+import com.ramez.shopp.databinding.ActivityInvoiceInfoBinding;
 
 import java.util.ArrayList;
 
 public class InvoiceInfoActivity extends ActivityBase {
-    ActivityContactSupportBinding binding;
+    ActivityInvoiceInfoBinding binding;
 
     private OrderProductsAdapter orderProductsAdapter;
     ArrayList<OrderProductsModel> list;
@@ -26,7 +27,7 @@ public class InvoiceInfoActivity extends ActivityBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding= ActivityContactSupportBinding.inflate(getLayoutInflater());
+        binding= ActivityInvoiceInfoBinding.inflate(getLayoutInflater());
         View view=binding.getRoot();
         setContentView(view);
 
