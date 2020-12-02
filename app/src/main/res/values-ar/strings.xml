@@ -150,5 +150,8 @@
     <string name="no_balance1">لا يوجد لديك رصيد كافي  اضغط هنا لاضافة رصيد</string>
     <string name="Hello">مرحبا</string>
     <string name="enter_message">اكتب هنا </string>
+    <string name="add_comment">الرجاء إضافة تعليق على المنتج</string>
+    <string name="add">إضافة</string>
+    <string name="add_comm">"اضف تعليق "</string>
 
 </resources>
