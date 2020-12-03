@@ -37,23 +37,22 @@
                     android:layout_marginStart="@dimen/_8sdp"
                     android:layout_marginEnd="@dimen/_8sdp"
                     android:inputType="textMultiLine"
-                    android:paddingTop="@dimen/_8sdp"
-                    android:paddingBottom="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_4sdp"
+                    android:paddingBottom="@dimen/_4sdp"
                     android:text="@string/invoice_number"
                     android:textColor="@color/black" />
 
                 <include layout="@layout/row_header_invoice_item" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv"
+                    android:id="@+id/productsRecycler"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:clipToPadding="false"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/row_invoice_product_item"
                     android:paddingStart="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_4sdp"
                     android:paddingEnd="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_8sdp" />
+                />
 
                 <View
                     android:layout_width="match_parent"
@@ -61,7 +60,7 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     android:background="@color/gray_view" />
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.ramez.shopp.SpichalViews.STextViewBold
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="end|center"
@@ -86,8 +85,7 @@
                         android:gravity="end|center"
                         android:lines="1"
                         android:text="@string/product_total"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_12ssp" />
+                        android:textSize="@dimen/_10ssp" />
 
                     <com.ramez.shopp.SpichalViews.STextView
                         android:id="@+id/priceTv"
@@ -100,7 +98,7 @@
                         android:lines="1"
                         android:text="3"
                         android:textColor="@color/green"
-                        android:textSize="@dimen/_12ssp" />
+                        android:textSize="@dimen/_10ssp" />
 
                 </LinearLayout>
 
@@ -119,8 +117,8 @@
                         android:gravity="end|center"
                         android:lines="1"
                         android:text="@string/deliver_fees"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_12ssp" />
+                        android:textColor="@color/text_color"
+                        android:textSize="@dimen/_10ssp" />
 
                     <com.ramez.shopp.SpichalViews.STextView
                         android:layout_width="0dp"
@@ -132,7 +130,7 @@
                         android:lines="1"
                         android:text="3"
                         android:textColor="@color/green"
-                        android:textSize="@dimen/_12ssp" />
+                        android:textSize="@dimen/_10ssp" />
 
                 </LinearLayout>
 
@@ -145,13 +143,13 @@
                     android:orientation="horizontal"
                     android:padding="@dimen/_4sdp">
 
-                    <com.ramez.shopp.SpichalViews.STextView
+                    <com.ramez.shopp.SpichalViews.STextViewBold
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:lines="1"
                         android:text="@string/total"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/_14ssp" />
+                        android:textSize="@dimen/_12ssp" />
 
                     <com.ramez.shopp.SpichalViews.STextView
                         android:id="@+id/totalTv"
@@ -164,7 +162,7 @@
                         android:lines="1"
                         android:text="1111"
                         android:textColor="@color/green"
-                        android:textSize="@dimen/_14ssp" />
+                        android:textSize="@dimen/_10ssp" />
 
                 </LinearLayout>
 
@@ -191,7 +189,7 @@
                         android:lines="1"
                         android:text="@string/delivery_to"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/_14ssp" />
+                        android:textSize="@dimen/_10ssp" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -201,7 +199,7 @@
                         android:lines="1"
                         android:src="@drawable/edit_delivery_icon"
                         android:text="1111"
-                        android:textSize="@dimen/_14ssp" />
+                        android:textSize="@dimen/_10ssp" />
 
                 </LinearLayout>
 
@@ -218,7 +216,7 @@
                     android:padding="@dimen/_8sdp"
                     android:text="@string/deliver_time"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_10ssp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/deliveryRv"
@@ -227,7 +225,6 @@
                     android:clipToPadding="false"
                     android:orientation="horizontal"
                     android:paddingStart="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_8sdp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -247,7 +244,7 @@
                     android:padding="@dimen/_8sdp"
                     android:text="@string/choose_payment_type"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_10ssp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/paymentRv"

@@ -37,10 +37,12 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/_8sdp"
                     android:layout_marginEnd="@dimen/_8sdp"
+                    android:padding="@dimen/_4sdp"
                     android:gravity="center"
                     android:text="@string/delete"
                     android:textColor="@color/white"
-                    android:background="@color/colorPrimaryDark"
+                    android:background="@drawable/round_corner_grey_small"
+                    android:backgroundTint="@color/colorPrimaryDark"
                     app:srcCompat="@drawable/delete_icon" />
 
 
@@ -56,14 +58,15 @@
                     android:id="@+id/card_view_outer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical"
                     android:background="@drawable/round_corner_grey_small"
                     android:orientation="horizontal">
 
                     <com.makeramen.roundedimageview.RoundedImageView
                         android:id="@+id/productImage"
-                        android:layout_width="@dimen/_50sdp"
-                        android:layout_height="@dimen/_50sdp"
+                        android:layout_width="@dimen/_45sdp"
+                        android:layout_height="@dimen/_45sdp"
                         android:elevation="4dp"
                         android:padding="@dimen/_8sdp"
                         android:scaleType="fitXY"
@@ -71,13 +74,14 @@
                         app:riv_corner_radius="@dimen/_2sdp" />
                     <com.ramez.shopp.SpichalViews.STextView
                         android:id="@+id/productName"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:maxLines="2"
-                        android:layout_marginStart="@dimen/_8sdp"
-                        android:textAlignment="viewStart"
-                        android:text="اسم المنتج"
-                        android:textSize="@dimen/_12ssp" />
+                        android:lines="2"
+                        android:layout_weight="1"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:text=" اسم المنتجات "
+                        android:textSize="@dimen/_10ssp" />
 
 
 
@@ -119,7 +123,7 @@
                                 android:text="1"
                                 android:textAllCaps="false"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/_11ssp"
+                                android:textSize="@dimen/_10ssp"
                                 android:visibility="visible" />
 
 
@@ -151,15 +155,16 @@
                         </LinearLayout>
 
                         <com.ramez.shopp.SpichalViews.STextView
-                            android:id="@+id/tvPrice"
+                            android:id="@+id/productPriceTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="4dp"
+                            android:layout_marginEnd="@dimen/_4sdp"
                             android:gravity="center"
                             android:lines="1"
                             android:text="15 AED"
                             android:textColor="@color/green"
-                            android:textSize="@dimen/_12ssp" />
+                            android:textSize="@dimen/_10ssp" />
 
 
 

@@ -15,6 +15,7 @@
         android:paddingTop="@dimen/_8sdp"
         android:paddingEnd="@dimen/_8sdp"
         android:background="@drawable/round_corner_white_welcom"
+        android:backgroundTint="@color/gray"
         android:paddingStart="@dimen/_8sdp"
         android:text="Sub item title"/>
 
