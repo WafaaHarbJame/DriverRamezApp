@@ -11,6 +11,7 @@ import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Fragments.CartFragment;
 import com.ramez.shopp.Fragments.CategoryFragment;
 import com.ramez.shopp.Fragments.HomeFragment;
+import com.ramez.shopp.Fragments.InvoiceFragment;
 import com.ramez.shopp.Fragments.MyAccountFragment;
 import com.ramez.shopp.Fragments.OfferFragment;
 import com.ramez.shopp.Models.MemberModel;
@@ -29,11 +30,24 @@ public class MainActivity extends ActivityBase {
 
         getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
 
-        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.mainContainer);
         binding.toolBar.mainTitleTxt.setText(getString(R.string.string_menu_home));
         binding.toolBar.backBtn.setVisibility(View.GONE);
 
-        binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_icon));
+        binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_clicked));
+
+
+
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.mainContainer);
+        if(currentFragment instanceof  CartFragment){
+            binding.toolBar.mainTitleTxt.setText(getString(R.string.cart));
+
+        }
+        if(currentFragment instanceof InvoiceFragment){
+            binding.toolBar.mainTitleTxt.setText(getString(R.string.cart));
+
+        }
+
+
         binding.homeButn.setOnClickListener(view1 -> {
           //  binding.toolBar.background.setVisibility(View.GONE);
             binding.toolBar.mainTitleTxt.setText(getString(R.string.string_menu_home));

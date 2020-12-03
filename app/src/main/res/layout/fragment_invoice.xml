@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical">
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/back1"
+        android:orientation="vertical"
+        android:background="@drawable/toolbar_back1"
+        android:layout_height="@dimen/_60sdp">
+    </LinearLayout>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -15,18 +22,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
-                android:id="@+id/back1"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_70sdp"
-                android:background="@drawable/toolbar_back1"
-                android:orientation="vertical"/>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/_70sdp"
                 android:orientation="vertical">
 
                 <com.ramez.shopp.SpichalViews.STextView
@@ -37,10 +37,12 @@
                     android:layout_marginStart="@dimen/_8sdp"
                     android:layout_marginEnd="@dimen/_8sdp"
                     android:inputType="textMultiLine"
-                    android:paddingTop="@dimen/_15sdp"
-                    android:paddingBottom="@dimen/_15sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_8sdp"
                     android:text="@string/invoice_number"
                     android:textColor="@color/black" />
+
+                <include layout="@layout/row_header_invoice_item" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv"
@@ -49,9 +51,9 @@
                     android:layout_weight="1"
                     android:clipToPadding="false"
                     android:paddingStart="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_8sdp"
-                    android:paddingEnd="@dimen/_10sdp" />
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_8sdp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -183,10 +185,10 @@
                     <com.ramez.shopp.SpichalViews.STextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:lines="1"
-                        android:drawablePadding="@dimen/_8sdp"
-                        android:drawableStart="@drawable/deliver_icon"
                         android:layout_weight="1"
+                        android:drawableStart="@drawable/deliver_icon"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:lines="1"
                         android:text="@string/delivery_to"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14ssp" />
@@ -196,8 +198,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_8sdp"
-                        android:src="@drawable/edit_delivery_icon"
                         android:lines="1"
+                        android:src="@drawable/edit_delivery_icon"
                         android:text="1111"
                         android:textSize="@dimen/_14ssp" />
 
@@ -207,6 +209,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/gray_view" />
+
                 <com.ramez.shopp.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -216,20 +219,26 @@
                     android:text="@string/deliver_time"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/deliveryRv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clipToPadding="false"
+                    android:orientation="horizontal"
                     android:paddingStart="@dimen/_10sdp"
                     android:paddingTop="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_8sdp"
-                    android:paddingEnd="@dimen/_10sdp" />
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/row_payment_type" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/gray_view" />
+
                 <com.ramez.shopp.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -239,6 +248,7 @@
                     android:text="@string/choose_payment_type"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/paymentRv"
                     android:layout_width="match_parent"
@@ -246,16 +256,18 @@
                     android:clipToPadding="false"
                     android:paddingStart="@dimen/_10sdp"
                     android:paddingTop="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_8sdp"
-                    android:paddingEnd="@dimen/_10sdp" />
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_8sdp" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_8sdp"
                     android:layout_marginEnd="@dimen/_8sdp"
                     android:layout_marginBottom="@dimen/_8sdp"
-                    android:layout_height="wrap_content">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
                     <com.ramez.shopp.SpichalViews.STextViewBold
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -266,6 +278,7 @@
                         android:padding="@dimen/_8sdp"
                         android:text="@string/save_update"
                         android:textColor="@color/white" />
+
                     <com.ramez.shopp.SpichalViews.STextViewBold
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -278,7 +291,6 @@
                         android:textColor="@color/white" />
 
                 </LinearLayout>
-
 
 
             </LinearLayout>

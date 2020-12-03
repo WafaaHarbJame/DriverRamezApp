@@ -163,5 +163,9 @@
     <string name="delivery_send">تسليم للتوصيل</string>
     <string name="save_update">حفظ مع متابعة التعديل</string>
     <string name="textFromtime">9 A.m  9 P.M</string>
+    <string name="item">الصنف</string>
+    <string name="quantity">الكمية </string>
+    <string name="price1">السعر </string>
+    <string name="delete">delete</string>
 
 </resources>

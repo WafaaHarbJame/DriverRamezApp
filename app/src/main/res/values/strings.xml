@@ -173,5 +173,9 @@
     <string name="delivery_send">Send for delivery</string>
     <string name="save_update">Save and continue editing</string>
     <string name="textFromtime">9 A.m  9 P.M </string>
+    <string name="item">Item</string>
+    <string name="quantity">Quantity</string>
+    <string name="price1">price </string>
+    <string name="delete">delete</string>
 
 </resources>
