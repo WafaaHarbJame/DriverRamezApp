@@ -25,6 +25,7 @@ public class InvoiceFragment extends FragmentBase {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentInvoiceBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
         return view;
     }
 }

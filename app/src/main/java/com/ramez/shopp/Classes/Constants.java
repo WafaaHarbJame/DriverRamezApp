@@ -195,4 +195,13 @@ public class Constants {
 
     public static String latitude = "latitude";
     public static String longitude = "longitude";
+
+    public  static String Sender="Sender";
+    public  static String Receiver="Receiver";
+    public  static String inputType_text="text";
+    public  static String inputType_image="Image";
+    public  static String inputType="Image";
+
+
+
 }

@@ -1,6 +1,8 @@
 package com.ramez.shopp.Utils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.util.Log;
 
 
 import com.ramez.shopp.Classes.Constants;
@@ -780,5 +782,23 @@ public class DateHandler {
         long diffMinutes = diff / (60 * 1000);
 
         return diffMinutes;
+    }
+    public static String convertLongDateToString(String date, String format,String lang) {
+        String stringDate = "";
+        try {
+            long millisecond = Long.parseLong(date);
+            String dateString = android.text.format.DateFormat.format(format, new Date(millisecond)).toString();
+           SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, new Locale("en"));
+            Date dateTime = simpleDateFormat.parse(dateString);
+            if (dateTime != null) {
+                stringDate = simpleDateFormat.format(dateTime);
+            }
+            Log.d("TAG", "convertLongDate: " + stringDate);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            stringDate = "";
+        }
+        return stringDate;
     }
 }

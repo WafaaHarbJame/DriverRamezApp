@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.ramez.shopp.Adapter.AddressAdapter;
 import com.ramez.shopp.Adapter.ChatAdapter;
+import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Models.AddressModel;
 import com.ramez.shopp.Models.ChatModel;
 import com.ramez.shopp.R;
@@ -27,14 +28,21 @@ public class ContactSupportActivity extends ActivityBase {
         View view=binding.getRoot();
         setContentView(view);
         list=new ArrayList<>();
-        list.add(new ChatModel(1,1,1,1,
-                        "hhh","","httpp://","18/12/2020 5.30 م","",getString(R.string.Hello)));
-        list.add(new ChatModel(1,1,1,1,
-                "hhh","","httpp://","","18/12/2020 5.30 م",getString(R.string.Hello)));
-        list.add(new ChatModel(1,1,1,1,
-                "hhh","","httpp://","","18/12/2020 5.30 م",getString(R.string.Hello)));
-        list.add(new ChatModel(1,1,1,1,
-                "hhh","","httpp://","","18/12/2020 5.30 م",getString(R.string.Hello)));
+        list.add(new ChatModel("1","2","key",getString(R.string.Hello),
+                        "hhh","",
+                "http://","http", Constants.Sender,Constants.inputType_image,
+                "http://","","",1699999,true));
+
+        list.add(new ChatModel("1","2","key",Constants.inputType_image,
+                "hhh","",
+                "http://","http",Constants.Receiver,Constants.inputType_text,
+                "http://","","",1698889999,true));
+
+        list.add(new ChatModel("1","2","key",getString(R.string.Hello1),
+                "hhh","",
+                "http://","http",Constants.Sender,Constants.inputType_image,
+                "http://","","",169955999,true));
+
 
 
         binding.toolBar.mainTitleTxt.setText(getString(R.string.customer_service));

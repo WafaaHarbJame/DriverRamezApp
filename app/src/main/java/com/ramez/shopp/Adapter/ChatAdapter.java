@@ -1,74 +1,117 @@
 package com.ramez.shopp.Adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.ChatModel;
 import com.ramez.shopp.R;
-import com.ramez.shopp.databinding.RowChatBinding;
+import com.ramez.shopp.Utils.DateHandler;
+import com.ramez.shopp.Utils.NumberHandler;
+import com.ramez.shopp.databinding.RowChatReceiverBinding;
+import com.ramez.shopp.databinding.RowChatSenderBinding;
 
 import java.util.ArrayList;
 
-public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
+public class ChatAdapter extends RecyclerView.Adapter {
+
+    private static final String TAG = "ChatAdapter";
+
+    private final int SENDER_VIEW = 1;
+    private final int RECEIVER_VIEW = 2;
+
     private Context context;
-    private ArrayList<ChatModel> countryModels;
+    private ArrayList<ChatModel> chatMessages;
 
-    public ChatAdapter(Context context, ArrayList<ChatModel> countryModels) {
+
+    public ChatAdapter(Context context, ArrayList<ChatModel> chatMessages) {
         this.context = context;
-        this.countryModels = countryModels;
+        this.chatMessages = chatMessages;
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        RowChatBinding itemView =RowChatBinding.inflate(LayoutInflater.from(context), parent, false);
-        return new ViewHolder(itemView);
+        if (viewType == SENDER_VIEW) {
+            RowChatSenderBinding itemView = RowChatSenderBinding.inflate(LayoutInflater.from(context), parent, false);
+            return new SenderHolder(itemView);
+
+        } else if (viewType == RECEIVER_VIEW) {
+            RowChatReceiverBinding itemView = RowChatReceiverBinding.inflate(LayoutInflater.from(context), parent, false);
+            return new ReceiverHolder(itemView);
+        }
+
+        return null;
     }
 
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        ChatModel countryModel = countryModels.get(position);
 
-        holder.binding.messageTxt.setText(countryModel.getMessageTxt().trim());
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
+        if (viewHolder instanceof SenderHolder) {
+            SenderHolder holder = (SenderHolder) viewHolder;
+            ChatModel chatModel = chatMessages.get(position);
 
-        Glide.with(context).asBitmap()
-                .load(countryModel.getCustomerAvatar()).placeholder(R.drawable.avatar).placeholder(R.drawable.avatar)
-                .into(holder.binding.userImg);
+            holder.binding.dateTxt.setText(NumberHandler.arabicToDecimal(DateHandler.convertLongDateToString(String.valueOf(chatModel.getMessageTime()), "yyyy-MM-dd hh:mm aa",UtilityApp.getLanguage())));
+            holder.binding.messageTxt.setText(chatModel.getMessageBody().trim());
+            Glide.with(context).asBitmap().load(chatModel.getSenderImage()).placeholder(R.drawable.avatar).placeholder(R.drawable.avatar).into(holder.binding.userImg);
+            holder.binding.chatImage.setVisibility(chatModel.getInputType().equalsIgnoreCase(Constants.inputType_image) ?
+                    View.VISIBLE : View.GONE);
 
+        } else if (viewHolder instanceof ReceiverHolder) {
+            ReceiverHolder receiverHolder = (ReceiverHolder) viewHolder;
+            ChatModel chatModel = chatMessages.get(position);
+            receiverHolder.binding.dateTxt.setText(NumberHandler.arabicToDecimal(DateHandler.convertLongDateToString(String.valueOf(chatModel.getMessageTime()), "yyyy-MM-dd hh:mm aa",UtilityApp.getLanguage())));
+            receiverHolder.binding.messageTxt.setText(chatModel.getMessageBody().trim());
+            Glide.with(context).asBitmap().load(chatModel.getReceiverImage()).placeholder(R.drawable.avatar).placeholder(R.drawable.avatar).into(receiverHolder.binding.userImg);
 
+            receiverHolder.binding.chatImage.setVisibility(chatModel.getInputType().equalsIgnoreCase(Constants.inputType_image) ?
+                    View.VISIBLE : View.GONE);
 
+        }
     }
+
 
     @Override
     public int getItemCount() {
-        return countryModels != null ? countryModels.size() : 0;
+        return chatMessages == null ? 0 : chatMessages.size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        ChatModel obj = chatMessages.get(position);
+        String typeSender = Constants.Sender;
+        return obj.getMessageType().equals(typeSender) ? SENDER_VIEW : RECEIVER_VIEW;
+    }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class SenderHolder extends RecyclerView.ViewHolder {
 
-        RowChatBinding binding;
+        RowChatSenderBinding binding;
 
-        ViewHolder(RowChatBinding view) {
+        public SenderHolder(RowChatSenderBinding view) {
+
             super(view.getRoot());
             binding = view;
 
+
         }
+    }
 
 
+    class ReceiverHolder extends RecyclerView.ViewHolder {
+        RowChatReceiverBinding binding;
+
+        public ReceiverHolder(RowChatReceiverBinding itemView) {
+            super(itemView.getRoot());
+            binding = itemView;
+
+        }
 
     }
 

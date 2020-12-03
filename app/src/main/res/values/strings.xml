@@ -159,9 +159,19 @@
     <string name="no_balance">Sorry !!</string>
     <string name="no_balance1">You do not have enough balance Click here to add credit</string>
     <string name="Hello">hello</string>
+    <string name="Hello1">hello wafaa</string>
     <string name="enter_message">Enter Message</string>
     <string name="add_comment">Please add a comment to the product</string>
     <string name="add">Add</string>
     <string name="add_comm">Add Comment</string>
+    <string name="invoice_number">Invoice Number</string>
+    <string name="product_total">Total product</string>
+    <string name="deliver_fees">Delivery Fees</string>
+    <string name="delivery_to">Delivery to</string>
+    <string name="deliver_time">Delivery times</string>
+    <string name="choose_payment_type">Choose a payment Type</string>
+    <string name="delivery_send">Send for delivery</string>
+    <string name="save_update">Save and continue editing</string>
+    <string name="textFromtime">9 A.m  9 P.M </string>
 
 </resources>

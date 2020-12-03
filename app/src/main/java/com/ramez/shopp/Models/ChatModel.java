@@ -3,134 +3,157 @@ package com.ramez.shopp.Models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by wokman on 5/7/2017.
- */
-
 public class ChatModel {
+    private String senderID, receiverID, messageKey;
+    private String messageBody;
+    private String   senderName;
+    private String receiverName;
+    private String senderImage;
+    private String receiverImage;
+    private String messageType;
+    private String inputType;
+    private String imageUrl;
+    private String lat;
+    private String lng;
+    private long messageTime;
+    private boolean is_read;
 
-    @SerializedName("id")
-    @Expose
-    public int id;
-    @SerializedName("chat_id")
-    @Expose
-    public int chatId;
-    @SerializedName("customer_id")
-    @Expose
-    public int customerId;
-    @SerializedName("provider_id")
-    @Expose
-    public int providerId;
-    @SerializedName("provider_name")
-    @Expose
-    public String providerName;
-    @SerializedName("customer_name")
-    @Expose
-    public String customerName;
-    @SerializedName("user_avatar")
-    @Expose
-    public String customerAvatar;
-    @SerializedName("provider_avatar")
-    @Expose
-    public String providerAvatar;
-    @SerializedName("updated_at")
-    @Expose
-    public String updatedAt;
-
-    @SerializedName("messageTxt")
-    @Expose
-    public String messageTxt;
-
-    public int getId() {
-        return id;
+    public ChatModel(String senderID, String receiverID, String messageKey, String messageBody, String senderName, String receiverName, String senderImage, String receiverImage, String messageType, String inputType, String imageUrl, String lat, String lng, long messageTime, boolean is_read) {
+        this.senderID = senderID;
+        this.receiverID = receiverID;
+        this.messageKey = messageKey;
+        this.messageBody = messageBody;
+        this.senderName = senderName;
+        this.receiverName = receiverName;
+        this.senderImage = senderImage;
+        this.receiverImage = receiverImage;
+        this.messageType = messageType;
+        this.inputType = inputType;
+        this.imageUrl = imageUrl;
+        this.lat = lat;
+        this.lng = lng;
+        this.messageTime = messageTime;
+        this.is_read = is_read;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getSenderID() {
+        return senderID;
     }
 
-    public int getChatId() {
-        return chatId;
+    public void setSenderID(String senderID) {
+        this.senderID = senderID;
     }
 
-    public void setChatId(int chatId) {
-        this.chatId = chatId;
+    public String getReceiverID() {
+        return receiverID;
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public void setReceiverID(String receiverID) {
+        this.receiverID = receiverID;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public String getMessageKey() {
+        return messageKey;
     }
 
-    public int getProviderId() {
-        return providerId;
+    public void setMessageKey(String messageKey) {
+        this.messageKey = messageKey;
     }
 
-    public void setProviderId(int providerId) {
-        this.providerId = providerId;
+    public String getMessageBody() {
+        return messageBody;
     }
 
-    public String getProviderName() {
-        return providerName;
+    public void setMessageBody(String messageBody) {
+        this.messageBody = messageBody;
     }
 
-    public void setProviderName(String providerName) {
-        this.providerName = providerName;
+    public String getSenderName() {
+        return senderName;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public String getReceiverName() {
+        return receiverName;
     }
 
-    public String getCustomerAvatar() {
-        return customerAvatar;
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
     }
 
-    public void setCustomerAvatar(String customerAvatar) {
-        this.customerAvatar = customerAvatar;
+    public String getSenderImage() {
+        return senderImage;
     }
 
-    public String getProviderAvatar() {
-        return providerAvatar;
+    public void setSenderImage(String senderImage) {
+        this.senderImage = senderImage;
     }
 
-    public void setProviderAvatar(String providerAvatar) {
-        this.providerAvatar = providerAvatar;
+    public String getReceiverImage() {
+        return receiverImage;
     }
 
-    public String getUpdatedAt() {
-        return updatedAt;
+    public void setReceiverImage(String receiverImage) {
+        this.receiverImage = receiverImage;
     }
 
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
+    public String getMessageType() {
+        return messageType;
     }
 
-    public String getMessageTxt() {
-        return messageTxt;
+    public void setMessageType(String messageType) {
+        this.messageType = messageType;
     }
 
-    public void setMessageTxt(String messageTxt) {
-        this.messageTxt = messageTxt;
+    public String getInputType() {
+        return inputType;
     }
 
-    public ChatModel(int id, int chatId, int customerId, int providerId, String providerName, String customerName, String customerAvatar, String providerAvatar, String updatedAt, String messageTxt) {
-        this.id = id;
-        this.chatId = chatId;
-        this.customerId = customerId;
-        this.providerId = providerId;
-        this.providerName = providerName;
-        this.customerName = customerName;
-        this.customerAvatar = customerAvatar;
-        this.providerAvatar = providerAvatar;
-        this.updatedAt = updatedAt;
-        this.messageTxt = messageTxt;
+    public void setInputType(String inputType) {
+        this.inputType = inputType;
     }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
+
+    public long getMessageTime() {
+        return messageTime;
+    }
+
+    public void setMessageTime(long messageTime) {
+        this.messageTime = messageTime;
+    }
+
+    public boolean isIs_read() {
+        return is_read;
+    }
+
+    public void setIs_read(boolean is_read) {
+        this.is_read = is_read;
+    }
+
 }
