@@ -49,17 +49,17 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
     public void onBindViewHolder(final Holder holder, int position) {
         CategoryModel categoryModel = categoryDMS.get(position);
         if (UtilityApp.getLanguage() == Constants.Arabic) {
-            holder.binding.tvCatTitle.setText(categoryModel.getName_ar());
+            holder.binding.tvCatTitle.setText(categoryModel.getHName());
 
         } else {
-            holder.binding.tvCatTitle.setText(categoryModel.getName_en());
+            holder.binding.tvCatTitle.setText(categoryModel.getHName());
 
         }
 
-        Glide.with(context).asBitmap().load(categoryModel.getIcon()).addListener(new RequestListener<Bitmap>() {
+        Glide.with(context).asBitmap().load(categoryModel.getImage()).addListener(new RequestListener<Bitmap>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
-                holder.binding.loadingLY.setVisibility(View.GONE);
+                holder.binding.loadingLY.setVisibility(View.VISIBLE);
                 return false;
             }
 
@@ -71,6 +71,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
         }).into(holder.binding.ivCatImage);
 
         holder.binding.container.setOnClickListener(v -> onItemClick.onItemClicked(position,categoryModel));
+
     }
 
     public void setCategoriesList(List<CategoryModel> list) {

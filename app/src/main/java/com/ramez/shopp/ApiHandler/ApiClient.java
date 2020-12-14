@@ -1,9 +1,13 @@
 package com.ramez.shopp.ApiHandler;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.TLSSocketFactory;
+import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Utils.SharedPManger;
 
 
 import java.security.cert.CertificateException;
@@ -26,10 +30,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    public static final String BASE_URL = GlobalData.ApiURL;
+    public static  String BASE_URL = "";
     private static Retrofit retrofit = null;
     private static Retrofit retrofitCustom = null;
     private static Retrofit retrofitLong = null;
+    private static String country;
 
     private static ConnectionSpec spec = new ConnectionSpec.Builder(ConnectionSpec.COMPATIBLE_TLS)
             .supportsTlsExtensions(true)
@@ -66,10 +71,20 @@ public class ApiClient {
 
 
     public static Retrofit getClient() {
+        if(UtilityApp.getLocalData().getShortname()!=null){
+            country=UtilityApp.getLocalData().getShortname();
+
+        }
+        else {
+            country="BH";
+
+        }
+        BASE_URL=GlobalData.BetaBaseURL+ country+GlobalData.grocery+GlobalData.Api;
+        Log.i("TAG", "Log BASE_URL " + BASE_URL);
+
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
-
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -81,10 +96,20 @@ public class ApiClient {
     }
 
     public static Retrofit getLongClient() {
+        if(UtilityApp.getLocalData().getShortname()!=null){
+            country=UtilityApp.getLocalData().getShortname();
+
+        }
+        else {
+            country="BH";
+
+        }
+        BASE_URL=GlobalData.BetaBaseURL+ country+GlobalData.grocery+GlobalData.Api;
 
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
+
 
         if (retrofitLong == null) {
             retrofitLong = new Retrofit.Builder()

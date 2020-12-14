@@ -128,11 +128,11 @@ public class NumberHandler {
 
 
 
-    public static String formatDouble(Object number) {
+    public static String formatDouble(Object number,int FractionDigits ) {
         DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
         DecimalFormat stringFormater = new DecimalFormat("##.########", symbols);
-        stringFormater.setMaximumFractionDigits(3);
-        stringFormater.setMinimumFractionDigits(3);
+        stringFormater.setMaximumFractionDigits(FractionDigits);
+        stringFormater.setMinimumFractionDigits(FractionDigits);
 
         return stringFormater.format(number);
 

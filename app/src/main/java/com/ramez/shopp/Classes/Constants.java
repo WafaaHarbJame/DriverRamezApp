@@ -30,6 +30,11 @@ public class Constants {
     public static final int Points_To_SAR = 100;
     public static final String TIME_ZONE = "GMT+3";
     public static final String COUNTRY_CODE = "00966";
+    public static final String COUNTRY_NAME_SHORT = "COUNTRY_NAME_SHORT";
+    public static final String COUNTRY_ID = "COUNTRY_ID";
+    public static final String CITY_ID = "CITY_ID";
+    public static final String COUNTRY_NAME = "COUNTRY_NAME";
+
     public static final String COUNTRY_CODE_PLUS = "+966";
     public static final String Paly_Link = "http://onelink.to/k9h4jf";
 
@@ -81,6 +86,7 @@ public class Constants {
     public static final String SEARCH = "search";
 
     public static final String KEY_MEMBER = "key_member";
+    public static final String KEY_Local = "KEY_Local";
     public static String KEY_FIREBASE_TOKEN = "firebase_token";
     public static final String KEY_MEMBER_LOCATION = "key_member_location";
     public static final String KEY_MEMBER_LANGUAGE = "key_member_language";
@@ -90,7 +96,8 @@ public class Constants {
     public static final String KEY_IS_CHAT_LIST = "key_is_chat_list";
     public static final String KEY_NOTIFY_TYPE = "key_notify_type";
     public static final String KEY_NOTIFICATION_TYPE = "key_notification_type";
-
+    public static final String FROM_REGISTER = "FROM_REGISTER";
+    public static final String success = "success";
     public static final String KEY_USERNAME = "key_username";
     public static final String KEY_USER_ID = "key_user_id";
     public static final String KEY_USER_NAME = "key_user_name";
@@ -174,6 +181,8 @@ public class Constants {
     public static final String DB_FemaleObstruction = "22";
 
     public static final String DB_AboutModel = "24";
+    public static final String LIST_MODEL = "LIST_MODEL";
+    public static final String LIST_MODEL_NAME = "LIST_MODEL_NAME";
     public static final String DB_Salary = "25";
     public static final String DB_Education = "26";
     public static final String DB_NumberOfChildren = "27";
@@ -201,7 +210,17 @@ public class Constants {
     public  static String inputType_text="text";
     public  static String inputType_image="Image";
     public  static String inputType="Image";
+    public  static String deviceType="android";
+    public  static String user_type="User";
+    public  static String api_key="^~>h2q=m[h=>3?bU/!M'X!m~?4GjKJP{Q@y;~fa3Vjs/M#`8FuB;x[LKwJ&>gNrxBt8!5PZ:9QLuHBUtu{TPc2s]k74]Br?PGe6+NcFUT-8";
 
+    public static String KEY_FILE = "KEY_FILE";
+    public static String KEY_EDIT = "KEY_EDIT";
+    public static String KEY_ADDRESS_ID = "KEY_ADDRESS_ID";
+    public static String KEY_LAT = "KEY_LAT";
+    public static String KEY_LNG = "KEY_LNG";
+    public static final String CURRENCY = "CURRENCY";
+    public static final String Fractional = "Fractional";
 
 
 }

@@ -31,7 +31,7 @@ public class InfoDialog extends Dialog {
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         requestWindowFeature(Window.FEATURE_NO_TITLE); //before
 //        setTitle(title);
-        setContentView(R.layout.dialog_info);
+        setContentView(R.layout.dialog_my_info);
 
         messageTxt = findViewById(R.id.messageTxt);
         okBtn = findViewById(R.id.okBtn);

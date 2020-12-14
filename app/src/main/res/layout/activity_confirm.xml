@@ -142,11 +142,11 @@
                 android:focusableInTouchMode="true"
                 android:imeOptions="actionDone"
                 android:inputType="number"
-                android:maxLength="6"
-                android:background="@drawable/textlines"
-                android:textColor="@color/colorAppRed"
+                android:maxLength="4"
+                android:textColor="@color/colorPrimaryDark"
                 android:textIsSelectable="false"
-                android:textSize="@dimen/_15ssp" />
+                android:visibility="visible"
+                android:textSize="@dimen/_15ssp"/>
 
 
             <com.ramez.shopp.SpichalViews.STextViewBold

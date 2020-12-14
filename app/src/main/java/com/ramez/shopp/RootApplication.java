@@ -24,7 +24,6 @@ public class RootApplication extends Application {
 
     SharedPManger sharedPManger;
 
-    public static Map<String, Object> changesMap = new HashMap<>();
 
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -40,12 +39,9 @@ public class RootApplication extends Application {
         return rootApplication;
     }
 
-    public synchronized SharedPManger getSharedPManger() {
+    public  SharedPManger getSharedPManger() {
         return sharedPManger;
     }
-
-//    @GlideModule
-//    public final class MyAppGlideModule extends AppGlideModule {}
 
     @Override
     public void onCreate() {
@@ -54,26 +50,9 @@ public class RootApplication extends Application {
         rootApplication = this;
         sharedPManger = new SharedPManger(this);
 
-//        FirebaseMessaging.getInstance().subscribeToTopic("promotional");
-
-//        Crashlytics crashlyticsKit = new Crashlytics.Builder()
-//                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-//                .build();
-
-//        Fabric.with(this, crashlyticsKit);
-
-//        Realm.init(this);
-//        RealmConfiguration config = new RealmConfiguration.Builder().name("warda.realm")
-//                .schemaVersion(1)
-//                .deleteRealmIfMigrationNeeded()
-//                .migration(new RootMigration())
-//                .build();
-//        Realm.setDefaultConfiguration(config);
-
 
         String appLanguage = UtilityApp.getLanguage();
         if (appLanguage == null) {
-//            appLanguage = Locale.getDefault().getLanguage();
             appLanguage = Constants.Arabic;
             UtilityApp.setLanguage(appLanguage);
 
@@ -87,7 +66,6 @@ public class RootApplication extends Application {
 
         }
 
-        rootApplication = this;
 
     }
 
@@ -97,6 +75,7 @@ public class RootApplication extends Application {
         super.onConfigurationChanged(newConfig);
         LocaleUtils.updateConfig(rootApplication, newConfig);
     }
+
 
 
 }

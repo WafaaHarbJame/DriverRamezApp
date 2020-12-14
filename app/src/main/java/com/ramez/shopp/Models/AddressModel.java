@@ -1,74 +1,140 @@
 package com.ramez.shopp.Models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class AddressModel {
-    private int primaryID;
+    @SerializedName("id")
+    @Expose
+    private Integer id;
+    @SerializedName("user_id")
+    @Expose
+    private Integer userId;
+    @SerializedName("name")
+    @Expose
+    private String name="";
+    @SerializedName("phone_prefix")
+    @Expose
+    private String phonePrefix ="";
+    @SerializedName("mobile_number")
+    @Expose
+    private String mobileNumber="";
+    @SerializedName("address_type")
+    @Expose
+    private String addressType="";
+    @SerializedName("house_no")
+    @Expose
+    private String houseNo="";
+    @SerializedName("apartment_no")
+    @Expose
+    private String apartmentNo="";
+    @SerializedName("area_id")
+    @Expose
+    private int areaId=0;
+    @SerializedName("additional_direction")
+    @Expose
+    private String additionalDirection="";
+    @SerializedName("landline_number")
+    @Expose
+    private int landlineNumber=0;
+    @SerializedName("floor")
+    @Expose
+    private String floor="";
+    @SerializedName("block")
+    @Expose
+    private String block="";
+    @SerializedName("address_nickname")
+    @Expose
+    private String addressNickname="";
+    @SerializedName("landmark_details")
+    @Expose
+    private String landmarkDetails="";
+    @SerializedName("area_details")
+    @Expose
+    private String areaDetails="";
+    @SerializedName("city")
+    @Expose
+    private String city="";
+    @SerializedName("country")
+    @Expose
+    private String country="";
+    @SerializedName("street_details")
+    @Expose
+    private String streetDetails="";
+    @SerializedName("longitude")
+    @Expose
+    private Double longitude=0.0;
+    @SerializedName("latitude")
+    @Expose
+    private Double latitude=0.0;
+    @SerializedName("google_address")
+    @Expose
+    private String googleAddress="";
+    @SerializedName("full_address")
+    @Expose
+    private String fullAddress="";
+    @SerializedName("default_address")
+    @Expose
+    private Integer defaultAddress=0;
+    @SerializedName("state")
+    @Expose
+    private int state=0;
+    @SerializedName("pincode")
+    @Expose
+    private String pincode="";
+    @SerializedName("apartment_name")
+    @Expose
+    private String apartmentName="";
+    @SerializedName("isDefault")
+    @Expose
+    private Boolean isDefault=false;
 
-    private int userID = 0, addressID = 0;
-    private String addressLat = "", addressLng = "", addressType = "";
-    private String addressMark = "", addressNote = "", addressText = "";
-    public String addressAttitude = "", physicalAddress = "";
-    public String add_area="";
-    public int area_id=0;
-    public String road_number="",block_numer="",building_number="",flat_numer="";
-
-    public AddressModel(int primaryID, int userID, int addressID, String addressLat, String addressLng, String addressType, String addressMark, String addressNote, String addressText, String addressAttitude, String physicalAddress, String add_area, int area_id, String road_number, String block_numer, String building_number, String flat_numer) {
-        this.primaryID = primaryID;
-        this.userID = userID;
-        this.addressID = addressID;
-        this.addressLat = addressLat;
-        this.addressLng = addressLng;
-        this.addressType = addressType;
-        this.addressMark = addressMark;
-        this.addressNote = addressNote;
-        this.addressText = addressText;
-        this.addressAttitude = addressAttitude;
-        this.physicalAddress = physicalAddress;
-        this.add_area = add_area;
-        this.area_id = area_id;
-        this.road_number = road_number;
-        this.block_numer = block_numer;
-        this.building_number = building_number;
-        this.flat_numer = flat_numer;
+    public Integer getId() {
+        return id;
     }
 
-    public int getPrimaryID() {
-        return primaryID;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setPrimaryID(int primaryID) {
-        this.primaryID = primaryID;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public int getUserID() {
-        return userID;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public String getName() {
+        return name;
     }
 
-    public int getAddressID() {
-        return addressID;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setAddressID(int addressID) {
-        this.addressID = addressID;
+    public int getState() {
+        return state;
     }
 
-    public String getAddressLat() {
-        return addressLat;
+    public void setState(int state) {
+        this.state = state;
     }
 
-    public void setAddressLat(String addressLat) {
-        this.addressLat = addressLat;
+    public String getPhonePrefix() {
+        return phonePrefix;
     }
 
-    public String getAddressLng() {
-        return addressLng;
+    public void setPhonePrefix(String phonePrefix) {
+        this.phonePrefix = phonePrefix;
     }
 
-    public void setAddressLng(String addressLng) {
-        this.addressLng = addressLng;
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 
     public String getAddressType() {
@@ -79,91 +145,175 @@ public class AddressModel {
         this.addressType = addressType;
     }
 
-    public String getAddressMark() {
-        return addressMark;
+    public String getHouseNo() {
+        return houseNo;
     }
 
-    public void setAddressMark(String addressMark) {
-        this.addressMark = addressMark;
+    public void setHouseNo(String houseNo) {
+        this.houseNo = houseNo;
     }
 
-    public String getAddressNote() {
-        return addressNote;
+    public String getApartmentNo() {
+        return apartmentNo;
     }
 
-    public void setAddressNote(String addressNote) {
-        this.addressNote = addressNote;
+    public void setApartmentNo(String apartmentNo) {
+        this.apartmentNo = apartmentNo;
     }
 
-    public String getAddressText() {
-        return addressText;
+    public int getAreaId() {
+        return areaId;
     }
 
-    public void setAddressText(String addressText) {
-        this.addressText = addressText;
+    public void setAreaId(int areaId) {
+        this.areaId = areaId;
     }
 
-    public String getAddressAttitude() {
-        return addressAttitude;
+    public String getAdditionalDirection() {
+        return additionalDirection;
     }
 
-    public void setAddressAttitude(String addressAttitude) {
-        this.addressAttitude = addressAttitude;
+    public void setAdditionalDirection(String additionalDirection) {
+        this.additionalDirection = additionalDirection;
     }
 
-    public String getPhysicalAddress() {
-        return physicalAddress;
+    public int getLandlineNumber() {
+        return landlineNumber;
     }
 
-    public void setPhysicalAddress(String physicalAddress) {
-        this.physicalAddress = physicalAddress;
+    public void setLandlineNumber(int landlineNumber) {
+        this.landlineNumber = landlineNumber;
     }
 
-    public String getAdd_area() {
-        return add_area;
+    public String getFloor() {
+        return floor;
     }
 
-    public void setAdd_area(String add_area) {
-        this.add_area = add_area;
+    public void setFloor(String floor) {
+        this.floor = floor;
     }
 
-    public int getArea_id() {
-        return area_id;
+    public String getBlock() {
+        return block;
     }
 
-    public void setArea_id(int area_id) {
-        this.area_id = area_id;
+    public void setBlock(String block) {
+        this.block = block;
     }
 
-    public String getRoad_number() {
-        return road_number;
+    public String getAddressNickname() {
+        return addressNickname;
     }
 
-    public void setRoad_number(String road_number) {
-        this.road_number = road_number;
+    public void setAddressNickname(String addressNickname) {
+        this.addressNickname = addressNickname;
     }
 
-    public String getBlock_numer() {
-        return block_numer;
+    public String getLandmarkDetails() {
+        return landmarkDetails;
     }
 
-    public void setBlock_numer(String block_numer) {
-        this.block_numer = block_numer;
+    public void setLandmarkDetails(String landmarkDetails) {
+        this.landmarkDetails = landmarkDetails;
     }
 
-    public String getBuilding_number() {
-        return building_number;
+    public String getAreaDetails() {
+        return areaDetails;
     }
 
-    public void setBuilding_number(String building_number) {
-        this.building_number = building_number;
+    public void setAreaDetails(String areaDetails) {
+        this.areaDetails = areaDetails;
     }
 
-    public String getFlat_numer() {
-        return flat_numer;
+    public String getCity() {
+        return city;
     }
 
-    public void setFlat_numer(String flat_numer) {
-        this.flat_numer = flat_numer;
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getStreetDetails() {
+        return streetDetails;
+    }
+
+    public void setStreetDetails(String streetDetails) {
+        this.streetDetails = streetDetails;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getGoogleAddress() {
+        return googleAddress;
+    }
+
+    public void setGoogleAddress(String googleAddress) {
+        this.googleAddress = googleAddress;
+    }
+
+    public String getFullAddress() {
+        return fullAddress;
+    }
+
+    public void setFullAddress(String fullAddress) {
+        this.fullAddress = fullAddress;
+    }
+
+    public Integer getDefaultAddress() {
+        return defaultAddress;
+    }
+
+    public void setDefaultAddress(Integer defaultAddress) {
+        this.defaultAddress = defaultAddress;
+    }
+
+
+
+
+    public String getPincode() {
+        return pincode;
+    }
+
+    public void setPincode(String pincode) {
+        this.pincode = pincode;
+    }
+
+    public String getApartmentName() {
+        return apartmentName;
+    }
+
+    public void setApartmentName(String apartmentName) {
+        this.apartmentName = apartmentName;
+    }
+
+    public Boolean getDefault() {
+        return isDefault;
+    }
+
+    public void setDefault(Boolean aDefault) {
+        isDefault = aDefault;
     }
 }
+

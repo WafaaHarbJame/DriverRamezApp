@@ -2,9 +2,18 @@ package com.ramez.shopp.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
+import com.github.dhaval2404.form_validation.rule.NonEmptyRule;
+import com.github.dhaval2404.form_validation.validation.FormValidator;
+import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.GlobalData;
+import com.ramez.shopp.Classes.OtpModel;
+import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.R;
+import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.ActivityConformPhoneBinding;
 
 public class ConfirmPhoneActivity extends ActivityBase {
@@ -23,7 +32,16 @@ public class ConfirmPhoneActivity extends ActivityBase {
             onBackPressed();
         });
         binding.confirmBut.setOnClickListener(view1 -> {
-            GoToConfirm();
+            if (isValidForm()) {
+                String mobileStr = NumberHandler.arabicToDecimal(binding.edtPhoneNumber.getText().toString());
+                MemberModel memberModel=new MemberModel();
+                memberModel.setUserType(Constants.user_type);
+                memberModel.setMobileNumber(mobileStr);
+                ForgetPassword(memberModel);
+
+            }
+
+
         });
         binding.toolBar.mainTitleTxt.setText(getString(R.string.forget_pass));
         binding.toolBar.backBtn.setOnClickListener(view1 -> {
@@ -38,6 +56,58 @@ public class ConfirmPhoneActivity extends ActivityBase {
         startActivity(intent);
         finish();
 
+    }
+
+    private final boolean isValidForm() {
+        FormValidator formValidator = FormValidator.Companion.getInstance();
+        return formValidator.addField(binding.edtPhoneNumber, new NonEmptyRule(getString(R.string.enter_phone_number))).validate();
+    }
+
+    public void SendOtp(String mobile) {
+        new DataFeacher(getActiviy(), (obj, func, IsSuccess) -> {
+            if (func.equals(Constants.ERROR)) {
+                Toast(R.string.error_in_data);
+            } else if (func.equals(Constants.FAIL)) {
+                Toast(R.string.fail_to_sen_otp);
+            } else {
+                if (IsSuccess) {
+                    OtpModel otpModel = (OtpModel) obj;
+                    Log.i("TAG", "Log otp " + otpModel.getData());
+                    GoToConfirm();
+
+
+                } else {
+                    Toast(R.string.fail_to_sen_otp);
+                }
+            }
+
+        }).sendOpt(mobile);
+    }
+
+    public void ForgetPassword(MemberModel memberModel) {
+        GlobalData.progressDialog(
+                getActiviy(),
+                R.string.forget_pass,
+                R.string.please_wait_sending);
+        new DataFeacher(getActiviy(), (obj, func, IsSuccess) -> {
+            GlobalData.hideProgressDialog();
+            if (func.equals(Constants.ERROR)) {
+                Toast(R.string.error_in_data);
+            } else if (func.equals(Constants.FAIL)) {
+                Toast(R.string.fail_to_sen_otp);
+            } else {
+                if (IsSuccess) {
+                    SendOtp(memberModel.getMobileNumber());
+                    OtpModel otpModel = (OtpModel) obj;
+                    Log.i("TAG", "Log otp " + otpModel.getData());
+
+
+                } else {
+                    Toast(R.string.fail_to_sen_otp);
+                }
+            }
+
+        }).ForgetPasswordHandle(memberModel);
     }
 
 

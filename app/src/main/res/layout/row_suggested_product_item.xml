@@ -53,6 +53,7 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:lines="2"
+            android:textAlignment="viewStart"
             android:text="@string/product_name"
             android:textColor="@color/black"
             android:textSize="@dimen/_11ssp"

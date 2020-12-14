@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.R;
@@ -16,7 +17,6 @@ public class SplashScreenActivity extends ActivityBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         startSplash();
@@ -31,26 +31,37 @@ public class SplashScreenActivity extends ActivityBase {
         initData();
 
     }
+
     private void initData() {
 
         new Handler().postDelayed(() -> {
 
-                    if (UtilityApp.isLogin()) {
-                        Intent intent = new Intent(getActiviy(), MainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        finish();
+            if (UtilityApp.isLogin()) {
+                Intent intent = new Intent(getActiviy(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
 
-                    } else {
+            } else {
 
-                        Intent intent = new Intent(getActiviy(), MainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        finish();
-
-                    }
+                if (!UtilityApp.isFirstRun()) {
+                    Intent intent = new Intent(getActiviy(), RegisterLoginActivity.class);
+                    intent.putExtra(Constants.LOGIN, true);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    startWelcomeActivity();
                 }
-                , SPLASH_TIMER);
+            }
+
+
+        }, SPLASH_TIMER);
+    }
+
+    private void startWelcomeActivity() {
+        startActivity(new Intent(getActiviy(), WelcomeActivity.class));
+        finish();
     }
 
 }

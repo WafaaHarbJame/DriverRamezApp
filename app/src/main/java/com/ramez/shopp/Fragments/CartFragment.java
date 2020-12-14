@@ -2,6 +2,8 @@ package com.ramez.shopp.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +16,30 @@ import com.google.gson.Gson;
 import com.ramez.shopp.Activities.AddCardActivity;
 import com.ramez.shopp.Activities.TermsActivity;
 import com.ramez.shopp.Adapter.CartAdapter;
+import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.CartModel;
+import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.MessageEvent;
+import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Models.CartResultModel;
+import com.ramez.shopp.Models.CategoryResultModel;
 import com.ramez.shopp.R;
+import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.FragmentCartBinding;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
+
+import static android.content.ContentValues.TAG;
 
 public class CartFragment extends FragmentBase  implements CartAdapter.OnCartItemClicked{
     private FragmentCartBinding binding;
     private CartAdapter cartAdapter;
     ArrayList<CartModel> cartList;
     LinearLayoutManager linearLayoutManager;
+    String currency="BHD";
+    int fraction=2;
 
 
 
@@ -34,27 +49,26 @@ public class CartFragment extends FragmentBase  implements CartAdapter.OnCartIte
         View view = binding.getRoot();
         cartList =new ArrayList<>();
 
+        currency=UtilityApp.getLocalData().getCurrencyCode();
+        fraction=UtilityApp.getLocalData().getFractional();
+
+
         linearLayoutManager=new LinearLayoutManager(getActivityy());
         binding.cartRecycler.setLayoutManager(linearLayoutManager);
         binding.cartRecycler.setHasFixedSize(true);
-        cartList.add(new CartModel(1,2,1,2,0,10,"شيبس ليز الملح 25 جرام","https://www.supermama.me/system/App/Entities/Article/images/000/065/491/web-watermarked-large/%D9%85%D8%B4%D8%B1%D9%88%D8%A8%D8%A7%D8%AA-%D8%AD%D8%A7%D8%B1%D9%82%D8%A9-%D9%84%D9%84%D8%AF%D9%87%D9%88%D9%86.jpg",
-                "10","",0,"20",100));
-        cartList.add(new CartModel(1,2,1,2,0,10,"شيبس ليز الملح 25 جرام","https://www.supermama.me/system/App/Entities/Article/images/000/065/491/web-watermarked-large/%D9%85%D8%B4%D8%B1%D9%88%D8%A8%D8%A7%D8%AA-%D8%AD%D8%A7%D8%B1%D9%82%D8%A9-%D9%84%D9%84%D8%AF%D9%87%D9%88%D9%86.jpg",
-                "10","",0,"20",100));
-        cartList.add(new CartModel(1,2,1,2,0,10,"شيبس ليز الملح 25 جرام","https://www.supermama.me/system/App/Entities/Article/images/000/065/491/web-watermarked-large/%D9%85%D8%B4%D8%B1%D9%88%D8%A8%D8%A7%D8%AA-%D8%AD%D8%A7%D8%B1%D9%82%D8%A9-%D9%84%D9%84%D8%AF%D9%87%D9%88%D9%86.jpg",
-                "10","",0,"20",100));
-        cartList.add(new CartModel(1,2,1,2,0,10,"شيبس ليز الملح 25 جرام","https://www.supermama.me/system/App/Entities/Article/images/000/065/491/web-watermarked-large/%D9%85%D8%B4%D8%B1%D9%88%D8%A8%D8%A7%D8%AA-%D8%AD%D8%A7%D8%B1%D9%82%D8%A9-%D9%84%D9%84%D8%AF%D9%87%D9%88%D9%86.jpg",
-                "10","",0,"20",100));
-        cartList.add(new CartModel(1,2,1,2,0,10,"شيبس ليز الملح 25 جرام","https://www.supermama.me/system/App/Entities/Article/images/000/065/491/web-watermarked-large/%D9%85%D8%B4%D8%B1%D9%88%D8%A8%D8%A7%D8%AA-%D8%AD%D8%A7%D8%B1%D9%82%D8%A9-%D9%84%D9%84%D8%AF%D9%87%D9%88%D9%86.jpg",
-                "10","",0,"20",100));
-        initAdapter();
 
         binding.contBut.setOnClickListener(view1 -> {
-            //startAddCardActivity();
-            FragmentManager fragmentManager = getFragmentManager();
+            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_invoice));
+            FragmentManager fragmentManager = getParentFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.mainContainer, new InvoiceFragment(), "InvoiceFragment").commit();
 
         });
+
+
+        getCarts(7263,14);
+
+
+
 
 
         return view;
@@ -74,5 +88,76 @@ public class CartFragment extends FragmentBase  implements CartAdapter.OnCartIte
     private void startAddCardActivity(){
         Intent intent=new Intent(getActivityy(), AddCardActivity.class);
         startActivity(intent);
+    }
+
+    public void getCarts(int storeId,int userId) {
+        binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
+        binding.dataLY.setVisibility(View.GONE);
+        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+
+        new DataFeacher(getActivity(), (obj, func, IsSuccess) -> {
+            CartResultModel result = (CartResultModel) obj;
+            String message = getString(R.string.fail_to_get_data);
+
+            binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
+
+            if (func.equals(Constants.ERROR)) {
+
+                if (result != null) {
+                    message = result.getMessage();
+                }
+                binding.dataLY.setVisibility(View.GONE);
+                binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(message);
+
+            } else if (func.equals(Constants.FAIL)) {
+
+                binding.dataLY.setVisibility(View.GONE);
+                binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(message);
+
+
+            } else {
+                if (IsSuccess) {
+                    if (result.getData().getCartData() != null && result.getData().getCartData().size() > 0) {
+
+                        binding.dataLY.setVisibility(View.VISIBLE);
+                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+                        cartList = result.getData().getCartData();
+
+                        Log.i(TAG, "Log cart" + result.getData().getCartData().size());
+                        initAdapter();
+
+                        if(cartList.size()>0){
+                            binding.productsSizeTv.setText(String.valueOf(cartList.size()));
+                            binding.totalTv.setText(NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction).concat(" "+currency));
+                            binding.productCostTv.setText(NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction).concat(" "+currency));
+                        }
+
+
+                    } else {
+
+                        binding.dataLY.setVisibility(View.GONE);
+                        binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
+
+                    }
+
+
+                } else {
+
+                    binding.dataLY.setVisibility(View.GONE);
+                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(message);
+
+
+                }
+            }
+
+        }).GetCarts(storeId,userId);
     }
 }

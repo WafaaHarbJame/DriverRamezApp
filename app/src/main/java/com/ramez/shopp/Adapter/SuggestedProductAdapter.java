@@ -33,7 +33,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
     private  OnItemClick onItemClick;
     private ArrayList<ProductModel> productModels;
     private double discount = 0.0;
-    private String currency="AED";
+    private String currency="BHD";
     private  int limit = 2;
 
 
@@ -56,15 +56,16 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
     @Override
     public void onBindViewHolder(Holder holder, int position) {
         ProductModel productModel = productModels.get(position);
+        currency=UtilityApp.getLocalData().getCurrencyCode();
         if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
             if(UtilityApp.getLanguage().equals(Constants.Arabic))
-            holder.binding.productNameTv.setText(productModel.getPro_name_ar().trim());
+                holder.binding.productNameTv.setText(productModel.getHName().trim());
             else
-                holder.binding.productNameTv.setText(productModel.getPro_name_en().trim());
+                holder.binding.productNameTv.setText(productModel.getName().trim());
 
         }
 
-        if(productModel.getIsFavorite()==1){
+        if(productModel.getFavourite()!=null&& productModel.getFavourite()){
             holder.binding.favBut.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.favorite_icon));
         }
         else {
@@ -73,12 +74,13 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
         }
 
 
-        if (productModel.getIs_special() == 1) {
+
+        if ( productModel.getProductBarcodes().get(0).getIsSpecial()) {
             holder.binding.productPriceBeforeTv.setPaintFlags(holder.binding.productPriceBeforeTv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            if (productModel.getPro_price() != null) {
-                holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(productModel.getPro_price())) + " " + currency);
-                holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(productModel.getPro_special_price())) + " " + currency);
-                discount = (Double.parseDouble(productModel.getPro_price()) - Double.parseDouble(productModel.getPro_special_price())) / (Double.parseDouble(productModel.getPro_price())) * 100;
+            if (productModel.getProductBarcodes().get(0).getSpecialPrice() != null) {
+                holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())),UtilityApp.getLocalData().getFractional()) + " " + currency);
+                holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice())),UtilityApp.getLocalData().getFractional()) + " " + currency);
+                discount = (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())) - Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice()))) / (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice()))) * 100;
                 DecimalFormat df = new DecimalFormat("#");
                 String newDiscount_str = df.format(discount);
                 holder.binding.discountTv.setText(NumberHandler.arabicToDecimal(newDiscount_str) + " % "+"OFF");
@@ -86,18 +88,17 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
 
 
         } else {
-            if (productModel.getPro_price() != null) {
-                holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(productModel.getPro_price())) + " " + currency + "");
+            if (productModel.getProductBarcodes().get(0).getPrice() != null) {
+                holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())) + " " + currency + "",UtilityApp.getLocalData().getFractional()));
                 holder.binding.productPriceBeforeTv.setVisibility(View.INVISIBLE);
                 holder.binding.discountTv.setVisibility(View.INVISIBLE);
-
 
             }
         }
 
 
         Glide.with(context).asBitmap()
-                .load("http" + productModel.getPro_img()).placeholder(R.drawable.image_product).placeholder(R.drawable.image_product)
+                .load(productModel.getImages().get(0)).placeholder(R.drawable.image_product).placeholder(R.drawable.image_product)
                 .addListener(new RequestListener<Bitmap>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {

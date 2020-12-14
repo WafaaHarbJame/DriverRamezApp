@@ -3,118 +3,107 @@ package com.ramez.shopp.Activities;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.text.Html;
+import android.util.Log;
 import android.view.View;
 
 import com.ramez.shopp.Adapter.ProductSliderAdapter;
 import com.ramez.shopp.Adapter.ReviewAdapter;
 import com.ramez.shopp.Adapter.SuggestedProductAdapter;
+import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Models.MemberModel;
+import com.ramez.shopp.Models.ProductDetailsModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.Models.ReviewModel;
-import com.ramez.shopp.Models.SliderModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.ActivityProductDeatilsBinding;
 
 import java.util.ArrayList;
 
+import static android.content.ContentValues.TAG;
+
 public class ProductDetailsActivity extends ActivityBase implements SuggestedProductAdapter.OnItemClick {
     ActivityProductDeatilsBinding binding;
-
-    ArrayList<SliderModel> sliderList;
+    String user_id;
+    ArrayList<String> sliderList;
     ArrayList<ProductModel> productList;
     ArrayList<ReviewModel> reviewList;
-
+    String productName;
+    private int category_id = 0, country_id, city_id, product_id;
     private ProductSliderAdapter productSliderAdapter;
     private SuggestedProductAdapter productOfferAdapter;
     private ReviewAdapter reviewAdapter;
-    private  LinearLayoutManager productLayoutManager;
-    private  LinearLayoutManager reviewManger;
-
-    String productName;
+    private LinearLayoutManager productLayoutManager;
+    private LinearLayoutManager reviewManger;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding=ActivityProductDeatilsBinding.inflate(getLayoutInflater());
+        binding = ActivityProductDeatilsBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         getIntentExtra();
 
-        sliderList=new ArrayList<>();
-        productList=new ArrayList<>();
-        reviewList=new ArrayList<>();
+        MemberModel memberModel = UtilityApp.getUserData();
+        country_id = UtilityApp.getLocalData().getCountryId();
+        city_id = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+        user_id = String.valueOf(memberModel.getId());
 
-        sliderList.add(new SliderModel(1,"https://www.supermama.me/system/App/Entities/Article/images/000/065/491/web-watermarked-large/%D9%85%D8%B4%D8%B1%D9%88%D8%A8%D8%A7%D8%AA-%D8%AD%D8%A7%D8%B1%D9%82%D8%A9-%D9%84%D9%84%D8%AF%D9%87%D9%88%D9%86.jpg"));
-        sliderList.add(new SliderModel(1,"https://www.supermama.me/system/App/Entities/Article/images/000/065/491/web-watermarked-large/%D9%85%D8%B4%D8%B1%D9%88%D8%A8%D8%A7%D8%AA-%D8%AD%D8%A7%D8%B1%D9%82%D8%A9-%D9%84%D9%84%D8%AF%D9%87%D9%88%D9%86.jpg"));
-        sliderList.add(new SliderModel(1,"https://www.supermama.me/system/App/Entities/Article/images/000/065/491/web-watermarked-large/%D9%85%D8%B4%D8%B1%D9%88%D8%A8%D8%A7%D8%AA-%D8%AD%D8%A7%D8%B1%D9%82%D8%A9-%D9%84%D9%84%D8%AF%D9%87%D9%88%D9%86.jpg"));
-        sliderList.add(new SliderModel(1,"https://www.supermama.me/system/App/Entities/Article/images/000/065/491/web-watermarked-large/%D9%85%D8%B4%D8%B1%D9%88%D8%A8%D8%A7%D8%AA-%D8%AD%D8%A7%D8%B1%D9%82%D8%A9-%D9%84%D9%84%D8%AF%D9%87%D9%88%D9%86.jpg"));
-        sliderList.add(new SliderModel(1,"https://www.supermama.me/system/App/Entities/Article/images/000/065/491/web-watermarked-large/%D9%85%D8%B4%D8%B1%D9%88%D8%A8%D8%A7%D8%AA-%D8%AD%D8%A7%D8%B1%D9%82%D8%A9-%D9%84%D9%84%D8%AF%D9%87%D9%88%D9%86.jpg"));
+        sliderList = new ArrayList<String>();
+        productList = new ArrayList<>();
+        reviewList = new ArrayList<>();
 
-
-        productList.add(new ProductModel(1, getString(R.string.product_name),getString(R.string.product_name),getString(R.string._10220_aed1),"htt",
-                getString(R.string._50_off),1, getString(R.string._10220_aed),1));
-
-        productList.add(new ProductModel(1, getString(R.string.product_name),getString(R.string.product_name),getString(R.string._10220_aed1),"htt",
-                getString(R.string._50_off),0, getString(R.string._10220_aed),0));
-
-        productList.add(new ProductModel(1, getString(R.string.product_name),getString(R.string.product_name),getString(R.string._10220_aed),"htt",
-                getString(R.string._50_off),1, getString(R.string._10220_aed),1));
-
-        productList.add(new ProductModel(1, getString(R.string.product_name),getString(R.string.product_name),getString(R.string._10220_aed),"htt",
-                getString(R.string._50_off),0, getString(R.string._10220_aed),0));
-
-        reviewList.add(new ReviewModel(1,"very good"));
-        reviewList.add(new ReviewModel(1,"good"));
-        reviewList.add(new ReviewModel(1,"very good"));
+        reviewList.add(new ReviewModel(1, "very good"));
+        reviewList.add(new ReviewModel(1, "good"));
+        reviewList.add(new ReviewModel(1, "very good"));
 
 
-        productSliderAdapter=new ProductSliderAdapter(this,sliderList);
-        binding.viewPager.setAdapter(productSliderAdapter);
-
-        productLayoutManager =new LinearLayoutManager(getActiviy(), RecyclerView.HORIZONTAL,false);
+        productLayoutManager = new LinearLayoutManager(getActiviy(), RecyclerView.HORIZONTAL, false);
         binding.offerRecycler.setLayoutManager(productLayoutManager);
         binding.offerRecycler.setHasFixedSize(true);
 
-        reviewManger=new LinearLayoutManager(getActiviy(),RecyclerView.VERTICAL,false);
+        reviewManger = new LinearLayoutManager(getActiviy(), RecyclerView.VERTICAL, false);
         binding.reviewRecycler.setLayoutManager(reviewManger);
         binding.reviewRecycler.setHasFixedSize(true);
 
+        getSingleProduct(country_id, city_id, product_id, user_id);
 
-
-        initAdapter();
         binding.backBtn.setOnClickListener(view1 -> {
             onBackPressed();
-                }
-        );
+        });
     }
 
     private void getIntentExtra() {
-        Bundle bundle=getIntent().getExtras();
+        Bundle bundle = getIntent().getExtras();
 
-        if(bundle!=null){
-            ProductModel productModel= (ProductModel) bundle.getSerializable(Constants.DB_productModel);
-            if(UtilityApp.getLanguage().equals(Constants.Arabic)){
-                productName=productModel.getPro_name_ar().trim();
+        if (bundle != null) {
+            ProductModel productModel = (ProductModel) bundle.getSerializable(Constants.DB_productModel);
+            if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
+                productName = productModel.getHName().trim();
+                product_id = productModel.getId();
+                binding.productNameTv.setText(productName);
 
-            }
-            else {
-                productName=productModel.getPro_name_en().trim();
+            } else {
+                productName = productModel.getName().trim();
 
             }
             binding.mainTitleTxt.setText(productName);
 
 
-
         }
     }
 
-    public void initAdapter(){
+    public void initAdapter() {
 
-        productOfferAdapter = new SuggestedProductAdapter(getActiviy(), this, productList,productList.size());
+        productOfferAdapter = new SuggestedProductAdapter(getActiviy(), this, productList, productList.size());
         binding.offerRecycler.setAdapter(productOfferAdapter);
 
+        productSliderAdapter = new ProductSliderAdapter(this, sliderList);
+        binding.viewPager.setAdapter(productSliderAdapter);
 
         reviewAdapter = new ReviewAdapter(getActiviy(), reviewList);
         binding.reviewRecycler.setAdapter(reviewAdapter);
@@ -123,5 +112,75 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
     @Override
     public void onItemClicked(int position, ProductModel productModel) {
 
+    }
+
+
+    @SuppressLint("SetTextI18n")
+    public void getSingleProduct(int country_id, int city_id, int product_id, String user_id) {
+        binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
+        binding.dataLY.setVisibility(View.GONE);
+        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+
+        new DataFeacher(getActiviy(), (obj, func, IsSuccess) -> {
+            ProductDetailsModel result = (ProductDetailsModel) obj;
+            String message = getString(R.string.fail_to_get_data);
+
+            binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
+
+            if (func.equals(Constants.ERROR)) {
+
+                if (result != null) {
+                    message = result.getMessage();
+                }
+                binding.dataLY.setVisibility(View.GONE);
+                binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(message);
+
+            } else if (func.equals(Constants.FAIL)) {
+
+                binding.dataLY.setVisibility(View.GONE);
+                binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(message);
+
+
+            } else {
+                if (IsSuccess) {
+                    if (result.getData() != null && result.getData().size() > 0) {
+
+                        binding.dataLY.setVisibility(View.VISIBLE);
+                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+                        productList = result.getData();
+                        Log.i(TAG, "Log productBestList" + productList.size());
+                        binding.productDescTv.setText(Html.fromHtml(result.getData().get(0).getDescription().toString()));
+                        binding.productPriceTv.setText(result.getData().get(0).getProductBarcodes().get(0).getPrice().toString());
+                        sliderList = result.getData().get(0).getImages();
+                        sliderList.add("https://s3.amazonaws.com/xadok-media/public/uploads/products/7rJeQuselTsUk0nTlhOfWGUQZORHxp0uKj6bsuSZ.jpeg");
+
+                        initAdapter();
+
+                    } else {
+
+                        binding.dataLY.setVisibility(View.GONE);
+                        binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
+
+                    }
+
+
+                } else {
+
+                    binding.dataLY.setVisibility(View.GONE);
+                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(message);
+
+
+                }
+            }
+
+        }).GetSingleProduct(country_id, city_id, product_id, user_id);
     }
 }

@@ -16,11 +16,11 @@ import com.ramez.shopp.R;
 import java.util.ArrayList;
 
 public class ProductSliderAdapter extends PagerAdapter {
-    public ArrayList<SliderModel> sliderList;
+    public ArrayList<String> sliderList;
     private Context context;
 
 
-    public ProductSliderAdapter(Context context, ArrayList<SliderModel> sliderModels) {
+    public ProductSliderAdapter(Context context, ArrayList<String> sliderModels) {
         this.context = context;
         this.sliderList = sliderModels;
     }
@@ -42,9 +42,8 @@ public class ProductSliderAdapter extends PagerAdapter {
 
         try {
 
-            SliderModel sliderModel=sliderList.get(position);
             ImageView productImg =  view.findViewById(R.id.productImg);
-            Glide.with(context).asBitmap().load(sliderModel.getImageUrl()).placeholder(R.drawable.holder_image).into(productImg);
+            Glide.with(context).asBitmap().load(sliderList.get(position)).placeholder(R.drawable.holder_image).into(productImg);
             container.addView(view);
         } catch (Exception e) {
             e.printStackTrace();

@@ -22,10 +22,6 @@ public class WelcomeActivity extends ActivityBase {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(!UtilityApp.isFirstRun()) {
-            startMainActivity();
-            finish();
-        }
         binding = ActivityWelcomeBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);

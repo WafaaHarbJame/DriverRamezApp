@@ -4,10 +4,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.ramez.shopp.Adapter.AddressAdapter;
+import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.Classes.CityModelResult;
+import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.GlobalData;
+import com.ramez.shopp.Classes.OtpModel;
+import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.AddressModel;
+import com.ramez.shopp.Models.AddressResultModel;
+import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.ActivityAddressBinding;
 
@@ -18,6 +28,7 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
     private AddressAdapter addressAdapter;
     ArrayList<AddressModel> addressList;
     private LinearLayoutManager linearLayoutManager;
+    private int defaultAddressId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,37 +43,25 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
             onBackPressed();
         });
         addressList=new ArrayList<>();
-        addressList.add(new AddressModel(1,2,2,"45.5666","45.5000",
-                "","960,21,2923,,,,, ثاني باب على اليمين","Ph : 33310488","Talal",
-                "hh","hgg","",1,
-                "","","",""));
-        addressList.add(new AddressModel(1,2,1,"45.5666","45.5000",
-                "","960,21,2923,,,,, ثاني باب على اليمين","Ph : 33310488","علي ",
-                "hh","hgg","",1,
-                "","","",""));
-
-        addressList.add(new AddressModel(1,2,3,"45.5666","45.5000",
-                "","960,21,2923,,,,, ثاني باب على اليمين","Ph : 33310488","Talal",
-                "hh","hgg","",1,
-                "","","",""));
-        addressList.add(new AddressModel(1,2,4,"45.5666","45.5000",
-                "","960,21,2923,,,,, ثاني باب على اليمين","Ph : 33310488","Talal",
-                "hh","hgg","",1,
-                "","","",""));
-        addressList.add(new AddressModel(1,2,5,"45.5666","45.5000",
-                "","960,21,2923,,,,, ثاني باب على اليمين","Ph : 33310488","Talal",
-                "hh","hgg","",1,
-                "","","",""));
-        addressList.add(new AddressModel(1,2,6,"45.5666","45.5000",
-                "","960,21,2923,,,,, ثاني باب على اليمين","Ph : 33310488","Talal",
-                "hh","hgg","",1,
-                "","","",""));
         linearLayoutManager=new LinearLayoutManager(getActiviy());
         binding.addressRecycler.setLayoutManager(linearLayoutManager);
-        initAdapter();
+
+        if(UtilityApp.isLogin()){
+            GetUserAddress(UtilityApp.getUserData().getId());
+        }
+
 
         binding.addNewAddressBut.setOnClickListener(view1 -> {
             addNewAddress();
+        });
+        binding.acceptBtu.setOnClickListener(view1 -> {
+            MemberModel memberModel=UtilityApp.getUserData();
+            memberModel.setLastSelectedAddress(defaultAddressId);
+            UtilityApp.setUserData(memberModel);
+            addressAdapter.notifyDataSetChanged();
+            Toast(R.string.address_default);
+
+
         });
 
 
@@ -70,6 +69,8 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
 
     @Override
     public void onAddressSelected(AddressModel addressesDM) {
+        defaultAddressId=addressesDM.getId();
+
 
     }
 
@@ -85,5 +86,52 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
     private void addNewAddress() {
         Intent intent=new Intent(getActiviy(),AddNewAddressActivity.class);
         startActivity(intent);
+    }
+
+    public void GetUserAddress(int user_id) {
+        binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
+
+        new DataFeacher(getActiviy(), (obj, func, IsSuccess) -> {
+            binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
+
+            AddressResultModel result = (AddressResultModel) obj;
+
+            if (func.equals(Constants.ERROR)) {
+
+                Toast(R.string.error_in_data);
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(R.string.error_in_data);
+                binding.dataLY.setVisibility(View.GONE);
+
+            } else if (func.equals(Constants.FAIL)) {
+                Toast(R.string.fail_to_get_data);
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(R.string.error_in_data);
+                binding.dataLY.setVisibility(View.GONE);
+            } else {
+                if (IsSuccess) {
+                    binding.dataLY.setVisibility(View.VISIBLE);
+                    if (result.getData() != null && result.getData().size() > 0) {
+                        addressList= result.getData();
+                        initAdapter();
+
+                    }
+                    else {
+                        binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                        binding.failGetDataLY.failTxt.setText(R.string.no_address);
+                        binding.dataLY.setVisibility(View.GONE);
+
+                    }
+
+
+
+
+                } else {
+                    Toast(R.string.fail_to_get_data);
+
+                }
+            }
+
+        }).GetAddressHandle(user_id);
     }
 }

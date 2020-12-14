@@ -1,28 +1,36 @@
 package com.ramez.shopp.Fragments;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.GridLayoutManager;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.ramez.shopp.Adapter.ProductAdapter;
+import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Models.MainModel;
+import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.FragmentOfferBinding;
 
 import java.util.ArrayList;
 
+import static android.content.ContentValues.TAG;
 
 public class OfferFragment extends FragmentBase implements ProductAdapter.OnItemClick {
     private FragmentOfferBinding binding;
     private ProductAdapter productOfferAdapter;
     ArrayList<ProductModel> productOffersList;
     GridLayoutManager gridLayoutManager;
-
+    private int category_id = 0, country_id, city_id;
+    String user_id=" ";
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentOfferBinding.inflate(inflater, container, false);
@@ -30,40 +38,28 @@ public class OfferFragment extends FragmentBase implements ProductAdapter.OnItem
 
         productOffersList=new ArrayList<>();
 
-        productOffersList.add(new ProductModel(1, getString(R.string.product_name),getString(R.string.product_name),getString(R.string._10220_aed1),"htt",
-                getString(R.string._50_off),1, getString(R.string._10220_aed),1));
 
-        productOffersList.add(new ProductModel(1, getString(R.string.product_name),getString(R.string.product_name),getString(R.string._10220_aed1),"htt",
-                getString(R.string._50_off),1, getString(R.string._10220_aed),0));
+        if(UtilityApp.isLogin()){
+            MemberModel memberModel = UtilityApp.getUserData();
+            user_id = String.valueOf(memberModel.getId());
 
-        productOffersList.add(new ProductModel(1, getString(R.string.product_name),getString(R.string.product_name),getString(R.string._10220_aed),"htt",
-                getString(R.string._50_off),0, getString(R.string._10220_aed),1));
+        }
 
-        productOffersList.add(new ProductModel(1, getString(R.string.product_name),getString(R.string.product_name),getString(R.string._10220_aed1),"htt",
-                getString(R.string._50_off),1, getString(R.string._10220_aed),0));
-
-        productOffersList.add(new ProductModel(1, getString(R.string.product_name),getString(R.string.product_name),getString(R.string._10220_aed1),"htt",
-                getString(R.string._50_off),1, getString(R.string._10220_aed),0));
-
-        productOffersList.add(new ProductModel(1, getString(R.string.product_name),getString(R.string.product_name),getString(R.string._10220_aed),"htt",
-                getString(R.string._50_off),0, getString(R.string._10220_aed),1));
-
-        productOffersList.add(new ProductModel(1, getString(R.string.product_name),getString(R.string.product_name),getString(R.string._10220_aed1),"htt",
-                getString(R.string._50_off),1, getString(R.string._10220_aed),0));
-        productOffersList.add(new ProductModel(1, getString(R.string.product_name),getString(R.string.product_name),getString(R.string._10220_aed1),"htt",
-                getString(R.string._50_off),1, getString(R.string._10220_aed),0));
-
-        productOffersList.add(new ProductModel(1, getString(R.string.product_name),getString(R.string.product_name),getString(R.string._10220_aed),"htt",
-                getString(R.string._50_off),0, getString(R.string._10220_aed),1));
-
-        productOffersList.add(new ProductModel(1, getString(R.string.product_name),getString(R.string.product_name),getString(R.string._10220_aed1),"htt",
-                getString(R.string._50_off),1, getString(R.string._10220_aed),0));
+        country_id = UtilityApp.getLocalData().getCountryId();
+        city_id = Integer.parseInt(UtilityApp.getLocalData().getCityId());
 
         gridLayoutManager =new GridLayoutManager(getActivityy(),2);
         binding.offerRecycler.setLayoutManager(gridLayoutManager);
         binding.offerRecycler.setHasFixedSize(true);
 
-        initAdapter();
+        getOfferList(0,country_id,city_id,user_id);
+
+        binding.swipeDataContainer.setOnRefreshListener(() -> {
+          binding.swipeDataContainer.setRefreshing(false);
+          getOfferList(0,country_id,city_id,user_id);
+
+
+      });
 
         return view;
     }
@@ -77,5 +73,67 @@ public class OfferFragment extends FragmentBase implements ProductAdapter.OnItem
     @Override
     public void onItemClicked(int position, ProductModel productModel) {
 
+    }
+    public void getOfferList(int category_id,int country_id,int city_id,String user_id) {
+        binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
+        binding.dataLY.setVisibility(View.GONE);
+        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+
+        new DataFeacher(getActivity(), (obj, func, IsSuccess) -> {
+            MainModel result = (MainModel) obj;
+            String message = getString(R.string.fail_to_get_data);
+
+            binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
+
+            if (func.equals(Constants.ERROR)) {
+
+                if (result != null) {
+                    message = result.getMessage();
+                }
+                binding.dataLY.setVisibility(View.GONE);
+                binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(message);
+
+            } else if (func.equals(Constants.FAIL)) {
+
+                binding.dataLY.setVisibility(View.GONE);
+                binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(message);
+
+
+            } else {
+                if (IsSuccess) {
+                    if (result.getOfferedProducts() != null && result.getOfferedProducts().size() > 0) {
+
+                        binding.dataLY.setVisibility(View.VISIBLE);
+                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+                        productOffersList = result.getOfferedProducts();
+
+                        initAdapter();
+
+                    } else {
+
+                        binding.dataLY.setVisibility(View.GONE);
+                        binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
+
+                    }
+
+
+                } else {
+
+                    binding.dataLY.setVisibility(View.GONE);
+                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(message);
+
+
+                }
+            }
+
+        }).GetMainPage(category_id, country_id, city_id, user_id);
     }
 }

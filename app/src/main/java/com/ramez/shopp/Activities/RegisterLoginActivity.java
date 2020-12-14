@@ -26,7 +26,6 @@ public class RegisterLoginActivity extends ActivityBase {
         binding.toolBar.backBtn.setVisibility(View.GONE);
         getIntentExtra();
 
-
         adapter = new RegisterLoginAdapter(getActiviy(), getSupportFragmentManager());
 
         binding.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -60,17 +59,14 @@ public class RegisterLoginActivity extends ActivityBase {
         binding.tabs.setupWithViewPager(binding.viewPager);
         binding.tabs.setSelectedTabIndicatorColor(ContextCompat.getColor(getActiviy(),R.color.colorAccent));
 
-
         if(login){
             binding.viewPager.setCurrentItem(1);
 
         }
-        else if(register){
+        else {
             binding.viewPager.setCurrentItem(0);
 
         }
-
-
 
     }
 

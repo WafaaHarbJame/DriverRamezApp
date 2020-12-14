@@ -2,12 +2,12 @@ package com.ramez.shopp.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
 
 import com.ramez.shopp.Activities.AboutActivity;
 import com.ramez.shopp.Activities.AddressActivity;
@@ -20,7 +20,16 @@ import com.ramez.shopp.Activities.EditProfileActivity;
 import com.ramez.shopp.Activities.FavoriteActivity;
 import com.ramez.shopp.Activities.MyOrderActivity;
 import com.ramez.shopp.Activities.RatingActivity;
+import com.ramez.shopp.Activities.RegisterLoginActivity;
+import com.ramez.shopp.Activities.SplashScreenActivity;
 import com.ramez.shopp.Activities.TermsActivity;
+import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.GlobalData;
+import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Dialogs.ConfirmDialog;
+import com.ramez.shopp.MainActivity;
+import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.ActivityHandler;
 import com.ramez.shopp.databinding.FragmentMyAccountBinding;
@@ -33,6 +42,27 @@ public class MyAccountFragment extends FragmentBase {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMyAccountBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
+
+        if(UtilityApp.isLogin()){
+            binding.logoutText.setText(R.string.logout);
+        }
+        else {
+            binding.logoutText.setText(R.string.text_login_login);
+        }
+
+
+        if(UtilityApp.isLogin()){
+            binding.editProfileBu.setVisibility(View.VISIBLE);
+            MemberModel memberModel=UtilityApp.getUserData();
+            binding.usernameTV.setText(memberModel.getName());
+            binding.emailTv.setText(memberModel.getEmail());
+
+        }
+        else {
+            binding.editProfileBu.setVisibility(View.GONE);
+
+        }
 
         binding.termsBtn.setOnClickListener(view1 -> {
             startTermsActivity();
@@ -93,7 +123,28 @@ public class MyAccountFragment extends FragmentBase {
         binding.SupportBtn.setOnClickListener(view1 -> {
             startSupport();
         });
+
+        binding.logoutBtn.setOnClickListener(view1 -> {
+
+            if(UtilityApp.isLogin()){
+                MemberModel memberModel=UtilityApp.getUserData();
+                signOut(memberModel);
+            }
+            else {
+                startLogin();
+
+            }
+
+        });
         return view;
+    }
+
+    private void startLogin() {
+        Intent intent = new Intent(getActivityy(), RegisterLoginActivity.class);
+        intent.putExtra(Constants.LOGIN,true);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        getActivityy().finish();
     }
 
     private void startSupport() {
@@ -151,4 +202,34 @@ public class MyAccountFragment extends FragmentBase {
         Intent intent=new Intent(getActivityy(), FavoriteActivity.class);
         startActivity(intent);
     }
+    public void signOut(MemberModel memberModel) {
+        ConfirmDialog.Click click = new ConfirmDialog.Click() {
+            @Override
+            public void click() {
+                new DataFeacher(getActivity(), (obj, func, IsSuccess) -> {
+                    if (func.equals(Constants.ERROR)) {
+                        Toast(R.string.error_in_data);
+                    } else if (func.equals(Constants.FAIL)) {
+                        Toast(R.string.fail_to_get_data);
+                    } else {
+                        if (IsSuccess) {
+                            UtilityApp.logOut();
+                            GlobalData.Position = 0;
+
+                            Intent intent = new Intent(getActivityy(), SplashScreenActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                        } else {
+                            Toast(R.string.fail_to_sign_out);
+                        }
+                    }
+
+                }).logOut(memberModel);
+            }
+        };
+
+        new ConfirmDialog(getActivityy(), R.string.want_to_signout, R.string.ok, R.string.cancel_label, click, null);
+
+    }
+
 }

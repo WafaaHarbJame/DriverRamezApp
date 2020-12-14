@@ -3,22 +3,26 @@ package com.ramez.shopp.Utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-/**
- * Created by A7mad28 on 2015-10-28.
- */
+import com.ramez.shopp.Classes.Constants;
+
+import static android.content.Context.MODE_PRIVATE;
+
+
 public class SharedPManger {
     SharedPreferences preferences;
 
-    public SharedPManger(Context context) {
-        preferences = context.getSharedPreferences("mujamaaSettings", 0);
-    }
 
+    public SharedPManger(Context context) {
+        preferences = context.getSharedPreferences(Constants.KEY_FILE, MODE_PRIVATE);
+
+    }
 
     public void SetData(String key, String value) {
 
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(key, value);
         editor.apply();
+        editor.commit();
 
     }
 
@@ -27,6 +31,8 @@ public class SharedPManger {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt(key, value);
         editor.apply();
+        editor.commit();
+
 
     }
 
@@ -35,6 +41,8 @@ public class SharedPManger {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putFloat(key, value);
         editor.apply();
+        editor.commit();
+
 
     }
 
@@ -43,6 +51,8 @@ public class SharedPManger {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean(key, value);
         editor.apply();
+        editor.commit();
+
 
     }
 
@@ -72,5 +82,15 @@ public class SharedPManger {
 
     public boolean getDataBool(String key, boolean The_default) {
         return preferences.getBoolean(key, The_default);
+    }
+
+    public void RemoveData(String key) {
+
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.remove(key);
+        editor.apply();
+        editor.commit();
+
+
     }
 }

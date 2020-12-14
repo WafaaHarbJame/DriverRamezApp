@@ -1,100 +1,156 @@
 package com.ramez.shopp.Models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductModel  implements Serializable {
 
-    private int pro_id = 0;
-    private String pro_name_ar = "pro_name";
-    private String  pro_name_en;
-    private String pro_price = "";
-    private String pro_img = "";
-    private  String discountPercentage;
-    private  int is_special=0;
-    private  String pro_special_price="";
-    private int IsFavorite;
+    @SerializedName("brand_id")
+    @Expose
+    private Integer brandId;
+    @SerializedName("cart_quantity")
+    @Expose
+    private Integer cartQuantity;
+    @SerializedName("category_id")
+    @Expose
+    private Integer categoryId;
+    @SerializedName("description")
+    @Expose
+    private Object description;
+    @SerializedName("favourite")
+    @Expose
+    private Boolean favourite;
+    @SerializedName("product_barcodes")
+    @Expose
+    private List<ProductBarcode> productBarcodes = null;
+    @SerializedName("product_units")
+    @Expose
+    private Object productUnits;
+    @SerializedName("h_description")
+    @Expose
+    private Object hDescription;
+    @SerializedName("h_name")
+    @Expose
+    private String hName;
+    @SerializedName("id")
+    @Expose
+    private Integer id;
+    @SerializedName("images")
+    @Expose
+    private ArrayList<String> images = null;
+    @SerializedName("name")
+    @Expose
+    private String name;
+    @SerializedName("product_brand")
+    @Expose
+    private ProductBrand productBrand;
 
-    public ProductModel(int pro_id, String pro_name_ar, String pro_name_en, String pro_price, String pro_img, String discountPercentage, int is_special, String pro_special_price, int isFavorite) {
-        this.pro_id = pro_id;
-        this.pro_name_ar = pro_name_ar;
-        this.pro_name_en = pro_name_en;
-        this.pro_price = pro_price;
-        this.pro_img = pro_img;
-        this.discountPercentage = discountPercentage;
-        this.is_special = is_special;
-        this.pro_special_price = pro_special_price;
-        IsFavorite = isFavorite;
+    public Integer getBrandId() {
+        return brandId;
     }
 
-    public int getPro_id() {
-        return pro_id;
+    public void setBrandId(Integer brandId) {
+        this.brandId = brandId;
     }
 
-    public void setPro_id(int pro_id) {
-        this.pro_id = pro_id;
+    public Integer getCartQuantity() {
+        return cartQuantity;
     }
 
-    public String getPro_name_ar() {
-        return pro_name_ar;
+    public void setCartQuantity(Integer cartQuantity) {
+        this.cartQuantity = cartQuantity;
     }
 
-    public void setPro_name_ar(String pro_name_ar) {
-        this.pro_name_ar = pro_name_ar;
+    public Integer getCategoryId() {
+        return categoryId;
     }
 
-    public String getPro_name_en() {
-        return pro_name_en;
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
     }
 
-    public void setPro_name_en(String pro_name_en) {
-        this.pro_name_en = pro_name_en;
+    public Object getDescription() {
+        return description;
     }
 
-    public String getPro_price() {
-        return pro_price;
+    public void setDescription(Object description) {
+        this.description = description;
     }
 
-    public void setPro_price(String pro_price) {
-        this.pro_price = pro_price;
+    public Boolean getFavourite() {
+        return favourite;
     }
 
-    public String getPro_img() {
-        return pro_img;
+    public void setFavourite(Boolean favourite) {
+        this.favourite = favourite;
     }
 
-    public void setPro_img(String pro_img) {
-        this.pro_img = pro_img;
+    public List<ProductBarcode> getProductBarcodes() {
+        return productBarcodes;
     }
 
-    public String getDiscountPercentage() {
-        return discountPercentage;
+    public void setProductBarcodes(List<ProductBarcode> productBarcodes) {
+        this.productBarcodes = productBarcodes;
     }
 
-    public void setDiscountPercentage(String discountPercentage) {
-        this.discountPercentage = discountPercentage;
+    public Object getProductUnits() {
+        return productUnits;
     }
 
-    public int getIs_special() {
-        return is_special;
+    public void setProductUnits(Object productUnits) {
+        this.productUnits = productUnits;
     }
 
-    public void setIs_special(int is_special) {
-        this.is_special = is_special;
+    public Object getHDescription() {
+        return hDescription;
     }
 
-    public String getPro_special_price() {
-        return pro_special_price;
+    public void setHDescription(Object hDescription) {
+        this.hDescription = hDescription;
     }
 
-    public void setPro_special_price(String pro_special_price) {
-        this.pro_special_price = pro_special_price;
+    public String getHName() {
+        return hName;
     }
 
-    public int getIsFavorite() {
-        return IsFavorite;
+    public void setHName(String hName) {
+        this.hName = hName;
     }
 
-    public void setIsFavorite(int isFavorite) {
-        IsFavorite = isFavorite;
+    public Integer getId() {
+        return id;
     }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public ArrayList<String> getImages() {
+        return images;
+    }
+
+    public void setImages(ArrayList<String> images) {
+        this.images = images;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ProductBrand getProductBrand() {
+        return productBrand;
+    }
+
+    public void setProductBrand(ProductBrand productBrand) {
+        this.productBrand = productBrand;
+    }
+
 }

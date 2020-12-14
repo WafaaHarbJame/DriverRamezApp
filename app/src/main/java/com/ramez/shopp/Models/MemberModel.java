@@ -3,94 +3,131 @@ package com.ramez.shopp.Models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MemberModel {
+import java.io.Serializable;
+
+public class MemberModel implements Serializable {
+    public int lastSelectedAddress;
 
     @SerializedName("id")
     @Expose
-    public int id;
-    @SerializedName("full_name")
+    private Integer id;
+
+    @SerializedName("name")
     @Expose
-    public String fullName;
-    //    @SerializedName("first_name")
-//    @Expose
-//    public String firstName;
-//    @SerializedName("last_name")
-//    @Expose
-//    public String lastName;
-    @SerializedName("email")
+    private String name;
+    @SerializedName("mobile_number")
     @Expose
-    public String email;
-    @SerializedName("mobile")
+    private String mobileNumber;
+    @SerializedName("password")
     @Expose
-    public String mobile;
-    @SerializedName("contact_mobile")
+    private String password;
+    @SerializedName("user_type")
     @Expose
-    public String contactMobile;
-    @SerializedName("mobile_verified_at")
-    @Expose
-    public String mobileVerifiedAt;
-    @SerializedName("mobile_verification_code")
-    @Expose
-    public String mobileVerificationCode;
-    @SerializedName("city_id")
-    @Expose
-    public int cityId;
-    @SerializedName("logo")
-    @Expose
-    public String logo;
-    @SerializedName("device_token")
-    @Expose
-    public String deviceToken;
+    private String userType;
     @SerializedName("device_id")
     @Expose
-    public String deviceId;
-    @SerializedName("api_token")
+    private String deviceId;
+    @SerializedName("device_type")
     @Expose
-    public String apiToken;
-    @SerializedName("status")
+    private String deviceType;
+    @SerializedName("country")
     @Expose
-    public Object status;
-    @SerializedName("created_at")
-    @Expose
-    public String createdAt;
-    @SerializedName("updated_at")
-    @Expose
-    public String updatedAt;
-    @SerializedName("deleted_at")
-    @Expose
-    public Object deletedAt;
+    private String country;
     @SerializedName("city")
     @Expose
-    public CityModel city;
-    @SerializedName("city_name")
+    private String city;
+    @SerializedName("prefix")
     @Expose
-    public int lastSelectedAddress;
-
-    @SerializedName("lastSelectedAddress")
+    private String prefix;
+    @SerializedName("device_token")
     @Expose
-
-
-    public String cityName;
-    public String fcmToken;
-    public String password;
+    private String deviceToken;
+    @SerializedName("email")
+    @Expose
+    private String email;
+    @SerializedName("profile_picture")
+    @Expose
+    private String profilePicture;
 
 
     public String getName() {
-        return fullName;
+        return name;
     }
 
-    public int getId() {
-        return id;
+    public void setName(String name) {
+        this.name = name;
     }
 
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
 
-    public boolean getStatus() {
-        if (status instanceof Boolean)
-            return (boolean) status;
-        else if (status instanceof Double)
-            return (double) status == 1;
-        else
-            return false;
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
+
+    public String getDeviceType() {
+        return deviceType;
+    }
+
+    public void setDeviceType(String deviceType) {
+        this.deviceType = deviceType;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
+
+    public String getDeviceToken() {
+        return deviceToken;
+    }
+
+    public void setDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public int getLastSelectedAddress() {
@@ -101,8 +138,29 @@ public class MemberModel {
         this.lastSelectedAddress = lastSelectedAddress;
     }
 
-    public boolean isVerified() {
-        return mobileVerifiedAt != null && !mobileVerifiedAt.isEmpty();
+    public String getUserType() {
+        return userType;
     }
 
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
+    }
 }
+
+

@@ -5,24 +5,41 @@ import com.google.gson.annotations.SerializedName;
 
 public class CityModel {
 
+
     @SerializedName("id")
     @Expose
-    public int id;
+    private Integer id;
     @SerializedName("name")
     @Expose
-    public String name;
-    @SerializedName("status")
+    private String name;
+    @SerializedName("name_ar")
     @Expose
-    public int status;
-    @SerializedName("created_at")
-    @Expose
-    public Object createdAt;
-    @SerializedName("updated_at")
-    @Expose
-    public String updatedAt;
-    @SerializedName("deleted_at")
-    @Expose
-    public Object deletedAt;
+    private String nameAr;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getNameAr() {
+        return nameAr;
+    }
+
+    public void setNameAr(String nameAr) {
+        this.nameAr = nameAr;
+    }
+
 
 
 }

@@ -43,7 +43,7 @@ public class ErrorMessagesDialog {
             getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             requestWindowFeature(Window.FEATURE_NO_TITLE); //before
 
-            setContentView(R.layout.dialog_info);
+            setContentView(R.layout.dialog_my_info);
 
             messageTxt = findViewById(R.id.messageTxt);
             okBtn = findViewById(R.id.okBtn);

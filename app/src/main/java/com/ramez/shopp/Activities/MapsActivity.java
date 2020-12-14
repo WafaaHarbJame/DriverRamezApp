@@ -8,6 +8,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -78,6 +79,7 @@ public class MapsActivity extends ActivityBase implements OnMapReadyCallback, Go
     private float zoom = 0;
     private boolean isValid, isValidFromZoom;
     private    AutocompleteSupportFragment autocompleteFragment;
+    private ImageView backBut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +91,9 @@ public class MapsActivity extends ActivityBase implements OnMapReadyCallback, Go
 
         initViews();
         getDataExtra();
+
+
+
     }
 
     private void getDataExtra() {
@@ -119,6 +124,9 @@ public class MapsActivity extends ActivityBase implements OnMapReadyCallback, Go
         initPlaceAutoComplete();
 
         pickLocation = findViewById(R.id.pickLocation);
+//        backBut.setOnClickListener(view -> {
+//            onBackPressed();
+//        });
         textPhysicalAddress = findViewById(R.id.tvPhysicalAddress);
 
         pickLocation.setOnClickListener(v -> {
@@ -182,8 +190,8 @@ public class MapsActivity extends ActivityBase implements OnMapReadyCallback, Go
 
     private void setActivityResult(String latitude, String longitude) {
         Intent intent = new Intent();
-        intent.putExtra("latitude", latitude);
-        intent.putExtra("longitude", longitude);
+        intent.putExtra(Constants.KEY_LAT, latitude);
+        intent.putExtra(Constants.KEY_LNG, longitude);
         setResult(RESULT_OK, intent);
         finish();
     }

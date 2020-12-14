@@ -44,26 +44,8 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.Coun
     @Override
     public void onBindViewHolder(CountryViewHolder holder, int position) {
         CountryModel countryModel = countryModels.get(position);
-        if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
-            holder.binding.textCountry.setText(countryModel.getCountry().trim());
-        } else {
-            holder.binding.textCountry.setText(countryModel.getCountry_ar().trim());
-        }
-
-        Glide.with(context).asBitmap()
-                .load("http" + countryModel.getFlag()).placeholder(R.drawable.ic_flag_uae).placeholder(R.drawable.ic_flag_uae)
-                .addListener(new RequestListener<Bitmap>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                        return false;
-                    }
-                })
-                .into(holder.binding.imgFlag);
+            holder.binding.textCountry.setText(countryModel.getName());
+            holder.binding.imgFlag.setImageResource(countryModel.getFlag());
 
         if (position == getItemCount() - 1) {
             holder.binding.divider.setVisibility(View.GONE);

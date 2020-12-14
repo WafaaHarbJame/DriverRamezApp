@@ -1,50 +1,77 @@
 package com.ramez.shopp.Classes;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import com.ramez.shopp.Models.ChildCat;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class CategoryModel implements Serializable {
-    private int catId;
-    private String name_ar;
-    private String name_en;
-    private String icon;
+    @SerializedName("id")
+    @Expose
+    private Integer id;
+    @SerializedName("h_name")
+    @Expose
+    private String hName;
+    @SerializedName("image")
+    @Expose
+    private String image;
+    @SerializedName("name")
+    @Expose
+    private String name;
+    @SerializedName("parent_id")
+    @Expose
+    private Object parentId;
+    @SerializedName("child_cat")
+    @Expose
+    private ArrayList<ChildCat> childCat = null;
 
-    public CategoryModel(int catId, String name_ar, String name_en, String icon) {
-
-        this.catId = catId;
-        this.name_ar = name_ar;
-        this.name_en = name_en;
-        this.icon = icon;
+    public Integer getId() {
+        return id;
     }
 
-    public int getCatId() {
-        return catId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setCatId(int catId) {
-        this.catId = catId;
+    public String getHName() {
+        return hName;
     }
 
-    public String getName_ar() {
-        return name_ar;
+    public void setHName(String hName) {
+        this.hName = hName;
     }
 
-    public void setName_ar(String name_ar) {
-        this.name_ar = name_ar;
+    public String getImage() {
+        return image;
     }
 
-    public String getName_en() {
-        return name_en;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-    public void setName_en(String name_en) {
-        this.name_en = name_en;
+    public String getName() {
+        return name;
     }
 
-    public String getIcon() {
-        return icon;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setIcon(String icon) {
-        this.icon = icon;
+    public Object getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Object parentId) {
+        this.parentId = parentId;
+    }
+
+    public ArrayList<ChildCat> getChildCat() {
+        return childCat;
+    }
+
+    public void setChildCat(ArrayList<ChildCat> childCat) {
+        this.childCat = childCat;
     }
 }

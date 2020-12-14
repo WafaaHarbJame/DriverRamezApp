@@ -177,5 +177,68 @@
     <string name="quantity">Quantity</string>
     <string name="price1">price </string>
     <string name="delete">delete</string>
+    <string name="enter_phone_number">Enter Phone Number</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="fail_signin">Fail To sign in</string>
+    <string name="please_wait_login">Please wait to  login</string>
+    <string name="text_email">Email</string>
+    <string name="enter_valid_email">Enter Valid Email</string>
+    <string name="enter_confirm_password">Enter Confirm Password</string>
+    <string name="password_confirm_not_match">Password confirm not match</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="enter_phone_please">Enter Phone</string>
+    <string name="please_wait_register">please Wait to register </string>
+    <string name="fail_register">Fail to register</string>
+    <string name="error_in_data">Error in data</string>
+    <string name="fail_to_sign_out">Fail to sign out</string>
+    <string name="want_to_signout">Do yo want to sign out?</string>
+    <string name="please_wait_upload">Please wait to Get Data</string>
+    <string name="upload_date">Get Data</string>
+    <string name="select_country_code">Select Country Code</string>
+    <string name="enter_country_name_to_search">Enter country name or code to search</string>
+    <string name="title">title</string>
+    <string name="fail_to_sen_otp">fail to sent otp</string>
+    <string name="confirm_code">Confrim Code</string>
+    <string name="please_wait_sending">Please wait sending ...</string>
+    <string name="send_code">"Send Code "</string>
+    <string name="oman_shotname" translatable="false">OM</string>
+    <string name="bahrain_shotname" translatable="false">BH</string>
+    <string name="Kuwait_shotname" translatable="false">KW</string>
+    <string name="United_Arab_Emirates_shotname" translatable="false">AE</string>
+    <string name="Qatar_shotname" translatable="false">QA</string>
+    <string name="Saudi_Arabia_shortname" translatable="false">SA</string>
+
+    <string name="Bahrain">Bahrain</string>
+    <string name="Oman">Oman</string>
+    <string name="Qatar">Qatar</string>
+    <string name="Saudi_Arabia">Saudi Arabia</string>
+    <string name="United_Arab_Emirates">United Arab Emirates</string>
+    <string name="Kuwait">Kuwait</string>
+    <string name="get_data">Get Data</string>
+    <string name="please_wait_get">Please wait to get Data</string>
+    <string name="address_default">This address is set as the default address</string>
+    <string name="edit_address">Edit Address</string>
+    <string name="choose_address">Select Addresss</string>
+    <string name="enter_area">Enter Area</string>
+    <string name="enter_block">Enter  Block</string>
+    <string name="enter_street">Enter Steet</string>
+    <string name="enter_flat">Enter Flat</string>
+    <string name="enter_building">Enter Building</string>
+    <string name="choose_code">Choose Code</string>
+    <string name="please_wait_creat">Please Wait to add address</string>
+    <string name="fail_to_addAddress">Fail To add address</string>
+    <string name="select_area">Select Area</string>
+    <string name="close">Close</string>
+    <string name="want_to_delete_address">Do you want to delete address</string>
+    <string name="no_data">No Data</string>
+    <string name="fail_to_add_favorite">Fail to add to favorite</string>
+    <string name="fail_to_remove_favorite">"Fail to remove from Favorite "</string>
+    <string name="success_add">Adding to Favorite Successful</string>
+    <string name="success_delete">Remove From Favorite Successful</string>
+    <string name="textLoginFirst">You Must Login to add to Cart</string>
+    <string name="fail_to_add_cart">Fail to add to cart</string>
+    <string name="success_added_to_cart">Success adding to cart</string>
+    <string name="fail_to_delete_cart">Fail To delete item</string>
 
 </resources>

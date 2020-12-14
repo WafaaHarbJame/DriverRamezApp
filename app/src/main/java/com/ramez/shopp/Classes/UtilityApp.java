@@ -3,8 +3,10 @@ package com.ramez.shopp.Classes;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.provider.Settings;
+import android.util.Log;
 
 import com.google.gson.Gson;
+import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.RootApplication;
 import com.ramez.shopp.Utils.LocaleUtils;
@@ -79,30 +81,30 @@ public class UtilityApp {
 
 
     public static boolean isLogin() {
-        String userToken = RootApplication.getInstance().getSharedPManger().getDataString(Constants.KEY_MEMBER, null);
+        String userToken = RootApplication.getInstance().getSharedPManger().getDataString(Constants.KEY_MEMBER);
         return userToken != null;
     }
 
+//    public static boolean isLogin() {
+//        boolean isLogin = RootApplication.getInstance().getSharedPManger().getDataBool(Constants.KEY_LOGIN_PREFERANCE, false);
+//        return isLogin;
+//    }
+
 
     public static void logOut() {
-
-        if (isLogin()) {
-
-//            MemberModel user = getUserData();
-
-//            FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.NOTIFICATION_TOPIC + user.getId());
-//            FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.NOTIFICATION_USER_TOPIC + user.getId());
-//            FirebaseMessaging.getInstance().unsubscribeFromTopic(Constants.CHAT_TOPIC + user.getId());
-
-        }
-
         RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_MEMBER, null);
+        RootApplication.getInstance().getSharedPManger().RemoveData(Constants.KEY_LOGIN_PREFERANCE);
+
     }
 
     public static void setToShPref(String key, String data) {
         RootApplication.getInstance().getSharedPManger().SetData(key, data);
     }
 
+
+    public static void setToShPref(String key, boolean data) {
+        RootApplication.getInstance().getSharedPManger().SetData(key, data);
+    }
     public static String getFromShPref(String key) {
         return RootApplication.getInstance().getSharedPManger().getDataString(key);
     }
@@ -142,6 +144,19 @@ public class UtilityApp {
         String userJsonData = RootApplication.getInstance().getSharedPManger().getDataString(Constants.KEY_MEMBER);
         MemberModel user = new Gson().fromJson(userJsonData, MemberModel.class);
         return user;
+    }
+
+
+
+    public static void setLocalData(LocalModel model) {
+        String localData = new Gson().toJson(model);
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_Local, localData);
+    }
+
+    public static LocalModel getLocalData() {
+        String localJsonData = RootApplication.getInstance().getSharedPManger().getDataString(Constants.KEY_Local);
+        LocalModel model = new Gson().fromJson(localJsonData, LocalModel.class);
+        return model;
     }
 
 

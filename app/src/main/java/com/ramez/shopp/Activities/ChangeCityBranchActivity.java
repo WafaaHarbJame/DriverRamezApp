@@ -45,17 +45,17 @@ public class ChangeCityBranchActivity extends ActivityBase implements  Countries
             binding.chooseBranchTv.setVisibility(View.GONE);
 
         });
-        countriesList.add(new CountryModel(1,972,getString(R.string.text_registration_country),
-                "","","","",getString(R.string.text_registration_country),""));
-
-        countriesList.add(new CountryModel(1,972,getString(R.string.text_registration_country),
-                "","","","",getString(R.string.text_registration_country),""));
-        countriesList.add(new CountryModel(1,972,getString(R.string.text_registration_country),
-                "","","","",getString(R.string.text_registration_country),""));
-        countriesList.add(new CountryModel(1,972,getString(R.string.text_registration_country),
-                "","","","",getString(R.string.text_registration_country),""));
-        countriesList.add(new CountryModel(1,972,getString(R.string.text_registration_country),
-                "","","",getString(R.string.text_registration_country),getString(R.string.text_registration_country),""));
+//        countriesList.add(new CountryModel(1,972,getString(R.string.text_registration_country),
+//                "","","","",getString(R.string.text_registration_country),""));
+//
+//        countriesList.add(new CountryModel(1,972,getString(R.string.text_registration_country),
+//                "","","","",getString(R.string.text_registration_country),""));
+//        countriesList.add(new CountryModel(1,972,getString(R.string.text_registration_country),
+//                "","","","",getString(R.string.text_registration_country),""));
+//        countriesList.add(new CountryModel(1,972,getString(R.string.text_registration_country),
+//                "","","","",getString(R.string.text_registration_country),""));
+//        countriesList.add(new CountryModel(1,972,getString(R.string.text_registration_country),
+//                "","","",getString(R.string.text_registration_country),getString(R.string.text_registration_country),""));
 
         branchesList=countriesList;
 

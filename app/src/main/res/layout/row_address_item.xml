@@ -38,10 +38,16 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"/>
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/_20sdp"
+                android:id="@+id/editAddressBut"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:src="@drawable/edit_icons"
+                android:layout_height="@dimen/_20sdp"/>
+            <ImageView
+                android:layout_width="@dimen/_20sdp"
                 android:id="@+id/deleteAddressBut"
                 android:src="@drawable/delete_icon"
-                android:layout_height="wrap_content"/>
+                android:layout_height="@dimen/_20sdp"/>
         </LinearLayout>
 
         <com.ramez.shopp.SpichalViews.STextView

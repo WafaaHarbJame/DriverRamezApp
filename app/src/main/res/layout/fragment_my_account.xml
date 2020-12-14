@@ -60,6 +60,7 @@
                     android:textSize="@dimen/_12ssp" />
 
                 <com.ramez.shopp.SpichalViews.STextView
+                    android:id="@+id/emailTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/usernameTV"
@@ -657,7 +658,8 @@
                 <com.ramez.shopp.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/logout"
+                    android:id="@+id/logoutText"
+                    android:text="@string/text_login_login"
                     android:textSize="@dimen/_10ssp" />
             </LinearLayout>
         </LinearLayout>

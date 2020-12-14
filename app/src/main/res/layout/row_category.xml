@@ -19,7 +19,8 @@
             android:id="@+id/loadingLY"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginBottom="@dimen/_5sdp"
             android:visibility="gone"
             app:indicatorColor="@color/colorPrimary"
@@ -39,7 +40,7 @@
                     android:scaleType="fitXY"
                     app:riv_corner_radius="@dimen/_10sdp"
                     android:background="@drawable/round_corner_white"
-                    android:src="@drawable/small_logo_screen" />
+                    android:src="@drawable/holder_image" />
             </androidx.cardview.widget.CardView>
 
         </FrameLayout>

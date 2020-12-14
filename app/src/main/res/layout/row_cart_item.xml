@@ -92,42 +92,23 @@
                         android:id="@+id/imageView1"
                         android:layout_width="@dimen/_100sdp"
                         android:layout_height="@dimen/_80sdp"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/round_card_corner_white"
                         android:elevation="4dp"
-                        android:layout_margin="4dp"
                         android:padding="@dimen/_8sdp"
-                        android:scaleType="fitXY"
                         android:src="@drawable/holder_image"
+                        android:scaleType="fitXY"
                         app:riv_corner_radius="@dimen/_16sdp" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
+                    <com.ramez.shopp.SpichalViews.STextView
+                        android:id="@+id/tvName"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:maxLines="2"
+                        android:layout_marginBottom="4dp"
+                        android:textAlignment="viewStart"
+                        android:text="اسم المنتج"
+                        android:textSize="@dimen/_12ssp" />
 
-                        <com.ramez.shopp.SpichalViews.STextView
-                            android:id="@+id/tvName"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:maxLines="2"
-                            android:textAlignment="viewStart"
-                            android:text="اسم المنتج"
-                            android:textSize="@dimen/_12ssp" />
-
-                        <com.ramez.shopp.SpichalViews.STextView
-                            android:id="@+id/tvPrice"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="4dp"
-                            android:gravity="end|center"
-                            android:lines="1"
-                            android:text=""
-                            android:textColor="@color/colorPrimaryDark"
-                            android:textSize="@dimen/_12ssp" />
-
-
-                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -178,13 +159,13 @@
                         android:textSize="@dimen/_12ssp" />
 
                     <com.ramez.shopp.SpichalViews.STextViewBold
+                        android:id="@+id/totalTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_4sdp"
                         android:gravity="end|center"
                         android:lines="1"
                         android:text="35555"
-                        android:id="@+id/totalTv"
-                        android:layout_marginStart="@dimen/_4sdp"
                         android:textColor="@color/green"
                         android:textSize="@dimen/_12ssp" />
 

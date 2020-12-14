@@ -1,13 +1,27 @@
 package com.ramez.shopp.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.ramez.shopp.Activities.AddNewAddressActivity;
+import com.ramez.shopp.Activities.SplashScreenActivity;
+import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Dialogs.ConfirmDialog;
 import com.ramez.shopp.Models.AddressModel;
+import com.ramez.shopp.Models.AddressResultModel;
 import com.ramez.shopp.Models.MemberModel;
+import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.RowAddressItemBinding;
 
 import java.util.List;
@@ -42,29 +56,42 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Holder> 
         RowAddressItemBinding binding = holder.binding;
         AddressModel addressModel=addressModelList.get(position);
 
-        if (UtilityApp.getUserData().lastSelectedAddress ==addressModel.getAddressID()) {
+        if (UtilityApp.getUserData().lastSelectedAddress ==addressModel.getId()) {
             holder.binding.rbSelectAddress.setChecked(true);
         } else {
             holder.binding.rbSelectAddress.setChecked(false);
         }
 
-        binding.tvAddressMark.setText(addressModel.getAddressMark());
-        binding.tvAddressNote.setText(addressModel.getAddressNote());
-        binding.tvaAddressTitle.setText(addressModel.getAddressText());
+        binding.tvAddressMark.setText(addressModel.getMobileNumber());
+        binding.tvAddressNote.setText(addressModel.getFullAddress());
+        binding.tvaAddressTitle.setText(addressModel.getName());
 
         binding.rbSelectAddress.setOnClickListener(v -> {
             onRadioAddressSelect.onAddressSelected(addressModel);
             MemberModel memberModel=UtilityApp.getUserData();
-            memberModel.setLastSelectedAddress(addressModel.getAddressID());
+            memberModel.setLastSelectedAddress(addressModel.getId());
             UtilityApp.setUserData(memberModel);
             notifyDataSetChanged();
+        });
+
+        binding.editAddressBut.setOnClickListener(view -> {
+            Intent intent=new Intent(context, AddNewAddressActivity.class);
+            intent.putExtra(Constants.KEY_EDIT,true);
+            intent.putExtra(Constants.KEY_ADDRESS_ID,addressModel.getId());
+            context.startActivity(intent);
+
+
         });
 
 
 
         binding.deleteAddressBut.setOnClickListener(v -> {
-            onDeleteClicked.onDeleteClicked(addressModel,
-                    UtilityApp.getUserData().lastSelectedAddress == position);
+
+//            onDeleteClicked.onDeleteClicked(addressModel,
+//                    UtilityApp.getUserData().lastSelectedAddress == position);
+            deleteAddressId(addressModelList.get(position).getId(),position);
+
+
         });
     }
 
@@ -79,6 +106,17 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Holder> 
         public Holder(RowAddressItemBinding view) {
             super(view.getRoot());
             binding = view;
+
+            binding.container.setOnClickListener(view1 -> {
+                int position=getAdapterPosition();
+                AddressModel addressModel=addressModelList.get(position);
+                Intent intent=new Intent(context, AddNewAddressActivity.class);
+                intent.putExtra(Constants.KEY_EDIT,true);
+                intent.putExtra(Constants.KEY_ADDRESS_ID,addressModel.getId());
+                context.startActivity(intent);
+
+            });
+
         }
 
 
@@ -94,5 +132,37 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Holder> 
 
     public interface OnDeleteClicked {
         void onDeleteClicked(AddressModel addressModel, boolean isChecked);
+
+    }
+
+
+    public void deleteAddressId(int addressId,int position) {
+        ConfirmDialog.Click click = new ConfirmDialog.Click() {
+            @Override
+            public void click() {
+                new DataFeacher((Activity) context, (obj, func, IsSuccess) -> {
+                    if (func.equals(Constants.ERROR)) {
+                        Toast.makeText(context, ""+context.getString(R.string.error_in_data), Toast.LENGTH_SHORT).show();
+                    } else if (func.equals(Constants.FAIL)) {
+                        Toast.makeText(context, ""+context.getString(R.string.fail_to_get_data), Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        if (IsSuccess) {
+                            addressModelList.remove(position);
+                            notifyDataSetChanged();
+                            notifyItemRemoved(position);
+
+                        } else {
+
+                            Toast.makeText(context, ""+context.getString(R.string.fail_to_get_data), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                }).deleteAddressHandle(addressId);
+            }
+        };
+
+        new ConfirmDialog(context, R.string.want_to_delete_address, R.string.ok, R.string.cancel_label, click, null);
+
     }
 }

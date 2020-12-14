@@ -41,16 +41,7 @@ public class InvoiceFragment extends FragmentBase implements PaymentAdapter.OnPa
         paymentList.add(new PaymentModel(1,"بطاقة ائتمان","بطاقة ائتمان"));
 
 
-        productList.add(new CartModel(1,2,1,2,0,10,"شيبس ليز الملح 25 جرام","https://www.supermama.me/system/App/Entities/Article/images/000/065/491/web-watermarked-large/%D9%85%D8%B4%D8%B1%D9%88%D8%A8%D8%A7%D8%AA-%D8%AD%D8%A7%D8%B1%D9%82%D8%A9-%D9%84%D9%84%D8%AF%D9%87%D9%88%D9%86.jpg",
-                "10","",0,"20",100));
-        productList.add(new CartModel(1,2,1,2,0,10,"شيبس ليز الملح 25 جرام","https://www.supermama.me/system/App/Entities/Article/images/000/065/491/web-watermarked-large/%D9%85%D8%B4%D8%B1%D9%88%D8%A8%D8%A7%D8%AA-%D8%AD%D8%A7%D8%B1%D9%82%D8%A9-%D9%84%D9%84%D8%AF%D9%87%D9%88%D9%86.jpg",
-                "10","",0,"20",100));
-        productList.add(new CartModel(1,2,1,2,0,10,"شيبس ليز الملح 25 جرام","https://www.supermama.me/system/App/Entities/Article/images/000/065/491/web-watermarked-large/%D9%85%D8%B4%D8%B1%D9%88%D8%A8%D8%A7%D8%AA-%D8%AD%D8%A7%D8%B1%D9%82%D8%A9-%D9%84%D9%84%D8%AF%D9%87%D9%88%D9%86.jpg",
-                "10","",0,"20",100));
-        productList.add(new CartModel(1,2,1,2,0,10,"شيبس ليز الملح 25 جرام","https://www.supermama.me/system/App/Entities/Article/images/000/065/491/web-watermarked-large/%D9%85%D8%B4%D8%B1%D9%88%D8%A8%D8%A7%D8%AA-%D8%AD%D8%A7%D8%B1%D9%82%D8%A9-%D9%84%D9%84%D8%AF%D9%87%D9%88%D9%86.jpg",
-                "10","",0,"20",100));
-        productList.add(new CartModel(1,2,1,2,0,10,"شيبس ليز الملح 25 جرام","https://www.supermama.me/system/App/Entities/Article/images/000/065/491/web-watermarked-large/%D9%85%D8%B4%D8%B1%D9%88%D8%A8%D8%A7%D8%AA-%D8%AD%D8%A7%D8%B1%D9%82%D8%A9-%D9%84%D9%84%D8%AF%D9%87%D9%88%D9%86.jpg",
-                "10","",0,"20",100));
+
 
 
         payLinearLayoutManager=new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL,false);

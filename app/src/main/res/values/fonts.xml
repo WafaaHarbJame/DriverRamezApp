@@ -11,6 +11,9 @@
     <string name="fa_file_contract" translatable="false">&#xf56c;</string>
     <string name="fa_circle" translatable="false">&#xf111;</string>
     <string name="fa_circle_o" translatable="false">&#xf10c;</string>
+    <string name="fal_globe_americas" translatable="false">&#xf57d;</string>
+    <string name="fal_times" translatable="false">&#xf00d;</string>
+    <string name="fal_search" translatable="false">&#xf002;</string>
 
 
 </resources>

@@ -27,9 +27,19 @@
         android:layout_marginEnd="@dimen/_8sdp"
         android:layout_below="@id/back1"
         android:layout_alignParentStart="true">
+
+        <include
+            android:id="@+id/loadingProgressLY"
+            layout="@layout/layout_pre_loading" />
+
+        <include
+            android:id="@+id/failGetDataLY"
+            layout="@layout/layout_fail_get_data" />
+
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:id="@+id/lY"
+            android:id="@+id/dataLY"
             android:layout_height="wrap_content">
 
 
@@ -42,6 +52,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
+                    <include
+                        android:id="@+id/noDataLY"
+                        layout="@layout/layout_no_data" />
+
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/cartRecycler"
@@ -84,9 +99,9 @@
                             android:layout_weight="1"
                             android:gravity="end|center"
                             android:lines="1"
-                            android:text="3"
+                            android:text=""
                             android:layout_gravity="center"
-                            android:id="@+id/priceTv"
+                            android:id="@+id/productsSizeTv"
                             android:layout_marginStart="@dimen/_8sdp"
                             android:textColor="@color/green"
                             android:textSize="@dimen/_12ssp" />
@@ -120,7 +135,7 @@
                             android:layout_weight="1"
                             android:gravity="end|center"
                             android:lines="1"
-                            android:text="3"
+                            android:text=""
                             android:layout_gravity="center"
                             android:id="@+id/productCostTv"
                             android:layout_marginStart="@dimen/_8sdp"
@@ -156,7 +171,7 @@
                             android:layout_weight="1"
                             android:gravity="end|center"
                             android:lines="1"
-                            android:text="1111"
+                            android:text=""
                             android:layout_gravity="center"
                             android:id="@+id/totalTv"
                             android:layout_marginStart="@dimen/_8sdp"

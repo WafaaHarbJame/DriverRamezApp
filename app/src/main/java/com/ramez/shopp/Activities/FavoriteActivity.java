@@ -25,20 +25,6 @@ public class FavoriteActivity extends ActivityBase implements ProductAdapter.OnI
         View view = binding.getRoot();
         setContentView(view);
         productList=new ArrayList<>();
-        productList.add(new ProductModel(1, getString(R.string.product_name),getString(R.string.product_name),getString(R.string._10220_aed1),"htt",
-                getString(R.string._50_off),1, getString(R.string._10220_aed),1));
-
-        productList.add(new ProductModel(1, getString(R.string.product_name),getString(R.string.product_name),getString(R.string._10220_aed1),"htt",
-                getString(R.string._50_off),1, getString(R.string._10220_aed),0));
-
-        productList.add(new ProductModel(1, getString(R.string.product_name),getString(R.string.product_name),getString(R.string._10220_aed),"htt",
-                getString(R.string._50_off),0, getString(R.string._10220_aed),1));
-
-        productList.add(new ProductModel(1, getString(R.string.product_name),getString(R.string.product_name),getString(R.string._10220_aed1),"htt",
-                getString(R.string._50_off),1, getString(R.string._10220_aed),0));
-
-        productList.add(new ProductModel(1, getString(R.string.product_name),getString(R.string.product_name),getString(R.string._10220_aed1),"htt",
-                getString(R.string._50_off),1, getString(R.string._10220_aed),0));
 
         gridLayoutManager =new GridLayoutManager(getActiviy(),2);
 

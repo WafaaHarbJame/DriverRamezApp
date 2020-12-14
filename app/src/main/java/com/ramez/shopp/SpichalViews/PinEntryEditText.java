@@ -1,8 +1,11 @@
 package com.ramez.shopp.SpichalViews;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Build;
 import android.text.Editable;
@@ -13,11 +16,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import androidx.core.content.ContextCompat;
+
+import com.ramez.shopp.R;
+import com.ramez.shopp.RootApplication;
+
+@SuppressLint("AppCompatCustomView")
 public class PinEntryEditText extends EditText {
 
     float mSpace = 24; //24 dp by default
     float mCharSize = 0;
-    float mNumChars = 6;
+    float mNumChars = 4;
     float mLineSpacing = 8; //8dp by default
     private float mLineStroke = 1; //1dp by default
     private Paint mLinesPaint;
@@ -28,35 +37,35 @@ public class PinEntryEditText extends EditText {
             new int[]{-android.R.attr.state_focused}, // unfocused
     };
 
-//    int[] mColors = new int[]{
-//            ContextCompat.getColor(RootApplication.getInstance(), R.color.colorPrimary),
-////            Color.GREEN,
-//            ContextCompat.getColor(RootApplication.getInstance(), R.color.header6),
-//            ContextCompat.getColor(RootApplication.getInstance(), R.color.header2)
-//    };
+    int[] mColors = new int[]{
+            ContextCompat.getColor(RootApplication.getInstance(), R.color.colorPrimaryDark),
+//            Color.GREEN,
+            ContextCompat.getColor(RootApplication.getInstance(), R.color.black),
+            ContextCompat.getColor(RootApplication.getInstance(), R.color.colorPrimaryDark)
+    };
 
-//    ColorStateList mColorStates = new ColorStateList(mStates, mColors);
+    ColorStateList mColorStates = new ColorStateList(mStates, mColors);
 
-//    private int getColorForState(int... states) {
-//        return mColorStates.getColorForState(states, Color.GRAY);
-//    }
+    private int getColorForState(int... states) {
+        return mColorStates.getColorForState(states, Color.GRAY);
+    }
 
     private OnClickListener mClickListener;
 
     /* next = is the current char the next character to be input? */
-//    private void updateColorForLines(boolean next) {
-//        if (isFocused()) {
-//            mLinesPaint.setColor(
-//                    getColorForState(android.R.attr.state_focused));
-//            if (next) {
-//                mLinesPaint.setColor(
-//                        getColorForState(android.R.attr.state_selected));
-//            }
-//        } else {
-//            mLinesPaint.setColor(
-//                    getColorForState(-android.R.attr.state_focused));
-//        }
-//    }
+    private void updateColorForLines(boolean next) {
+        if (isFocused()) {
+            mLinesPaint.setColor(
+                    getColorForState(android.R.attr.state_focused));
+            if (next) {
+                mLinesPaint.setColor(
+                        getColorForState(android.R.attr.state_selected));
+            }
+        } else {
+            mLinesPaint.setColor(
+                    getColorForState(-android.R.attr.state_focused));
+        }
+    }
 
     public PinEntryEditText(Context context) {
         super(context);
@@ -151,7 +160,7 @@ public class PinEntryEditText extends EditText {
 
 
         for (int i = 0; i < mNumChars; i++) {
-//            updateColorForLines(i == textLength);
+            updateColorForLines(i == textLength);
             canvas.drawLine(
                     startX, bottom, startX + mCharSize, bottom, mLinesPaint);
 

@@ -26,7 +26,7 @@ public class ConfirmDialog extends Dialog {
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         requestWindowFeature(Window.FEATURE_NO_TITLE); //before
 
-        setContentView(R.layout.dialog_confirm);
+        setContentView(R.layout.dialog_my_confirm);
         setCancelable(false);
 //        setTitle(title);
 

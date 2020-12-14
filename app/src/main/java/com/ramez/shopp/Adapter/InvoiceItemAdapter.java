@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 import com.ramez.shopp.Classes.CartModel;
+import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.RowInvoiceProductItemBinding;
@@ -58,7 +59,6 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
 
         holder.binding.cardViewOuter.setOnClickListener(v -> {
             Log.d(TAG, "name p" + cartDM.getProductName());
-            Log.d(TAG, "ModelID p" + cartDM.getModelID());
 
             onInvoiceItemClicked.onInvoiceItemClicked(cartDM);
         });
@@ -70,11 +70,11 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
         });
 
 
-        if (cartDM.getProductPrice().isEmpty()) {
+        if (cartDM.getProductPrice().isNaN()) {
             holder.binding.productPriceTv.setVisibility(View.GONE);
-            Log.d("proImage", "cart proImage: " + cartDM.getProductImage());
+            Log.d("proImage", "cart proImage: " + cartDM.getImage());
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), Uri.parse(cartDM.getProductImage()));
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), Uri.parse(cartDM.getImage()));
                 Glide.with(context).load(bitmap).placeholder(R.drawable.holder_image).into(holder.binding.productImage);
 
             } catch (IOException e) {
@@ -84,8 +84,8 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
 
         }
         else {
-            double subTotal = Double.parseDouble(cartDM.getProductPrice()) * cartDM.getProductQuantity();
-            Glide.with(context).load(cartDM.getProductImage()).placeholder(R.drawable.holder_image).into(holder.binding.productImage);
+            double subTotal = cartDM.getProductPrice() * cartDM.getProductQuantity();
+            Glide.with(context).load(cartDM.getImage()).placeholder(R.drawable.holder_image).into(holder.binding.productImage);
 
         }
 
@@ -140,8 +140,8 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
     public double calculateSubTotalPrice() {
         double subTotal = 0;
         for (int i = 0; i < cartDMS.size(); i++) {
-            if (!cartDMS.get(i).getProductPrice().isEmpty()) {
-                subTotal += Double.parseDouble(cartDMS.get(i).getProductPrice()) * cartDMS.get(i).getProductQuantity();
+            if (!cartDMS.get(i).getProductPrice().isNaN()) {
+                subTotal += cartDMS.get(i).getProductPrice() * cartDMS.get(i).getProductQuantity();
             }
         }
 
@@ -189,9 +189,9 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
                     count++;
                     binding.productCartQTY.setText(String.valueOf(count));
 
-                    if(!cartDM.getProductPrice().isEmpty()){
-                        double newSubTotal = Double.parseDouble(cartDM.getProductPrice()) * count;
-                        binding.productPriceTv.setText(NumberHandler.formatDouble(newSubTotal) + " " + currency);
+                    if(!cartDM.getProductPrice().isNaN()){
+                        double newSubTotal = cartDM.getProductPrice() * count;
+                        binding.productPriceTv.setText(NumberHandler.formatDouble(newSubTotal, UtilityApp.getLocalData().getFractional()) + " " + currency);
 
                     }
 
@@ -221,8 +221,8 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
                 }
 
                 binding.productCartQTY.setText(String.valueOf(count));
-                if(!cartDM.getProductPrice().isEmpty()){
-                    double newSubTotal = Double.parseDouble(cartDM.getProductPrice()) * count;
+                if(!cartDM.getProductPrice().isNaN()){
+                    double newSubTotal = cartDM.getProductPrice() * count;
 
                 }
                 count = Integer.parseInt(binding.productCartQTY.getText().toString());
