@@ -90,7 +90,7 @@
 
 
             <com.ramez.shopp.SpichalViews.STextViewBold
-                android:id="@+id/textButtonLogin"
+                android:id="@+id/confirmBut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

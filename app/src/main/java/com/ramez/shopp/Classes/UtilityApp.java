@@ -6,12 +6,16 @@ import android.provider.Settings;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.ramez.shopp.Models.CountryModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.RootApplication;
 import com.ramez.shopp.Utils.LocaleUtils;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -147,6 +151,17 @@ public class UtilityApp {
     }
 
 
+    public static void setCountriesData(ArrayList<CountryModel> countryModelList) {
+        String userData = new Gson().toJson(countryModelList);
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_COUNTRIES, userData);
+    }
+
+    public static ArrayList<CountryModel> getCountriesData() {
+        String dataString = RootApplication.getInstance().getSharedPManger().getDataString(Constants.KEY_COUNTRIES);
+        return new Gson().fromJson(dataString, new TypeToken<List<CountryModel>>() {
+        }.getType());
+
+    }
 
     public static void setLocalData(LocalModel model) {
         String localData = new Gson().toJson(model);

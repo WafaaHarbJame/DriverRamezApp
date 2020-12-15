@@ -29,35 +29,35 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
     ArrayList<AddressModel> addressList;
     private LinearLayoutManager linearLayoutManager;
     private int defaultAddressId;
-
+    private MemberModel user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding=ActivityAddressBinding.inflate(getLayoutInflater());
         View view=binding.getRoot();
         setContentView(view);
+        user=UtilityApp.getUserData();
 
         binding.toolBar.mainTitleTxt.setText(R.string.address);
 
         binding.toolBar.backBtn.setOnClickListener(view1 -> {
             onBackPressed();
         });
+
         addressList=new ArrayList<>();
         linearLayoutManager=new LinearLayoutManager(getActiviy());
         binding.addressRecycler.setLayoutManager(linearLayoutManager);
 
         if(UtilityApp.isLogin()){
-            GetUserAddress(UtilityApp.getUserData().getId());
+            GetUserAddress(user.getId());
         }
-
 
         binding.addNewAddressBut.setOnClickListener(view1 -> {
             addNewAddress();
         });
         binding.acceptBtu.setOnClickListener(view1 -> {
-            MemberModel memberModel=UtilityApp.getUserData();
-            memberModel.setLastSelectedAddress(defaultAddressId);
-            UtilityApp.setUserData(memberModel);
+            user.setLastSelectedAddress(defaultAddressId);
+            UtilityApp.setUserData(user);
             addressAdapter.notifyDataSetChanged();
             Toast(R.string.address_default);
 

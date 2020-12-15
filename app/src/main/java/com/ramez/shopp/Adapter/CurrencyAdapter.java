@@ -19,12 +19,13 @@ public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.ViewHo
     private Context context;
     private OnCurrencyClick onLangClick;
     private ArrayList<CurrencyModel> list;
-    private int lastIndex = 0;
+    private int selectedCurrency = 0;
 
-    public CurrencyAdapter(Context context, ArrayList<CurrencyModel> list, OnCurrencyClick onCurrencyClick) {
+    public CurrencyAdapter(Context context, ArrayList<CurrencyModel> list, OnCurrencyClick onCurrencyClick,int selectedCurrency) {
         this.context = context;
         this.onLangClick = onCurrencyClick;
         this.list = list;
+        this.selectedCurrency=selectedCurrency;
     }
 
     @Override
@@ -40,7 +41,7 @@ public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.ViewHo
         holder.binding.nameTxt.setText(currencyModel.getName().trim());
 
 
-        if (lastIndex == position) {
+        if (currencyModel.getId() == selectedCurrency) {
             holder.binding.selectTxt.setText(context.getString(R.string.fa_circle));
             holder.binding.selectTxt.setTextColor(ContextCompat.getColor(context,R.color.colorPrimaryDark));
         } else {
@@ -80,7 +81,7 @@ public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.ViewHo
 
             itemView.setOnClickListener(v -> {
                 onLangClick.onCurrencyClicked(getAdapterPosition(), list.get(getAdapterPosition()));
-                lastIndex = getAdapterPosition();
+                selectedCurrency = list.get(getAdapterPosition()).getId();
                 notifyDataSetChanged();
             });
 

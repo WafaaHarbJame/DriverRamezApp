@@ -39,7 +39,7 @@ public class CartModel {
     private String toDate;
     @SerializedName("special_price")
     @Expose
-    private Integer specialPrice;
+    private Double specialPrice;
     @SerializedName("isSpecialPriceVisible")
     @Expose
     private Boolean isSpecialPriceVisible;
@@ -183,11 +183,11 @@ public class CartModel {
         this.toDate = toDate;
     }
 
-    public Integer getSpecialPrice() {
+    public Double getSpecialPrice() {
         return specialPrice;
     }
 
-    public void setSpecialPrice(Integer specialPrice) {
+    public void setSpecialPrice(Double specialPrice) {
         this.specialPrice = specialPrice;
     }
 

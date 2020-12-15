@@ -74,14 +74,6 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Holder> 
             notifyDataSetChanged();
         });
 
-        binding.editAddressBut.setOnClickListener(view -> {
-            Intent intent=new Intent(context, AddNewAddressActivity.class);
-            intent.putExtra(Constants.KEY_EDIT,true);
-            intent.putExtra(Constants.KEY_ADDRESS_ID,addressModel.getId());
-            context.startActivity(intent);
-
-
-        });
 
 
 

@@ -18,12 +18,13 @@ public class LangAdapter extends RecyclerView.Adapter<LangAdapter.CountryViewHol
     private Context context;
     private OnLangClick onLangClick;
     private ArrayList<LanguageModel> langList;
-    private int lastIndex = 0;
+    private int selectedPosition = 0;
 
-    public LangAdapter(Context context, ArrayList<LanguageModel> list, OnLangClick onLangClick) {
+    public LangAdapter(Context context, ArrayList<LanguageModel> list, OnLangClick onLangClick,int selectedPosition) {
         this.context = context;
         this.onLangClick = onLangClick;
         this.langList = list;
+        this.selectedPosition=selectedPosition;
     }
 
     @Override
@@ -39,14 +40,17 @@ public class LangAdapter extends RecyclerView.Adapter<LangAdapter.CountryViewHol
 
         holder.binding.nameTxt.setText(languageModel.getName().trim());
 
-
-        if (lastIndex == position) {
+        if (languageModel.getId() == selectedPosition) {
             holder.binding.selectTxt.setText(context.getString(R.string.fa_circle));
             holder.binding.selectTxt.setTextColor(ContextCompat.getColor(context,R.color.colorPrimaryDark));
-        } else {
+        }
+
+        else {
             holder.binding.selectTxt.setText(context.getString(R.string.fa_circle_o));
             holder.binding.selectTxt.setTextColor(ContextCompat.getColor(context, R.color.header3));
         }
+
+
 
 
 
@@ -79,7 +83,7 @@ public class LangAdapter extends RecyclerView.Adapter<LangAdapter.CountryViewHol
 
             itemView.setOnClickListener(v -> {
                 onLangClick.onLangClicked(getAdapterPosition(), langList.get(getAdapterPosition()));
-                lastIndex = getAdapterPosition();
+                selectedPosition = langList.get(getAdapterPosition()).getId();
                 notifyDataSetChanged();
             });
 

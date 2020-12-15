@@ -10,6 +10,7 @@ import com.ramez.shopp.Models.AreasResultModel;
 import com.ramez.shopp.Models.CartResultModel;
 import com.ramez.shopp.Models.CategoryResultModel;
 import com.ramez.shopp.Models.CountryModelResult;
+import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.GeneralModel;
 import com.ramez.shopp.Models.LoginResultModel;
 import com.ramez.shopp.Models.MainModel;
@@ -55,6 +56,9 @@ ApiInterface {
 
     @POST("v3/Account/forgotPassword")
     Call<OtpModel> ForgetPasswordHandle(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
+
+    @POST("v3/Account/changePassword")
+    Call<OtpModel> changePasswordHandle(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
     @POST("v3/Account/updateDeviceToken")
     Call<LoginResultModel> UpdateTokenHandle(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
@@ -119,8 +123,12 @@ ApiInterface {
     @GET("v3/Carts/checkOut")
     Call<CartResultModel> GetACarts(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int  user_id, @Query("store_ID") int sotre_id);
 
+    @GET("v3/Products/productList")
+    Call<FavouriteResultModel>  GetFavoriteProducts(@HeaderMap() Map<String, Object> headerParams, @Query("category_id")
+            int category_id, @Query("country_id") int country_id, @Query("city_id") int city_id, @Query("user_id") String user_id, @Query("filter") String filter,
+                                                    @Query("page_number") int page_number, @Query("page_size") int page_size);
 
-    @POST("v3/Account/updateDeviceToken")
+
     Call<ResultAPIModel<MemberModel>> updateProfilePost(@HeaderMap() Map<String, Object> headerParams, @Body RequestBody params);
 
     @POST("v3/Account/uploadFile")

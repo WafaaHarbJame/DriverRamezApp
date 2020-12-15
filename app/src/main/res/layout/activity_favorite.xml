@@ -10,8 +10,18 @@
     <include
         android:id="@+id/tool_bar"
         layout="@layout/tool_bar_with_back" />
+    <include
+        android:id="@+id/loadingProgressLY"
+        layout="@layout/layout_pre_loading" />
+
+    <include
+        android:id="@+id/failGetDataLY"
+        layout="@layout/layout_fail_get_data" />
+
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
+        android:id="@+id/dataLY"
         android:layout_height="match_parent">
 
 
@@ -20,6 +30,9 @@
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
             android:orientation="vertical">
+            <include
+                android:id="@+id/noDataLY"
+                layout="@layout/layout_no_data" />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/favoriteRecycler"
                 android:layout_width="match_parent"

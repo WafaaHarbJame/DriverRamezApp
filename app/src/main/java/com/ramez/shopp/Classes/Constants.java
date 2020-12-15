@@ -86,6 +86,7 @@ public class Constants {
     public static final String SEARCH = "search";
 
     public static final String KEY_MEMBER = "key_member";
+    public static final String KEY_COUNTRIES= "key_countries";
     public static final String KEY_Local = "KEY_Local";
     public static String KEY_FIREBASE_TOKEN = "firebase_token";
     public static final String KEY_MEMBER_LOCATION = "key_member_location";
@@ -221,6 +222,7 @@ public class Constants {
     public static String KEY_LNG = "KEY_LNG";
     public static final String CURRENCY = "CURRENCY";
     public static final String Fractional = "Fractional";
+    public static final String favourite_filter = "favourite";
 
 
 }

@@ -25,6 +25,7 @@ import com.ramez.shopp.Models.AddressModel;
 import com.ramez.shopp.Models.AddressResultModel;
 import com.ramez.shopp.Models.AreasModel;
 import com.ramez.shopp.Models.AreasResultModel;
+import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.MapHandler;
 import com.ramez.shopp.databinding.ActivityAddNewAddressBinding;
@@ -56,6 +57,7 @@ public class AddNewAddressActivity extends ActivityBase {
     private int CHOOSE_LOCATION = 3000;
     private int countryId;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +67,7 @@ public class AddNewAddressActivity extends ActivityBase {
 
         stateModelList = new ArrayList<>();
         stateNames = new ArrayList<>();
+
 
         binding.toolBar.mainTitleTxt.setText(R.string.new_address);
 
@@ -79,6 +82,7 @@ public class AddNewAddressActivity extends ActivityBase {
         });
 
         getIntentData();
+
         binding.addNewAddressBut.setOnClickListener(view1 -> {
 
             if (isValidForm() && area_id != 0) {
@@ -153,7 +157,6 @@ public class AddNewAddressActivity extends ActivityBase {
                 if (IsSuccess) {
                     Intent intent = new Intent(getActiviy(), AddressActivity.class);
                     startActivity(intent);
-                    finish();
 
 
                 } else {

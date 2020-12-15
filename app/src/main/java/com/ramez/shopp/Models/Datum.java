@@ -6,9 +6,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Datum {
-    @SerializedName("aws_image")
-    @Expose
-    private String awsImage;
     @SerializedName("brand_id")
     @Expose
     private Integer brandId;
@@ -18,98 +15,36 @@ public class Datum {
     @SerializedName("category_id")
     @Expose
     private Integer categoryId;
-    @SerializedName("cgst")
-    @Expose
-    private Integer cgst;
-    @SerializedName("checkPickerLoad")
-    @Expose
-    private Integer checkPickerLoad;
-    @SerializedName("created_at")
-    @Expose
-    private String createdAt;
     @SerializedName("description")
     @Expose
-    private String description;
-    @SerializedName("discount")
-    @Expose
-    private Integer discount;
+    private Object description;
     @SerializedName("favourite")
     @Expose
-    private String favourite;
-    @SerializedName("get_product_variations")
+    private Boolean favourite;
+    @SerializedName("product_barcodes")
     @Expose
-    private List<GetProductVariation> getProductVariations = null;
+    private List<ProductBarcode> productBarcodes = null;
+    @SerializedName("product_units")
+    @Expose
+    private Object productUnits;
     @SerializedName("h_description")
     @Expose
-    private String hDescription;
+    private Object hDescription;
     @SerializedName("h_name")
     @Expose
     private String hName;
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("igst")
+    @SerializedName("images")
     @Expose
-    private Integer igst;
-    @SerializedName("image")
-    @Expose
-    private String image;
-    @SerializedName("is_featured")
-    @Expose
-    private Integer isFeatured;
-    @SerializedName("is_offered")
-    @Expose
-    private Integer isOffered;
-    @SerializedName("is_quick_grab")
-    @Expose
-    private Integer isQuickGrab;
+    private List<String> images = null;
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("parent_category_id")
-    @Expose
-    private Object parentCategoryId;
-    @SerializedName("price")
-    @Expose
-    private Integer price;
     @SerializedName("product_brand")
     @Expose
     private ProductBrand productBrand;
-    @SerializedName("quantity")
-    @Expose
-    private Integer quantity;
-    @SerializedName("secondLoad")
-    @Expose
-    private Integer secondLoad;
-    @SerializedName("selected_index")
-    @Expose
-    private Integer selectedIndex;
-    @SerializedName("sgst")
-    @Expose
-    private Object sgst;
-    @SerializedName("special_price")
-    @Expose
-    private Integer specialPrice;
-    @SerializedName("status")
-    @Expose
-    private Object status;
-    @SerializedName("unit")
-    @Expose
-    private String unit;
-    @SerializedName("updated_at")
-    @Expose
-    private String updatedAt;
-    @SerializedName("weight")
-    @Expose
-    private Integer weight;
-
-    public String getAwsImage() {
-        return awsImage;
-    }
-
-    public void setAwsImage(String awsImage) {
-        this.awsImage = awsImage;
-    }
 
     public Integer getBrandId() {
         return brandId;
@@ -135,67 +70,43 @@ public class Datum {
         this.categoryId = categoryId;
     }
 
-    public Integer getCgst() {
-        return cgst;
-    }
-
-    public void setCgst(Integer cgst) {
-        this.cgst = cgst;
-    }
-
-    public Integer getCheckPickerLoad() {
-        return checkPickerLoad;
-    }
-
-    public void setCheckPickerLoad(Integer checkPickerLoad) {
-        this.checkPickerLoad = checkPickerLoad;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getDescription() {
+    public Object getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(Object description) {
         this.description = description;
     }
 
-    public Integer getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(Integer discount) {
-        this.discount = discount;
-    }
-
-    public String getFavourite() {
+    public Boolean getFavourite() {
         return favourite;
     }
 
-    public void setFavourite(String favourite) {
+    public void setFavourite(Boolean favourite) {
         this.favourite = favourite;
     }
 
-    public List<GetProductVariation> getGetProductVariations() {
-        return getProductVariations;
+    public List<ProductBarcode> getProductBarcodes() {
+        return productBarcodes;
     }
 
-    public void setGetProductVariations(List<GetProductVariation> getProductVariations) {
-        this.getProductVariations = getProductVariations;
+    public void setProductBarcodes(List<ProductBarcode> productBarcodes) {
+        this.productBarcodes = productBarcodes;
     }
 
-    public String getHDescription() {
+    public Object getProductUnits() {
+        return productUnits;
+    }
+
+    public void setProductUnits(Object productUnits) {
+        this.productUnits = productUnits;
+    }
+
+    public Object getHDescription() {
         return hDescription;
     }
 
-    public void setHDescription(String hDescription) {
+    public void setHDescription(Object hDescription) {
         this.hDescription = hDescription;
     }
 
@@ -215,44 +126,12 @@ public class Datum {
         this.id = id;
     }
 
-    public Integer getIgst() {
-        return igst;
+    public List<String> getImages() {
+        return images;
     }
 
-    public void setIgst(Integer igst) {
-        this.igst = igst;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public Integer getIsFeatured() {
-        return isFeatured;
-    }
-
-    public void setIsFeatured(Integer isFeatured) {
-        this.isFeatured = isFeatured;
-    }
-
-    public Integer getIsOffered() {
-        return isOffered;
-    }
-
-    public void setIsOffered(Integer isOffered) {
-        this.isOffered = isOffered;
-    }
-
-    public Integer getIsQuickGrab() {
-        return isQuickGrab;
-    }
-
-    public void setIsQuickGrab(Integer isQuickGrab) {
-        this.isQuickGrab = isQuickGrab;
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 
     public String getName() {
@@ -263,22 +142,6 @@ public class Datum {
         this.name = name;
     }
 
-    public Object getParentCategoryId() {
-        return parentCategoryId;
-    }
-
-    public void setParentCategoryId(Object parentCategoryId) {
-        this.parentCategoryId = parentCategoryId;
-    }
-
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
     public ProductBrand getProductBrand() {
         return productBrand;
     }
@@ -286,77 +149,4 @@ public class Datum {
     public void setProductBrand(ProductBrand productBrand) {
         this.productBrand = productBrand;
     }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public Integer getSecondLoad() {
-        return secondLoad;
-    }
-
-    public void setSecondLoad(Integer secondLoad) {
-        this.secondLoad = secondLoad;
-    }
-
-    public Integer getSelectedIndex() {
-        return selectedIndex;
-    }
-
-    public void setSelectedIndex(Integer selectedIndex) {
-        this.selectedIndex = selectedIndex;
-    }
-
-    public Object getSgst() {
-        return sgst;
-    }
-
-    public void setSgst(Object sgst) {
-        this.sgst = sgst;
-    }
-
-    public Integer getSpecialPrice() {
-        return specialPrice;
-    }
-
-    public void setSpecialPrice(Integer specialPrice) {
-        this.specialPrice = specialPrice;
-    }
-
-    public Object getStatus() {
-        return status;
-    }
-
-    public void setStatus(Object status) {
-        this.status = status;
-    }
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public Integer getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Integer weight) {
-        this.weight = weight;
-    }
-
 }

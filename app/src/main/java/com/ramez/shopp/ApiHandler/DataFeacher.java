@@ -207,6 +207,26 @@ public class DataFeacher {
         call.enqueue(callbackApi);
     }
 
+
+    public void ChangePasswordHandle(MemberModel memberModel) {
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("user_id", memberModel.getId());
+        params.put("password",memberModel.getPassword());
+        params.put("new_password",memberModel.getNew_password());
+
+        Log.i(TAG, "Log ChangePasswordHandle");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log user_id " + memberModel.getId());
+        Log.i(TAG, "Log password " + memberModel.getPassword());
+        Log.i(TAG, "Log new_password " + memberModel.getNew_password());
+
+
+        Call call = apiService.changePasswordHandle(headerMap, params);
+        call.enqueue(callbackApi);
+
+    }
+
     public void UpdateTokenHandle(MemberModel memberModel) {
 
         Map<String, Object> params = new HashMap<>();
@@ -313,6 +333,7 @@ public class DataFeacher {
 
     public void CreateAddressHandle(AddressModel addressModel) {
 
+
         Log.i(TAG, "Log CreateAddressHandle");
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log mobile_number " + addressModel.getMobileNumber());
@@ -325,6 +346,7 @@ public class DataFeacher {
         Log.i(TAG, "Log getHouseNo  " + addressModel.getHouseNo());
         Log.i(TAG, "Log apartment_no  " + addressModel.getApartmentNo());
         Log.i(TAG, "Log phone_prefix  " + addressModel.getPhonePrefix());
+        Log.i(TAG, "Log mobile_number  " + addressModel.getMobileNumber());
         Log.i(TAG, "Log longitude  " + addressModel.getLongitude());
         Log.i(TAG, "Log getLatitude  " + addressModel.getLatitude());
         Log.i(TAG, "Log google_address  " + addressModel.getGoogleAddress());
@@ -496,7 +518,7 @@ public class DataFeacher {
         params.put("product_barcode_id", product_barcode_id);
 
 
-        Log.i(TAG, "Log addCartHandle");
+        Log.i(TAG, "Log deleteCartHandle");
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log user_id " + userId);
         Log.i(TAG, "Log store_ID " + storeId);
@@ -521,6 +543,23 @@ public class DataFeacher {
         call.enqueue(callbackApi);
 
 
+    }
+
+
+    public void getFavorite(int category_id,int country_id,int city_id,String user_id,String filter,int page_number,int page_size ) {
+
+        Log.i(TAG, "Log getFavorite");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log category_id " + category_id);
+        Log.i(TAG, "Log country_id " + country_id);
+        Log.i(TAG, "Log city_id " + city_id);
+        Log.i(TAG, "Log user_id " + user_id);
+        Log.i(TAG, "Log filter " + filter);
+        Log.i(TAG, "Log page_number " + page_number);
+        Log.i(TAG, "Log page_size " + page_size);
+
+        Call call = apiService.GetFavoriteProducts(headerMap, category_id,country_id,city_id,user_id,filter,page_number,page_size);
+        call.enqueue(callbackApi);
     }
 
 

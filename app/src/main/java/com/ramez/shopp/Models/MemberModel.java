@@ -21,6 +21,11 @@ public class MemberModel implements Serializable {
     @SerializedName("password")
     @Expose
     private String password;
+
+    @SerializedName("new_password")
+    @Expose
+    private String new_password;
+
     @SerializedName("user_type")
     @Expose
     private String userType;
@@ -160,6 +165,14 @@ public class MemberModel implements Serializable {
 
     public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
+    }
+
+    public String getNew_password() {
+        return new_password;
+    }
+
+    public void setNew_password(String new_password) {
+        this.new_password = new_password;
     }
 }
 

@@ -129,7 +129,8 @@
     <string name="choose_branch">Please Choose Branch</string>
     <string name="choose_city">Please Choose City</string>
     <string name="choose_currency">Please Choose currency</string>
-    <string name="english_lang" translatable="false">English</string>
+    <string name="ar_lang" translatable="false">Arabic</string>
+    <string name="en_lang" translatable="false">English</string>
     <string name="dollar" translatable="false">dollar</string>
     <string name="pound" translatable="false">pound</string>
     <string name="euro" translatable="false">euro</string>
@@ -222,12 +223,9 @@
     <string name="choose_address">Select Addresss</string>
     <string name="enter_area">Enter Area</string>
     <string name="enter_block">Enter  Block</string>
-    <string name="enter_street">Enter Steet</string>
     <string name="enter_flat">Enter Flat</string>
     <string name="enter_building">Enter Building</string>
     <string name="choose_code">Choose Code</string>
-    <string name="please_wait_creat">Please Wait to add address</string>
-    <string name="fail_to_addAddress">Fail To add address</string>
     <string name="select_area">Select Area</string>
     <string name="close">Close</string>
     <string name="want_to_delete_address">Do you want to delete address</string>
@@ -239,6 +237,16 @@
     <string name="textLoginFirst">You Must Login to add to Cart</string>
     <string name="fail_to_add_cart">Fail to add to cart</string>
     <string name="success_added_to_cart">Success adding to cart</string>
+    <string name="fail_to_addAddress">Fail To add address</string>
+    <string name="enter_street">Enter Street</string>
+    <string name="please_wait_creat">Please Wait to add address</string>
+    <string name="fail_to_update_cart">Fail to update to cart</string>
+    <string name="success_to_update_cart">Success to update to cart</string>
+    <string name="success_delete_from_cart">Success delete from cart</string>
     <string name="fail_to_delete_cart">Fail To delete item</string>
+    <string name="show_cart">Show Cart</string>
+    <string name="fail_to_change_password">Fail to change address</string>
+    <string name="enter_new_password">Enter New Password</string>
+    <string name="change_city_currency">Change Language And Currency </string>
 
 </resources>

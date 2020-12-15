@@ -75,6 +75,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
 
 
 
+
         if ( productModel.getProductBarcodes().get(0).getIsSpecial()) {
             holder.binding.productPriceBeforeTv.setPaintFlags(holder.binding.productPriceBeforeTv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             if (productModel.getProductBarcodes().get(0).getSpecialPrice() != null) {
@@ -89,13 +90,12 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
 
         } else {
             if (productModel.getProductBarcodes().get(0).getPrice() != null) {
-                holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())) + " " + currency + "",UtilityApp.getLocalData().getFractional()));
+                holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())),UtilityApp.getLocalData().getFractional()) + " " + currency + "");
                 holder.binding.productPriceBeforeTv.setVisibility(View.INVISIBLE);
                 holder.binding.discountTv.setVisibility(View.INVISIBLE);
 
             }
         }
-
 
         Glide.with(context).asBitmap()
                 .load(productModel.getImages().get(0)).placeholder(R.drawable.image_product).placeholder(R.drawable.image_product)

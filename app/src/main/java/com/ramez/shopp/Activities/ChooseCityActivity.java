@@ -53,7 +53,9 @@ public class ChooseCityActivity extends ActivityBase implements CountriesAdapter
 
         initAdapter();
 
-        //getCountryList();
+        if(countries.size()>0){
+            UtilityApp.setCountriesData(countries);
+        }
 
         binding.toolBar.backBtn.setVisibility(View.GONE);
 
