@@ -327,7 +327,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
             }).addCartHandle(productId, product_barcode_id, quantity, userId, storeId);
         }
 
-
         private void updateCart(View v,int position, int productId, int product_barcode_id, int quantity, int userId, int storeId, int cart_id, String update_quantity) {
             new DataFeacher((Activity) context, (obj, func, IsSuccess) -> {
                 if (IsSuccess) {
@@ -344,7 +343,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
             }).updateCartHandle(productId, product_barcode_id, quantity, userId, storeId, cart_id, update_quantity);
         }
-
 
         private void deleteCart(View v,int position, int productId, int product_barcode_id, int cart_id, int userId, int storeId) {
             new DataFeacher((Activity) context, (obj, func, IsSuccess) -> {
@@ -363,8 +361,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
             }).deleteCartHandle(productId, product_barcode_id, cart_id, userId, storeId);
         }
-    }
 
+    }
 
     private void initSnackBar(String message, View viewBar) {
         Snackbar snackbar = Snackbar.make(viewBar, message, Snackbar.LENGTH_SHORT);

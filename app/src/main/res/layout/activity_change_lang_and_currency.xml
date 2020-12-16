@@ -11,12 +11,14 @@
     <include
         android:id="@+id/tool_bar"
         layout="@layout/tool_bar_with_back" />
+
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/dataLY"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:gravity="center_horizontal"
-        android:layout_height="match_parent">
-
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,12 +26,12 @@
             android:orientation="vertical"
             android:padding="@dimen/_16sdp">
 
-
             <LinearLayout
+                android:id="@+id/langLY"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
                 android:background="@drawable/spinner_style"
-                android:layout_marginBottom="@dimen/_16sdp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -60,166 +62,50 @@
                 </LinearLayout>
 
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/langContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/lang_style"
-                android:orientation="vertical"
-                android:visibility="gone">
-
                 <LinearLayout
+                    android:id="@+id/langContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/_8sdp">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-                    <com.ramez.shopp.SpichalViews.STextView
-                        android:layout_width="0dp"
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:background="#DCD6D6" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:drawableStart="@drawable/location_icon"
-                        android:drawablePadding="10dp"
-                        android:gravity="start|center_vertical"
-                        android:text="@string/text_title_select_language"
-                        android:textColor="@color/colorLoginText" />
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:itemCount="3"
+                        tools:listitem="@layout/row_item_city" />
 
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_down" />
 
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="10dp"
-                    android:background="#DCD6D6" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:id="@+id/recycler"
-                    tools:itemCount="3"
-                    tools:listitem="@layout/row_item_city"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:layout_height="wrap_content"/>
-
-
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/spinner_style"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:orientation="vertical">
-
-
-                <LinearLayout
-                    android:id="@+id/chooseCurrencyTv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/_8sdp">
-
-                    <com.ramez.shopp.SpichalViews.STextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:drawableStart="@drawable/location_icon"
-                        android:drawablePadding="10dp"
-                        android:gravity="start|center_vertical"
-                        android:text="@string/choose_currency"
-                        android:textColor="@color/colorLoginText" />
-
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_down" />
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/containerCurrency"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/lang_style"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/_8sdp">
-
-                    <com.ramez.shopp.SpichalViews.STextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@android:color/transparent"
-                        android:drawableStart="@drawable/location_icon"
-                        android:drawablePadding="10dp"
-                        android:gravity="start|center_vertical"
-                        android:text="@string/choose_currency"
-                        android:textColor="@color/colorLoginText" />
-
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_down" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="10dp"
-                    android:background="#DCD6D6" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:id="@+id/branchRecycler"
-                    tools:itemCount="3"
-                    tools:listitem="@layout/row_item_city"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:layout_height="wrap_content"/>
-
-
-            </LinearLayout>
 
             <com.ramez.shopp.SpichalViews.STextViewBold
                 android:id="@+id/saveBut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_marginStart="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_50sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
                 android:background="@drawable/round_corner_next"
+                android:gravity="center"
                 android:padding="@dimen/_12sdp"
                 android:text="@string/accept"
-                android:layout_marginBottom="@dimen/_8sdp"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:layout_marginStart="@dimen/_50sdp"
-                android:layout_marginEnd="@dimen/_50sdp"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
 
 </LinearLayout>
 

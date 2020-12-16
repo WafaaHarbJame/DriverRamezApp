@@ -79,8 +79,8 @@
     <string name="my_order">My Orders</string>
     <string name="address">My Address</string>
     <string name="customer_service">Customer support</string>
-    <string name="lang_setting">Language setting and currency </string>
-    <string name="change_city_branch">Change City and Branch</string>
+    <string name="lang_setting">Language setting </string>
+    <string name="change_city_branch">Change Branch</string>
     <string name="conditions">Terms and Conditions</string>
     <string name="rate_app">Rate App</string>
     <string name="logout">logout</string>
@@ -247,6 +247,8 @@
     <string name="show_cart">Show Cart</string>
     <string name="fail_to_change_password">Fail to change address</string>
     <string name="enter_new_password">Enter New Password</string>
-    <string name="change_city_currency">Change Language And Currency </string>
+    <string name="change_city_currency">Change Language </string>
+    <string name="change_branch_success">Change Branch Successfully</string>
+    <string name="change_success">Change Successfully "</string>
 
 </resources>

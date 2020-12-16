@@ -76,8 +76,8 @@
     <string name="my_order">طلباتي</string>
     <string name="address">العناوين</string>
     <string name="customer_service">خدمة العملاء</string>
-    <string name="lang_setting">إعدادات اللغة والعملة</string>
-    <string name="change_city_branch">تغير المدينة والفرع </string>
+    <string name="lang_setting">إعدادات اللغة </string>
+    <string name="change_city_branch">تغيرالفرع </string>
     <string name="rate_app">قيم التطبيق</string>
     <string name="logout">تسجيل الخروج</string>
     <string name="conditions">الشروط والأحكام </string>
@@ -228,6 +228,8 @@
     <string name="success_to_update_cart">تم تحديث العربة بنجاح </string>
     <string name="fail_to_change_password">Fail to change address</string>
     <string name="enter_new_password">تغير كلمة المرور</string>
-    <string name="change_city_currency">تغير اللغة  والعملة</string>
+    <string name="change_city_currency">تغير اللغة </string>
+    <string name="change_branch_success">Change Branch Succces</string>
+    <string name="change_success">"Chnage Succefully "</string>
 
 </resources>

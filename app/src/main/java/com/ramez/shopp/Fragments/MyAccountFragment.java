@@ -27,21 +27,26 @@ import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Dialogs.ConfirmDialog;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.ActivityHandler;
+import com.ramez.shopp.databinding.DialogCheckLoginBinding;
 import com.ramez.shopp.databinding.FragmentMyAccountBinding;
 
 public class MyAccountFragment extends FragmentBase {
     private FragmentMyAccountBinding binding;
+    boolean isLogin=false;
+    private CheckLoginDialog checkLoginDialog;
 
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMyAccountBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+        isLogin=UtilityApp.isLogin();
 
 
         if(UtilityApp.isLogin()){
@@ -49,6 +54,7 @@ public class MyAccountFragment extends FragmentBase {
         }
         else {
             binding.logoutText.setText(R.string.text_login_login);
+
         }
 
 
@@ -58,9 +64,11 @@ public class MyAccountFragment extends FragmentBase {
             binding.usernameTV.setText(memberModel.getName());
             binding.emailTv.setText(memberModel.getEmail());
 
+
         }
         else {
             binding.editProfileBu.setVisibility(View.GONE);
+
 
         }
 
@@ -79,7 +87,13 @@ public class MyAccountFragment extends FragmentBase {
 
         });
         binding.rateBtn.setOnClickListener(view1 -> {
-            startRateAppActivity();
+
+            if(isLogin){
+                startRateAppActivity();
+            }
+            else {
+                showDialog();
+            }
         });
 
 
@@ -89,17 +103,37 @@ public class MyAccountFragment extends FragmentBase {
         });
 
         binding.changePassBtn.setOnClickListener(view1 -> {
-            startChangeActivity();
+            if(isLogin){
+                startChangeActivity();
+            }
+            else {
+                showDialog();
+            }
+
+
 
         });
 
         binding.favProductBut.setOnClickListener(view1 -> {
-            startFavProductActivity();
+            if(isLogin){
+                startFavProductActivity();
+            }
+            else {
+                 showDialog();
+            }
+
 
         });
 
         binding.myOrderBut.setOnClickListener(view1 -> {
-            startOrderActivity();
+
+            if(isLogin){
+                startOrderActivity();
+            }
+            else {
+                showDialog();
+            }
+
 
         });
 
@@ -109,11 +143,25 @@ public class MyAccountFragment extends FragmentBase {
         });
 
         binding.addressBtn.setOnClickListener(view1 -> {
-            startAddressActivity();
+            if(isLogin){
+                startAddressActivity();
+            }
+            else {
+                showDialog();
+            }
+
+
 
         });
         binding.changeCityBtn.setOnClickListener(view1 -> {
-            startChangeBranch();
+            if(isLogin){
+                startChangeBranch();
+            }
+            else {
+                showDialog();
+            }
+
+
         });
 
         binding.changeLangBtn.setOnClickListener(view1 -> {
@@ -121,7 +169,14 @@ public class MyAccountFragment extends FragmentBase {
         });
 
         binding.SupportBtn.setOnClickListener(view1 -> {
-            startSupport();
+            if(isLogin){
+                startSupport();
+            }
+            else {
+                showDialog();
+            }
+
+
         });
 
         binding.logoutBtn.setOnClickListener(view1 -> {
@@ -139,12 +194,15 @@ public class MyAccountFragment extends FragmentBase {
         return view;
     }
 
+    private void showDialog() {
+        checkLoginDialog=new CheckLoginDialog(getActivityy(),R.string.please_login,R.string.text_login_login,R.string.register,null,null);
+        checkLoginDialog.show();
+    }
+
     private void startLogin() {
         Intent intent = new Intent(getActivityy(), RegisterLoginActivity.class);
         intent.putExtra(Constants.LOGIN,true);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        getActivityy().finish();
     }
 
     private void startSupport() {

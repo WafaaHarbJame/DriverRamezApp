@@ -1,6 +1,7 @@
 package com.ramez.shopp.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,9 +9,13 @@ import android.view.ViewGroup;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.Classes.CityModelResult;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.CityModel;
+import com.ramez.shopp.Models.LanguageModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.RowItemCitiesBinding;
 
@@ -20,14 +25,17 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
     private Context context;
     private OnCityClick onCityClick;
     private ArrayList<CityModel> list;
-    private int lastIndex = 0;
+    private int selectedPosition = 0;
 
-    public CityAdapter(Context context, ArrayList<CityModel> list, OnCityClick onCityClick) {
+    public CityAdapter(Context context, ArrayList<CityModel> list, OnCityClick onCityClick, int selectedPosition) {
         this.context = context;
         this.onCityClick = onCityClick;
         this.list = list;
+        this.selectedPosition=selectedPosition;
+
 
     }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -63,9 +71,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
         }
 
 
-       // holder.binding.nameTxt.setText(lang.equals(Constants.Arabic)?languageModel.getNameAr():languageModel.getName());
-
-        if (lastIndex == position) {
+        if (selectedPosition==languageModel.getId()) {
             holder.binding.selectTxt.setText(context.getString(R.string.fa_circle));
             holder.binding.selectTxt.setTextColor(ContextCompat.getColor(context,R.color.colorPrimaryDark));
         } else {
@@ -104,7 +110,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
 
             itemView.setOnClickListener(v -> {
                 onCityClick.onCityClicked(getAdapterPosition(), list.get(getAdapterPosition()));
-                lastIndex = getAdapterPosition();
+                selectedPosition = list.get(getAdapterPosition()).getId();
                 notifyDataSetChanged();
             });
 
@@ -117,4 +123,6 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
     public interface OnCityClick {
         void onCityClicked(int position, CityModel cityModel);
     }
+
+
 }

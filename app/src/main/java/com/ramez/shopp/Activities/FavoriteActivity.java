@@ -2,6 +2,7 @@ package com.ramez.shopp.Activities;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -37,17 +38,28 @@ public class FavoriteActivity extends ActivityBase implements ProductAdapter.OnI
         binding = ActivityFavoriteBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        productList=new ArrayList<>();
 
-        gridLayoutManager =new GridLayoutManager(getActiviy(),2);
+
+        if (!UtilityApp.isLogin()) {
+            Intent intent = new Intent(getActiviy(), RegisterLoginActivity.class);
+            intent.putExtra(Constants.LOGIN, true);
+            startActivity(intent);
+            finish();
+
+        } else {
+            user = UtilityApp.getUserData();
+            user_id = String.valueOf(UtilityApp.getUserData().getId());
+
+
+        productList = new ArrayList<>();
+
+        gridLayoutManager = new GridLayoutManager(getActiviy(), 2);
 
         binding.favoriteRecycler.setLayoutManager(gridLayoutManager);
-        filter=Constants.favourite_filter;
+        filter = Constants.favourite_filter;
 
-        user= UtilityApp.getUserData();
-        localModel=UtilityApp.getLocalData();
 
-        user_id= String.valueOf(UtilityApp.getUserData().getId());
+        localModel = UtilityApp.getLocalData();
 
 
         binding.toolBar.mainTitleTxt.setText(getString(R.string.fav_products));
@@ -56,14 +68,13 @@ public class FavoriteActivity extends ActivityBase implements ProductAdapter.OnI
             onBackPressed();
         });
 
-        country_id=localModel.getCountryId();
-        city_id= Integer.parseInt(localModel.getCityId());
+        country_id = localModel.getCountryId();
+        city_id = Integer.parseInt(localModel.getCityId());
 
-        getFavoriteProducts(category_id,country_id,city_id,"14",filter,0,10);
-
-
+        getFavoriteProducts(category_id, country_id, city_id, "14", filter, 0, 10);
 
 
+    }
 
     }
 

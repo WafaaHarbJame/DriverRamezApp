@@ -2,10 +2,13 @@ package com.ramez.shopp.Activities;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.ramez.shopp.Adapter.MyOrdersAdapter;
+import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.OrdersHeaderModel;
 import com.ramez.shopp.Models.OrdersModel;
 import com.ramez.shopp.R;
@@ -19,11 +22,10 @@ public class MyOrderActivity extends ActivityBase {
 
     List<OrdersModel> currentOrdersList;
     List<OrdersModel> completedOrdersList;
+    LinearLayoutManager linearLayoutManager;
+    boolean isCurrentLoading = false, isFinishedLoading = false;
     private List ordersDMS;
     private MyOrdersAdapter myOrdersAdapter;
-    LinearLayoutManager linearLayoutManager;
-
-    boolean isCurrentLoading = false, isFinishedLoading = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,23 +34,30 @@ public class MyOrderActivity extends ActivityBase {
         View view = binding.getRoot();
         setContentView(view);
 
-        ordersDMS = new ArrayList<>();
-        currentOrdersList=new ArrayList<>();
-        completedOrdersList=new ArrayList<>();
+        if (!UtilityApp.isLogin()) {
+            Intent intent = new Intent(getActiviy(), RegisterLoginActivity.class);
+            intent.putExtra(Constants.LOGIN, true);
+            startActivity(intent);
+            finish();
+        } else {
 
-        binding.toolBar.mainTitleTxt.setText(getString(R.string.my_order));
+            ordersDMS = new ArrayList<>();
+            currentOrdersList = new ArrayList<>();
+            completedOrdersList = new ArrayList<>();
 
-        binding.toolBar.backBtn.setOnClickListener(view1 -> {
-            onBackPressed();
-        });
+            binding.toolBar.mainTitleTxt.setText(getString(R.string.my_order));
 
-        linearLayoutManager =new LinearLayoutManager(getActiviy());
+            binding.toolBar.backBtn.setOnClickListener(view1 -> {
+                onBackPressed();
+            });
 
-        binding.myOrderRecycler.setLayoutManager(linearLayoutManager);
+            linearLayoutManager = new LinearLayoutManager(getActiviy());
 
-        initOrdersList();
+            binding.myOrderRecycler.setLayoutManager(linearLayoutManager);
 
+            initOrdersList();
 
+        }
 
     }
 
@@ -60,32 +69,25 @@ public class MyOrderActivity extends ActivityBase {
 
 
     }
+
     private void initOrdersList() {
         ordersDMS.clear();
-        currentOrdersList.add(new OrdersModel(1,getString(R.string.krof),"","2020-11-29 22:27:14","122",
-                "wait","45.555","49,00","market"));
+        currentOrdersList.add(new OrdersModel(1, getString(R.string.krof), "", "2020-11-29 22:27:14", "122", "wait", "45.555", "49,00", "market"));
 
-        currentOrdersList.add(new OrdersModel(1,getString(R.string.krof),"","2020-11-29 22:27:14","122",
-                "wait","45.555","49,00","market"));
+        currentOrdersList.add(new OrdersModel(1, getString(R.string.krof), "", "2020-11-29 22:27:14", "122", "wait", "45.555", "49,00", "market"));
 
-        currentOrdersList.add(new OrdersModel(1,getString(R.string.krof),"","2020-11-29 22:27:14","122",
-                "waiting","45.555","49,00","market"));
+        currentOrdersList.add(new OrdersModel(1, getString(R.string.krof), "", "2020-11-29 22:27:14", "122", "waiting", "45.555", "49,00", "market"));
 
-        currentOrdersList.add(new OrdersModel(1,getString(R.string.krof),"","2020-11-29 22:27:14","122",
-                "waiting","45.555","49,00","market"));
+        currentOrdersList.add(new OrdersModel(1, getString(R.string.krof), "", "2020-11-29 22:27:14", "122", "waiting", "45.555", "49,00", "market"));
 
 
-        completedOrdersList.add(new OrdersModel(1,getString(R.string.krof),"","2020-11-29 22:27:14","122",
-                "complete","45.555","49,00","market"));
+        completedOrdersList.add(new OrdersModel(1, getString(R.string.krof), "", "2020-11-29 22:27:14", "122", "complete", "45.555", "49,00", "market"));
 
-        completedOrdersList.add(new OrdersModel(1,getString(R.string.krof),"","2020-11-29 22:27:14","122",
-                "complete","45.555","49,00","market"));
+        completedOrdersList.add(new OrdersModel(1, getString(R.string.krof), "", "2020-11-29 22:27:14", "122", "complete", "45.555", "49,00", "market"));
 
-        completedOrdersList.add(new OrdersModel(1,getString(R.string.krof),"","2020-11-29 22:27:14","122",
-                "complete","45.555","49,00","market"));
+        completedOrdersList.add(new OrdersModel(1, getString(R.string.krof), "", "2020-11-29 22:27:14", "122", "complete", "45.555", "49,00", "market"));
 
-        completedOrdersList.add(new OrdersModel(1,getString(R.string.krof),"","2020-11-29 22:27:14","122",
-                "complete","45.555","49,00","market"));
+        completedOrdersList.add(new OrdersModel(1, getString(R.string.krof), "", "2020-11-29 22:27:14", "122", "complete", "45.555", "49,00", "market"));
 
         ordersDMS.add(new OrdersHeaderModel(getString(R.string.current_orders), currentOrdersList.size()));
         ordersDMS.addAll(currentOrdersList);

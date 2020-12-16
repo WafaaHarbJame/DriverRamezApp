@@ -334,4 +334,15 @@ public class CartModel {
     public void setMinimumDate(Object minimumDate) {
         this.minimumDate = minimumDate;
     }
+
+
+    public String getName(){
+        if(UtilityApp.getLanguage().equals(Constants.English)){
+            return productName;
+
+        }
+        else {
+            return hProductName;
+        }
+    }
 }

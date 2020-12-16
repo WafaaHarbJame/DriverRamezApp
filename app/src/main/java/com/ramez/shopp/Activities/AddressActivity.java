@@ -30,13 +30,24 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
     private LinearLayoutManager linearLayoutManager;
     private int defaultAddressId;
     private MemberModel user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding=ActivityAddressBinding.inflate(getLayoutInflater());
-        View view=binding.getRoot();
+        binding = ActivityAddressBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
         setContentView(view);
-        user=UtilityApp.getUserData();
+
+
+        if (!UtilityApp.isLogin()) {
+            Intent intent = new Intent(getActiviy(), RegisterLoginActivity.class);
+            intent.putExtra(Constants.LOGIN, true);
+            startActivity(intent);
+            finish();
+        }
+
+        else {
+        user = UtilityApp.getUserData();
 
         binding.toolBar.mainTitleTxt.setText(R.string.address);
 
@@ -44,11 +55,11 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
             onBackPressed();
         });
 
-        addressList=new ArrayList<>();
-        linearLayoutManager=new LinearLayoutManager(getActiviy());
+        addressList = new ArrayList<>();
+        linearLayoutManager = new LinearLayoutManager(getActiviy());
         binding.addressRecycler.setLayoutManager(linearLayoutManager);
 
-        if(UtilityApp.isLogin()){
+        if (UtilityApp.isLogin()) {
             GetUserAddress(user.getId());
         }
 
@@ -66,6 +77,8 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
 
 
     }
+
+}
 
     @Override
     public void onAddressSelected(AddressModel addressesDM) {
@@ -97,14 +110,11 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
             AddressResultModel result = (AddressResultModel) obj;
 
             if (func.equals(Constants.ERROR)) {
-
-                Toast(R.string.error_in_data);
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(R.string.error_in_data);
                 binding.dataLY.setVisibility(View.GONE);
 
             } else if (func.equals(Constants.FAIL)) {
-                Toast(R.string.fail_to_get_data);
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(R.string.error_in_data);
                 binding.dataLY.setVisibility(View.GONE);

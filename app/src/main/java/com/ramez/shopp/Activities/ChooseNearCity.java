@@ -22,36 +22,42 @@ import java.util.ArrayList;
 
 public class ChooseNearCity extends ActivityBase implements CityAdapter.OnCityClick {
     ActivityChooseNearstCityBinding binding;
-    ArrayList<CityModel> countries;
-    SharedPManger sharedPManger;
+    ArrayList<CityModel> list;
     int city_id = 0;
-    private CityAdapter countriesAdapter;
-
+    private CityAdapter cityAdapter;
+    LocalModel localModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityChooseNearstCityBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        countries = new ArrayList<>();
-        sharedPManger = new SharedPManger(this);
+        list = new ArrayList<>();
+
+        localModel=UtilityApp.getLocalData();
+
         binding.chooseCityTv.setOnClickListener(view1 -> {
             binding.cityContainer.setVisibility(View.VISIBLE);
             binding.chooseCityTv.setVisibility(View.GONE);
 
         });
+
         getExtraIntent();
+
         binding.toolBar.backBtn.setVisibility(View.GONE);
 
     }
 
     private void getExtraIntent() {
+
         Bundle bundle = getIntent().getExtras();
+
         if (bundle != null) {
             int country_id = getIntent().getIntExtra(Constants.COUNTRY_ID, 0);
-            Log.i("TAG", "Log Shortname" + UtilityApp.getLocalData().getShortname());
-            Log.i("TAG", "Log country_id" + UtilityApp.getLocalData().getCountryId());
+            Log.i("TAG", "Log ShortName" + localModel.getShortname());
+            Log.i("TAG", "Log country_id" + localModel.getCountryId());
             Log.i("TAG", "Log country_id Intent" + country_id);
+            Log.i("TAG", "Log country_id model " + localModel.getCountryId());
 
             getCityList(country_id);
 
@@ -61,31 +67,34 @@ public class ChooseNearCity extends ActivityBase implements CityAdapter.OnCityCl
     }
 
     public void initAdapter() {
-        countriesAdapter = new CityAdapter(getActiviy(), countries, this);
-        binding.recycler.setAdapter(countriesAdapter);
+
+        cityAdapter = new CityAdapter(getActiviy(), list, this, 0);
+        binding.recycler.setAdapter(cityAdapter);
     }
 
 
     private void getCityList(int country_id) {
-        countries.clear();
+        list.clear();
         Log.i("TAG", "Log country_id" + country_id);
 
         GlobalData.progressDialog(getActiviy(), R.string.upload_date, R.string.please_wait_upload);
+
         new DataFeacher(getActiviy(), (obj, func, IsSuccess) -> {
             GlobalData.hideProgressDialog();
             CityModelResult result = (CityModelResult) obj;
+
             if (func.equals(Constants.ERROR)) {
                 String message = getString(R.string.fail_to_get_data);
                 if (result != null && result.getMessage() != null) {
                     message = result.getMessage();
                 }
                 GlobalData.errorDialog(getActiviy(), R.string.fail_to_get_data, message);
+
             } else {
                 if (IsSuccess) {
                     if (result.getData() != null && result.getData().size() > 0) {
                         Log.i("TAG", "Log country size " + result.getData().size());
-                        countries = result.getData();
-                        city_id = countries.get(0).getId();
+                        list = result.getData();
                         initAdapter();
 
                     }
@@ -105,12 +114,9 @@ public class ChooseNearCity extends ActivityBase implements CityAdapter.OnCityCl
     @Override
     public void onCityClicked(int position, CityModel cityModel) {
         city_id = cityModel.getId();
-        Toast("+city_id " + city_id);
-        LocalModel localModel = UtilityApp.getLocalData();
         localModel.setCityId(String.valueOf(city_id));
         UtilityApp.setLocalData(localModel);
-        Toast("+city_id model  " + localModel.getCityId());
-        Intent intent = new Intent(getActiviy(), RegisterLoginActivity.class);
+        Intent intent = new Intent(getActiviy(), MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();

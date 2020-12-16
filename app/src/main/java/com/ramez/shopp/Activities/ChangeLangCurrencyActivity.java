@@ -1,19 +1,21 @@
 package com.ramez.shopp.Activities;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.ramez.shopp.Adapter.CountriesAdapter;
 import com.ramez.shopp.Adapter.CurrencyAdapter;
 import com.ramez.shopp.Adapter.LangAdapter;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.CountryModel;
 import com.ramez.shopp.Models.CurrencyModel;
 import com.ramez.shopp.Models.LanguageModel;
+import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.ActivityChangeLangAndCurrencyBinding;
 
@@ -25,13 +27,13 @@ public class ChangeLangCurrencyActivity extends ActivityBase implements Currency
 
     private LangAdapter langAdapter;
     private LinearLayoutManager linearLayoutManager;
-
-
     ArrayList<CurrencyModel> currencyList;
     private CurrencyAdapter currencyAdapter;
     private LinearLayoutManager currencyLinearLayoutManager;
     ArrayList<CountryModel> countries;
     int selectedLangId,selectedCurrency;
+    LocalModel localModel;
+    private boolean toggleButton = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +41,13 @@ public class ChangeLangCurrencyActivity extends ActivityBase implements Currency
         binding=ActivityChangeLangAndCurrencyBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
         binding.toolBar.mainTitleTxt.setText(getString(R.string.change_city_currency));
 
         langList =new ArrayList<>();
         currencyList =new ArrayList<>();
         countries=new ArrayList<>();
+        localModel=UtilityApp.getLocalData();
 
         langList.add(new LanguageModel(1,getString(R.string.text_language_arabic),getString(R.string.ar_lang)));
         langList.add(new LanguageModel(2,getString(R.string.text_langiage_english),getString(R.string.en_lang)));
@@ -56,13 +60,13 @@ public class ChangeLangCurrencyActivity extends ActivityBase implements Currency
             selectedLangId=2;
         }
 
-        selectedCurrency=UtilityApp.getLocalData().getCountryId();
+        selectedCurrency=localModel.getCountryId();
 
         linearLayoutManager=new LinearLayoutManager(getActiviy());
         currencyLinearLayoutManager=new LinearLayoutManager(getActiviy());
 
         binding.recycler.setLayoutManager(linearLayoutManager);
-        binding.branchRecycler.setLayoutManager(currencyLinearLayoutManager);
+        binding.recycler.setLayoutManager(currencyLinearLayoutManager);
 
         binding.chooseLangTv.setOnClickListener(view1 -> {
             binding.langContainer.setVisibility(View.VISIBLE);
@@ -71,14 +75,38 @@ public class ChangeLangCurrencyActivity extends ActivityBase implements Currency
         });
 
 
-        binding.chooseCurrencyTv.setOnClickListener(view1 -> {
-            binding.containerCurrency.setVisibility(View.VISIBLE);
-            binding.chooseCurrencyTv.setVisibility(View.GONE);
+
+        binding.chooseLangTv.setOnClickListener(view1 -> {
+
+            toggleButton = !toggleButton;
+
+            if (toggleButton) {
+                binding.langContainer.setVisibility(View.VISIBLE);
+                binding.langLY.setBackground(ContextCompat.getDrawable(getActiviy(), R.drawable.lang_style));
+            } else {
+                binding.langContainer.setVisibility(View.GONE);
+                binding.langLY.setBackground(ContextCompat.getDrawable(getActiviy(), R.drawable.spinner_style));
+            }
 
         });
 
-        binding.saveBut.setOnClickListener(view1 -> {
 
+
+
+
+        binding.saveBut.setOnClickListener(view1 -> {
+            if(selectedLangId==2){
+                UtilityApp.setLanguage(Constants.English);
+                UtilityApp.setAppLanguage();
+            }
+            else {
+                UtilityApp.setLanguage(Constants.Arabic);
+                UtilityApp.setAppLanguage();
+
+            }
+            Toast(R.string.change_success);
+            Intent intent=new Intent(getActiviy(),SplashScreenActivity.class);
+            startActivity(intent);
 
         });
 
@@ -120,10 +148,7 @@ public class ChangeLangCurrencyActivity extends ActivityBase implements Currency
     public void initAdapter(){
 
         langAdapter = new LangAdapter(getActiviy(), langList,this,selectedLangId);
-        currencyAdapter = new CurrencyAdapter(getActiviy(), currencyList,this,selectedCurrency);
-
         binding.recycler.setAdapter(langAdapter);
-        binding.branchRecycler.setAdapter(currencyAdapter);
 
 
 
@@ -133,23 +158,13 @@ public class ChangeLangCurrencyActivity extends ActivityBase implements Currency
 
     @Override
     public void onLangClicked(int position, LanguageModel languageModel) {
-        if(languageModel.getId()==2){
-            UtilityApp.setLanguage(Constants.English);
-            UtilityApp.setAppLanguage();
-        }
-        else {
-            UtilityApp.setLanguage(Constants.Arabic);
-            UtilityApp.setAppLanguage();
-
-        }
-
-        Intent intent=new Intent(getActiviy(),SplashScreenActivity.class);
-        startActivity(intent);
+        selectedLangId=languageModel.getId();
 
     }
 
     @Override
     public void onCurrencyClicked(int position, CurrencyModel currencyModel) {
+        selectedCurrency=currencyModel.getId();
 
     }
 }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
@@ -15,20 +14,32 @@
         android:paddingTop="@dimen/_30sdp">
 
 
+        <com.ramez.shopp.SpichalViews.STextViewIcon
+            android:id="@+id/closeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:textSize="@dimen/_12ssp"
+            android:visibility="gone"
+            android:padding="@dimen/_4sdp"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="@string/fal_times" />
 
         <com.ramez.shopp.SpichalViews.STextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_8sdp"
-            android:gravity="center"
             android:text="@string/empty_cart"
             android:textColor="@color/black"
+            android:layout_gravity="center"
             android:textSize="@dimen/_14ssp" />
 
+
         <com.ramez.shopp.SpichalViews.STextView
-            android:layout_width="@dimen/_200sdp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="center"
             android:layout_marginBottom="@dimen/_20sdp"
             android:gravity="center"
             android:text="@string/do_yo_want"
@@ -36,42 +47,42 @@
             android:textSize="@dimen/_12ssp" />
 
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:orientation="horizontal"
-    android:layout_gravity="center_vertical"
-    android:gravity="center"
-    android:layout_marginStart="@dimen/_16sdp"
-    android:layout_marginEnd="@dimen/_16sdp"
-    android:layout_marginBottom="@dimen/_30sdp"
-    android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:layout_height="wrap_content">
 
-    <com.ramez.shopp.SpichalViews.STextViewBold
-        android:id="@+id/yesBtn"
-        android:background="@drawable/round_corner_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:minWidth="@dimen/_100sdp"
-        android:padding="@dimen/_8sdp"
-        android:text="@string/message_yes"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_12ssp" />
-    <com.ramez.shopp.SpichalViews.STextViewBold
-        android:id="@+id/noBtn"
-        android:background="@drawable/round_corner_grey"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:minWidth="@dimen/_100sdp"
-        android:text="@string/message_no"
-        android:padding="@dimen/_8sdp"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_12ssp" />
-</LinearLayout>
+            <com.ramez.shopp.SpichalViews.STextViewBold
+                android:id="@+id/yesBtn"
+                android:background="@drawable/round_corner_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:minWidth="@dimen/_100sdp"
+                android:padding="@dimen/_8sdp"
+                android:text="@string/message_yes"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp" />
+            <com.ramez.shopp.SpichalViews.STextViewBold
+                android:id="@+id/noBtn"
+                android:background="@drawable/round_corner_grey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:minWidth="@dimen/_100sdp"
+                android:text="@string/message_no"
+                android:padding="@dimen/_8sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp" />
+        </LinearLayout>
 
 
 

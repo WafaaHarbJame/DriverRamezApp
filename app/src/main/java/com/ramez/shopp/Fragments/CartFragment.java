@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -21,8 +22,12 @@ import com.ramez.shopp.Classes.CartModel;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Dialogs.CheckLoginDialog;
+import com.ramez.shopp.Dialogs.EmptyCartDialog;
 import com.ramez.shopp.Models.CartResultModel;
 import com.ramez.shopp.Models.CategoryResultModel;
+import com.ramez.shopp.Models.LocalModel;
+import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.FragmentCartBinding;
@@ -33,27 +38,44 @@ import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
 
-public class CartFragment extends FragmentBase  implements CartAdapter.OnCartItemClicked{
-    private FragmentCartBinding binding;
-    private CartAdapter cartAdapter;
+public class CartFragment extends FragmentBase implements CartAdapter.OnCartItemClicked {
     ArrayList<CartModel> cartList;
     LinearLayoutManager linearLayoutManager;
-    String currency="BHD";
-    int fraction=2;
-
-
+    String currency = "BHD";
+    int fraction = 2;
+    int storeId, userId;
+    MemberModel user;
+    LocalModel localModel;
+    private FragmentCartBinding binding;
+    private CartAdapter cartAdapter;
+    private EmptyCartDialog emptyCartDialog;
+    private CheckLoginDialog checkLoginDialog;
+    boolean isLogin = false;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCartBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        cartList =new ArrayList<>();
 
-        currency=UtilityApp.getLocalData().getCurrencyCode();
-        fraction=UtilityApp.getLocalData().getFractional();
+        cartList = new ArrayList<>();
+        isLogin = UtilityApp.isLogin();
+
+        localModel = UtilityApp.getLocalData();
+        currency = localModel.getCurrencyCode();
+        fraction = localModel.getFractional();
 
 
-        linearLayoutManager=new LinearLayoutManager(getActivityy());
+        user = UtilityApp.getUserData();
+        if (!isLogin) {
+            binding.cartContainer.setVisibility(View.GONE);
+            binding.contBut.setVisibility(View.GONE);
+            showLoginDialog();
+        }
+        else {
+        storeId = Integer.parseInt(localModel.getCityId());
+        userId = user.getId();
+
+        linearLayoutManager = new LinearLayoutManager(getActivityy());
         binding.cartRecycler.setLayoutManager(linearLayoutManager);
         binding.cartRecycler.setHasFixedSize(true);
 
@@ -65,17 +87,15 @@ public class CartFragment extends FragmentBase  implements CartAdapter.OnCartIte
         });
 
 
-        getCarts(7263,14);
-
-
-
-
+        getCarts(storeId, userId);
+    }
 
         return view;
+
     }
 
     private void initAdapter() {
-        cartAdapter=new CartAdapter(getActivityy(), cartList,this);
+        cartAdapter = new CartAdapter(getActivityy(), cartList, this);
         binding.cartRecycler.setAdapter(cartAdapter);
 
     }
@@ -85,12 +105,12 @@ public class CartFragment extends FragmentBase  implements CartAdapter.OnCartIte
 
     }
 
-    private void startAddCardActivity(){
-        Intent intent=new Intent(getActivityy(), AddCardActivity.class);
+    private void startAddCardActivity() {
+        Intent intent = new Intent(getActivityy(), AddCardActivity.class);
         startActivity(intent);
     }
 
-    public void getCarts(int storeId,int userId) {
+    public void getCarts(int storeId, int userId) {
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -132,18 +152,18 @@ public class CartFragment extends FragmentBase  implements CartAdapter.OnCartIte
                         Log.i(TAG, "Log cart" + result.getData().getCartData().size());
                         initAdapter();
 
-                        if(cartList.size()>0){
+                        if (cartList.size() > 0) {
                             binding.productsSizeTv.setText(String.valueOf(cartList.size()));
-                            binding.totalTv.setText(NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction).concat(" "+currency));
-                            binding.productCostTv.setText(NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction).concat(" "+currency));
+                            binding.totalTv.setText(NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction).concat(" " + currency));
+                            binding.productCostTv.setText(NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction).concat(" " + currency));
                         }
 
 
                     } else {
 
                         binding.dataLY.setVisibility(View.GONE);
-                        binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
-
+                        binding.contBut.setVisibility(View.GONE);
+                        showEmptyCartDialog();
                     }
 
 
@@ -158,6 +178,18 @@ public class CartFragment extends FragmentBase  implements CartAdapter.OnCartIte
                 }
             }
 
-        }).GetCarts(storeId,userId);
+        }).GetCarts(storeId, userId);
     }
+
+    private void showEmptyCartDialog() {
+        emptyCartDialog = new EmptyCartDialog(getActivityy(), R.string.please_login, R.string.text_login_login, R.string.register, null, null);
+        emptyCartDialog.show();
+    }
+
+    private void showLoginDialog() {
+        checkLoginDialog = new CheckLoginDialog(getActivityy(), R.string.please_login, R.string.text_login_login, R.string.register, null, null);
+        checkLoginDialog.show();
+    }
+
+
 }

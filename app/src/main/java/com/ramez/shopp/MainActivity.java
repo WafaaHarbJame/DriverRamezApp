@@ -7,9 +7,12 @@ import android.view.View;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.gson.Gson;
 import com.ramez.shopp.Activities.ActivityBase;
+import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Fragments.CartFragment;
 import com.ramez.shopp.Fragments.CategoryFragment;
 import com.ramez.shopp.Fragments.HomeFragment;
@@ -43,23 +46,23 @@ public class MainActivity extends ActivityBase {
         binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_clicked));
 
 
-
-
-
+//        if (getIntent().getExtras().getBoolean(Constants.CART, false)) {
+//
+//
+//        }
 
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.mainContainer);
-        if(currentFragment instanceof  CartFragment){
+        if (currentFragment instanceof CartFragment) {
             binding.toolBar.mainTitleTxt.setText(getString(R.string.cart));
 
         }
-        if(currentFragment instanceof InvoiceFragment){
+        if (currentFragment instanceof InvoiceFragment) {
             binding.toolBar.mainTitleTxt.setText(getString(R.string.cart));
 
         }
 
 
         binding.homeButn.setOnClickListener(view1 -> {
-          //  binding.toolBar.background.setVisibility(View.GONE);
             binding.toolBar.mainTitleTxt.setText(getString(R.string.string_menu_home));
             binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_clicked));
             binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.category_icon));
@@ -72,7 +75,6 @@ public class MainActivity extends ActivityBase {
         });
 
         binding.categoryBut.setOnClickListener(view1 -> {
-         //   binding.toolBar.background.setVisibility(View.GONE);
             binding.toolBar.mainTitleTxt.setText(getString(R.string.category));
             binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_icon));
             binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.category_click));
@@ -85,8 +87,8 @@ public class MainActivity extends ActivityBase {
         });
 
         binding.cartBut.setOnClickListener(view1 -> {
+
             binding.toolBar.mainTitleTxt.setText(getString(R.string.cart));
-            //binding.toolBar.background.setVisibility(View.VISIBLE);
             binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_icon));
             binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.category_icon));
             binding.cartBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.cart_icon_bottom));
@@ -138,7 +140,7 @@ public class MainActivity extends ActivityBase {
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public  void onMessageEvent(@NotNull MessageEvent event) {
+    public void onMessageEvent(@NotNull MessageEvent event) {
         if (event.type.equals(MessageEvent.TYPE_invoice)) {
             binding.toolBar.mainTitleTxt.setText(R.string.invoice_details);
             binding.toolBar.backBtn.setVisibility(View.VISIBLE);
@@ -148,12 +150,13 @@ public class MainActivity extends ActivityBase {
 
             });
 
-        }
-        else {
+        } else {
             binding.toolBar.backBtn.setVisibility(View.GONE);
 
         }
 
     }
+
+
 
 }
