@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
+import com.bumptech.glide.Glide;
 import com.ramez.shopp.Activities.AboutActivity;
 import com.ramez.shopp.Activities.AddressActivity;
 import com.ramez.shopp.Activities.ChangeCityBranchActivity;
@@ -63,6 +64,7 @@ public class MyAccountFragment extends FragmentBase {
             MemberModel memberModel=UtilityApp.getUserData();
             binding.usernameTV.setText(memberModel.getName());
             binding.emailTv.setText(memberModel.getEmail());
+            Glide.with(getActivityy()).asBitmap().load(memberModel.getProfilePicture()).placeholder(R.drawable.avatar).into(binding.userImg);
 
 
         }
@@ -264,7 +266,7 @@ public class MyAccountFragment extends FragmentBase {
         ConfirmDialog.Click click = new ConfirmDialog.Click() {
             @Override
             public void click() {
-                new DataFeacher(getActivity(), (obj, func, IsSuccess) -> {
+                new DataFeacher(false, (obj, func, IsSuccess) -> {
                     if (func.equals(Constants.ERROR)) {
                         Toast(R.string.error_in_data);
                     } else if (func.equals(Constants.FAIL)) {

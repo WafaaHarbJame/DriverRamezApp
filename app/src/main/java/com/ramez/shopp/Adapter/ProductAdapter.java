@@ -66,13 +66,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
         currency = UtilityApp.getLocalData().getCurrencyCode();
 
-//        if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
-//            if (UtilityApp.getLanguage().equals(Constants.Arabic))
-//                holder.binding.productNameTv.setText(productModel.getHName().trim());
-//            else holder.binding.productNameTv.setText(productModel.getName().trim());
-//
-//        }
-        holder.binding.productNameTv.setText(productModel.getName().trim());
+        holder.binding.productNameTv.setText(productModel.getProductName().trim());
 
         if (productModel.getFavourite() != null && productModel.getFavourite()) {
             holder.binding.favBut.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.favorite_icon));
@@ -123,14 +117,19 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
         }
 
 
-        Glide.with(context).asBitmap().load(productModel.getImages().get(0)).placeholder(R.drawable.image_product).placeholder(R.drawable.image_product).addListener(new RequestListener<Bitmap>() {
+        Glide.with(context).asBitmap().load(productModel.getImages().get(0)).placeholder(R.drawable.holder_image)
+                .placeholder(R.drawable.image_product).addListener(new RequestListener<Bitmap>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                holder.binding.loadingLY.setVisibility(View.GONE);
+
                 return false;
             }
 
             @Override
             public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                holder.binding.loadingLY.setVisibility(View.GONE);
+
                 return false;
             }
         }).into(holder.binding.productImg);
@@ -146,8 +145,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
     }
 
-    private void addToFavorite(View v,int position, int productId, int userId, int storeId) {
-        new DataFeacher((Activity) context, (obj, func, IsSuccess) -> {
+    private void addToFavorite(View v, int position, int productId, int userId, int storeId) {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
                 Toast.makeText(context, "" + context.getString(R.string.fail_to_add_favorite), Toast.LENGTH_SHORT).show();
             } else if (func.equals(Constants.FAIL)) {
@@ -169,8 +168,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
     }
 
 
-    private void removeFromFavorite(View view,int position, int productId, int userId, int storeId) {
-        new DataFeacher((Activity) context, (obj, func, IsSuccess) -> {
+    private void removeFromFavorite(View view, int position, int productId, int userId, int storeId) {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
                 Toast.makeText(context, "" + context.getString(R.string.fail_to_remove_favorite), Toast.LENGTH_SHORT).show();
             } else if (func.equals(Constants.FAIL)) {
@@ -202,6 +201,18 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
     }
 
+    private void initSnackBar(String message, View viewBar) {
+        Snackbar snackbar = Snackbar.make(viewBar, message, Snackbar.LENGTH_SHORT);
+        View view = snackbar.getView();
+        TextView snackBarMessage = view.findViewById(R.id.snackbar_text);
+        snackBarMessage.setTextColor(Color.WHITE);
+        snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.green));
+        snackbar.setAction(context.getResources().getString(R.string.show_cart), v -> {
+
+        });
+        snackbar.show();
+    }
+
     public interface OnItemClick {
         void onItemClicked(int position, ProductModel productModel);
     }
@@ -222,10 +233,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                 int productId = productModels.get(position).getId();
                 boolean isFavorite = productModels.get(position).getFavourite();
                 if (isFavorite) {
-                    removeFromFavorite(view1,position, productId, userId, storeId);
+                    removeFromFavorite(view1, position, productId, userId, storeId);
 
                 } else {
-                    addToFavorite(view1,position, productId, userId, storeId);
+                    addToFavorite(view1, position, productId, userId, storeId);
 
                 }
 
@@ -246,7 +257,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                     int productId = productModel.getId();
                     int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
 
-                    addToCart(view1,position, productId, product_barcode_id, count + 1, userId, storeId);
+                    addToCart(view1, position, productId, product_barcode_id, count + 1, userId, storeId);
 
 
                 }
@@ -264,7 +275,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                 int productId = productModel.getId();
                 int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
 
-                updateCart(v,position, productId, product_barcode_id, count + 1, userId, storeId, 0, "quantity");
+                updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, 0, "quantity");
 
             });
 
@@ -278,7 +289,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                 int productId = productModel.getId();
                 int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
 
-                updateCart(v,position, productId, product_barcode_id, count - 1, userId, storeId, 0, "quantity");
+                updateCart(v, position, productId, product_barcode_id, count - 1, userId, storeId, 0, "quantity");
 
 
             });
@@ -293,7 +304,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                 int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
                 int cart_id = 0;
 
-                deleteCart(v,position, productId, product_barcode_id, cart_id, userId, storeId);
+                deleteCart(v, position, productId, product_barcode_id, cart_id, userId, storeId);
 
             });
 
@@ -309,71 +320,59 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
         }
 
 
-        private void addToCart(View v,int position, int productId, int product_barcode_id, int quantity, int userId, int storeId) {
-            new DataFeacher((Activity) context, (obj, func, IsSuccess) -> {
+        private void addToCart(View v, int position, int productId, int product_barcode_id, int quantity, int userId, int storeId) {
+            new DataFeacher(false, (obj, func, IsSuccess) -> {
 
                 if (IsSuccess) {
 
-                    initSnackBar(context.getString(R.string.success_added_to_cart),v);
+                    initSnackBar(context.getString(R.string.success_added_to_cart), v);
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
                     notifyItemChanged(position);
 
                 } else {
 
-                    initSnackBar(context.getString(R.string.fail_to_add_cart),v);
+                    initSnackBar(context.getString(R.string.fail_to_add_cart), v);
                 }
 
 
             }).addCartHandle(productId, product_barcode_id, quantity, userId, storeId);
         }
 
-        private void updateCart(View v,int position, int productId, int product_barcode_id, int quantity, int userId, int storeId, int cart_id, String update_quantity) {
-            new DataFeacher((Activity) context, (obj, func, IsSuccess) -> {
+        private void updateCart(View v, int position, int productId, int product_barcode_id, int quantity, int userId, int storeId, int cart_id, String update_quantity) {
+            new DataFeacher(false, (obj, func, IsSuccess) -> {
                 if (IsSuccess) {
 
-                    initSnackBar(context.getString(R.string.success_to_update_cart),v);
+                    initSnackBar(context.getString(R.string.success_to_update_cart), v);
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
                     notifyItemChanged(position);
 
                 } else {
 
-                    initSnackBar(context.getString(R.string.fail_to_update_cart),v);
+                    initSnackBar(context.getString(R.string.fail_to_update_cart), v);
 
                 }
 
             }).updateCartHandle(productId, product_barcode_id, quantity, userId, storeId, cart_id, update_quantity);
         }
 
-        private void deleteCart(View v,int position, int productId, int product_barcode_id, int cart_id, int userId, int storeId) {
-            new DataFeacher((Activity) context, (obj, func, IsSuccess) -> {
+        private void deleteCart(View v, int position, int productId, int product_barcode_id, int cart_id, int userId, int storeId) {
+            new DataFeacher(false, (obj, func, IsSuccess) -> {
 
                 if (IsSuccess) {
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(0);
                     notifyItemChanged(position);
-                    initSnackBar(context.getString(R.string.success_delete_from_cart),v);
+                    initSnackBar(context.getString(R.string.success_delete_from_cart), v);
 
 
                 } else {
 
-                    initSnackBar(context.getString(R.string.fail_to_delete_cart),v);
+                    initSnackBar(context.getString(R.string.fail_to_delete_cart), v);
                 }
 
 
             }).deleteCartHandle(productId, product_barcode_id, cart_id, userId, storeId);
         }
 
-    }
-
-    private void initSnackBar(String message, View viewBar) {
-        Snackbar snackbar = Snackbar.make(viewBar, message, Snackbar.LENGTH_SHORT);
-        View view = snackbar.getView();
-        TextView snackBarMessage = view.findViewById(R.id.snackbar_text);
-        snackBarMessage.setTextColor(Color.WHITE);
-        snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.green));
-        snackbar.setAction(context.getResources().getString(R.string.show_cart), v -> {
-
-        });
-        snackbar.show();
     }
 
 }

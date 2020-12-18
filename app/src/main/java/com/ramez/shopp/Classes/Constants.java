@@ -224,6 +224,11 @@ public class Constants {
     public static final String CURRENCY = "CURRENCY";
     public static final String Fractional = "Fractional";
     public static final String favourite_filter = "favourite";
+    public static final String SEARCH_BY_CODE_byCode = "SEARCH_BY_CODE_byCode";
+    public static final String CODE = "CODE";
+    public static final String SELECTED_POSITION = "SELECTED_POSITION";
+    public static final String CAT_LIST = "CAT_LIST";
+    public static final String CAT_MODEL = "CAT_MODEL";
 
 
 }

@@ -10,6 +10,7 @@ import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Utils.SharedPManger;
 
 
+import java.net.HttpURLConnection;
 import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ import javax.net.ssl.X509TrustManager;
 
 import okhttp3.CipherSuite;
 import okhttp3.ConnectionSpec;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.TlsVersion;
 import retrofit2.Retrofit;
@@ -135,6 +137,9 @@ public class ApiClient {
                 .readTimeout(10, TimeUnit.SECONDS)
                 .writeTimeout(10, TimeUnit.SECONDS);
 
+
+
+
         try {
 //            ProviderInstaller.installIfNeeded(RootApplication.getInstance());
 
@@ -156,15 +161,8 @@ public class ApiClient {
                     }
             };
 
-            // Install the all-trusting trust manager
-//            final SSLContext sslContext = SSLContext.getInstance("SSL");
-//            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
-
-            // Create an ssl socket factory with our all-trusting manager
-//            final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
 
             client.sslSocketFactory(new TLSSocketFactory(), (X509TrustManager) trustAllCerts[0]);
-//            client.sslSocketFactory(new TLSSocketFactory());
             client.hostnameVerifier(new HostnameVerifier() {
                 @Override
                 public boolean verify(String hostname, SSLSession session) {

@@ -39,9 +39,9 @@ public class RegisterFragment extends FragmentBase {
     boolean select_country = false;
     String country_name = "bh";
     String city_id = "bh";
-    String prefix="966";
-    private FragmentRegisterBinding binding;
+    String prefix = "966";
     SharedPManger sharedPManger;
+    private FragmentRegisterBinding binding;
     private ViewPager viewPager;
 
     @SuppressLint("ClickableViewAccessibility")
@@ -49,19 +49,16 @@ public class RegisterFragment extends FragmentBase {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentRegisterBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        viewPager=container.findViewById(R.id.viewPager);
+        viewPager = container.findViewById(R.id.viewPager);
 
         getDeviceToken();
-        sharedPManger=new SharedPManger(getActivityy());
+        sharedPManger = new SharedPManger(getActivityy());
 
         binding.loginBut.setOnClickListener(view1 -> {
             startLogin();
 
 
         });
-
-
-
 
 
         binding.registerBut.setOnClickListener(view1 -> {
@@ -78,14 +75,14 @@ public class RegisterFragment extends FragmentBase {
         final String passwordStr = NumberHandler.arabicToDecimal(binding.edtPassword.getText().toString());
         final String nameStr = NumberHandler.arabicToDecimal(binding.edtFirstName.getText().toString());
         final String emailStr = NumberHandler.arabicToDecimal(binding.edtEmail.getText().toString());
-        LocalModel localModel=UtilityApp.getLocalData();
+        LocalModel localModel = UtilityApp.getLocalData();
 
-        country_name=localModel.getShortname();
-        CountryCode= String.valueOf(localModel.getPhonecode());
-        city_id= localModel.getCityId();
+        country_name = localModel.getShortname();
+        CountryCode = String.valueOf(localModel.getPhonecode());
+        city_id = localModel.getCityId();
 
-        Toast("dd"+localModel.getCityId());
-         MemberModel memberModel = new MemberModel();
+        Toast("dd" + localModel.getCityId());
+        MemberModel memberModel = new MemberModel();
         memberModel.setMobileNumber(mobileStr);
         memberModel.setPassword(passwordStr);
         memberModel.setName(nameStr);
@@ -100,7 +97,7 @@ public class RegisterFragment extends FragmentBase {
 
         GlobalData.progressDialog(getActivityy(), R.string.register, R.string.please_wait_register);
 
-        new DataFeacher(getActivityy(), (obj, func, IsSuccess) -> {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
             GlobalData.hideProgressDialog();
             LoginResultModel result = (LoginResultModel) obj;
             if (func.equals(Constants.ERROR)) {
@@ -114,7 +111,7 @@ public class RegisterFragment extends FragmentBase {
                     Log.i("TAG", "Log otp " + result.getOtp());
                     MemberModel user = result.data;
                     UtilityApp.setUserData(user);
-                  SendOtp(mobileStr);
+                    SendOtp(mobileStr);
                 } else {
                     Toast(getString(R.string.fail_register));
 
@@ -139,15 +136,7 @@ public class RegisterFragment extends FragmentBase {
     private final boolean isValidForm() {
         FormValidator formValidator = FormValidator.Companion.getInstance();
 
-        return formValidator.addField(binding.edtFirstName,
-                new NonEmptyRule(R.string.enter_name)).addField(binding.edtEmail,
-                new NonEmptyRule(getString(R.string.enter_email))).addField(binding.edtEmail,
-                new EmailRule(R.string.enter_valid_email)).addField(binding.edtPhoneNumber,
-                new NonEmptyRule(R.string.enter_phone_please)).addField(binding.edtPassword,
-                new NonEmptyRule(R.string.enter_password)).addField(binding.edtConfirmPassword,
-                new NonEmptyRule(R.string.enter_confirm_password)).addField(binding.edtConfirmPassword,
-                new EqualRule(String.valueOf(binding.edtPassword.getText()),
-                        R.string.password_confirm_not_match)).validate();
+        return formValidator.addField(binding.edtFirstName, new NonEmptyRule(R.string.enter_name)).addField(binding.edtEmail, new NonEmptyRule(getString(R.string.enter_email))).addField(binding.edtEmail, new EmailRule(R.string.enter_valid_email)).addField(binding.edtPhoneNumber, new NonEmptyRule(R.string.enter_phone_please)).addField(binding.edtPassword, new NonEmptyRule(R.string.enter_password)).addField(binding.edtConfirmPassword, new NonEmptyRule(R.string.enter_confirm_password)).addField(binding.edtConfirmPassword, new EqualRule(String.valueOf(binding.edtPassword.getText()), R.string.password_confirm_not_match)).validate();
     }
 
     private void getDeviceToken() {
@@ -173,7 +162,7 @@ public class RegisterFragment extends FragmentBase {
 
     public void SendOtp(String mobile) {
         final String mobileStr = NumberHandler.arabicToDecimal(binding.edtPhoneNumber.getText().toString());
-        new DataFeacher(getActivity(), (obj, func, IsSuccess) -> {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
                 Toast(R.string.error_in_data);
             } else if (func.equals(Constants.FAIL)) {
@@ -184,7 +173,7 @@ public class RegisterFragment extends FragmentBase {
                     Log.i("TAG", "Log otp " + otpModel.getData());
 
                     Intent intent = new Intent(getActivityy(), ConfirmActivity.class);
-                    intent.putExtra(Constants.KEY_MOBILE,mobileStr);
+                    intent.putExtra(Constants.KEY_MOBILE, mobileStr);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
 

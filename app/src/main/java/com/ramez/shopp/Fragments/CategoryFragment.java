@@ -1,5 +1,6 @@
 package com.ramez.shopp.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.gson.Gson;
+import com.ramez.shopp.Activities.CategoryProductsActivity;
 import com.ramez.shopp.Adapter.CategoryAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.CategoryModel;
@@ -19,6 +22,7 @@ import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.FragmentCategoryBinding;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
@@ -58,6 +62,11 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
 
     @Override
     public void onItemClicked(int position, CategoryModel categoryModel) {
+        Intent intent = new Intent(getActivityy(), CategoryProductsActivity.class);
+        intent.putExtra(Constants.CAT_LIST, categoryModelList);
+        intent.putExtra(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
+        intent.putExtra(Constants.CAT_MODEL, categoryModel);
+        startActivity(intent);
 
     }
 
@@ -67,7 +76,7 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
-        new DataFeacher(getActivity(), (obj, func, IsSuccess) -> {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
             CategoryResultModel result = (CategoryResultModel) obj;
             String message = getString(R.string.fail_to_get_data);
 

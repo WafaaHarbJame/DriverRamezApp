@@ -246,7 +246,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
 
         private void updateCart(View v,int position, int productId, int product_barcode_id, int quantity, int userId, int storeId, int cart_id, String update_quantity) {
-            new DataFeacher((Activity) context, (obj, func, IsSuccess) -> {
+            new DataFeacher(false, (obj, func, IsSuccess) -> {
                 if (IsSuccess) {
 
                     initSnackBar(context.getString(R.string.success_to_update_cart),v);
@@ -263,7 +263,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
         }
 
         private void deleteCart(View v,int position, int productId, int product_barcode_id, int cart_id, int userId, int storeId) {
-            new DataFeacher((Activity) context, (obj, func, IsSuccess) -> {
+            new DataFeacher(false, (obj, func, IsSuccess) -> {
 
                 if (IsSuccess) {
 //                    cartDMS.get(position).setQuantity(0);

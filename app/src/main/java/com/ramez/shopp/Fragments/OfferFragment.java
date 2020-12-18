@@ -80,7 +80,7 @@ public class OfferFragment extends FragmentBase implements ProductAdapter.OnItem
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
-        new DataFeacher(getActivity(), (obj, func, IsSuccess) -> {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
             MainModel result = (MainModel) obj;
             String message = getString(R.string.fail_to_get_data);
 

@@ -53,7 +53,7 @@ public class ConfirmActivity extends ActivityBase {
                 getActiviy(),
                 R.string.confirm_code,
                 R.string.please_wait_sending);
-        new DataFeacher(getActiviy(), (obj, func, IsSuccess) -> {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
             GlobalData.hideProgressDialog();
             if (func.equals(Constants.ERROR)) {
                 Toast(R.string.error_in_data);

@@ -2,12 +2,14 @@ package com.ramez.shopp.Models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.UtilityApp;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductModel  implements Serializable {
+public class ProductModel  implements Serializable, Comparable<ProductModel>{
 
     @SerializedName("brand_id")
     @Expose
@@ -151,6 +153,24 @@ public class ProductModel  implements Serializable {
 
     public void setProductBrand(ProductBrand productBrand) {
         this.productBrand = productBrand;
+    }
+
+    @Override
+    public int compareTo(ProductModel productModel) {
+        if (productBarcodes.get(0).getPrice() == 0 ||productModel.getProductBarcodes().get(0).getPrice() == 0) {
+            return 0;
+        }
+        return getProductBarcodes().get(0).getPrice().compareTo(productModel.getProductBarcodes().get(0).getPrice());
+    }
+
+    public String getProductName(){
+        if(UtilityApp.getLanguage().equals(Constants.English)){
+            return name;
+
+        }
+        else {
+            return hName;
+        }
     }
 
 }

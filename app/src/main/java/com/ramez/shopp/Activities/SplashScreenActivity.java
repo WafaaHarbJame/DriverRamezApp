@@ -3,13 +3,23 @@ package com.ramez.shopp.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
+import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.MainActivity;
+import com.ramez.shopp.Models.FavouriteResultModel;
+import com.ramez.shopp.Models.MemberModel;
+import com.ramez.shopp.Models.ProfileData;
+import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.R;
+
+import static android.content.ContentValues.TAG;
 
 public class SplashScreenActivity extends ActivityBase {
     private static final int SPLASH_TIMER = 3000;
@@ -37,10 +47,8 @@ public class SplashScreenActivity extends ActivityBase {
         new Handler().postDelayed(() -> {
 
             if (UtilityApp.isLogin()) {
-                Intent intent = new Intent(getActiviy(), MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
+                getUserData(UtilityApp.getUserData().getId());
+
 
             } else {
 
@@ -62,6 +70,36 @@ public class SplashScreenActivity extends ActivityBase {
     private void startWelcomeActivity() {
         startActivity(new Intent(getActiviy(), WelcomeActivity.class));
         finish();
+    }
+
+
+    public void getUserData(int user_id) {
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            ResultAPIModel<ProfileData> result = (ResultAPIModel<ProfileData>) obj;
+            String message = getString(R.string.fail_to_get_data);
+
+                if (IsSuccess) {
+                    MemberModel memberModel=UtilityApp.getUserData();
+                    memberModel.setName(result.data.getName());
+                    memberModel.setEmail(result.data.getEmail());
+                    memberModel.setProfilePicture(result.data.getProfilePicture());
+                    UtilityApp.setUserData(memberModel);
+                    Intent intent = new Intent(getActiviy(), MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+
+                }
+
+                else {
+                    Intent intent = new Intent(getActiviy(), MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }
+
+        }).getUserDetails(user_id );
     }
 
 }

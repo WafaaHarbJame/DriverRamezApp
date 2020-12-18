@@ -1,12 +1,11 @@
 package com.ramez.shopp.ApiHandler;
 
 
-import android.accounts.Account;
-
 import com.ramez.shopp.Classes.CityModelResult;
 import com.ramez.shopp.Classes.OtpModel;
 import com.ramez.shopp.Models.AddressResultModel;
 import com.ramez.shopp.Models.AreasResultModel;
+import com.ramez.shopp.Models.AutoCompeteResult;
 import com.ramez.shopp.Models.CartResultModel;
 import com.ramez.shopp.Models.CategoryResultModel;
 import com.ramez.shopp.Models.CountryModelResult;
@@ -15,9 +14,8 @@ import com.ramez.shopp.Models.GeneralModel;
 import com.ramez.shopp.Models.LoginResultModel;
 import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.MemberModel;
-import com.ramez.shopp.Models.PhotoModel;
 import com.ramez.shopp.Models.ProductDetailsModel;
-import com.ramez.shopp.Models.RegisterModel;
+import com.ramez.shopp.Models.ProfileData;
 import com.ramez.shopp.Models.ResultAPIModel;
 
 import java.util.Map;
@@ -25,17 +23,12 @@ import java.util.Map;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.FieldMap;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-/**
- * Created by wokman on 11/4/2016.
- */
 
 public interface
 
@@ -53,6 +46,10 @@ ApiInterface {
 
     @POST("v3/Account/getotp")
     Call<OtpModel> GetOptHandle(@HeaderMap() Map<String, Object> headerParams, @Query("mobile_number") String mobile_number);
+
+    @POST("v3/Account/getUserDetail")
+    Call<ResultAPIModel<ProfileData>> getUserDetail(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id);
+
 
     @POST("v3/Account/forgotPassword")
     Call<OtpModel> ForgetPasswordHandle(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
@@ -95,15 +92,13 @@ ApiInterface {
 
 
     @GET("v3/Products/singleproductList")
-    Call<ProductDetailsModel>  GetSignalProducts(@HeaderMap() Map<String, Object> headerParams, @Query("country_id") int country_id, @Query("city_id") int city_id,
-                                                 @Query("product_id") int product_id, @Query("user_id") String user_id);
+    Call<ProductDetailsModel> GetSignalProducts(@HeaderMap() Map<String, Object> headerParams, @Query("country_id") int country_id, @Query("city_id") int city_id, @Query("product_id") int product_id, @Query("user_id") String user_id);
 
     @GET("v3/Products/categoryList")
-    Call<MainModel> GetMainPage(@HeaderMap() Map<String, Object> headerParams, @Query("category_id") int category_id, @Query("country_id") int country_id,
-                                @Query("city_id") int city_id, @Query("user_id") String user_id);
+    Call<MainModel> GetMainPage(@HeaderMap() Map<String, Object> headerParams, @Query("category_id") int category_id, @Query("country_id") int country_id, @Query("city_id") int city_id, @Query("user_id") String user_id);
 
     @GET("v3/Products/AllCategories")
-    Call<CategoryResultModel>  GetAllCategories(@HeaderMap() Map<String, Object> headerParams, @Query("sotre_id") int sotre_id);
+    Call<CategoryResultModel> GetAllCategories(@HeaderMap() Map<String, Object> headerParams, @Query("sotre_id") int sotre_id);
 
     @POST("v3/Favourite/addFavouriteProduct")
     Call<GeneralModel> addFavouriteProduct(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
@@ -121,18 +116,39 @@ ApiInterface {
     Call<GeneralModel> updateCart(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
     @GET("v3/Carts/checkOut")
-    Call<CartResultModel> GetACarts(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int  user_id, @Query("store_ID") int sotre_id);
+    Call<CartResultModel> GetACarts(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id, @Query("store_ID") int sotre_id);
 
     @GET("v3/Products/productList")
-    Call<FavouriteResultModel>  GetFavoriteProducts(@HeaderMap() Map<String, Object> headerParams, @Query("category_id")
-            int category_id, @Query("country_id") int country_id, @Query("city_id") int city_id, @Query("user_id") String user_id, @Query("filter") String filter,
-                                                    @Query("page_number") int page_number, @Query("page_size") int page_size);
+    Call<FavouriteResultModel> GetFavoriteProducts(@HeaderMap() Map<String, Object> headerParams, @Query("category_id") int category_id, @Query("country_id") int country_id, @Query("city_id") int city_id, @Query("user_id") String user_id, @Query("filter") String filter, @Query("page_number") int page_number, @Query("page_size") int page_size);
+
+    @POST("v3/Account/updateProfile")
+    Call<LoginResultModel> updateProfile(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
+
+    @POST("v3/Account/UploadPhoto")
+    Call<ResultAPIModel<GeneralModel>> uploadPhoto(@HeaderMap() Map<String, Object> headerParams, @Body RequestBody params, @Query("user_id") int user_id);
+
+    @GET("v3/Products/search")
+    Call<FavouriteResultModel> searchProduct(@HeaderMap() Map<String, Object> headerParams, @Query("country_id")
+            int country_id, @Query("city_id") int city_id, @Query("user_id") String user_id, @Query("text") String text
+            , @Query("page_number") int page_number, @Query("page_size") int page_size);
+
+    @GET("v3/Products/barcodeSearch")
+    Call<FavouriteResultModel> barcodeSearch(@HeaderMap() Map<String, Object> headerParams, @Query("country_id")
+            int country_id, @Query("city_id") int city_id, @Query("user_id") String user_id, @Query("barcode") String barcode
+            , @Query("page_number") int page_number, @Query("page_size") int page_size);
+
+    @GET("v3/Products/autocomplete")
+    Call<AutoCompeteResult> autocomplete(@HeaderMap() Map<String, Object> headerParams, @Query("country_id")
+            int country_id, @Query("city_id") int city_id, @Query("user_id") String user_id, @Query("text") String text);
+
+    @GET("v3/Products/productList")
+    Call<FavouriteResultModel> getCatProductList(@HeaderMap() Map<String, Object> headerParams, @Query("category_id") int category_id, @Query("country_id") int country_id, @Query("city_id") int city_id, @Query("user_id") String user_id, @Query("filter") String filter, @Query("page_number") int page_number, @Query("page_size") int page_size);
 
 
     Call<ResultAPIModel<MemberModel>> updateProfilePost(@HeaderMap() Map<String, Object> headerParams, @Body RequestBody params);
 
     @POST("v3/Account/uploadFile")
-    Call<ResultAPIModel<PhotoModel>> uploadPhoto(@HeaderMap() Map<String, Object> headerParams, @Body RequestBody params);
+    Call<ResultAPIModel<GeneralModel>> uploadPhoto(@HeaderMap() Map<String, Object> headerParams, @Body RequestBody params);
 
 
     @POST("v3/me/update")

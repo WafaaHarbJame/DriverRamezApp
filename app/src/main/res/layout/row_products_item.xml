@@ -23,6 +23,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <com.wang.avi.AVLoadingIndicatorView
+                    android:id="@+id/loadingLY"
+                    android:layout_width="@dimen/_125sdp"
+                    android:layout_height="@dimen/_125sdp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:visibility="gone"
+                    app:indicatorColor="@color/colorPrimaryDark"
+                    app:indicatorName="BallClipRotateMultipleIndicator"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <ImageView
                     android:id="@+id/productImg"
                     android:layout_width="@dimen/_90sdp"
@@ -31,7 +44,7 @@
                     android:layout_margin="@dimen/_12sdp"
                     android:background="@color/transparent"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/image_product" />
+                    android:src="@drawable/holder_image" />
 
                 <ImageView
                     android:id="@+id/favBut"

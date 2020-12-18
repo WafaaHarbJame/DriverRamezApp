@@ -157,7 +157,7 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
         cityModelArrayList.clear();
 
         Log.i("TAG", "Log country_id" + country_id);
-        new DataFeacher(getActiviy(), (obj, func, IsSuccess) -> {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
 
             CityModelResult result = (CityModelResult) obj;
             if (func.equals(Constants.ERROR)) {

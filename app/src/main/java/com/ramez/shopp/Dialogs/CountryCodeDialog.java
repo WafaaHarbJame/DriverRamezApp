@@ -128,7 +128,7 @@ public class CountryCodeDialog extends Dialog {
     private void getCountryList() {
 
         GlobalData.progressDialog(activity, R.string.upload_date, R.string.please_wait_upload);
-        new DataFeacher(activity, (obj, func, IsSuccess) -> {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
             GlobalData.hideProgressDialog();
             CountryModelResult result = (CountryModelResult) obj;
             if (func.equals(Constants.ERROR)) {

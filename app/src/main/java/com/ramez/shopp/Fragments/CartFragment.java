@@ -116,7 +116,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
-        new DataFeacher(getActivity(), (obj, func, IsSuccess) -> {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
             CartResultModel result = (CartResultModel) obj;
             String message = getString(R.string.fail_to_get_data);
 

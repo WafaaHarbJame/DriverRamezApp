@@ -96,7 +96,7 @@ public class ChooseCityActivity extends ActivityBase implements CountriesAdapter
     private void getCountryList() {
 
         GlobalData.progressDialog(getActiviy(), R.string.upload_date, R.string.please_wait_upload);
-        new DataFeacher(getActiviy(), (obj, func, IsSuccess) -> {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
             GlobalData.hideProgressDialog();
             CountryModelResult result = (CountryModelResult) obj;
             if (func.equals(Constants.ERROR)) {

@@ -96,7 +96,7 @@ public class FavoriteActivity extends ActivityBase implements ProductAdapter.OnI
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
-        new DataFeacher(getActiviy(), (obj, func, IsSuccess) -> {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
             FavouriteResultModel result = (FavouriteResultModel) obj;
             String message = getString(R.string.fail_to_get_data);
 

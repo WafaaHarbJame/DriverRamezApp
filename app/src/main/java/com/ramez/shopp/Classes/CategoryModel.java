@@ -74,4 +74,14 @@ public class CategoryModel implements Serializable {
     public void setChildCat(ArrayList<ChildCat> childCat) {
         this.childCat = childCat;
     }
+
+    public String getCatName(){
+        if(UtilityApp.getLanguage().equals(Constants.English)){
+            return name;
+
+        }
+        else {
+            return hName;
+        }
+    }
 }

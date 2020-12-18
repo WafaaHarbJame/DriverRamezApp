@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.multidex.MultiDex;
 
 
+import com.androidnetworking.AndroidNetworking;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Utils.LocaleUtils;
@@ -65,6 +66,9 @@ public class RootApplication extends Application {
             LocaleUtils.updateConfig(rootApplication, rootApplication.getResources().getConfiguration());
 
         }
+
+        AndroidNetworking.initialize(getApplicationContext());
+
 
 
     }

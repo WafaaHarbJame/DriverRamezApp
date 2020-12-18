@@ -64,7 +64,7 @@ public class ConfirmPhoneActivity extends ActivityBase {
     }
 
     public void SendOtp(String mobile) {
-        new DataFeacher(getActiviy(), (obj, func, IsSuccess) -> {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
                 Toast(R.string.error_in_data);
             } else if (func.equals(Constants.FAIL)) {
@@ -89,7 +89,7 @@ public class ConfirmPhoneActivity extends ActivityBase {
                 getActiviy(),
                 R.string.forget_pass,
                 R.string.please_wait_sending);
-        new DataFeacher(getActiviy(), (obj, func, IsSuccess) -> {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
             GlobalData.hideProgressDialog();
             if (func.equals(Constants.ERROR)) {
                 Toast(R.string.error_in_data);

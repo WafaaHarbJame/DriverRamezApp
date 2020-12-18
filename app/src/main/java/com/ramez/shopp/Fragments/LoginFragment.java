@@ -84,7 +84,7 @@ public class LoginFragment extends FragmentBase {
 
         GlobalData.progressDialog(getActivityy(), R.string.text_login_login, R.string.please_wait_login);
 
-        new DataFeacher(getActivityy(), (obj, func, IsSuccess) -> {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
             GlobalData.hideProgressDialog();
             LoginResultModel result = (LoginResultModel) obj;
             if (func.equals(Constants.ERROR)) {
@@ -156,7 +156,7 @@ public class LoginFragment extends FragmentBase {
 
     private void UpdateToken() {
         MemberModel memberModel=UtilityApp.getUserData();
-        new DataFeacher(getActivityy(), (obj, func, IsSuccess) -> {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
             GlobalData.hideProgressDialog();
             LoginResultModel result = (LoginResultModel) obj;
             if (func.equals(Constants.ERROR)) {

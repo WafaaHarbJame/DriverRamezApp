@@ -61,7 +61,7 @@ public class ChangePassActivity extends ActivityBase {
                 R.string.text_registration_change_password,
                 R.string.please_wait_sending);
 
-        new DataFeacher(getActiviy(), (obj, func, IsSuccess) -> {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
             GlobalData.hideProgressDialog();
             if (func.equals(Constants.ERROR)) {
                 Toast(R.string.error_in_data);

@@ -132,7 +132,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Holder> 
         ConfirmDialog.Click click = new ConfirmDialog.Click() {
             @Override
             public void click() {
-                new DataFeacher((Activity) context, (obj, func, IsSuccess) -> {
+                new DataFeacher(false, (obj, func, IsSuccess) -> {
                     if (func.equals(Constants.ERROR)) {
                         Toast.makeText(context, ""+context.getString(R.string.error_in_data), Toast.LENGTH_SHORT).show();
                     } else if (func.equals(Constants.FAIL)) {

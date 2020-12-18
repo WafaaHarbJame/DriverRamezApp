@@ -104,7 +104,7 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
     public void GetUserAddress(int user_id) {
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
 
-        new DataFeacher(getActiviy(), (obj, func, IsSuccess) -> {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
             binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
 
             AddressResultModel result = (AddressResultModel) obj;

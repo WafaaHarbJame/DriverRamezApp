@@ -47,14 +47,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
 
     @Override
     public void onBindViewHolder(final Holder holder, int position) {
+
         CategoryModel categoryModel = categoryDMS.get(position);
-        if (UtilityApp.getLanguage() == Constants.Arabic) {
-            holder.binding.tvCatTitle.setText(categoryModel.getHName());
 
-        } else {
-            holder.binding.tvCatTitle.setText(categoryModel.getHName());
-
-        }
+        holder.binding.tvCatTitle.setText(categoryModel.getCatName());
 
         Glide.with(context).asBitmap().load(categoryModel.getImage()).addListener(new RequestListener<Bitmap>() {
             @Override

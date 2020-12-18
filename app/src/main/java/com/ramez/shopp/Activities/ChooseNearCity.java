@@ -79,7 +79,7 @@ public class ChooseNearCity extends ActivityBase implements CityAdapter.OnCityCl
 
         GlobalData.progressDialog(getActiviy(), R.string.upload_date, R.string.please_wait_upload);
 
-        new DataFeacher(getActiviy(), (obj, func, IsSuccess) -> {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
             GlobalData.hideProgressDialog();
             CityModelResult result = (CityModelResult) obj;
 

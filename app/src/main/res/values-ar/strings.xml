@@ -226,10 +226,21 @@
     <string name="success_delete_from_cart">تم حذف المنتج من السلة بنجاح</string>
     <string name="fail_to_delete_cart">لم يتم حذف هذا المنتج من السلة </string>
     <string name="success_to_update_cart">تم تحديث العربة بنجاح </string>
-    <string name="fail_to_change_password">Fail to change address</string>
+    <string name="fail_to_change_password">فشل تغير كلمة المرور</string>
     <string name="enter_new_password">تغير كلمة المرور</string>
     <string name="change_city_currency">تغير اللغة </string>
-    <string name="change_branch_success">Change Branch Succces</string>
-    <string name="change_success">"Chnage Succefully "</string>
+    <string name="change_branch_success">تم تغير الفرع بنجاح </string>
+    <string name="change_success">تم التغير بنجاح </string>
+    <string name="scan_text"> ثبت الكاميرافوق الباركود للبحث عن المنتج </string>
+    <string name="should_allow_permission">يجب السماح للصلاحيات </string>
+    <string name="some_permission_denied">بعض الصلاحيات مرفوضة</string>
+    <string name="selectImage">اخنر الصورة </string>
+    <string name="upload_photo">تحميل صورة </string>
+    <string name="textTryAgain">فشل تحميل الصورة </string>
+    <string name="failtoupdate_profile">فشل تعديل الملف الشخصي </string>
+    <string name="update_profile">تعديل الملف الشخصي</string>
+    <string name="success_update">تم تعديل البيانات بنجاح </string>
+    <string name="please_wait_to_upload_photo">الرجاء الانتظار يتم الان تحميل الصورة</string>
+    <string name="categories">الاصناف</string>
 
 </resources>

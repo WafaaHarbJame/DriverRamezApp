@@ -2,6 +2,9 @@ package com.ramez.shopp.Models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.ramez.shopp.Classes.CategoryModel;
+import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.UtilityApp;
 
 import java.io.Serializable;
 import java.util.List;
@@ -25,7 +28,7 @@ public class ChildCat implements Serializable {
     private Integer parentId;
     @SerializedName("child_cat")
     @Expose
-    private List<Object> childCat = null;
+    private List<CategoryModel> childCat = null;
 
     public Integer getId() {
         return id;
@@ -67,11 +70,22 @@ public class ChildCat implements Serializable {
         this.parentId = parentId;
     }
 
-    public List<Object> getChildCat() {
+    public List<CategoryModel> getChildCat() {
         return childCat;
     }
 
-    public void setChildCat(List<Object> childCat) {
+    public void setChildCat(List<CategoryModel> childCat) {
         this.childCat = childCat;
     }
+
+    public String getCatName(){
+        if(UtilityApp.getLanguage().equals(Constants.English)){
+            return name;
+
+        }
+        else {
+            return hName;
+        }
+    }
+
 }

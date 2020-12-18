@@ -13,12 +13,17 @@ import com.ramez.shopp.Models.AddressModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ResultAPIModel;
 
+import java.io.File;
 import java.net.NoRouteToHostException;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import kotlin.jvm.internal.Intrinsics;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,7 +31,6 @@ import retrofit2.Response;
 
 public class DataFeacher {
     final String TAG = "Log";
-    Activity activity;
     DataFetcherCallBack dataFetcherCallBack;
     ApiInterface apiService;
     //    int city;
@@ -36,12 +40,15 @@ public class DataFeacher {
     private Callback callbackApi;
 
 
-    public DataFeacher(Activity activity) {
-        this.activity = activity;
+    public DataFeacher() {
         apiService = ApiClient.getClient().create(ApiInterface.class);
         this.dataFetcherCallBack = (obj, func, IsSuccess) -> {
 
         };
+
+        headerMap.put("ApiKey", Constants.api_key);
+        headerMap.put("Accept", "application/json");
+        headerMap.put("Content-Type", "application/json");
 
         callbackApi = new Callback() {
             @Override
@@ -84,11 +91,12 @@ public class DataFeacher {
 
     }
 
-    public DataFeacher(Activity activity, DataFetcherCallBack dataFetcherCallBack) {
-        this.activity = activity;
+    public DataFeacher(boolean isLong, DataFetcherCallBack dataFetcherCallBack) {
         this.dataFetcherCallBack = dataFetcherCallBack;
-        apiService = ApiClient.getClient().create(ApiInterface.class);
+        apiService = isLong ? ApiClient.getLongClient().create(ApiInterface.class) : ApiClient.getClient().create(ApiInterface.class);
+
         headerMap.put("ApiKey", Constants.api_key);
+        headerMap.put("Accept", "application/json");
         headerMap.put("Content-Type", "application/json");
 
         callbackApi = new Callback() {
@@ -196,7 +204,7 @@ public class DataFeacher {
 
         Map<String, Object> params = new HashMap<>();
         params.put("mobile_number", memberModel.getMobileNumber());
-        params.put("user_type",memberModel.getUserType());
+        params.put("user_type", memberModel.getUserType());
 
         Log.i(TAG, "Log ForgetPasswordHandle");
         Log.i(TAG, "Log headerMap " + headerMap);
@@ -212,8 +220,8 @@ public class DataFeacher {
 
         Map<String, Object> params = new HashMap<>();
         params.put("user_id", memberModel.getId());
-        params.put("password",memberModel.getPassword());
-        params.put("new_password",memberModel.getNew_password());
+        params.put("password", memberModel.getPassword());
+        params.put("new_password", memberModel.getNew_password());
 
         Log.i(TAG, "Log ChangePasswordHandle");
         Log.i(TAG, "Log headerMap " + headerMap);
@@ -231,7 +239,7 @@ public class DataFeacher {
 
         Map<String, Object> params = new HashMap<>();
         params.put("user_id", memberModel.getId());
-        params.put("device_token",memberModel.getDeviceToken());
+        params.put("device_token", memberModel.getDeviceToken());
 
         Log.i(TAG, "Log UpdateTokenHandle");
         Log.i(TAG, "Log headerMap " + headerMap);
@@ -267,11 +275,10 @@ public class DataFeacher {
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log country_id " + country_id);
 
-        if(UtilityApp.getLanguage()!=null){
+        if (UtilityApp.getLanguage() != null) {
             lang = UtilityApp.getLanguage();
-        }
-        else {
-            lang= Locale.getDefault().getLanguage();
+        } else {
+            lang = Locale.getDefault().getLanguage();
         }
 
 
@@ -289,14 +296,14 @@ public class DataFeacher {
 
         Log.i(TAG, "Log sendOpt");
         Log.i(TAG, "Log headerMap " + headerMap);
-        Log.i(TAG, "Log mobile_number " +mobile_number);
+        Log.i(TAG, "Log mobile_number " + mobile_number);
 
         Call call = apiService.GetOptHandle(headerMap, mobile_number);
         call.enqueue(callbackApi);
 
     }
 
-    public void VerifyOtpHandle(String mobile_number,String otp) {
+    public void VerifyOtpHandle(String mobile_number, String otp) {
 
         Log.i(TAG, "Log VerifyOtpHandle");
         Log.i(TAG, "Log headerMap " + headerMap);
@@ -352,19 +359,19 @@ public class DataFeacher {
         Log.i(TAG, "Log google_address  " + addressModel.getGoogleAddress());
 
         Map<String, Object> params = new HashMap<>();
-        params.put("user_id",addressModel.getUserId());
-        params.put("name",addressModel.getName());
-        params.put("area_id",addressModel.getAreaId());
-        params.put("state_id",addressModel.getState());
-        params.put("block",addressModel.getBlock());
-        params.put("street_details",addressModel.getStreetDetails());
-        params.put("house_no",addressModel.getHouseNo());
-        params.put("apartment_no",addressModel.getApartmentNo());
-        params.put("phone_prefix",addressModel.getPhonePrefix());
-        params.put("mobile_number",addressModel.getMobileNumber());
-        params.put("longitude",addressModel.getLongitude());
-        params.put("latitude",addressModel.getLatitude());
-        params.put("google_address",addressModel.getGoogleAddress());
+        params.put("user_id", addressModel.getUserId());
+        params.put("name", addressModel.getName());
+        params.put("area_id", addressModel.getAreaId());
+        params.put("state_id", addressModel.getState());
+        params.put("block", addressModel.getBlock());
+        params.put("street_details", addressModel.getStreetDetails());
+        params.put("house_no", addressModel.getHouseNo());
+        params.put("apartment_no", addressModel.getApartmentNo());
+        params.put("phone_prefix", addressModel.getPhonePrefix());
+        params.put("mobile_number", addressModel.getMobileNumber());
+        params.put("longitude", addressModel.getLongitude());
+        params.put("latitude", addressModel.getLatitude());
+        params.put("google_address", addressModel.getGoogleAddress());
 
 
         Call call = apiService.CreateNewAddress(headerMap, params);
@@ -393,23 +400,23 @@ public class DataFeacher {
     }
 
 
-    public void GetMainPage(int category_id,int country_id,int city_id,String user_id) {
+    public void GetMainPage(int category_id, int country_id, int city_id, String user_id) {
 
         Log.i(TAG, "Log GetAreasHandle");
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log country_id " + country_id);
 
-        Call call = apiService.GetMainPage(headerMap, category_id,country_id,city_id,user_id);
+        Call call = apiService.GetMainPage(headerMap, category_id, country_id, city_id, user_id);
         call.enqueue(callbackApi);
     }
 
-    public void GetSingleProduct(int country_id,int city_id,int product_id,String user_id) {
+    public void GetSingleProduct(int country_id, int city_id, int product_id, String user_id) {
 
         Log.i(TAG, "Log GetSingleProduct");
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log country_id " + country_id);
 
-        Call call = apiService.GetSignalProducts(headerMap,country_id,city_id,product_id,user_id);
+        Call call = apiService.GetSignalProducts(headerMap, country_id, city_id, product_id, user_id);
         call.enqueue(callbackApi);
     }
 
@@ -420,11 +427,11 @@ public class DataFeacher {
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log country_id " + sotre_id);
 
-        Call call = apiService.GetAllCategories(headerMap,sotre_id);
+        Call call = apiService.GetAllCategories(headerMap, sotre_id);
         call.enqueue(callbackApi);
     }
 
-    public void addToFavoriteHandle(int user_id,int store_ID,int product_id ) {
+    public void addToFavoriteHandle(int user_id, int store_ID, int product_id) {
 
         Map<String, Object> params = new HashMap<>();
         params.put("user_id", user_id);
@@ -442,7 +449,7 @@ public class DataFeacher {
         call.enqueue(callbackApi);
     }
 
-    public void deleteFromFavoriteHandle(int user_id,int store_ID,int product_id ) {
+    public void deleteFromFavoriteHandle(int user_id, int store_ID, int product_id) {
 
         Map<String, Object> params = new HashMap<>();
         params.put("user_id", user_id);
@@ -459,7 +466,7 @@ public class DataFeacher {
         call.enqueue(callbackApi);
     }
 
-    public void addCartHandle(int productId,int product_barcode_id,int quantity, int userId,int storeId ) {
+    public void addCartHandle(int productId, int product_barcode_id, int quantity, int userId, int storeId) {
 
         Map<String, Object> params = new HashMap<>();
         params.put("user_id", userId);
@@ -482,7 +489,7 @@ public class DataFeacher {
         call.enqueue(callbackApi);
     }
 
-    public void updateCartHandle(int productId,int product_barcode_id,int quantity, int userId,int storeId,int cart_id,String update_quantity ) {
+    public void updateCartHandle(int productId, int product_barcode_id, int quantity, int userId, int storeId, int cart_id, String update_quantity) {
 
         Map<String, Object> params = new HashMap<>();
         params.put("user_id", userId);
@@ -492,7 +499,6 @@ public class DataFeacher {
         params.put("cart_id", cart_id);
         params.put("update_type", update_quantity);
         params.put("product_barcode_id", product_barcode_id);
-
 
 
         Log.i(TAG, "Log updateCartHandle");
@@ -508,7 +514,7 @@ public class DataFeacher {
         call.enqueue(callbackApi);
     }
 
-    public void deleteCartHandle(int productId,int product_barcode_id,int cart_id, int userId,int storeId ) {
+    public void deleteCartHandle(int productId, int product_barcode_id, int cart_id, int userId, int storeId) {
 
         Map<String, Object> params = new HashMap<>();
         params.put("user_id", userId);
@@ -531,7 +537,7 @@ public class DataFeacher {
         call.enqueue(callbackApi);
     }
 
-    public void GetCarts(int sotre_id,int user_id) {
+    public void GetCarts(int sotre_id, int user_id) {
 
         Log.i(TAG, "Log GetCarts");
         Log.i(TAG, "Log headerMap " + headerMap);
@@ -539,14 +545,14 @@ public class DataFeacher {
         Log.i(TAG, "Log sotre_id " + sotre_id);
         Log.i(TAG, "Log user_id " + user_id);
 
-        Call call = apiService.GetACarts(headerMap,user_id,sotre_id);
+        Call call = apiService.GetACarts(headerMap, user_id, sotre_id);
         call.enqueue(callbackApi);
 
 
     }
 
 
-    public void getFavorite(int category_id,int country_id,int city_id,String user_id,String filter,int page_number,int page_size ) {
+    public void getFavorite(int category_id, int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
 
         Log.i(TAG, "Log getFavorite");
         Log.i(TAG, "Log headerMap " + headerMap);
@@ -558,7 +564,126 @@ public class DataFeacher {
         Log.i(TAG, "Log page_number " + page_number);
         Log.i(TAG, "Log page_size " + page_size);
 
-        Call call = apiService.GetFavoriteProducts(headerMap, category_id,country_id,city_id,user_id,filter,page_number,page_size);
+        Call call = apiService.GetFavoriteProducts(headerMap, category_id, country_id, city_id, user_id, filter, page_number, page_size);
+        call.enqueue(callbackApi);
+    }
+
+
+    public void updateProfile(MemberModel memberModel) {
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("user_id", memberModel.getId());
+        params.put("name", memberModel.getName());
+        params.put("email", memberModel.getEmail());
+        params.put("country", memberModel.getCountry());
+        params.put("state", "1");
+        params.put("city", Integer.parseInt(memberModel.getCity()));
+
+        Log.i(TAG, "Log updateProfile");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log name " + memberModel.getName());
+        Log.i(TAG, "Log email " + memberModel.getEmail());
+        Log.i(TAG, "Log country " + memberModel.getCountry());
+        Log.i(TAG, "Log city " + memberModel.getCity());
+
+
+        Call call = apiService.updateProfile(headerMap, params);
+        call.enqueue(callbackApi);
+
+    }
+
+
+    public void uploadPhoto(int userId, File photo) {
+
+        Log.i(TAG, "Log uploadPhoto");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log userId " + userId);
+        Log.i(TAG, "Log photo Name  " + photo.getName());
+
+        MultipartBody.Builder builder = new MultipartBody.Builder();
+        builder.setType(MultipartBody.FORM);
+
+        if (photo != null) {
+            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), photo);
+            builder.addFormDataPart("file", photo.lastModified() + ".png", requestBody);
+        }
+
+        MultipartBody requestBody = builder.build();
+
+        Call call = apiService.uploadPhoto(headerMap, requestBody, userId);
+        call.enqueue(callbackApi);
+
+    }
+
+
+    public void getUserDetails(int  user_id) {
+
+        Log.i(TAG, "Log getUserDetails");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log user_id " + user_id);
+
+        Call call = apiService.getUserDetail(headerMap, user_id);
+        call.enqueue(callbackApi);
+    }
+
+    public void barcodeSearch( int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
+
+        Log.i(TAG, "Log barcodeSearch");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log country_id " + country_id);
+        Log.i(TAG, "Log city_id " + city_id);
+        Log.i(TAG, "Log user_id " + user_id);
+        Log.i(TAG, "Log filter " + filter);
+        Log.i(TAG, "Log page_number " + page_number);
+        Log.i(TAG, "Log page_size " + page_size);
+
+        Call call = apiService.barcodeSearch(headerMap,country_id, city_id, user_id, filter, page_number, page_size);
+        call.enqueue(callbackApi);
+    }
+
+    public void searchTxt( int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
+
+        Log.i(TAG, "Log barcodeSearch");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log country_id " + country_id);
+        Log.i(TAG, "Log city_id " + city_id);
+        Log.i(TAG, "Log user_id " + user_id);
+        Log.i(TAG, "Log filter " + filter);
+        Log.i(TAG, "Log page_number " + page_number);
+        Log.i(TAG, "Log page_size " + page_size);
+
+        Call call = apiService.searchProduct(headerMap,country_id, city_id, user_id, filter, page_number, page_size);
+        call.enqueue(callbackApi);
+    }
+
+    public void autocomplete( int country_id, int city_id, String user_id, String text, int page_number, int page_size) {
+
+        Log.i(TAG, "Log barcodeSearch");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log country_id " + country_id);
+        Log.i(TAG, "Log city_id " + city_id);
+        Log.i(TAG, "Log user_id " + user_id);
+        Log.i(TAG, "Log text " + text);
+        Log.i(TAG, "Log page_number " + page_number);
+        Log.i(TAG, "Log page_size " + page_size);
+
+        Call call = apiService.autocomplete(headerMap,country_id, city_id, user_id, text);
+        call.enqueue(callbackApi);
+    }
+
+    public void getCatProductList(int category_id, int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
+
+        Log.i(TAG, "Log getFavorite");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log category_id " + category_id);
+        Log.i(TAG, "Log country_id " + country_id);
+        Log.i(TAG, "Log city_id " + city_id);
+        Log.i(TAG, "Log user_id " + user_id);
+        Log.i(TAG, "Log filter " + filter);
+        Log.i(TAG, "Log page_number " + page_number);
+        Log.i(TAG, "Log page_size " + page_size);
+
+        Call call = apiService.getCatProductList(headerMap, category_id, country_id, city_id, user_id, filter, page_number, page_size);
         call.enqueue(callbackApi);
     }
 

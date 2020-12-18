@@ -250,5 +250,16 @@
     <string name="change_city_currency">Change Language </string>
     <string name="change_branch_success">Change Branch Successfully</string>
     <string name="change_success">Change Successfully "</string>
+    <string name="scan_text">Move camera over the barcode to find the product</string>
+    <string name="should_allow_permission">Should Allow Permission</string>
+    <string name="some_permission_denied">Some permission denied</string>
+    <string name="selectImage">Select Image</string>
+    <string name="upload_photo">Upload Photo</string>
+    <string name="textTryAgain">Upload Photo Fail</string>
+    <string name="failtoupdate_profile">Fail to update profile</string>
+    <string name="update_profile">"Update Profile "</string>
+    <string name="success_update">Succes Update</string>
+    <string name="please_wait_to_upload_photo">Please wait to upload Photo</string>
+    <string name="categories">categories</string>
 
 </resources>

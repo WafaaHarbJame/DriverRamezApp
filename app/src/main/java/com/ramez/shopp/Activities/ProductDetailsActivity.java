@@ -122,7 +122,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
-        new DataFeacher(getActiviy(), (obj, func, IsSuccess) -> {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
             ProductDetailsModel result = (ProductDetailsModel) obj;
             String message = getString(R.string.fail_to_get_data);
 

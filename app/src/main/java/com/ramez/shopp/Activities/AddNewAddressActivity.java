@@ -142,7 +142,7 @@ public class AddNewAddressActivity extends ActivityBase {
 
         GlobalData.progressDialog(getActiviy(), R.string.add_new_address, R.string.please_wait_creat);
 
-        new DataFeacher(getActiviy(), (obj, func, IsSuccess) -> {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
             GlobalData.hideProgressDialog();
             AddressResultModel result = (AddressResultModel) obj;
             if (func.equals(Constants.ERROR)) {
@@ -184,7 +184,7 @@ public class AddNewAddressActivity extends ActivityBase {
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
 
-        new DataFeacher(getActiviy(), (obj, func, IsSuccess) -> {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
             binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
             binding.dataLY.setVisibility(View.VISIBLE);
 
@@ -278,7 +278,7 @@ public class AddNewAddressActivity extends ActivityBase {
 
     public void GetAreas(int country_id) {
 
-        new DataFeacher(getActiviy(), (obj, func, IsSuccess) -> {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
             AreasResultModel result = (AreasResultModel) obj;
 
             if (func.equals(Constants.ERROR)) {
