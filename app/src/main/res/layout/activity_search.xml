@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_70sdp"
             android:background="@drawable/toolbar_back1"
-            android:orientation="vertical"/>
+            android:orientation="vertical" />
 
 
         <LinearLayout
@@ -31,39 +31,64 @@
                 android:layout_marginTop="@dimen/_34sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
                 android:gravity="center_vertical"
+                android:layout_gravity="center"
                 android:orientation="horizontal"
                 android:visibility="visible">
 
-
-                <com.ramez.shopp.SpichalViews.SAutoCompleteText
-                    android:id="@+id/searchEt"
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/round_corner_grey"
-                    android:drawablePadding="@dimen/_8sdp"
-                    android:gravity="start|center_vertical"
-                    android:hint="@string/search_product"
-                    android:maxLines="1"
-                    android:padding="@dimen/_10sdp"
-                    android:inputType="textAutoComplete|textAutoCorrect"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/black"
-                    android:imeOptions="actionSearch"
-                    android:textSize="@dimen/_12ssp"
-                    android:drawableEnd="@drawable/search_product" />
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:gravity="center_vertical"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_8sdp">
+
+                    <com.ramez.shopp.SpichalViews.SAutoCompleteText
+                        android:id="@+id/searchEt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/transparent"
+                        android:hint="@string/search_product"
+                        android:imeOptions="actionSearch"
+                        android:inputType="textAutoComplete|textAutoCorrect"
+                        android:maxLines="1"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_12ssp"
+                        tools:ignore="NestedWeights" />
+
+                    <com.ramez.shopp.SpichalViews.STextViewIcon
+                        android:id="@+id/closeBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_4sdp"
+                        android:padding="@dimen/_4sdp"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_8sdp"
+                        android:text="@string/fal_search"
+                        android:textColor="@color/very_dark_gray"
+                        android:textSize="@dimen/_14ssp" />
+
+
+                </LinearLayout>
 
 
                 <ImageView
                     android:id="@+id/barcodeBut"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/sort"
-                    android:textSize="@dimen/_18ssp" />
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:src="@drawable/sort" />
 
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>
+
     <include
         android:id="@+id/loadingProgressLY"
         layout="@layout/layout_pre_loading" />
@@ -81,8 +106,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:visibility="visible"
-        android:overScrollMode="never">
+        android:overScrollMode="never"
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -97,60 +122,64 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:layout_height="wrap_content">
+                    android:orientation="horizontal">
 
                     <com.ramez.shopp.SpichalViews.STextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_10sdp"
                         android:text="@string/categories"
                         android:textColor="@color/black"
-                        android:layout_marginEnd="@dimen/_10sdp"
                         android:textSize="@dimen/_12ssp" />
 
                     <com.ramez.shopp.SpichalViews.STextView
                         android:id="@+id/categoriesCountTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/bottom_arrow"
+                        android:drawablePadding="@dimen/_8sdp"
                         android:text="0"
                         android:textColor="@color/black"
-                        android:drawablePadding="@dimen/_8sdp"
-                        android:drawableEnd="@drawable/bottom_arrow"
                         android:textSize="@dimen/_10ssp" />
+
                     <com.ramez.shopp.SpichalViews.STextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
                         android:text="@string/offer_text"
                         android:textColor="@color/black"
-                        android:layout_marginEnd="@dimen/_10sdp"
-                        android:layout_marginStart="@dimen/_10sdp"
                         android:textSize="@dimen/_12ssp" />
 
                     <com.ramez.shopp.SpichalViews.STextView
                         android:id="@+id/offerCountTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/bottom_arrow"
+                        android:drawablePadding="@dimen/_8sdp"
                         android:text="0"
                         android:textColor="@color/black"
-                        android:drawablePadding="@dimen/_8sdp"
-                        android:drawableEnd="@drawable/bottom_arrow"
                         android:textSize="@dimen/_10ssp" />
+
                     <com.ramez.shopp.SpichalViews.STextView
                         android:id="@+id/priceBut"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:drawableEnd="@drawable/price_icon_filter"
+                        android:drawablePadding="@dimen/_8sdp"
                         android:text="@string/price"
                         android:textColor="@color/black"
-                        android:drawablePadding="@dimen/_8sdp"
-                        android:layout_marginEnd="@dimen/_10sdp"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:drawableEnd="@drawable/price_icon_filter"
                         android:textSize="@dimen/_12ssp" />
+
                     <Space
                         android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
                     <ImageView
                         android:id="@+id/view1But"
                         android:layout_width="wrap_content"
@@ -176,8 +205,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/_4sdp"
                     android:layout_marginEnd="@dimen/_4sdp"
-                    app:spanCount="2"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="2"
                     tools:itemCount="4"
                     tools:listitem="@layout/row_products_item" />
 

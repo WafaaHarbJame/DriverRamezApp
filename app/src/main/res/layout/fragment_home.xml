@@ -57,8 +57,7 @@
                         android:id="@+id/barcodeBut"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/cat_icon"
-                        android:textSize="@dimen/_18ssp" />
+                        android:src="@drawable/cat_icon" />
 
                 </LinearLayout>
             </LinearLayout>
