@@ -643,7 +643,7 @@ public class DataFeacher {
 
     public void searchTxt( int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
 
-        Log.i(TAG, "Log barcodeSearch");
+        Log.i(TAG, "Log searchTxt");
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log country_id " + country_id);
         Log.i(TAG, "Log city_id " + city_id);
@@ -658,7 +658,7 @@ public class DataFeacher {
 
     public void autocomplete( int country_id, int city_id, String user_id, String text, int page_number, int page_size) {
 
-        Log.i(TAG, "Log barcodeSearch");
+        Log.i(TAG, "Log autocomplete");
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log country_id " + country_id);
         Log.i(TAG, "Log city_id " + city_id);
@@ -673,7 +673,7 @@ public class DataFeacher {
 
     public void getCatProductList(int category_id, int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
 
-        Log.i(TAG, "Log getFavorite");
+        Log.i(TAG, "Log getCatProductList");
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log category_id " + category_id);
         Log.i(TAG, "Log country_id " + country_id);

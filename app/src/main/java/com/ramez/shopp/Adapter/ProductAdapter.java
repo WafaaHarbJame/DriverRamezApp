@@ -45,6 +45,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
     private String currency = "BHD";
     private int limit = 2;
 
+
     public ProductAdapter(Context context, ArrayList<ProductModel> productModels, OnItemClick onItemClick, int limit) {
         this.context = context;
         this.onItemClick = onItemClick;
@@ -55,7 +56,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        RowProductsItemBinding itemView = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.row_products_item, parent, false);
+        RowProductsItemBinding itemView =RowProductsItemBinding.inflate(LayoutInflater.from(context), parent, false);
         return new Holder(itemView);
     }
 

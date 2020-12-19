@@ -1,27 +1,22 @@
 package com.ramez.shopp.Activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 
-import com.google.android.gms.vision.barcode.Barcode;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.ramez.shopp.Adapter.MainCategoryAdapter;
-import com.ramez.shopp.Adapter.ProductAdapter;
+import com.ramez.shopp.Adapter.ProductCategoryAdapter;
 import com.ramez.shopp.Adapter.SubCategoryAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
-import com.ramez.shopp.Models.AutoCompeteResult;
 import com.ramez.shopp.Models.AutoCompleteModel;
 import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.LocalModel;
@@ -29,36 +24,35 @@ import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.ActivityCategoryProductsActivityBinding;
-import com.ramez.shopp.databinding.ActivitySearchBinding;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 import static android.content.ContentValues.TAG;
 
-public class CategoryProductsActivity extends ActivityBase implements ProductAdapter.OnItemClick,MainCategoryAdapter.OnMainCategoryItemClicked {
+public class CategoryProductsActivity extends ActivityBase implements ProductCategoryAdapter.OnItemClick, MainCategoryAdapter.OnMainCategoryItemClicked {
 
     ActivityCategoryProductsActivityBinding binding;
 
     ArrayList<ProductModel> productList;
-    private ArrayList<AutoCompleteModel> data = null;
-    private ArrayList<String> autoCompleteList;
-    private ArrayList<CategoryModel> mainCategoryDMS;
-    private ArrayList<CategoryModel> subCategoryDMS = new ArrayList<>();
+    ArrayList<AutoCompleteModel> data = null;
+    ArrayList<String> autoCompleteList;
+    ArrayList<CategoryModel> mainCategoryDMS;
+    ArrayList<CategoryModel> subCategoryDMS = new ArrayList<>();
 
     GridLayoutManager gridLayoutManager;
-    private MemberModel user;
-    private LocalModel localModel;
-
-    private ProductAdapter adapter;
-    private int country_id, city_id;
-    private String user_id, filter;
-    private CheckLoginDialog checkLoginDialog;
 
     int numColumn = 2;
-    int selectedCat=0;
-    int selectedSubCat=241;
-    int category_id;
+    int selectedCat = 0;
+    int selectedSubCat = 241;
+    int category_id,country_id,city_id;
+    private String user_id, filter;
+
+    private MemberModel user;
+    private LocalModel localModel;
+    private ProductCategoryAdapter adapter;
+
+    private CheckLoginDialog checkLoginDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,24 +70,22 @@ public class CategoryProductsActivity extends ActivityBase implements ProductAda
         binding.recycler.setLayoutManager(gridLayoutManager);
 
 
-        binding.listShopCategories.setLayoutManager(new GridLayoutManager(getActiviy(),1, LinearLayoutManager.HORIZONTAL,false));
+        binding.listShopCategories.setLayoutManager(new GridLayoutManager(getActiviy(), 1, LinearLayoutManager.HORIZONTAL, false));
 
-        binding.listSubCategory.setLayoutManager(new GridLayoutManager(getActiviy(),1, LinearLayoutManager.HORIZONTAL,false));
+        binding.listSubCategory.setLayoutManager(new GridLayoutManager(getActiviy(), 1, LinearLayoutManager.HORIZONTAL, false));
 
 
         data = new ArrayList<>();
         autoCompleteList = new ArrayList<>();
 
 
+        localModel = UtilityApp.getLocalData();
+        user = UtilityApp.getUserData();
+        country_id = localModel.getCountryId();
+        city_id = Integer.parseInt(localModel.getCityId());
+        user_id = String.valueOf(user.getId());
 
-            localModel = UtilityApp.getLocalData();
-            user = UtilityApp.getUserData();
-            country_id = localModel.getCountryId();
-            city_id = Integer.parseInt(localModel.getCityId());
-            user_id = String.valueOf(user.getId());
-
-            getIntentExtra();
-
+        getIntentExtra();
 
 
         binding.searchBut.setOnClickListener(view1 -> {
@@ -129,7 +121,7 @@ public class CategoryProductsActivity extends ActivityBase implements ProductAda
 
     public void initAdapter() {
 
-        adapter = new ProductAdapter(getActiviy(), productList, this, 0);
+        adapter = new ProductCategoryAdapter(getActiviy(), productList, category_id, selectedSubCat, country_id, city_id, user_id, 0, binding.recycler, this);
         binding.recycler.setAdapter(adapter);
 
         binding.categoriesCountTv.setText(String.valueOf(productList.size()));
@@ -189,6 +181,7 @@ public class CategoryProductsActivity extends ActivityBase implements ProductAda
                         Log.i(TAG, "Log productList" + productList.size());
                         initAdapter();
 
+
                     } else {
 
                         binding.dataLY.setVisibility(View.GONE);
@@ -223,15 +216,20 @@ public class CategoryProductsActivity extends ActivityBase implements ProductAda
 
         if (bundle != null) {
 
-            mainCategoryDMS= (ArrayList<CategoryModel>) bundle.getSerializable(Constants.CAT_LIST);
-            selectedCat=bundle.getInt(Constants.SELECTED_POSITION,0);
-            CategoryModel categoryModel= (CategoryModel) bundle.getSerializable(Constants.CAT_MODEL);
-            subCategoryDMS=mainCategoryDMS;
+            mainCategoryDMS = (ArrayList<CategoryModel>) bundle.getSerializable(Constants.CAT_LIST);
+            selectedCat = bundle.getInt(Constants.SELECTED_POSITION, 0);
+            CategoryModel categoryModel = (CategoryModel) bundle.getSerializable(Constants.CAT_MODEL);
+
+            subCategoryDMS = mainCategoryDMS;
+            selectedSubCat = subCategoryDMS.get(0).getChildCat().get(0).getId();
+
             initMainCategoryAdapter();
             initSubCategoryAdapter();
-            category_id=categoryModel.getId();
 
-            getProductList(category_id,country_id,city_id,user_id,"",0,10);
+            category_id = categoryModel.getId();
+            selectedCat = categoryModel.getId();
+
+            getProductList(category_id, country_id, city_id, user_id, "", 0, 10);
 
         }
     }
@@ -258,7 +256,7 @@ public class CategoryProductsActivity extends ActivityBase implements ProductAda
 
     }
 
-    public void getProductList(int category_id,int country_id,int city_id,String user_id,String filter,int page_number,int page_size ) {
+    public void getProductList(int category_id, int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -318,6 +316,6 @@ public class CategoryProductsActivity extends ActivityBase implements ProductAda
                 }
             }
 
-        }).getCatProductList( category_id, country_id, city_id, user_id, filter, page_number, page_size );
+        }).getCatProductList(category_id, country_id, city_id, user_id, filter, page_number, page_size);
     }
 }

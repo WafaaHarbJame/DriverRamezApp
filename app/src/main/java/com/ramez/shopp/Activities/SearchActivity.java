@@ -1,36 +1,17 @@
 package com.ramez.shopp.Activities;
 
 
-import android.Manifest;
-import android.accounts.Account;
-import android.accounts.AccountManager;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import com.edwardvanraak.materialbarcodescanner.MaterialBarcodeScanner;
-import com.edwardvanraak.materialbarcodescanner.MaterialBarcodeScannerBuilder;
 import com.google.android.gms.vision.barcode.Barcode;
-import com.google.gson.Gson;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.DexterError;
-import com.karumi.dexter.listener.PermissionDeniedResponse;
-import com.karumi.dexter.listener.PermissionGrantedResponse;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.PermissionRequestErrorListener;
-import com.karumi.dexter.listener.single.PermissionListener;
 import com.ramez.shopp.Adapter.ProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
@@ -42,33 +23,39 @@ import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProductModel;
-import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.R;
-import com.ramez.shopp.Utils.Helpers;
 import com.ramez.shopp.databinding.ActivitySearchBinding;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 import static android.content.ContentValues.TAG;
 
 public class SearchActivity extends ActivityBase implements ProductAdapter.OnItemClick {
+
     ActivitySearchBinding binding;
+
     ArrayList<ProductModel> productList;
+    private ArrayList<AutoCompleteModel> data = null;
+    private ArrayList<String> autoCompleteList;
+
     GridLayoutManager gridLayoutManager;
-    boolean searchByCode = false;
     private ProductAdapter adapter;
+
+
+    boolean searchByCode = false;
+    int numColumn = 2;
     private int country_id, city_id;
-    private String user_id, filter;
+    private String user_id, filter,result;
+
     private MemberModel user;
     private LocalModel localModel;
     private CheckLoginDialog checkLoginDialog;
+
     private Barcode barcodeResult;
-    private String result;
-    private ArrayList<AutoCompleteModel> data = null;
-    private ArrayList<String> autoCompleteList;
-    int numColumn=2;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,10 +65,17 @@ public class SearchActivity extends ActivityBase implements ProductAdapter.OnIte
         setContentView(view);
 
         productList = new ArrayList<>();
-        gridLayoutManager = new GridLayoutManager(getActiviy(), numColumn);
-        binding.recycler.setLayoutManager(gridLayoutManager);
         data = new ArrayList<>();
         autoCompleteList = new ArrayList<>();
+
+
+        binding.searchEt.requestFocus();
+        binding.searchEt.setFocusable(true);
+        binding.searchEt.requestFocusFromTouch();
+        binding.searchEt.setThreshold(1);
+
+        gridLayoutManager = new GridLayoutManager(getActiviy(), numColumn);
+        binding.recycler.setLayoutManager(gridLayoutManager);
 
 
         if (!UtilityApp.isLogin()) {
@@ -96,57 +90,70 @@ public class SearchActivity extends ActivityBase implements ProductAdapter.OnIte
             country_id = localModel.getCountryId();
             city_id = Integer.parseInt(localModel.getCityId());
             user_id = String.valueOf(user.getId());
-
             getIntentExtra();
 
+
+            binding.searchEt.addTextChangedListener(new TextWatcher() {
+
+                public void afterTextChanged(Editable s) {
+                    binding.closeBtn.setText(R.string.fal_times);
+                    searchTxt(country_id, city_id, user_id, String.valueOf(s), 0, 10);
+
+                }
+
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    binding.closeBtn.setText(R.string.fal_times);
+                    autoComplete(country_id, city_id, user_id, String.valueOf(s), 0, 10);
+
+                }
+
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    binding.closeBtn.setText(R.string.fal_times);
+                    autoComplete(country_id, city_id, user_id, String.valueOf(s), 0, 10);
+
+                }
+            });
+
+
+            binding.view1But.setOnClickListener(view1 -> {
+                numColumn = 1;
+                gridLayoutManager.setSpanCount(numColumn);
+                adapter.notifyDataSetChanged();
+
+
+            });
+
+            binding.view2But.setOnClickListener(view1 -> {
+                numColumn = 2;
+                gridLayoutManager.setSpanCount(numColumn);
+                adapter.notifyDataSetChanged();
+
+            });
+
+            binding.priceBut.setOnClickListener(view1 -> {
+
+                // Collections.sort(productList);
+                Collections.sort(productList, Collections.reverseOrder());
+
+            });
+
+            binding.categoriesCountTv.setText(String.valueOf(productList.size()));
+            binding.offerCountTv.setText(String.valueOf(productList.size()));
+
+
+            binding.searchEt.setOnItemClickListener((adapterView, view12, position, l) -> {
+                String text = autoCompleteList.get(position).toString();
+                searchTxt(country_id, city_id, user_id, text, 0, 10);
+
+            });
+
+            binding.closeBtn.setOnClickListener(view1 -> {
+                productList.clear();
+                binding.searchEt.setText("");
+
+            });
+
         }
-
-        binding.searchEt.addTextChangedListener(new TextWatcher() {
-
-            public void afterTextChanged(Editable s) {
-                autoComplete(country_id, city_id, user_id, String.valueOf(s), 0, 10);
-                searchTxt(country_id, city_id, user_id, String.valueOf(s), 0, 10);
-
-
-            }
-
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                autoComplete(country_id, city_id, user_id, String.valueOf(s), 0, 10);
-                searchTxt(country_id, city_id, user_id, String.valueOf(s), 0, 10);
-
-            }
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                autoComplete(country_id, city_id, user_id, String.valueOf(s), 0, 10);
-                searchTxt(country_id, city_id, user_id, String.valueOf(s), 0, 10);
-            }
-        });
-
-
-        binding.view1But.setOnClickListener(view1 -> {
-            numColumn=1;
-            gridLayoutManager.setSpanCount(numColumn);
-            adapter.notifyDataSetChanged();
-
-
-        });
-
-        binding.view2But.setOnClickListener(view1 -> {
-            numColumn=2;
-            gridLayoutManager.setSpanCount(numColumn);
-            adapter.notifyDataSetChanged();
-
-        });
-
-        binding.priceBut.setOnClickListener(view1 -> {
-
-           // Collections.sort(productList);
-            Collections.sort(productList,Collections.reverseOrder());
-
-        });
-
-        binding.categoriesCountTv.setText(String.valueOf(productList.size()));
-        binding.offerCountTv.setText(String.valueOf(productList.size()));
 
     }
 
@@ -154,6 +161,7 @@ public class SearchActivity extends ActivityBase implements ProductAdapter.OnIte
 
         adapter = new ProductAdapter(getActiviy(), productList, this, 0);
         binding.recycler.setAdapter(adapter);
+
         binding.categoriesCountTv.setText(String.valueOf(productList.size()));
         binding.offerCountTv.setText(String.valueOf(productList.size()));
     }
@@ -166,7 +174,6 @@ public class SearchActivity extends ActivityBase implements ProductAdapter.OnIte
 
 
     }
-
 
     public void searchBarcode(int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
 
@@ -299,12 +306,10 @@ public class SearchActivity extends ActivityBase implements ProductAdapter.OnIte
         }).searchTxt(country_id, city_id, user_id, filter, page_number, page_size);
     }
 
-
     private void showLoginDialog() {
         checkLoginDialog = new CheckLoginDialog(getActiviy(), R.string.please_login, R.string.text_login_login, R.string.register, null, null);
         checkLoginDialog.show();
     }
-
 
     private void getIntentExtra() {
         Bundle bundle = getIntent().getExtras();
@@ -353,6 +358,7 @@ public class SearchActivity extends ActivityBase implements ProductAdapter.OnIte
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActiviy(), android.R.layout.simple_dropdown_item_1line, autoCompleteList);
         binding.searchEt.setAdapter(adapter);
+
 
     }
 
