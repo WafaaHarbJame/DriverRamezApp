@@ -85,9 +85,10 @@ public class MainCategoryAdapter extends RecyclerView.Adapter<MainCategoryAdapte
 
 
             view.setOnClickListener(v -> {
-                CategoryModel mainMainCategoryDM = mainCategoryDMS.get(getAdapterPosition());
+                int position=getAdapterPosition();
+                CategoryModel mainMainCategoryDM = mainCategoryDMS.get(position);
 
-                onMainCategoryItemClicked.OnMainCategoryItemClicked(mainMainCategoryDM);
+                onMainCategoryItemClicked.OnMainCategoryItemClicked(mainMainCategoryDM,position);
                 lastIndex = getAdapterPosition();
                 notifyDataSetChanged();
                 selectedPosition = mainMainCategoryDM.getId();
@@ -99,7 +100,7 @@ public class MainCategoryAdapter extends RecyclerView.Adapter<MainCategoryAdapte
     }
 
     public interface OnMainCategoryItemClicked {
-        void OnMainCategoryItemClicked(CategoryModel mainCategoryDM);
+        void OnMainCategoryItemClicked(CategoryModel mainCategoryDM,int position);
     }
 
 

@@ -24,6 +24,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.google.android.material.snackbar.Snackbar;
+import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.Activities.RegisterLoginActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
@@ -168,7 +169,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
         }).addToFavoriteHandle(userId, storeId, productId);
     }
 
-
     private void removeFromFavorite(View view, int position, int productId, int userId, int storeId) {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
@@ -192,7 +192,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
         }).deleteFromFavoriteHandle(userId, storeId, productId);
     }
-
 
     private void loginFirst() {
         Toast.makeText(context, context.getString(R.string.textLoginFirst), Toast.LENGTH_SHORT).show();
@@ -316,7 +315,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
         @Override
         public void onClick(View v) {
             if (onItemClick != null) {
+                ProductModel productModel=productModels.get(getAdapterPosition());
                 onItemClick.onItemClicked(getAdapterPosition(), productModels.get(getAdapterPosition()));
+                Intent intent = new Intent(context, ProductDetailsActivity.class);
+                intent.putExtra(Constants.DB_productModel, productModel);
+                context.startActivity(intent);
             }
         }
 

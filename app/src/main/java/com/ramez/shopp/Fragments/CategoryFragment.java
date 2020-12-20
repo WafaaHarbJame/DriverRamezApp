@@ -65,6 +65,7 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
         Intent intent = new Intent(getActivityy(), CategoryProductsActivity.class);
         intent.putExtra(Constants.CAT_LIST, categoryModelList);
         intent.putExtra(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
+        intent.putExtra(Constants.position, position);
         intent.putExtra(Constants.CAT_MODEL, categoryModel);
         startActivity(intent);
 
@@ -80,47 +81,20 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
             CategoryResultModel result = (CategoryResultModel) obj;
             String message = getString(R.string.fail_to_get_data);
 
-            binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
+            if (isVisible()) {
+                binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
 
-            if (func.equals(Constants.ERROR)) {
+                if (func.equals(Constants.ERROR)) {
 
-                if (result != null) {
-                    message = result.getMessage();
-                }
-                binding.dataLY.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(message);
-
-            } else if (func.equals(Constants.FAIL)) {
-
-                binding.dataLY.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(message);
-
-
-            } else {
-                if (IsSuccess) {
-                    if (result.getData() != null && result.getData().size() > 0) {
-
-                        binding.dataLY.setVisibility(View.VISIBLE);
-                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-                        categoryModelList = result.getData();
-
-                        Log.i(TAG, "Log productBestList" + categoryModelList.size());
-                        initAdapter();
-
-                    } else {
-
-                        binding.dataLY.setVisibility(View.GONE);
-                        binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
-
+                    if (result != null) {
+                        message = result.getMessage();
                     }
+                    binding.dataLY.setVisibility(View.GONE);
+                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(message);
 
-
-                } else {
+                } else if (func.equals(Constants.FAIL)) {
 
                     binding.dataLY.setVisibility(View.GONE);
                     binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -128,6 +102,35 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
                     binding.failGetDataLY.failTxt.setText(message);
 
 
+                } else {
+                    if (IsSuccess) {
+                        if (result.getData() != null && result.getData().size() > 0) {
+
+                            binding.dataLY.setVisibility(View.VISIBLE);
+                            binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                            binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+                            categoryModelList = result.getData();
+
+                            Log.i(TAG, "Log productBestList" + categoryModelList.size());
+                            initAdapter();
+
+                        } else {
+
+                            binding.dataLY.setVisibility(View.GONE);
+                            binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
+
+                        }
+
+
+                    } else {
+
+                        binding.dataLY.setVisibility(View.GONE);
+                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                        binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                        binding.failGetDataLY.failTxt.setText(message);
+
+
+                    }
                 }
             }
 

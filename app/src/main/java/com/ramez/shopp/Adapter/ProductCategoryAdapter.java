@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +45,7 @@ import com.ramez.shopp.databinding.RowProductsItemBinding;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
@@ -54,7 +57,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public static final int VIEW_TYPE_EMPTY = 2;
 
     public boolean isLoading;
-    public int visibleThreshold = 5;
+    public int visibleThreshold = 10;
     public boolean show_loading = true;
     int category_id, country_id, city_id, subID;
     String user_id;
@@ -62,17 +65,17 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private int lastVisibleItem;
     private int totalItemCount;
     private OnLoadMoreListener mOnLoadMoreListener;
-    private RecyclerView rv;
+
     private Context context;
     private OnItemClick onItemClick;
-    private ArrayList<ProductModel> productModels;
+    private List<ProductModel> productModels;
     private double discount = 0.0;
     private String currency = "BHD";
     private int limit = 2;
+    private RecyclerView rv;
 
 
-    public ProductCategoryAdapter(Context context, ArrayList<ProductModel> productModels, int category_id, int subID, int country_id, int city_id, String user_id,
-                                  int limit, RecyclerView rv, OnItemClick onItemClick) {
+    public ProductCategoryAdapter(Context context, List<ProductModel> productModels, int category_id, int subID, int country_id, int city_id, String user_id, int limit, RecyclerView rv, OnItemClick onItemClick) {
         this.context = context;
         this.onItemClick = onItemClick;
         this.productModels = productModels;
@@ -82,7 +85,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         this.city_id = city_id;
         this.country_id = country_id;
         this.user_id = user_id;
-        this.rv = rv;
+        this.rv=rv;
 
 
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
@@ -103,8 +106,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             }
         });
         rv.setLayoutManager(gridLayoutManager);
-
-
+        rv.setLayoutManager(gridLayoutManager);
         rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -112,7 +114,6 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 totalItemCount = gridLayoutManager.getItemCount();
                 lastVisibleItem = gridLayoutManager.findLastVisibleItemPosition();
-
 
                 if (show_loading) {
                     if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
@@ -136,7 +137,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder vh = null;
         if (viewType == VIEW_TYPE_ITEM) {
-            RowProductsItemBinding itemView =RowProductsItemBinding.inflate(LayoutInflater.from(context), parent, false);
+            RowProductsItemBinding itemView = RowProductsItemBinding.inflate(LayoutInflater.from(context), parent, false);
             vh = new Holder(itemView);
         } else if (viewType == VIEW_TYPE_LOADING) {
             RowLoadingBinding itemView = RowLoadingBinding.inflate(LayoutInflater.from(context), parent, false);
@@ -332,9 +333,12 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
             if (!productModels.contains(null)) {
 
-                productModels.add(null);
+                new Handler(Looper.getMainLooper()).post(() -> {
 
-                notifyItemInserted(productModels.size() - 1);
+                    productModels.add(null);
+
+                    notifyItemInserted(productModels.size() - 1);
+                });
 
                 LoadAllData(category_id, country_id, city_id, user_id, "", nextPage, 10);
             }
@@ -352,63 +356,31 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             FavouriteResultModel result = (FavouriteResultModel) obj;
             String message = context.getString(R.string.fail_to_get_data);
 
-            if (func.equals(Constants.ERROR)) {
-
-                if (result.getMessage() != null) {
-                    message = result.getMessage();
-                }
-                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
-            } else if (func.equals(Constants.FAIL)) {
-
-                Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
-
-
-            } else {
-                if (IsSuccess) {
-                    if (result.getData() != null && result.getData().size() > 0) {
-                        ArrayList<ProductModel> products = result.getData();
-
-                        boolean prevHasRows = (productModels.size()) > 0;
-                        if (prevHasRows) {
-                            productModels.remove(productModels.size() - 1);
-
-                        }
-
-                        notifyItemRemoved(productModels.size());
-
-                        int pos = productModels.size() - 1;
-
-                        if (products.size() == 0) {
-                            setLoaded();
-                            show_loading = false;
-                        } else {
-                            productModels.addAll(products);
-                            nextPage++;
-
-                            rv.post(() -> {
-                                notifyItemRangeInserted(pos, productModels.size());
-                            });
-                            setLoaded();
-                        }
-
-
-                    } else {
-
-                        Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
-
-                    }
-
-
-                } else {
+            if (IsSuccess) {
+                if (result.getData() != null && result.getData().size() > 0) {
+                    ArrayList<ProductModel> products = result.getData();
 
                     productModels.remove(productModels.size() - 1);
                     notifyItemRemoved(productModels.size());
+
+                    int pos = productModels.size();
+                    if (products != null && products.size() > 0) {
+                        productModels.addAll(products);
+                        notifyItemRangeInserted(pos, productModels.size());
+                        nextPage++;
+                        setLoaded();
+                    }
+                } else {
                     setLoaded();
-
-                    Toast.makeText(context, "" + message, Toast.LENGTH_SHORT).show();
-
-
+                    show_loading = false;
                 }
+
+
+            } else {
+
+                setLoaded();
+                show_loading = false;
+
             }
 
         }).getCatProductList(category_id, country_id, city_id, user_id, filter, page_number, page_size);

@@ -3,11 +3,15 @@ package com.ramez.shopp.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 
@@ -29,6 +33,8 @@ import com.ramez.shopp.databinding.ActivitySearchBinding;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import retrofit2.Call;
+
 import static android.content.ContentValues.TAG;
 
 public class SearchActivity extends ActivityBase implements ProductAdapter.OnItemClick {
@@ -36,17 +42,14 @@ public class SearchActivity extends ActivityBase implements ProductAdapter.OnIte
     ActivitySearchBinding binding;
 
     ArrayList<ProductModel> productList;
-    private ArrayList<AutoCompleteModel> data = null;
-    private ArrayList<String> autoCompleteList;
-
     GridLayoutManager gridLayoutManager;
-    private ProductAdapter adapter;
-
-
     boolean searchByCode = false;
     int numColumn = 2;
+    private ArrayList<AutoCompleteModel> data = null;
+    private ArrayList<String> autoCompleteList;
+    private ProductAdapter adapter;
     private int country_id, city_id;
-    private String user_id, filter,result;
+    private String user_id, filter, result,searchQuery;
 
     private MemberModel user;
     private LocalModel localModel;
@@ -55,7 +58,9 @@ public class SearchActivity extends ActivityBase implements ProductAdapter.OnIte
     private Barcode barcodeResult;
 
 
-
+    private Call searchCall;
+    private Runnable runnable;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,24 +97,39 @@ public class SearchActivity extends ActivityBase implements ProductAdapter.OnIte
             user_id = String.valueOf(user.getId());
             getIntentExtra();
 
+            binding.searchEt.setOnEditorActionListener((v, actionId, event) -> {
+
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+
+                    String text = v.getText().toString();
+                    searchTxt(country_id, city_id, user_id, text, 0, 10);
+                    return true;
+                }
+                return false;
+
+            });
+
+            handler = new Handler();
+            runnable = () -> {
+                autoComplete(country_id, city_id, user_id, searchQuery, 0, 10);
+            };
 
             binding.searchEt.addTextChangedListener(new TextWatcher() {
 
                 public void afterTextChanged(Editable s) {
                     binding.closeBtn.setText(R.string.fal_times);
-                    searchTxt(country_id, city_id, user_id, String.valueOf(s), 0, 10);
+
+                    searchQuery = s.toString();
+                    handler.postDelayed(runnable, 500);
 
                 }
 
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    binding.closeBtn.setText(R.string.fal_times);
-                    autoComplete(country_id, city_id, user_id, String.valueOf(s), 0, 10);
-
+                    if (searchCall != null && searchCall.isExecuted()) searchCall.cancel();
+                    handler.removeCallbacks(runnable);
                 }
 
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    binding.closeBtn.setText(R.string.fal_times);
-                    autoComplete(country_id, city_id, user_id, String.valueOf(s), 0, 10);
 
                 }
             });
@@ -326,7 +346,7 @@ public class SearchActivity extends ActivityBase implements ProductAdapter.OnIte
     public void autoComplete(int country_id, int city_id, String user_id, String text, int page_number, int page_size) {
         data.clear();
 
-        new DataFeacher(false, (obj, func, IsSuccess) -> {
+        DataFeacher dataFeacher = new DataFeacher(false, (obj, func, IsSuccess) -> {
             AutoCompeteResult result = (AutoCompeteResult) obj;
 
             if (IsSuccess) {
@@ -345,21 +365,21 @@ public class SearchActivity extends ActivityBase implements ProductAdapter.OnIte
                     binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
 
                 }
-
-
             }
 
-        }).autocomplete(country_id, city_id, user_id, text, page_number, page_size);
+        });
+        searchCall = dataFeacher.autocomplete(country_id, city_id, user_id, text, page_number, page_size);
     }
 
     private void getAutoNames() {
+        autoCompleteList.clear();
         for (int i = 0; i < data.size(); i++) {
             autoCompleteList.add(data.get(i).getDataName());
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActiviy(), android.R.layout.simple_dropdown_item_1line, autoCompleteList);
         binding.searchEt.setAdapter(adapter);
 
-
+        binding.searchEt.showDropDown();
     }
 
 

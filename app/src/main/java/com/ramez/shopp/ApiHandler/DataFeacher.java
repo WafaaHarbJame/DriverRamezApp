@@ -616,7 +616,7 @@ public class DataFeacher {
     }
 
 
-    public void getUserDetails(int  user_id) {
+    public void getUserDetails(int user_id) {
 
         Log.i(TAG, "Log getUserDetails");
         Log.i(TAG, "Log headerMap " + headerMap);
@@ -626,7 +626,7 @@ public class DataFeacher {
         call.enqueue(callbackApi);
     }
 
-    public void barcodeSearch( int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
+    public void barcodeSearch(int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
 
         Log.i(TAG, "Log barcodeSearch");
         Log.i(TAG, "Log headerMap " + headerMap);
@@ -637,11 +637,11 @@ public class DataFeacher {
         Log.i(TAG, "Log page_number " + page_number);
         Log.i(TAG, "Log page_size " + page_size);
 
-        Call call = apiService.barcodeSearch(headerMap,country_id, city_id, user_id, filter, page_number, page_size);
+        Call call = apiService.barcodeSearch(headerMap, country_id, city_id, user_id, filter, page_number, page_size);
         call.enqueue(callbackApi);
     }
 
-    public void searchTxt( int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
+    public void searchTxt(int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
 
         Log.i(TAG, "Log searchTxt");
         Log.i(TAG, "Log headerMap " + headerMap);
@@ -652,11 +652,11 @@ public class DataFeacher {
         Log.i(TAG, "Log page_number " + page_number);
         Log.i(TAG, "Log page_size " + page_size);
 
-        Call call = apiService.searchProduct(headerMap,country_id, city_id, user_id, filter, page_number, page_size);
+        Call call = apiService.searchProduct(headerMap, country_id, city_id, user_id, filter, page_number, page_size);
         call.enqueue(callbackApi);
     }
 
-    public void autocomplete( int country_id, int city_id, String user_id, String text, int page_number, int page_size) {
+    public Call autocomplete(int country_id, int city_id, String user_id, String text, int page_number, int page_size) {
 
         Log.i(TAG, "Log autocomplete");
         Log.i(TAG, "Log headerMap " + headerMap);
@@ -667,8 +667,10 @@ public class DataFeacher {
         Log.i(TAG, "Log page_number " + page_number);
         Log.i(TAG, "Log page_size " + page_size);
 
-        Call call = apiService.autocomplete(headerMap,country_id, city_id, user_id, text);
+        Call call = apiService.autocomplete(headerMap, country_id, city_id, user_id, text);
         call.enqueue(callbackApi);
+
+        return call;
     }
 
     public void getCatProductList(int category_id, int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {

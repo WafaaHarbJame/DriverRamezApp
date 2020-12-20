@@ -18,6 +18,7 @@ import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Models.AutoCompleteModel;
+import com.ramez.shopp.Models.ChildCat;
 import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MemberModel;
@@ -38,14 +39,12 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
     ArrayList<AutoCompleteModel> data = null;
     ArrayList<String> autoCompleteList;
     ArrayList<CategoryModel> mainCategoryDMS;
-    ArrayList<CategoryModel> subCategoryDMS = new ArrayList<>();
+    ArrayList<ChildCat> subCategoryDMS = new ArrayList<>();
 
     GridLayoutManager gridLayoutManager;
-
     int numColumn = 2;
-    int selectedCat = 0;
-    int selectedSubCat = 241;
-    int category_id,country_id,city_id;
+    int selectedSubCat = 0;
+    int category_id = 0, country_id, city_id;
     private String user_id, filter;
 
     private MemberModel user;
@@ -70,14 +69,13 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
         binding.recycler.setLayoutManager(gridLayoutManager);
 
 
-        binding.listShopCategories.setLayoutManager(new GridLayoutManager(getActiviy(), 1, LinearLayoutManager.HORIZONTAL, false));
+        binding.listShopCategories.setLayoutManager(new LinearLayoutManager(getActiviy(), LinearLayoutManager.HORIZONTAL, false));
 
-        binding.listSubCategory.setLayoutManager(new GridLayoutManager(getActiviy(), 1, LinearLayoutManager.HORIZONTAL, false));
+        binding.listSubCategory.setLayoutManager(new LinearLayoutManager(getActiviy(), LinearLayoutManager.HORIZONTAL, false));
 
 
         data = new ArrayList<>();
         autoCompleteList = new ArrayList<>();
-
 
         localModel = UtilityApp.getLocalData();
         user = UtilityApp.getUserData();
@@ -94,6 +92,7 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
 
         });
 
+
         binding.view1But.setOnClickListener(view1 -> {
             numColumn = 1;
             gridLayoutManager.setSpanCount(numColumn);
@@ -102,6 +101,7 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
 
         });
 
+
         binding.view2But.setOnClickListener(view1 -> {
             numColumn = 2;
             gridLayoutManager.setSpanCount(numColumn);
@@ -109,12 +109,15 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
 
         });
 
+
         binding.priceBut.setOnClickListener(view1 -> {
             Collections.sort(productList, Collections.reverseOrder());
 
         });
 
+
         binding.categoriesCountTv.setText(String.valueOf(productList.size()));
+
         binding.offerCountTv.setText(String.valueOf(productList.size()));
 
     }
@@ -138,96 +141,29 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
     }
 
 
-    public void searchBarcode(int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
-
-        productList.clear();
-        binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
-        binding.dataLY.setVisibility(View.GONE);
-        binding.noDataLY.noDataLY.setVisibility(View.GONE);
-        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-
-        new DataFeacher(false, (obj, func, IsSuccess) -> {
-            FavouriteResultModel result = (FavouriteResultModel) obj;
-            String message = getActiviy().getString(R.string.fail_to_get_data);
-
-            binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
-
-            if (func.equals(Constants.ERROR)) {
-
-                if (result.getMessage() != null) {
-                    message = result.getMessage();
-                }
-                binding.dataLY.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(message);
-
-            } else if (func.equals(Constants.FAIL)) {
-
-                binding.dataLY.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(message);
-
-
-            } else {
-                if (IsSuccess) {
-                    if (result.getData() != null && result.getData().size() > 0) {
-
-                        binding.dataLY.setVisibility(View.VISIBLE);
-                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-                        productList = result.getData();
-                        Log.i(TAG, "Log productList" + productList.size());
-                        initAdapter();
-
-
-                    } else {
-
-                        binding.dataLY.setVisibility(View.GONE);
-                        binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
-
-                    }
-
-
-                } else {
-
-                    binding.dataLY.setVisibility(View.GONE);
-                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                    binding.failGetDataLY.failTxt.setText(message);
-
-
-                }
-            }
-
-        }).barcodeSearch(country_id, city_id, user_id, filter, page_number, page_size);
-    }
-
-
-    private void showLoginDialog() {
-        checkLoginDialog = new CheckLoginDialog(getActiviy(), R.string.please_login, R.string.text_login_login, R.string.register, null, null);
-        checkLoginDialog.show();
-    }
-
-
     private void getIntentExtra() {
         Bundle bundle = getIntent().getExtras();
 
         if (bundle != null) {
 
             mainCategoryDMS = (ArrayList<CategoryModel>) bundle.getSerializable(Constants.CAT_LIST);
-            selectedCat = bundle.getInt(Constants.SELECTED_POSITION, 0);
+            category_id = bundle.getInt(Constants.SELECTED_POSITION, 0);
             CategoryModel categoryModel = (CategoryModel) bundle.getSerializable(Constants.CAT_MODEL);
+            int position = bundle.getInt(Constants.position, 0);
 
-            subCategoryDMS = mainCategoryDMS;
-            selectedSubCat = subCategoryDMS.get(0).getChildCat().get(0).getId();
+            ChildCat childCat=new ChildCat();
+            childCat.setId(0);
+            childCat.setHName(getString(R.string.all));
+            childCat.setName(getString(R.string.all));
+
+            subCategoryDMS = mainCategoryDMS.get(position).getChildCat();
+
+            subCategoryDMS.add(0, childCat);
 
             initMainCategoryAdapter();
-            initSubCategoryAdapter();
 
+            initSubCategoryAdapter();
             category_id = categoryModel.getId();
-            selectedCat = categoryModel.getId();
 
             getProductList(category_id, country_id, city_id, user_id, "", 0, 10);
 
@@ -236,27 +172,27 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
 
 
     private void initSubCategoryAdapter() {
-        // TODO: init Category Data Adapter
+
         SubCategoryAdapter subCategoryAdapter = new SubCategoryAdapter(getActiviy(), subCategoryDMS, object -> {
 
-        }, 241);
+            category_id = object.getId();
+            getProductList(category_id, country_id, city_id, user_id, "", 0, 10);
+
+
+        }, selectedSubCat);
 
         binding.listSubCategory.setAdapter(subCategoryAdapter);
 
     }
 
     private void initMainCategoryAdapter() {
-        MainCategoryAdapter mainCategoryShopAdapter = new MainCategoryAdapter(getActiviy(), mainCategoryDMS, this, selectedCat);
+        MainCategoryAdapter mainCategoryShopAdapter = new MainCategoryAdapter(getActiviy(), mainCategoryDMS, this, category_id);
         binding.listShopCategories.setAdapter(mainCategoryShopAdapter);
     }
 
 
-    @Override
-    public void OnMainCategoryItemClicked(CategoryModel mainCategoryDM) {
-
-    }
-
     public void getProductList(int category_id, int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
+        productList.clear();
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -317,5 +253,20 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
             }
 
         }).getCatProductList(category_id, country_id, city_id, user_id, filter, page_number, page_size);
+    }
+
+    @Override
+    public void OnMainCategoryItemClicked(CategoryModel mainCategoryDM, int position) {
+
+        category_id = mainCategoryDM.getId();
+        subCategoryDMS.clear();
+
+        subCategoryDMS = mainCategoryDMS.get(position).getChildCat();
+        selectedSubCat = mainCategoryDMS.get(position).getChildCat().get(0).getId();
+
+        getProductList(category_id, country_id, city_id, user_id, "", 0, 10);
+        initSubCategoryAdapter();
+
+
     }
 }

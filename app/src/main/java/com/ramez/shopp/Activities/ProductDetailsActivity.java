@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -99,7 +100,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
     public void initAdapter() {
 
-        productOfferAdapter = new SuggestedProductAdapter(getActiviy(), this, productList, productList.size());
+        productOfferAdapter = new SuggestedProductAdapter(getActiviy(), productList,this, productList.size());
         binding.offerRecycler.setAdapter(productOfferAdapter);
 
         productSliderAdapter = new ProductSliderAdapter(this, sliderList);
@@ -111,9 +112,11 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
     @Override
     public void onItemClicked(int position, ProductModel productModel) {
+        Intent intent = new Intent(getActiviy(), ProductDetailsActivity.class);
+        intent.putExtra(Constants.DB_productModel, productModel);
+       startActivity(intent);
 
     }
-
 
     @SuppressLint("SetTextI18n")
     public void getSingleProduct(int country_id, int city_id, int product_id, String user_id) {

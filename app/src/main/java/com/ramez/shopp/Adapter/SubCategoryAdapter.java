@@ -20,11 +20,11 @@ import java.util.ArrayList;
 public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.Holder> {
 
     private Context context;
-    private ArrayList<CategoryModel> mainCategoryDMS;
+    private ArrayList<ChildCat> mainCategoryDMS;
     private OnSubCategoryItemClicked onSubCategoryItemClicked;
     private int selectedPosition;
 
-    public SubCategoryAdapter(Context context, ArrayList<CategoryModel> mainCategoryDMS,
+    public SubCategoryAdapter(Context context, ArrayList<ChildCat> mainCategoryDMS,
                               OnSubCategoryItemClicked onSubCategoryItemClicked, int selectedPosition) {
         this.context = context;
         this.mainCategoryDMS = mainCategoryDMS;
@@ -43,7 +43,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
 
     @Override
     public void onBindViewHolder(final Holder holder, int position) {
-        ChildCat subCategoryDM = mainCategoryDMS.get(position).getChildCat().get(position);
+        ChildCat subCategoryDM = mainCategoryDMS.get(position);
 
         holder.buttonCategory.setText(subCategoryDM.getCatName());
 
@@ -53,6 +53,12 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
             holder.buttonCategory.setBackgroundResource(R.drawable.shape_selected_category);
 
         }
+
+//        else if (subCategoryDM.getId() == 0) {
+//            holder.buttonCategory.setTextColor(context.getResources().getColor(R.color.white));
+//            holder.buttonCategory.setBackgroundResource(R.drawable.shape_selected_category);
+//
+//        }
 
         else {
             holder.buttonCategory.setTextColor(context.getResources().getColor(R.color.black));
@@ -77,7 +83,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
 
             buttonCategory.setOnClickListener(v -> {
                 int position=getAdapterPosition();
-                ChildCat subCategoryDM = mainCategoryDMS.get(position).getChildCat().get(position);
+                ChildCat subCategoryDM = mainCategoryDMS.get(position);
                 onSubCategoryItemClicked.onItemClicked(subCategoryDM);
                 notifyDataSetChanged();
                 selectedPosition = subCategoryDM.getId();

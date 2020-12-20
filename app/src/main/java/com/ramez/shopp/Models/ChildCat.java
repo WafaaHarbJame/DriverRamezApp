@@ -7,6 +7,7 @@ import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChildCat implements Serializable {
@@ -28,7 +29,7 @@ public class ChildCat implements Serializable {
     private Integer parentId;
     @SerializedName("child_cat")
     @Expose
-    private List<CategoryModel> childCat = null;
+    private ArrayList<ChildCat> childCat = null;
 
     public Integer getId() {
         return id;
@@ -70,11 +71,11 @@ public class ChildCat implements Serializable {
         this.parentId = parentId;
     }
 
-    public List<CategoryModel> getChildCat() {
+    public ArrayList<ChildCat> getChildCat() {
         return childCat;
     }
 
-    public void setChildCat(List<CategoryModel> childCat) {
+    public void setChildCat(ArrayList<ChildCat> childCat) {
         this.childCat = childCat;
     }
 
