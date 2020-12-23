@@ -1,31 +1,39 @@
 package com.ramez.shopp.Activities;
 
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.ramez.shopp.Adapter.MyOrdersAdapter;
+import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Fragments.CurrentOrderFragment;
+import com.ramez.shopp.Fragments.PastOrderFragment;
+import com.ramez.shopp.Models.FavouriteResultModel;
+import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.OrdersHeaderModel;
 import com.ramez.shopp.Models.OrdersModel;
+import com.ramez.shopp.Models.OrdersResultModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.ActivityMyOrderBinding;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static android.content.ContentValues.TAG;
 
 public class MyOrderActivity extends ActivityBase {
     ActivityMyOrderBinding binding;
-
-    List<OrdersModel> currentOrdersList;
-    List<OrdersModel> completedOrdersList;
-    LinearLayoutManager linearLayoutManager;
-    boolean isCurrentLoading = false, isFinishedLoading = false;
-    private List ordersDMS;
-    private MyOrdersAdapter myOrdersAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,70 +42,67 @@ public class MyOrderActivity extends ActivityBase {
         View view = binding.getRoot();
         setContentView(view);
 
-        if (!UtilityApp.isLogin()) {
-            Intent intent = new Intent(getActiviy(), RegisterLoginActivity.class);
-            intent.putExtra(Constants.LOGIN, true);
-            startActivity(intent);
-            finish();
-        } else {
 
-            ordersDMS = new ArrayList<>();
-            currentOrdersList = new ArrayList<>();
-            completedOrdersList = new ArrayList<>();
 
-            binding.toolBar.mainTitleTxt.setText(getString(R.string.my_order));
+        binding.toolBar.mainTitleTxt.setText(getString(R.string.my_order));
 
-            binding.toolBar.backBtn.setOnClickListener(view1 -> {
-                onBackPressed();
-            });
 
-            linearLayoutManager = new LinearLayoutManager(getActiviy());
 
-            binding.myOrderRecycler.setLayoutManager(linearLayoutManager);
+        binding.toolBar.backBtn.setOnClickListener(view1 -> {
+            onBackPressed();
+        });
 
-            initOrdersList();
 
+        binding.viewPager.setAdapter(new MyViewPagerAdapter(getSupportFragmentManager()));
+        binding.tabs.setupWithViewPager(binding.viewPager);
+        binding.tabs.setTabTextColors(ContextCompat.getColor(getActiviy(), R.color.black),
+                ContextCompat.getColor(getActiviy(), R.color.white));
+
+
+    }
+
+
+
+
+
+    class MyViewPagerAdapter extends FragmentStatePagerAdapter {
+
+        public MyViewPagerAdapter(FragmentManager fm) {
+            super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         }
 
+        @Override
+        public Fragment getItem(int position) {
+
+            switch (position) {
+
+                case 0:
+                    Fragment newFragment = new CurrentOrderFragment();
+                    return newFragment;
+                case 1:
+                    Fragment oldFragment = new PastOrderFragment();
+                    return oldFragment;
+
+                default:
+                    return CurrentOrderFragment.newInstance(position);
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            if (position == 0) return getString(R.string.current_orders);
+            else if (position == 1) return getString(R.string.complete_request);
+            else return "";
+        }
     }
 
 
-    private void initOrdersAdapters() {
-
-        myOrdersAdapter = new MyOrdersAdapter(getActiviy(), binding.myOrderRecycler, ordersDMS, 2);
-        binding.myOrderRecycler.setAdapter(myOrdersAdapter);
 
 
-    }
 
-    private void initOrdersList() {
-        ordersDMS.clear();
-        currentOrdersList.add(new OrdersModel(1, getString(R.string.krof), "", "2020-11-29 22:27:14", "122", "wait", "45.555", "49,00", "market"));
-
-        currentOrdersList.add(new OrdersModel(1, getString(R.string.krof), "", "2020-11-29 22:27:14", "122", "wait", "45.555", "49,00", "market"));
-
-        currentOrdersList.add(new OrdersModel(1, getString(R.string.krof), "", "2020-11-29 22:27:14", "122", "waiting", "45.555", "49,00", "market"));
-
-        currentOrdersList.add(new OrdersModel(1, getString(R.string.krof), "", "2020-11-29 22:27:14", "122", "waiting", "45.555", "49,00", "market"));
-
-
-        completedOrdersList.add(new OrdersModel(1, getString(R.string.krof), "", "2020-11-29 22:27:14", "122", "complete", "45.555", "49,00", "market"));
-
-        completedOrdersList.add(new OrdersModel(1, getString(R.string.krof), "", "2020-11-29 22:27:14", "122", "complete", "45.555", "49,00", "market"));
-
-        completedOrdersList.add(new OrdersModel(1, getString(R.string.krof), "", "2020-11-29 22:27:14", "122", "complete", "45.555", "49,00", "market"));
-
-        completedOrdersList.add(new OrdersModel(1, getString(R.string.krof), "", "2020-11-29 22:27:14", "122", "complete", "45.555", "49,00", "market"));
-
-        ordersDMS.add(new OrdersHeaderModel(getString(R.string.current_orders), currentOrdersList.size()));
-        ordersDMS.addAll(currentOrdersList);
-
-        ordersDMS.add(new OrdersHeaderModel(getString(R.string.complete_request), completedOrdersList.size()));
-        ordersDMS.addAll(completedOrdersList);
-
-        initOrdersAdapters();
-
-        myOrdersAdapter.notifyDataSetChanged();
-
-    }
 }
