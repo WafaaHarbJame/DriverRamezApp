@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
     android:orientation="horizontal"
-    android:paddingEnd="@dimen/_5sdp"
+    android:layout_margin="@dimen/_2sdp"
+    android:elevation="@dimen/_4sdp"
+    app:cardCornerRadius="@dimen/_8sdp"
+    app:cardUseCompatPadding="true"
+    app:cardBackgroundColor="@color/white"
     android:layout_height="wrap_content">
 
 
@@ -14,9 +19,8 @@
         android:paddingBottom="@dimen/_8sdp"
         android:paddingTop="@dimen/_8sdp"
         android:paddingEnd="@dimen/_8sdp"
-        android:background="@drawable/round_corner_white_welcom"
-        android:backgroundTint="@color/gray"
         android:paddingStart="@dimen/_8sdp"
+        android:textColor="@color/black"
         android:text="Sub item title"/>
 
-</LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -11,4 +11,5 @@ public class ResultAPIModel<T> {
     public ErrorModel error;
     public String message;
 
+
 }

@@ -1,8 +1,8 @@
 package com.ramez.shopp.Fragments;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +10,9 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.google.gson.Gson;
 import com.ramez.shopp.Activities.AddCardActivity;
-import com.ramez.shopp.Activities.TermsActivity;
 import com.ramez.shopp.Adapter.CartAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.CartModel;
@@ -24,8 +21,8 @@ import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Dialogs.EmptyCartDialog;
+import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.CartResultModel;
-import com.ramez.shopp.Models.CategoryResultModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.R;
@@ -46,12 +43,13 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
     int storeId, userId;
     MemberModel user;
     LocalModel localModel;
+    boolean isLogin = false;
+    int productsSize;
+    String total;
     private FragmentCartBinding binding;
     private CartAdapter cartAdapter;
     private EmptyCartDialog emptyCartDialog;
     private CheckLoginDialog checkLoginDialog;
-    boolean isLogin = false;
-
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCartBinding.inflate(inflater, container, false);
@@ -70,25 +68,33 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
             binding.cartContainer.setVisibility(View.GONE);
             binding.contBut.setVisibility(View.GONE);
             showLoginDialog();
+        } else {
+            storeId = Integer.parseInt(localModel.getCityId());
+            userId = user.getId();
+
+            linearLayoutManager = new LinearLayoutManager(getActivityy());
+            binding.cartRecycler.setLayoutManager(linearLayoutManager);
+            binding.cartRecycler.setHasFixedSize(true);
+
+            binding.contBut.setOnClickListener(view1 -> {
+
+                EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_invoice));
+                FragmentManager fragmentManager = getParentFragmentManager();
+
+                InvoiceFragment invoiceFragment = new InvoiceFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt(Constants.CART_PRODUCT_COUNT, productsSize);
+                bundle.putString(Constants.CART_SUM, total);
+                bundle.putSerializable(Constants.CART_LIST, cartList);
+                invoiceFragment.setArguments(bundle);
+
+                fragmentManager.beginTransaction().replace(R.id.mainContainer, invoiceFragment, "InvoiceFragment").commit();
+
+            });
+
+
+            getCarts(storeId, userId);
         }
-        else {
-        storeId = Integer.parseInt(localModel.getCityId());
-        userId = user.getId();
-
-        linearLayoutManager = new LinearLayoutManager(getActivityy());
-        binding.cartRecycler.setLayoutManager(linearLayoutManager);
-        binding.cartRecycler.setHasFixedSize(true);
-
-        binding.contBut.setOnClickListener(view1 -> {
-            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_invoice));
-            FragmentManager fragmentManager = getParentFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.mainContainer, new InvoiceFragment(), "InvoiceFragment").commit();
-
-        });
-
-
-        getCarts(storeId, userId);
-    }
 
         return view;
 
@@ -111,6 +117,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
     }
 
     public void getCarts(int storeId, int userId) {
+        cartList.clear();
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -153,8 +160,10 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
                         initAdapter();
 
                         if (cartList.size() > 0) {
-                            binding.productsSizeTv.setText(String.valueOf(cartList.size()));
-                            binding.totalTv.setText(NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction).concat(" " + currency));
+                            productsSize = cartList.size();
+                            binding.productsSizeTv.setText(String.valueOf(productsSize));
+                            total = NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction);
+                            binding.totalTv.setText(total.concat(" " + currency));
                             binding.productCostTv.setText(NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction).concat(" " + currency));
                         }
 
@@ -182,7 +191,17 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
     }
 
     private void showEmptyCartDialog() {
-        emptyCartDialog = new EmptyCartDialog(getActivityy(), R.string.please_login, R.string.text_login_login, R.string.register, null, null);
+        EmptyCartDialog.Click okClick = new EmptyCartDialog.Click() {
+            @Override
+            public void click() {
+                EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_main));
+
+                Intent intent = new Intent(getActivityy(), MainActivity.class);
+                intent.putExtra(Constants.CART, true);
+                startActivity(intent);
+            }
+        };
+        emptyCartDialog = new EmptyCartDialog(getActivityy(), R.string.please_login, R.string.text_login_login, R.string.register, okClick, null);
         emptyCartDialog.show();
     }
 

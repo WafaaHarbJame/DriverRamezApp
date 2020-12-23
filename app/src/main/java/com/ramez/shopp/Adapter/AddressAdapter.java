@@ -33,15 +33,17 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Holder> 
     private List<AddressModel> addressModelList;
     private OnRadioAddressSelect onRadioAddressSelect;
     private OnDeleteClicked onDeleteClicked;
+    private OnContainerSelect onContainerSelect;
 
 
 
     public AddressAdapter(Context context, List<AddressModel> addressModelList,
-                          OnRadioAddressSelect onRadioAddressSelect, OnDeleteClicked onDeleteClicked) {
+                          OnRadioAddressSelect onRadioAddressSelect, OnDeleteClicked onDeleteClicked,OnContainerSelect OnContainerSelect) {
         this.context = context;
         this.addressModelList = addressModelList;
         this.onRadioAddressSelect = onRadioAddressSelect;
         this.onDeleteClicked = onDeleteClicked;
+        this.onContainerSelect=OnContainerSelect;
     }
 
     @NonNull
@@ -100,12 +102,8 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Holder> 
             binding = view;
 
             binding.container.setOnClickListener(view1 -> {
-                int position=getAdapterPosition();
-                AddressModel addressModel=addressModelList.get(position);
-                Intent intent=new Intent(context, AddNewAddressActivity.class);
-                intent.putExtra(Constants.KEY_EDIT,true);
-                intent.putExtra(Constants.KEY_ADDRESS_ID,addressModel.getId());
-                context.startActivity(intent);
+                AddressModel addressModel=addressModelList.get(getAdapterPosition());
+              onContainerSelect.onContainerSelectSelected(addressModel);
 
             });
 
@@ -114,13 +112,15 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Holder> 
 
     }
 
+    public interface OnContainerSelect {
+        void onContainerSelectSelected(AddressModel addressesDM);
+    }
+
+
     public interface OnRadioAddressSelect {
         void onAddressSelected(AddressModel addressesDM);
     }
 
-    public interface OnEditClicked {
-        void onEditClicked(AddressModel addressModel, boolean isChecked);
-    }
 
     public interface OnDeleteClicked {
         void onDeleteClicked(AddressModel addressModel, boolean isChecked);

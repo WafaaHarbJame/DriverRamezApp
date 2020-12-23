@@ -45,22 +45,7 @@ public class MainActivity extends ActivityBase {
 
         binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_clicked));
 
-
-//        if (getIntent().getExtras().getBoolean(Constants.CART, false)) {
-//
-//
-//        }
-
-        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.mainContainer);
-        if (currentFragment instanceof CartFragment) {
-            binding.toolBar.mainTitleTxt.setText(getString(R.string.cart));
-
-        }
-        if (currentFragment instanceof InvoiceFragment) {
-            binding.toolBar.mainTitleTxt.setText(getString(R.string.cart));
-
-        }
-
+        getIntentExtra();
 
         binding.homeButn.setOnClickListener(view1 -> {
             binding.toolBar.mainTitleTxt.setText(getString(R.string.string_menu_home));
@@ -120,6 +105,9 @@ public class MainActivity extends ActivityBase {
 
         });
 
+
+
+
     }
 
 
@@ -150,11 +138,47 @@ public class MainActivity extends ActivityBase {
 
             });
 
-        } else {
+        }
+
+        if (event.type.equals(MessageEvent.TYPE_main)) {
+            binding.toolBar.mainTitleTxt.setText(getString(R.string.string_menu_home));
+            binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_clicked));
+            binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.category_icon));
+            binding.cartBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.cart_icon_before));
+            binding.offerBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.offer_icon));
+            binding.myAccountBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.myaccount_icon));
+            getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
+
+
+        }
+
+        else {
             binding.toolBar.backBtn.setVisibility(View.GONE);
 
         }
 
+    }
+
+    private void getIntentExtra() {
+        Bundle bundle = getIntent().getExtras();
+
+        if(bundle!=null){
+            boolean TO_CART=getIntent().getBooleanExtra(Constants.CART,false);
+
+            if (TO_CART) {
+                binding.toolBar.mainTitleTxt.setText(getString(R.string.string_menu_home));
+                binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_clicked));
+                binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.category_icon));
+                binding.cartBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.cart_icon_before));
+                binding.offerBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.offer_icon));
+                binding.myAccountBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.myaccount_icon));
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
+
+
+            }
+
+
+        }
     }
 
 

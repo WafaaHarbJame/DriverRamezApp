@@ -261,5 +261,15 @@
     <string name="success_update">Succes Update</string>
     <string name="please_wait_to_upload_photo">Please wait to upload Photo</string>
     <string name="categories">categories</string>
+    <string name="all">All</string>
+    <string name="choose_time">Choose Time</string>
+    <string name="choose_day">Choose Day</string>
+    <string name="make_order">Make Order</string>
+    <string name="fail_to_send_order">Fail To send Order</string>
+    <string name="sending_order">Sendin Order Succes</string>
+    <string name="textEmptyOrders">No orders found</string>
+    <string name="textNoXadoxOrder">You have not ordered products from Ramez yet</string>
+    <string name="textStartShopping">Start Shopping</string>
+    <string name="order_now">order Now</string>
 
 </resources>

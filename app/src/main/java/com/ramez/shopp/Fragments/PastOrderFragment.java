@@ -1,94 +1,77 @@
-package com.ramez.shopp.Activities;
+package com.ramez.shopp.Fragments;
 
-import androidx.recyclerview.widget.GridLayoutManager;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
-import com.ramez.shopp.Adapter.ProductAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.ramez.shopp.Adapter.MyOrdersAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
-import com.ramez.shopp.Models.FavouriteResultModel;
-import com.ramez.shopp.Models.LocalModel;
-import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.MemberModel;
-import com.ramez.shopp.Models.ProductModel;
+import com.ramez.shopp.Models.OrdersHeaderModel;
+import com.ramez.shopp.Models.OrdersModel;
+import com.ramez.shopp.Models.OrdersResultModel;
 import com.ramez.shopp.R;
-import com.ramez.shopp.databinding.ActivityFavoriteBinding;
+import com.ramez.shopp.databinding.FragmentCurrentOrderBinding;
+import com.ramez.shopp.databinding.FragmentPastOrderBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
-public class FavoriteActivity extends ActivityBase implements ProductAdapter.OnItemClick {
-    ActivityFavoriteBinding binding;
-    ArrayList<ProductModel> productList;
-    private ProductAdapter productFavAdapter;
-    private GridLayoutManager gridLayoutManager;
-    private int category_id = 0, country_id, city_id;
-    private String user_id, filter;
+
+public class PastOrderFragment extends FragmentBase {
+    ArrayList<OrdersModel> completedOrdersList;
+    LinearLayoutManager linearLayoutManager;
+    boolean showLoading = true;
+    private FragmentPastOrderBinding binding;
+    private MyOrdersAdapter myOrdersAdapter;
     private MemberModel user;
-    private LocalModel localModel;
+    private int user_id;
+    private List ordersDMS;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = ActivityFavoriteBinding.inflate(getLayoutInflater());
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentPastOrderBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        setContentView(view);
+
+        completedOrdersList = new ArrayList<>();
+        ordersDMS = new ArrayList<>();
+
+        linearLayoutManager = new LinearLayoutManager(getActivity());
+        binding.myOrderRecycler.setLayoutManager(linearLayoutManager);
 
         user = UtilityApp.getUserData();
-        user_id = String.valueOf(UtilityApp.getUserData().getId());
+        user_id = UtilityApp.getUserData().getId();
 
+        getPastOrder(user_id);
 
-        productList = new ArrayList<>();
-
-        gridLayoutManager = new GridLayoutManager(getActiviy(), 2);
-
-        binding.favoriteRecycler.setLayoutManager(gridLayoutManager);
-        filter = Constants.favourite_filter;
-
-
-        localModel = UtilityApp.getLocalData();
-
-
-        binding.toolBar.mainTitleTxt.setText(getString(R.string.fav_products));
-
-        binding.toolBar.backBtn.setOnClickListener(view1 -> {
-            onBackPressed();
+        binding.swipe.setOnRefreshListener(() -> {
+            getPastOrder(user_id);
+            binding.swipe.setRefreshing(false);
         });
 
-        country_id = localModel.getCountryId();
-        city_id = Integer.parseInt(localModel.getCityId());
 
-        getFavoriteProducts(category_id, country_id, city_id, "14", filter, 0, 10);
-
-
+        return view;
     }
 
-    @Override
-    public void onItemClicked(int position, ProductModel productModel) {
+    public void getPastOrder(int user_id) {
 
-    }
+        completedOrdersList.clear();
 
-    public void initAdapter() {
-
-        productFavAdapter = new ProductAdapter(getActiviy(), productList, this, productList.size());
-        binding.favoriteRecycler.setAdapter(productFavAdapter);
-    }
-
-
-    public void getFavoriteProducts(int category_id, int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            FavouriteResultModel result = (FavouriteResultModel) obj;
+            OrdersResultModel result = (OrdersResultModel) obj;
             String message = getString(R.string.fail_to_get_data);
 
             binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
@@ -118,9 +101,10 @@ public class FavoriteActivity extends ActivityBase implements ProductAdapter.OnI
                         binding.dataLY.setVisibility(View.VISIBLE);
                         binding.noDataLY.noDataLY.setVisibility(View.GONE);
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-                        productList = result.getData();
-                        Log.i(TAG, "Log productList" + productList.size());
-                        initAdapter();
+                        removeDuplicate(result.getData());
+
+                        Log.i(TAG, "Log ordersDMS" + ordersDMS.size());
+
 
                     } else {
 
@@ -141,6 +125,34 @@ public class FavoriteActivity extends ActivityBase implements ProductAdapter.OnI
                 }
             }
 
-        }).getFavorite(category_id, country_id, city_id, user_id, filter, page_number, page_size);
+        }).getPastOrders(user_id);
     }
+
+
+
+    private void initOrdersAdapters() {
+
+        myOrdersAdapter = new MyOrdersAdapter(getActivity(), binding.myOrderRecycler, completedOrdersList, user_id);
+        binding.myOrderRecycler.setAdapter(myOrdersAdapter);
+
+
+    }
+
+    private void removeDuplicate(ArrayList<OrdersModel> data) {
+        for (int i = 0; i < data.size(); i++) {
+            for (int j = i + 1; j < data.size(); j++) {
+                if (data.get(i).getOrderCode().equals(data.get(j).getOrderCode())) {
+                    data.remove(j);
+                    j--;
+                }
+            }
+        }
+
+        if (data.size() > 0) {
+            completedOrdersList = data;
+
+        }
+        initOrdersAdapters();
+    }
+
 }

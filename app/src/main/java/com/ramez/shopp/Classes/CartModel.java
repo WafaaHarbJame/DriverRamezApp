@@ -3,7 +3,9 @@ package com.ramez.shopp.Classes;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CartModel {
+import java.io.Serializable;
+
+public class CartModel implements Serializable {
     @SerializedName("id")
     @Expose
     private Integer id;

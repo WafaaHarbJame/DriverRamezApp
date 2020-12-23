@@ -22,7 +22,7 @@ public class EmptyCartDialog extends Dialog {
     Activity activity;
     TextView yesBtn, noBtn,closeBtn;
 
-    public EmptyCartDialog(Context context, int message, int okStr, int cancelStr, final ConfirmDialog.Click okCall, final ConfirmDialog.Click cancelCall) {
+    public EmptyCartDialog(Context context, int message, int okStr, int cancelStr, final Click okCall, final ConfirmDialog.Click cancelCall) {
         super(context);
 
         activity = (Activity) context;
@@ -39,6 +39,19 @@ public class EmptyCartDialog extends Dialog {
         noBtn = findViewById(R.id.noBtn);
         closeBtn = findViewById(R.id.closeBtn);
 
+
+        yesBtn.setOnClickListener(view -> {
+            if (okCall != null)
+                okCall.click();
+            dismiss();
+        });
+        noBtn.setOnClickListener(view -> {
+            if (cancelCall != null)
+                cancelCall.click();
+            dismiss();
+        });
+
+
         try {
             if (activity != null && !activity.isFinishing())
                 show();
@@ -46,16 +59,7 @@ public class EmptyCartDialog extends Dialog {
             dismiss();
         }
 
-        yesBtn.setOnClickListener(view -> {
-            Intent intent = new Intent(context, MainActivity.class);
-            intent.putExtra(Constants.CART, true);
-            context.startActivity(intent);
 
-
-        });
-        noBtn.setOnClickListener(view -> {
-            dismiss();
-        });
 
         closeBtn.setOnClickListener(view -> {
             dismiss();
@@ -68,5 +72,8 @@ public class EmptyCartDialog extends Dialog {
 
     }
 
+    public static abstract class Click {
+        public abstract void click();
+    }
 
 }

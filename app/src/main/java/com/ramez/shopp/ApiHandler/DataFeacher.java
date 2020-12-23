@@ -11,6 +11,7 @@ import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.AddressModel;
 import com.ramez.shopp.Models.MemberModel;
+import com.ramez.shopp.Models.OrderCall;
 import com.ramez.shopp.Models.ResultAPIModel;
 
 import java.io.File;
@@ -686,6 +687,74 @@ public class DataFeacher {
         Log.i(TAG, "Log page_size " + page_size);
 
         Call call = apiService.getCatProductList(headerMap, category_id, country_id, city_id, user_id, filter, page_number, page_size);
+        call.enqueue(callbackApi);
+    }
+
+
+    public void getPastOrders(int  user_id) {
+
+        Log.i(TAG, "Log getPastOrders");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log user_id " + user_id);
+
+        Call call = apiService.getPastOrders(headerMap, user_id);
+        call.enqueue(callbackApi);
+    }
+
+    public void getUpcomingOrders(int  user_id) {
+
+        Log.i(TAG, "Log getUpcomingOrders");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log user_id " + user_id);
+
+        Call call = apiService.getUpcomingOrders(headerMap, user_id);
+        call.enqueue(callbackApi);
+    }
+
+    public void getPaymentMethod(int  sotre_id) {
+
+        Log.i(TAG, "Log getPaymentMethod");
+
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log sotre_id " + sotre_id);
+
+        Call call = apiService.getPaymentMethod(headerMap, sotre_id);
+        call.enqueue(callbackApi);
+    }
+
+
+    public void getDeliveryTimeList(int  sotre_id) {
+
+        Log.i(TAG, "Log getDeliveryTimeList");
+
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log sotre_id " + sotre_id);
+
+        Call call = apiService.getDeliveryTimeList(headerMap, sotre_id);
+        call.enqueue(callbackApi);
+    }
+
+    public void makeOrder(OrderCall  orderCalls) {
+        OrderCall orderCall=new OrderCall();
+        orderCall.user_id=orderCalls.user_id;
+        orderCall.store_ID=orderCalls.store_ID;
+        orderCall.address_id=orderCalls.address_id;
+        orderCall.payment_method=orderCalls.payment_method;
+        orderCall.coupon_code_id=orderCalls.coupon_code_id;
+        orderCall.delivery_date_id=orderCalls.delivery_date_id;
+        orderCall.expressDelivery=orderCalls.expressDelivery;
+
+        Log.i(TAG, "Log makeOrder");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log user_id " + orderCalls.user_id);
+        Log.i(TAG, "Log store_ID " + orderCalls.store_ID);
+        Log.i(TAG, "Log addressId " + orderCalls.address_id);
+        Log.i(TAG, "Log payment_method " + orderCalls.payment_method);
+        Log.i(TAG, "Log coupon_code_id " + orderCalls.coupon_code_id);
+        Log.i(TAG, "Log delivery_date_id " + orderCalls.delivery_date_id);
+        Log.i(TAG, "Log expressDelivery " + orderCalls.expressDelivery);
+
+        Call call = apiService.makeOrder(headerMap, orderCall);
         call.enqueue(callbackApi);
     }
 

@@ -2,6 +2,7 @@ package com.ramez.shopp.Classes;
 public class MessageEvent {
 
     public static final String TYPE_invoice = "invoice";
+    public static final String TYPE_main = "main";
 
     //    public int PagerPosition;
     public Object data;

@@ -65,9 +65,9 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
         currency = UtilityApp.getLocalData().getCurrencyCode();
 
         int quantity = cartDM.getQuantity();
+        holder.binding.weightUnitTv.setText(cartDM.getWeightUnit());
         if (quantity > 0) {
             holder.binding.productCartQTY.setText(String.valueOf(quantity));
-            holder.binding.quantityTv.setText(String.valueOf(quantity));
 
             if (quantity == 1) {
                 holder.binding.deleteCartBtn.setVisibility(View.VISIBLE);
@@ -95,11 +95,21 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
 
         if (cartDM.getProductPrice() > 0) {
+            double subTotal=0;
+            if(cartDM.getSpecialPrice()==0){
+                holder.binding.priceTv.setText(cartDM.getProductPrice().toString());
+                 subTotal = cartDM.getProductPrice() * cartDM.getQuantity();
+
+
+            }
+            else {
+                holder.binding.priceTv.setText(cartDM.getSpecialPrice().toString());
+                 subTotal = cartDM.getSpecialPrice() * cartDM.getQuantity();
+
+            }
+
             holder.binding.totalTv.setVisibility(View.VISIBLE);
             holder.binding.priceTv.setVisibility(View.VISIBLE);
-            double subTotal = cartDM.getProductPrice() * cartDM.getQuantity();
-            holder.binding.priceTv.setText(cartDM.getProductPrice().toString());
-            Log.d("proImage", "cart proImage: " + cartDM.getImage());
             holder.binding.totalTv.setText(NumberHandler.formatDouble(subTotal, UtilityApp.getLocalData().getFractional()) + " " + currency);
             Glide.with(context).load(cartDM.getImage()).placeholder(R.drawable.holder_image).into(holder.binding.imageView1);
 

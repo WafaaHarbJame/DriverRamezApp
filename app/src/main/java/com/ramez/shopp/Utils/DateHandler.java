@@ -801,4 +801,16 @@ public class DateHandler {
         }
         return stringDate;
     }
+
+    public static String GetTimeString(Date d, String lang) {
+
+
+        DateFormat parser = new SimpleDateFormat("hh:mm aa", new Locale(lang));
+        try {
+            return parser.format(d);
+        } catch (Exception e) {
+
+        }
+        return "";
+    }
 }

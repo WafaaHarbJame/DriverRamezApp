@@ -2,6 +2,7 @@ package com.ramez.shopp.Activities;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,7 @@ import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.OtpModel;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Fragments.InvoiceFragment;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.AddressModel;
 import com.ramez.shopp.Models.AddressResultModel;
@@ -23,13 +25,14 @@ import com.ramez.shopp.databinding.ActivityAddressBinding;
 
 import java.util.ArrayList;
 
-public class AddressActivity extends ActivityBase implements AddressAdapter.OnRadioAddressSelect,AddressAdapter.OnDeleteClicked {
+public class AddressActivity extends ActivityBase implements AddressAdapter.OnRadioAddressSelect,AddressAdapter.OnContainerSelect,AddressAdapter.OnDeleteClicked {
     ActivityAddressBinding binding;
     private AddressAdapter addressAdapter;
     ArrayList<AddressModel> addressList;
     private LinearLayoutManager linearLayoutManager;
     private int defaultAddressId;
     private MemberModel user;
+    boolean deliveryChoose;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,15 +41,6 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
         View view = binding.getRoot();
         setContentView(view);
 
-
-        if (!UtilityApp.isLogin()) {
-            Intent intent = new Intent(getActiviy(), RegisterLoginActivity.class);
-            intent.putExtra(Constants.LOGIN, true);
-            startActivity(intent);
-            finish();
-        }
-
-        else {
         user = UtilityApp.getUserData();
 
         binding.toolBar.mainTitleTxt.setText(R.string.address);
@@ -59,13 +53,19 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
         linearLayoutManager = new LinearLayoutManager(getActiviy());
         binding.addressRecycler.setLayoutManager(linearLayoutManager);
 
+
         if (UtilityApp.isLogin()) {
             GetUserAddress(user.getId());
         }
 
+        getIntentExtra();
+
+
         binding.addNewAddressBut.setOnClickListener(view1 -> {
             addNewAddress();
         });
+
+
         binding.acceptBtu.setOnClickListener(view1 -> {
             user.setLastSelectedAddress(defaultAddressId);
             UtilityApp.setUserData(user);
@@ -76,13 +76,24 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
         });
 
 
+
+
     }
 
-}
+
 
     @Override
     public void onAddressSelected(AddressModel addressesDM) {
         defaultAddressId=addressesDM.getId();
+
+        if(deliveryChoose) {
+            Intent intent = new Intent(AddressActivity.this, InvoiceFragment.class);
+            intent.putExtra(Constants.ADDRESS_ID,addressesDM.getId());
+            intent.putExtra(Constants.ADDRESS_TITLE,addressesDM.getFullAddress());
+            setResult(Activity.RESULT_OK, intent);
+            finish();
+
+        }
 
 
     }
@@ -93,7 +104,7 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
     }
     public void initAdapter(){
 
-        addressAdapter=new AddressAdapter(getActiviy(),addressList,this,this);
+        addressAdapter=new AddressAdapter(getActiviy(),addressList,this,this,this);
         binding.addressRecycler.setAdapter(addressAdapter);
     }
     private void addNewAddress() {
@@ -143,5 +154,28 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
             }
 
         }).GetAddressHandle(user_id);
+    }
+
+    private void getIntentExtra() {
+        Bundle bundle = getIntent().getExtras();
+
+        if(bundle!=null){
+            deliveryChoose=bundle.getBoolean(Constants.delivery_choose,false);
+
+
+        }
+    }
+
+    @Override
+    public void onContainerSelectSelected(AddressModel addressesDM) {
+        if(deliveryChoose) {
+            Intent intent = new Intent(AddressActivity.this, InvoiceFragment.class);
+            intent.putExtra(Constants.ADDRESS_ID,addressesDM.getId());
+            intent.putExtra(Constants.ADDRESS_TITLE,addressesDM.getFullAddress());
+            setResult(Activity.RESULT_OK, intent);
+            finish();
+
+        }
+
     }
 }

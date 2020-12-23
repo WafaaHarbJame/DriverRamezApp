@@ -8,16 +8,24 @@ import com.ramez.shopp.Models.AreasResultModel;
 import com.ramez.shopp.Models.AutoCompeteResult;
 import com.ramez.shopp.Models.CartResultModel;
 import com.ramez.shopp.Models.CategoryResultModel;
+import com.ramez.shopp.Models.CityModel;
 import com.ramez.shopp.Models.CountryModelResult;
+import com.ramez.shopp.Models.DeliveryResultModel;
 import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.GeneralModel;
 import com.ramez.shopp.Models.LoginResultModel;
 import com.ramez.shopp.Models.MainModel;
+import com.ramez.shopp.Models.MakeOrder;
 import com.ramez.shopp.Models.MemberModel;
+import com.ramez.shopp.Models.OrderCall;
+import com.ramez.shopp.Models.OrdersResultModel;
+import com.ramez.shopp.Models.PaymentModel;
+import com.ramez.shopp.Models.PaymentResultModel;
 import com.ramez.shopp.Models.ProductDetailsModel;
 import com.ramez.shopp.Models.ProfileData;
 import com.ramez.shopp.Models.ResultAPIModel;
 
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.RequestBody;
@@ -143,6 +151,28 @@ ApiInterface {
 
     @GET("v3/Products/productList")
     Call<FavouriteResultModel> getCatProductList(@HeaderMap() Map<String, Object> headerParams, @Query("category_id") int category_id, @Query("country_id") int country_id, @Query("city_id") int city_id, @Query("user_id") String user_id, @Query("filter") String filter, @Query("page_number") int page_number, @Query("page_size") int page_size);
+
+
+    @GET("v3/Orders/getPastOrders")
+    Call<OrdersResultModel> getPastOrders(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id);
+
+    @GET("v3/Orders/getUpcomingOrders")
+    Call<OrdersResultModel> getUpcomingOrders(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id);
+
+    @GET("v3/Orders/GetOrderDelivery")
+    Call<OrdersResultModel> getOrderDelivery(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id);
+
+    @GET("v3/Orders/getPaymentMethod")
+    Call<PaymentResultModel> getPaymentMethod(@HeaderMap() Map<String, Object> headerParams, @Query("sotre_id")
+            int sotre_id);
+
+
+    @GET("v3/Orders/deliveryTimeList")
+    Call<DeliveryResultModel> getDeliveryTimeList(@HeaderMap() Map<String, Object> headerParams, @Query("sotre_id")
+            int sotre_id);
+
+    @POST("v3/Orders/CreateOrder")
+    Call<OrdersResultModel> makeOrder(@HeaderMap() Map<String, Object> headerParams, @Body OrderCall param);
 
 
     Call<ResultAPIModel<MemberModel>> updateProfilePost(@HeaderMap() Map<String, Object> headerParams, @Body RequestBody params);

@@ -1,44 +1,57 @@
 package com.ramez.shopp.Models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import com.ramez.shopp.Classes.UtilityApp;
 
 public class PaymentModel {
-    private int id;
-    private String name_ar;
-    private String name_en;
+    @SerializedName("id")
+    @Expose
+    private Integer id;
+    @SerializedName("shortname")
+    @Expose
+    private String shortname;
+    @SerializedName("method_en")
+    @Expose
+    private String methodEn;
+    @SerializedName("method_ar")
+    @Expose
+    private String methodAr;
 
-    public PaymentModel(int id, String name_ar, String name_en) {
-        this.id = id;
-        this.name_ar = name_ar;
-        this.name_en = name_en;
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getName_ar() {
-        return name_ar;
+    public String getShortname() {
+        return shortname;
     }
 
-    public void setName_ar(String name_ar) {
-        this.name_ar = name_ar;
+    public void setShortname(String shortname) {
+        this.shortname = shortname;
     }
 
-    public String getName_en() {
-        return name_en;
+    public String getMethodEn() {
+        return methodEn;
     }
 
-    public void setName_en(String name_en) {
-        this.name_en = name_en;
+    public void setMethodEn(String methodEn) {
+        this.methodEn = methodEn;
+    }
+
+    public String getMethodAr() {
+        return methodAr;
+    }
+
+    public void setMethodAr(String methodAr) {
+        this.methodAr = methodAr;
     }
 
     public String getName() {
 
-        return UtilityApp.isEnglish()? name_en : name_ar;
+        return UtilityApp.isEnglish()? methodEn : methodAr;
     }
 }
