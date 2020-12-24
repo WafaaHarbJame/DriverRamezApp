@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -113,17 +114,10 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             holder.binding.tvShopName.setText(R.string.app_name);
 
             //delivery_status = PN:Pending || RC:Received || IP:Processing || CA:CheckoutArea ||
-            // PP:PendingPayment || OH:OnHold || OP:Open  || CM:Complete  || CL:Canceled  || DV:Delivered
+            // PP:PendingPayment || OH:OnHold || OP:Open  || CM:Complete  || CL:Canceled  || DV:Delivered || Not Defined || CheckoutArea
 
 
-            //  ordersDM.getOrderStatus().equals("Processing") || ordersDM.getOrderStatus().equals("PendingPayment")
-            //                    || ordersDM.getOrderStatus().equals("Received") || ordersDM.getOrderStatus().equals("Open")
-            //                    || ordersDM.getOrderStatus().equals("CheckoutArea")
-
-
-            if (ordersDM.getDeliveryStatus().equals("Processing") || ordersDM.getOrderStatus().equals("Received")
-                    ||ordersDM.getOrderStatus().equals("Pending") || ordersDM.getOrderStatus().equals("Open") ||
-                    ordersDM.getOrderStatus().equals("CheckoutArea") ) {
+            if (ordersDM.getDeliveryStatus().equals("Processing") || ordersDM.getDeliveryStatus().equals("Received") || ordersDM.getDeliveryStatus().equals("Pending") || ordersDM.getDeliveryStatus().equals("Open") || ordersDM.getDeliveryStatus().equals("CheckoutArea") || ordersDM.getDeliveryStatus().equals("Not Defined")) {
 
                 holder.binding.completeOrderLy.setVisibility(View.GONE);
                 holder.binding.currentLY.setVisibility(View.VISIBLE);
@@ -163,20 +157,17 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             if (ordersDM.getOrderStatus().equals("PN")) {
                 holder.binding.doneImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
-            }
-            else if (ordersDM.getOrderStatus().equals("IP")) {
+            } else if (ordersDM.getOrderStatus().equals("IP")) {
                 holder.binding.processImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
                 holder.binding.doneImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
 
-            }
-            else if (ordersDM.getOrderStatus().equals("DV")) {
+            } else if (ordersDM.getOrderStatus().equals("DV")) {
                 holder.binding.deliveryImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
                 holder.binding.processImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
                 holder.binding.doneImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
 
 
-            }
-           else if (ordersDM.getOrderStatus().equals("CM")) {
+            } else if (ordersDM.getOrderStatus().equals("CM")) {
                 holder.binding.doneDeliveryImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
                 holder.binding.deliveryImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
                 holder.binding.processImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
@@ -194,6 +185,8 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             });
 
             holder.binding.container.setOnClickListener(v -> {
+
+                Log.i(TAG, "inv_id " + ordersDM.getOrderCode() + "");
                 Intent intent = new Intent(context, OrderDetailsActivity.class);
                 intent.putExtra(Constants.inv_id, ordersDM.getOrderCode() + "");
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

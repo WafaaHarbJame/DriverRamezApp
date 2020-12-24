@@ -42,7 +42,9 @@ public class ChangeLangCurrencyActivity extends ActivityBase implements Currency
         View view = binding.getRoot();
         setContentView(view);
 
-        binding.toolBar.mainTitleTxt.setText(getString(R.string.change_city_currency));
+
+        setTitle(R.string.change_city_currency);
+
 
         langList =new ArrayList<>();
         currencyList =new ArrayList<>();

@@ -1,6 +1,5 @@
 package com.ramez.shopp.Adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +17,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,7 +35,6 @@ import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
-import com.ramez.shopp.databinding.RowCartItemBinding;
 import com.ramez.shopp.databinding.RowEmptyBinding;
 import com.ramez.shopp.databinding.RowLoadingBinding;
 import com.ramez.shopp.databinding.RowProductsItemBinding;
@@ -46,8 +42,6 @@ import com.ramez.shopp.databinding.RowProductsItemBinding;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -107,6 +101,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         });
         rv.setLayoutManager(gridLayoutManager);
         rv.setLayoutManager(gridLayoutManager);
+
         rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {

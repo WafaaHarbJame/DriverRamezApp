@@ -3,18 +3,23 @@ package com.ramez.shopp.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
+import com.google.android.material.snackbar.Snackbar;
+import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.CartModel;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.R;
@@ -29,11 +34,10 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
 
     private static final String TAG = "Log CartAdapter";
     public int count;
-    public String currency;
+    public String currency = "BHD";
     private Context context;
     private List<CartModel> cartDMS;
     private OnInvoiceItemClicked onInvoiceItemClicked;
-
 
 
     public InvoiceItemAdapter(Context context, List<CartModel> cartDMS, OnInvoiceItemClicked onInvoiceItemClicked) {
@@ -52,9 +56,26 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(final Holder holder, int position) {
+
+        currency = UtilityApp.getLocalData().getCurrencyCode();
         CartModel cartDM = cartDMS.get(position);
-        currency = "AED";
-        holder.binding.productCartQTY.setText(cartDM.getProductQuantity() + "");
+
+        int quantity = cartDM.getQuantity();
+
+
+        if (quantity > 0) {
+            holder.binding.productCartQTY.setText(String.valueOf(quantity));
+
+            if (quantity == 1) {
+                holder.binding.deleteCartBtn.setVisibility(View.VISIBLE);
+                holder.binding.minusCartBtn.setVisibility(View.GONE);
+            } else {
+                holder.binding.minusCartBtn.setVisibility(View.VISIBLE);
+                holder.binding.deleteCartBtn.setVisibility(View.GONE);
+            }
+
+        }
+
         holder.binding.productName.setText(cartDM.getProductName());
 
         holder.binding.cardViewOuter.setOnClickListener(v -> {
@@ -70,27 +91,23 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
         });
 
 
-        if (cartDM.getProductPrice().isNaN()) {
-            holder.binding.productPriceTv.setVisibility(View.GONE);
-            Log.d("proImage", "cart proImage: " + cartDM.getImage());
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), Uri.parse(cartDM.getImage()));
-                Glide.with(context).load(bitmap).placeholder(R.drawable.holder_image).into(holder.binding.productImage);
+        if (cartDM.getProductPrice() > 0) {
+            if (cartDM.getSpecialPrice() == 0) {
+                holder.binding.productPriceTv.setText(cartDM.getProductPrice().toString());
 
-            } catch (IOException e) {
-                e.printStackTrace();
+
+            } else {
+                holder.binding.productPriceTv.setText(cartDM.getSpecialPrice().toString());
+
             }
 
-
-        }
-        else {
-            double subTotal = cartDM.getProductPrice() * cartDM.getProductQuantity();
             Glide.with(context).load(cartDM.getImage()).placeholder(R.drawable.holder_image).into(holder.binding.productImage);
 
+
         }
 
-
         calculateSubTotalPrice();
+
 
         if (Integer.parseInt(holder.binding.productCartQTY.getText().toString()) == 1) {
 
@@ -101,8 +118,6 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
             holder.binding.deleteCartBtn.setVisibility(View.GONE);
 
         }
-
-
         holder.binding.swipe.setShowMode(SwipeLayout.ShowMode.LayDown);
         holder.binding.swipe.addSwipeListener(new SwipeLayout.SwipeListener() {
             @Override
@@ -149,7 +164,6 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
     }
 
 
-
     @Override
     public int getItemCount() {
         return cartDMS.size();
@@ -157,6 +171,18 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
 
     public int getSwipeLayoutResourceId(int position) {
         return R.id.swipe;
+    }
+
+    private void initSnackBar(String message, View viewBar) {
+        Snackbar snackbar = Snackbar.make(viewBar, message, Snackbar.LENGTH_SHORT);
+        View view = snackbar.getView();
+        TextView snackBarMessage = view.findViewById(R.id.snackbar_text);
+        snackBarMessage.setTextColor(Color.WHITE);
+        snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.green));
+        snackbar.setAction(context.getResources().getString(R.string.show_cart), v -> {
+
+        });
+        snackbar.show();
     }
 
     public interface OnInvoiceItemClicked {
@@ -172,65 +198,110 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
             super(view.getRoot());
             binding = view;
 
-            binding.deleteCartBtn.setOnClickListener(view1 -> {
+            binding.plusCartBtn.setOnClickListener(v -> {
+
+
+                CartModel productModel = cartDMS.get(getAdapterPosition());
+                int count = productModel.getQuantity();
+                int product_barcode_id = productModel.getProductBarcodeId();
+
                 int position = getAdapterPosition();
+                int userId = UtilityApp.getUserData().getId();
+                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int productId = productModel.getProductId();
+
+                updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, 0, "quantity");
 
             });
 
-            binding.plusCartBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CartModel cartDM = cartDMS.get(getAdapterPosition());
-                    count = Integer.parseInt(binding.productCartQTY.getText().toString());
-                    if (count == 1) {
-                        binding.minusCartBtn.setVisibility(View.VISIBLE);
-                        binding.deleteCartBtn.setVisibility(View.GONE);
-                    }
-                    count++;
-                    binding.productCartQTY.setText(String.valueOf(count));
 
-                    if(!cartDM.getProductPrice().isNaN()){
-                        double newSubTotal = cartDM.getProductPrice() * count;
-                        binding.productPriceTv.setText(NumberHandler.formatDouble(newSubTotal, UtilityApp.getLocalData().getFractional()) + " " + currency);
+            binding.deleteCartBtn.setOnClickListener(view1 -> {
 
-                    }
+                CartModel productModel = cartDMS.get(getAdapterPosition());
+                int count = productModel.getQuantity();
+                int product_barcode_id = productModel.getProductBarcodeId();
+                int position = getAdapterPosition();
+                int userId = UtilityApp.getUserData().getId();
+                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int productId = productModel.getProductId();
+                int cart_id = 0;
 
-                    count = Integer.parseInt(binding.productCartQTY.getText().toString());
-                    cartDM.setProductQuantity(count);
+                deleteCart(view1 ,position, productId, product_barcode_id, cart_id, userId, storeId);
 
-
-                }
             });
 
             binding.minusCartBtn.setOnClickListener(v -> {
-                CartModel cartDM = cartDMS.get(getAdapterPosition());
-                count = Integer.parseInt(binding.productCartQTY.getText().toString());
-                binding.productCartQTY.setText(String.valueOf(count));
 
-                if (count == 1) {
-                    binding.minusCartBtn.setVisibility(View.GONE);
-                    binding.plusCartBtn.setVisibility(View.VISIBLE);
-                    binding.deleteCartBtn.setVisibility(View.VISIBLE);
+                CartModel productModel = cartDMS.get(getAdapterPosition());
+                int count = productModel.getQuantity();
+                int product_barcode_id = productModel.getProductBarcodeId();
 
-                } else {
-                    binding.minusCartBtn.setVisibility(View.VISIBLE);
-                    binding.plusCartBtn.setVisibility(View.VISIBLE);
-                    binding.deleteCartBtn.setVisibility(View.GONE);
-                    count--;
+                int position = getAdapterPosition();
+                int userId = UtilityApp.getUserData().getId();
+                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int productId = productModel.getProductId();
 
-                }
+                updateCart(v, position, productId, product_barcode_id, count - 1, userId, storeId, 0, "quantity");
 
-                binding.productCartQTY.setText(String.valueOf(count));
-                if(!cartDM.getProductPrice().isNaN()){
-                    double newSubTotal = cartDM.getProductPrice() * count;
-
-                }
-                count = Integer.parseInt(binding.productCartQTY.getText().toString());
-                cartDM.setProductQuantity(count);
 
             });
 
+            binding.deleteCartBtn.setOnClickListener(v -> {
+
+                CartModel productModel = cartDMS.get(getAdapterPosition());
+                int count = productModel.getQuantity();
+                int product_barcode_id = productModel.getProductBarcodeId();
+                int position = getAdapterPosition();
+                int userId = UtilityApp.getUserData().getId();
+                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int productId = productModel.getProductId();
+                int cart_id = 0;
+
+                deleteCart(v, position, productId, product_barcode_id, cart_id, userId, storeId);
+
+            });
 
         }
+
+        private void updateCart(View v, int position, int productId, int product_barcode_id, int quantity, int userId, int storeId, int cart_id, String update_quantity) {
+            new DataFeacher(false, (obj, func, IsSuccess) -> {
+                if (IsSuccess) {
+
+                    initSnackBar(context.getString(R.string.success_to_update_cart), v);
+                    cartDMS.get(position).setQuantity(quantity);
+                    notifyItemChanged(position);
+
+                } else {
+
+                    initSnackBar(context.getString(R.string.fail_to_update_cart), v);
+
+                }
+
+            }).updateCartHandle(productId, product_barcode_id, quantity, userId, storeId, cart_id, update_quantity);
+        }
+
+        private void deleteCart(View v, int position, int productId, int product_barcode_id, int cart_id, int userId, int storeId) {
+            new DataFeacher(false, (obj, func, IsSuccess) -> {
+
+                if (IsSuccess) {
+//                    cartDMS.get(position).setQuantity(0);
+//                    notifyItemChanged(position);
+                    cartDMS.remove(position);
+                    notifyItemRemoved(position);
+
+                    initSnackBar(context.getString(R.string.success_delete_from_cart), v);
+
+
+                } else {
+
+                    initSnackBar(context.getString(R.string.fail_to_delete_cart), v);
+                }
+
+
+            }).deleteCartHandle(productId, product_barcode_id, cart_id, userId, storeId);
+        }
+
+
     }
+
 }

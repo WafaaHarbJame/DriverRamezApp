@@ -12,13 +12,10 @@ public class TermsActivity extends ActivityBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding=ActivityTermsBinding.inflate(getLayoutInflater());
-        View view=binding.getRoot();
+        binding = ActivityTermsBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
         setContentView(view);
-        binding.toolBar.mainTitleTxt.setText(getString(R.string.conditions));
+        setTitle(R.string.conditions);
 
-        binding.toolBar.backBtn.setOnClickListener(view1 -> {
-            onBackPressed();
-        });
     }
 }

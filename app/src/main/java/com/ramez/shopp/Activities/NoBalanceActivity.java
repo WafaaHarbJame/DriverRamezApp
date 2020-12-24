@@ -17,13 +17,12 @@ public class NoBalanceActivity extends ActivityBase {
         View view = binding.getRoot();
         setContentView(view);
 
-        binding.toolBar.mainTitleTxt.setText(R.string.add_balance);
-        binding.toolBar.backBtn.setOnClickListener(view1 -> {
-            onBackPressed();
-        });
         binding.addBalanceBut.setOnClickListener(view1 -> {
 
         });
+
+        setTitle(R.string.add_balance);
+
 
     }
 

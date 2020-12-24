@@ -26,8 +26,10 @@ public class ContactSupportActivity extends ActivityBase {
         super.onCreate(savedInstanceState);
         binding= ActivityContactSupportBinding.inflate(getLayoutInflater());
         View view=binding.getRoot();
+
         setContentView(view);
         list=new ArrayList<>();
+
         list.add(new ChatModel("1","2","key",getString(R.string.Hello),
                         "hhh","",
                 "http://","http", Constants.Sender,Constants.inputType_image,
@@ -44,12 +46,7 @@ public class ContactSupportActivity extends ActivityBase {
                 "http://","","",169955999,true));
 
 
-
-        binding.toolBar.mainTitleTxt.setText(getString(R.string.customer_service));
-
-        binding.toolBar.backBtn.setOnClickListener(view1 -> {
-            onBackPressed();
-        });
+        setTitle(R.string.customer_service);
 
         linearLayoutManager=new LinearLayoutManager(getActiviy());
         binding.rv.setLayoutManager(linearLayoutManager);

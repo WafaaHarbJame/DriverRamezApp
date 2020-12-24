@@ -43,8 +43,8 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
         binding = ActivityChangeCityBranchBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        binding.toolBar.mainTitleTxt.setText(getString(R.string.change_city_branch));
 
+        setTitle(R.string.change_city_branch);
         cityModelArrayList = new ArrayList<>();
         countries = new ArrayList<>();
         localModel = UtilityApp.getLocalData();
@@ -83,14 +83,8 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
 
 
 
-
-
         linearLayoutManager = new LinearLayoutManager(getActiviy());
         binding.branchRecycler.setLayoutManager(linearLayoutManager);
-
-        binding.toolBar.backBtn.setOnClickListener(view1 -> {
-            onBackPressed();
-        });
 
          countryId = localModel.getCountryId();
 

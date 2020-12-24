@@ -76,6 +76,9 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         binding.backBtn.setOnClickListener(view1 -> {
             onBackPressed();
         });
+
+
+
     }
 
     private void getIntentExtra() {
@@ -92,8 +95,8 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 productName = productModel.getName().trim();
 
             }
-            binding.mainTitleTxt.setText(productName);
 
+            setTitle(productName);
 
         }
     }

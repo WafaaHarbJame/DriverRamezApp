@@ -43,10 +43,11 @@ public class ConfirmPhoneActivity extends ActivityBase {
 
 
         });
-        binding.toolBar.mainTitleTxt.setText(getString(R.string.forget_pass));
-        binding.toolBar.backBtn.setOnClickListener(view1 -> {
-            onBackPressed();
-        });
+
+
+
+        setTitle(R.string.forget_pass);
+
 
 
     }

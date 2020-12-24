@@ -54,12 +54,7 @@ public class FavoriteActivity extends ActivityBase implements ProductAdapter.OnI
 
         localModel = UtilityApp.getLocalData();
 
-
-        binding.toolBar.mainTitleTxt.setText(getString(R.string.fav_products));
-
-        binding.toolBar.backBtn.setOnClickListener(view1 -> {
-            onBackPressed();
-        });
+        setTitle(R.string.fav_products);
 
         country_id = localModel.getCountryId();
         city_id = Integer.parseInt(localModel.getCityId());

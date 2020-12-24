@@ -2,19 +2,25 @@ package com.ramez.shopp.Activities;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -35,6 +41,11 @@ import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.GPSTracker;
 import com.ramez.shopp.Permissions;
@@ -42,21 +53,22 @@ import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.MapHandler;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+
+import io.nlopez.smartlocation.SmartLocation;
 
 public class MapsActivity extends ActivityBase implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
 
     private static final String TAG = "MapsActivity";
-
-    // TODO: Google Clients
-    private GoogleMap mMap;
-    private SupportMapFragment mapFragment;
-
     //// ACTIVITY_RESULT
     private final int ACTIVITY_RESULT = 3000;
     private final int REQUEST_LOCATION_CODE = 99;
-
+    boolean isSelectFromPlace, intentWithLocation = false;
+    // TODO: Google Clients
+    private GoogleMap mMap;
+    private SupportMapFragment mapFragment;
     //// Google Maps & Location
     private GoogleMap userLocationMap;
     private FusedLocationProviderClient mFusedLocationClient;
@@ -65,12 +77,9 @@ public class MapsActivity extends ActivityBase implements OnMapReadyCallback, Go
     private GoogleApiClient client;
     private LocationRequest locationRequest;
     private CameraUpdate cameraUpdate;
-
     //// GPS Tracker
     private GPSTracker gpsTracker;
     private double longitude, latitude;
-    boolean isSelectFromPlace, intentWithLocation = false;
-
     // TODO: Views
     private ProgressDialog progressDialog;
     private Button pickLocation;
@@ -78,7 +87,7 @@ public class MapsActivity extends ActivityBase implements OnMapReadyCallback, Go
 
     private float zoom = 0;
     private boolean isValid, isValidFromZoom;
-    private    AutocompleteSupportFragment autocompleteFragment;
+    private AutocompleteSupportFragment autocompleteFragment;
     private ImageView backBut;
 
     @Override
@@ -87,27 +96,26 @@ public class MapsActivity extends ActivityBase implements OnMapReadyCallback, Go
         setContentView(R.layout.activity_map);
 
         //// Initialize Location
+
         gpsTracker = new GPSTracker(this);
-
         initViews();
+        requestLocationPermission(MapsActivity.this);
         getDataExtra();
-
-
 
     }
 
     private void getDataExtra() {
         if (getIntent().getExtras() != null) {
-            if (getIntent().hasExtra(Constants.latitude)) {
+            if (getIntent().hasExtra(Constants.KEY_LAT)) {
                 intentWithLocation = true;
-                latitude = Double.parseDouble(getIntent().getExtras().getString(Constants.latitude, "0"));
-                longitude = Double.parseDouble(getIntent().getExtras().getString(Constants.longitude, "0"));
+                latitude = Double.parseDouble(getIntent().getExtras().getString(Constants.KEY_LAT, "0"));
+                longitude = Double.parseDouble(getIntent().getExtras().getString(Constants.KEY_LNG, "0"));
                 isValid = MapHandler.vailAddress(this, latitude + "", longitude + "");
             } else {
                 intentWithLocation = false;
             }
         }
-        checkPermissions();
+        // checkPermissions();
     }
 
     private void initViews() {
@@ -124,38 +132,36 @@ public class MapsActivity extends ActivityBase implements OnMapReadyCallback, Go
         initPlaceAutoComplete();
 
         pickLocation = findViewById(R.id.pickLocation);
-//        backBut.setOnClickListener(view -> {
-//            onBackPressed();
-//        });
         textPhysicalAddress = findViewById(R.id.tvPhysicalAddress);
+        backBut = findViewById(R.id.backBtn);
 
         pickLocation.setOnClickListener(v -> {
             setActivityResult(latitude + "", longitude + "");
         });
+
+
+        backBut.setOnClickListener(view -> onBackPressed());
 
     }
 
     private void initPlaceAutoComplete() {
         // TODO: Places initialize
         Places.initialize(getApplicationContext(), getString(R.string.mapKey), Locale.US);
-
-        // Initialize the AutocompleteSupportFragment.
         autocompleteFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
 
-        // Specify the types of place data to return.
+        autocompleteFragment.setHint(getString((R.string.searchaddress)));
+
         assert autocompleteFragment != null;
         autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG));
 
-        // Set up a PlaceSelectionListener to handle the response.
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NonNull Place place) {
-                // TODO: Get info about the selected place.
                 Log.i(TAG, "onPlaceSelected: " + place.getLatLng() + ", " + place.getId() + ", " + place.getName());
                 try {
                     latitude = Objects.requireNonNull(place.getLatLng()).latitude;
                     longitude = place.getLatLng().longitude;
-                    //isValid = MapHandler.vailAddress(MapsActivity.this, place.getLatLng().latitude + "", place.getLatLng().longitude + "");
+                    isValid = MapHandler.vailAddress(MapsActivity.this, place.getLatLng().latitude + "", place.getLatLng().longitude + "");
 
                     // Creating a marker
                     MarkerOptions markerOptions = new MarkerOptions();
@@ -232,24 +238,22 @@ public class MapsActivity extends ActivityBase implements OnMapReadyCallback, Go
 
                 mMap.setOnCameraMoveStartedListener(i -> {
                     zoom = mMap.getCameraPosition().zoom;
-                   // isValidFromZoom = !(zoom < 15);
+                    isValidFromZoom = !(zoom < 15);
                     Log.d(TAG, "vailAddress: zoom:" + zoom);
 
-                    try {
-
+//                    try {
 //                        if (isValidFromZoom && isValid) {
 //                            pickLocation.setEnabled(true);
 //                            pickLocation.setText(getString(R.string.confirm));
-//                            pickLocation.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+//                            pickLocation.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
 //                        } else {
 //                            pickLocation.setEnabled(false);
-//                            pickLocation.setText(getString(R.string.textZoomIn));
-//                            pickLocation.setBackgroundColor(getResources().getColor(R.color.green));
+//                            pickLocation.setText(getString(R.string.zoom));
+//                            pickLocation.setBackgroundColor(getResources().getColor(R.color.gray1));
 //                        }
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
                 });
 
             }
@@ -260,22 +264,14 @@ public class MapsActivity extends ActivityBase implements OnMapReadyCallback, Go
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap != null) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
+                Toast.makeText(gpsTracker, getString(R.string.required_permissions_are_not_granted), Toast.LENGTH_SHORT).show();
                 return;
             }
             mMap.setMyLocationEnabled(true);
             if (mMap != null) {
                 mMap.setOnMyLocationChangeListener(arg0 -> {
                     try {
-                        addMarkerOnMap(new LatLng(mMap.getMyLocation().getLatitude(),
-                                mMap.getMyLocation().getLongitude()), cameraUpdate, "addMyLocationButton");
-
+                        addMarkerOnMap(new LatLng(mMap.getMyLocation().getLatitude(), mMap.getMyLocation().getLongitude()), cameraUpdate, "addMyLocationButton");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -292,10 +288,7 @@ public class MapsActivity extends ActivityBase implements OnMapReadyCallback, Go
                 longitude = midLatLng.longitude;
                 isValid = MapHandler.vailAddress(this, latitude + "", longitude + "");
                 try {
-                    textPhysicalAddress.setText(
-                            MapHandler.getPhysicalLocation(getApplicationContext(), latitude + "",
-                                    longitude + "")
-                    );
+                    textPhysicalAddress.setText(MapHandler.getPhysicalLocation(getApplicationContext(), latitude + "", longitude + ""));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -325,9 +318,7 @@ public class MapsActivity extends ActivityBase implements OnMapReadyCallback, Go
         mMap.animateCamera(cameraUpdate);
 
         try {
-            textPhysicalAddress.setText(
-                    MapHandler.getPhysicalLocation(getApplicationContext(), latitude + "", longitude + "")
-            );
+            textPhysicalAddress.setText(MapHandler.getPhysicalLocation(getApplicationContext(), latitude + "", longitude + ""));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -336,9 +327,7 @@ public class MapsActivity extends ActivityBase implements OnMapReadyCallback, Go
 
     /////gps
     protected synchronized void buildGoogleApiClient() {
-        client = new GoogleApiClient.Builder(MapsActivity.this)
-                .addConnectionCallbacks(this).addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API).build();
+        client = new GoogleApiClient.Builder(MapsActivity.this).addConnectionCallbacks(this).addOnConnectionFailedListener(this).addApi(LocationServices.API).build();
         client.connect();
 
     }
@@ -366,8 +355,7 @@ public class MapsActivity extends ActivityBase implements OnMapReadyCallback, Go
         locationRequest.setInterval(10);
         locationRequest.setFastestInterval(100);
         locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) ==
-                PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             LocationServices.FusedLocationApi.requestLocationUpdates(client, locationRequest, this);
         }
     }
@@ -415,5 +403,45 @@ public class MapsActivity extends ActivityBase implements OnMapReadyCallback, Go
         super.onActivityResult(requestCode, resultCode, data);
         autocompleteFragment.onActivityResult(requestCode, resultCode, data);
 
+    }
+
+
+    void requestLocationPermission(final Context activity) {
+
+        try {
+            String[] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+
+            Dexter.withContext(activity).withPermissions(permissions).withListener(new MultiplePermissionsListener() {
+                @Override
+                public void onPermissionsChecked(MultiplePermissionsReport report) {
+                    if (report.areAllPermissionsGranted()) {
+
+                        if (SmartLocation.with(MapsActivity.this).location().state().isGpsAvailable()) {
+                            SmartLocation.with(MapsActivity.this).location().oneFix().start(location -> {
+
+                                latitude = location.getLatitude();
+                                longitude = location.getLongitude();
+                                checkPermissions();
+
+                            });
+
+                        }
+
+
+                    } else if (report.isAnyPermissionPermanentlyDenied()) {
+                        gpsTracker.showSettingsAlert();
+                    }
+                }
+
+
+                @Override
+                public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                    token.continuePermissionRequest();
+                }
+            }).check();
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage() + "");
+
+        }
     }
 }

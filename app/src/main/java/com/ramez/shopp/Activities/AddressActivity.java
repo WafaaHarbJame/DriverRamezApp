@@ -43,11 +43,8 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
 
         user = UtilityApp.getUserData();
 
-        binding.toolBar.mainTitleTxt.setText(R.string.address);
+        setTitle(R.string.address);
 
-        binding.toolBar.backBtn.setOnClickListener(view1 -> {
-            onBackPressed();
-        });
 
         addressList = new ArrayList<>();
         linearLayoutManager = new LinearLayoutManager(getActiviy());

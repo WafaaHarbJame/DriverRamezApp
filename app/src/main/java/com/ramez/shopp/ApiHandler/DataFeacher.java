@@ -1,15 +1,14 @@
 package com.ramez.shopp.ApiHandler;
 
 
-import android.app.Activity;
 import android.util.Log;
-import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.AddressModel;
+import com.ramez.shopp.Models.LoginResultModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.OrderCall;
 import com.ramez.shopp.Models.ResultAPIModel;
@@ -21,7 +20,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import kotlin.jvm.internal.Intrinsics;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -32,6 +30,7 @@ import retrofit2.Response;
 
 public class DataFeacher {
     final String TAG = "Log";
+    final String LOGIN_URL = "/BH/GroceryStoreApi/api/v3/Account/login";
     DataFetcherCallBack dataFetcherCallBack;
     ApiInterface apiService;
     //    int city;
@@ -39,7 +38,6 @@ public class DataFeacher {
     String lang;
     Map<String, Object> headerMap = new HashMap<>();
     private Callback callbackApi;
-
 
     public DataFeacher() {
         apiService = ApiClient.getClient().create(ApiInterface.class);
@@ -55,11 +53,23 @@ public class DataFeacher {
             @Override
             public void onResponse(Call call, Response response) {
 
-//                T result = response.body();
+
                 if (response.isSuccessful()) {
+
+//                    ResultAPIModel result = (ResultAPIModel) response.body();
 
                     if (dataFetcherCallBack != null)
                         dataFetcherCallBack.Result(response.body(), Constants.success, true);
+//                    if (dataFetcherCallBack != null) {
+//
+//                        if (result != null && result.status == 0) {
+//                            dataFetcherCallBack.Result(response.body(), Constants.ERROR, false);
+//
+//                        } else {
+//                            dataFetcherCallBack.Result(response.body(), Constants.success, true);
+//
+//                        }
+//                    }
 
                 } else {
                     ResultAPIModel errorModel = null;
@@ -105,8 +115,26 @@ public class DataFeacher {
             public void onResponse(Call call, Response response) {
 
                 if (response.isSuccessful()) {
-                    if (dataFetcherCallBack != null)
-                        dataFetcherCallBack.Result(response.body(), Constants.success, true);
+                    System.out.println("Log url " + call.request().url().url().getPath());
+
+                    String url = call.request().url().url().getPath();
+                    if (url.equals(LOGIN_URL)){
+                        LoginResultModel result = (LoginResultModel) response.body();
+
+                        if (dataFetcherCallBack != null) {
+
+                        if (result != null && result.getStatus() == 0) {
+                            dataFetcherCallBack.Result(response.body(), Constants.ERROR, false);
+
+                        } else {
+                            dataFetcherCallBack.Result(response.body(), Constants.success, true);
+                        }
+                        }
+
+                    }else{
+                        if (dataFetcherCallBack != null)
+                            dataFetcherCallBack.Result(response.body(), Constants.success, true);
+                    }
 
                 } else {
                     ResultAPIModel errorModel = null;
@@ -691,7 +719,7 @@ public class DataFeacher {
     }
 
 
-    public void getPastOrders(int  user_id) {
+    public void getPastOrders(int user_id) {
 
         Log.i(TAG, "Log getPastOrders");
         Log.i(TAG, "Log headerMap " + headerMap);
@@ -701,7 +729,7 @@ public class DataFeacher {
         call.enqueue(callbackApi);
     }
 
-    public void getUpcomingOrders(int  user_id) {
+    public void getUpcomingOrders(int user_id) {
 
         Log.i(TAG, "Log getUpcomingOrders");
         Log.i(TAG, "Log headerMap " + headerMap);
@@ -711,7 +739,7 @@ public class DataFeacher {
         call.enqueue(callbackApi);
     }
 
-    public void getPaymentMethod(int  sotre_id) {
+    public void getPaymentMethod(int sotre_id) {
 
         Log.i(TAG, "Log getPaymentMethod");
 
@@ -723,7 +751,7 @@ public class DataFeacher {
     }
 
 
-    public void getDeliveryTimeList(int  sotre_id) {
+    public void getDeliveryTimeList(int sotre_id) {
 
         Log.i(TAG, "Log getDeliveryTimeList");
 
@@ -734,15 +762,15 @@ public class DataFeacher {
         call.enqueue(callbackApi);
     }
 
-    public void makeOrder(OrderCall  orderCalls) {
-        OrderCall orderCall=new OrderCall();
-        orderCall.user_id=orderCalls.user_id;
-        orderCall.store_ID=orderCalls.store_ID;
-        orderCall.address_id=orderCalls.address_id;
-        orderCall.payment_method=orderCalls.payment_method;
-        orderCall.coupon_code_id=orderCalls.coupon_code_id;
-        orderCall.delivery_date_id=orderCalls.delivery_date_id;
-        orderCall.expressDelivery=orderCalls.expressDelivery;
+    public void makeOrder(OrderCall orderCalls) {
+        OrderCall orderCall = new OrderCall();
+        orderCall.user_id = orderCalls.user_id;
+        orderCall.store_ID = orderCalls.store_ID;
+        orderCall.address_id = orderCalls.address_id;
+        orderCall.payment_method = orderCalls.payment_method;
+        orderCall.coupon_code_id = orderCalls.coupon_code_id;
+        orderCall.delivery_date_id = orderCalls.delivery_date_id;
+        orderCall.expressDelivery = orderCalls.expressDelivery;
 
         Log.i(TAG, "Log makeOrder");
         Log.i(TAG, "Log headerMap " + headerMap);

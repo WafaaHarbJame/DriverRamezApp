@@ -46,6 +46,7 @@ public class ChooseNearCity extends ActivityBase implements CityAdapter.OnCityCl
 
         binding.toolBar.backBtn.setVisibility(View.GONE);
 
+
     }
 
     private void getExtraIntent() {

@@ -66,7 +66,7 @@ ApiInterface {
     Call<OtpModel> changePasswordHandle(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
     @POST("v3/Account/updateDeviceToken")
-    Call<LoginResultModel> UpdateTokenHandle(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
+    Call<GeneralModel> UpdateTokenHandle(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
 
     @POST("v3/Account/otpVerify")

@@ -16,10 +16,7 @@ public class ConditionActivity extends ActivityBase{
         View view=binding.getRoot();
         setContentView(view);
 
-        binding.toolBar.mainTitleTxt.setText(getString(R.string.conditions));
+        setTitle(R.string.conditions);
 
-        binding.toolBar.backBtn.setOnClickListener(view1 -> {
-            onBackPressed();
-        });
     }
 }

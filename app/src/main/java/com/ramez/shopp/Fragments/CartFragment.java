@@ -94,6 +94,13 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
 
             getCarts(storeId, userId);
+
+            if(cartAdapter!=null){
+
+                cartAdapter.notifyDataSetChanged();
+            }
+
+
         }
 
         return view;
@@ -103,6 +110,12 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
     private void initAdapter() {
         cartAdapter = new CartAdapter(getActivityy(), cartList, this);
         binding.cartRecycler.setAdapter(cartAdapter);
+        productsSize = cartList.size();
+        binding.productsSizeTv.setText(String.valueOf(cartAdapter.getItemCount()));
+        total = NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction);
+        binding.totalTv.setText(total.concat(" " + currency));
+        binding.productCostTv.setText(NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction).concat(" " + currency));
+        cartAdapter.notifyDataSetChanged();
 
     }
 
@@ -117,7 +130,9 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
     }
 
     public void getCarts(int storeId, int userId) {
+
         cartList.clear();
+
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -158,14 +173,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
                         Log.i(TAG, "Log cart" + result.getData().getCartData().size());
                         initAdapter();
-
-                        if (cartList.size() > 0) {
-                            productsSize = cartList.size();
-                            binding.productsSizeTv.setText(String.valueOf(productsSize));
-                            total = NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction);
-                            binding.totalTv.setText(total.concat(" " + currency));
-                            binding.productCostTv.setText(NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction).concat(" " + currency));
-                        }
+                        cartAdapter.notifyDataSetChanged();
 
 
                     } else {

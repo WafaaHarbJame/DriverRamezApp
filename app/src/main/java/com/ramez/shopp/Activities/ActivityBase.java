@@ -9,7 +9,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,8 +28,9 @@ public class ActivityBase extends AppCompatActivity {
 
     int onStartCount = 0;
 
-    protected TextView mainTitle, home;
-    protected RelativeLayout toolbar;
+    protected TextView mainTitle;
+    protected ImageView home;
+    protected LinearLayout toolbar;
 
 
     public ActivityBase() {
@@ -47,7 +49,7 @@ public class ActivityBase extends AppCompatActivity {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
 // finally change the color
-        window.setStatusBarColor(ContextCompat.getColor(this,R.color.status_color));
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_color));
 
     }
 
@@ -63,8 +65,8 @@ public class ActivityBase extends AppCompatActivity {
     public void setTitle(CharSequence title) {
 
         toolbar = findViewById(R.id.tool_bar);
-        home = toolbar.findViewById(R.id.home);
-        mainTitle = toolbar.findViewById(R.id.title);
+        home = toolbar.findViewById(R.id.backBtn);
+        mainTitle = toolbar.findViewById(R.id.mainTitleTxt);
 
 
         mainTitle.setText(title);

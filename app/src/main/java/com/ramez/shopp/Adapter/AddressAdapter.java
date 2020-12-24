@@ -1,25 +1,18 @@
 package com.ramez.shopp.Adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ramez.shopp.Activities.AddNewAddressActivity;
-import com.ramez.shopp.Activities.SplashScreenActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.ConfirmDialog;
 import com.ramez.shopp.Models.AddressModel;
-import com.ramez.shopp.Models.AddressResultModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.RowAddressItemBinding;

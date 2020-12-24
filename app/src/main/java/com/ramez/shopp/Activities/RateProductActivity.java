@@ -16,11 +16,8 @@ public class RateProductActivity extends ActivityBase {
         View view=binding.getRoot();
         setContentView(view);
 
-        binding.toolBar.mainTitleTxt.setText(getString(R.string.rate_product));
+        setTitle(R.string.rate_product);
 
-        binding.toolBar.backBtn.setOnClickListener(view1 -> {
-            onBackPressed();
-        });
 
     }
 }

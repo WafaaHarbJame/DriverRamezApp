@@ -37,6 +37,7 @@ public class InvoiceInfoActivity extends ActivityBase {
             onBackPressed();
         });
 
+
         list=new ArrayList<>();
 
         list.add(new OrderProductsModel(1,972,"15",

@@ -16,10 +16,11 @@ public class AboutActivity extends ActivityBase {
         binding=ActivityAboutBinding.inflate(getLayoutInflater());
         View view=binding.getRoot();
         setContentView(view);
-        binding.toolBar.mainTitleTxt.setText(R.string.text_title_about_us);
+
+        setTitle(R.string.text_title_about_us);
+
         binding.appVersionTv.setText(getString(R.string.app_version).concat(UtilityApp.getAppVersion()+""));
-        binding.toolBar.backBtn.setOnClickListener(view1 -> {
-            onBackPressed();
-        });
+
+
     }
 }

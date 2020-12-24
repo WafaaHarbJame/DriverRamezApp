@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ajithvgiri.searchdialog.SearchListItem;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeSuccessDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
+import com.github.dhaval2404.form_validation.rule.NonEmptyRule;
+import com.github.dhaval2404.form_validation.validation.FormValidator;
 import com.ramez.shopp.Activities.AddressActivity;
 import com.ramez.shopp.Adapter.InvoiceItemAdapter;
 import com.ramez.shopp.Adapter.PaymentAdapter;
@@ -50,7 +52,7 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
     public Integer userId;
     public String paymentMethod;
     public String couponCodeId = "0";
-    public Integer deliveryDateId;
+    public Integer deliveryDateId=0;
     public Boolean expressDelivery = false;
     ArrayList<PaymentModel> paymentList;
     ArrayList<DeliveryTime> deliveryTimesList;
@@ -138,7 +140,18 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
             Log.i(TAG, "Log delivery_date_id " + deliveryDateId);
             Log.i(TAG, "Log expressDelivery " + expressDelivery);
 
-            sendOrder(orderCall);
+
+            if(addressId==0){
+                Toast(R.string.choose_address);
+                binding.deliveryAddressTv.setError(getString(R.string.choose_address));
+                binding.deliveryAddressTv.requestFocus();
+
+            }
+
+            else {
+                sendOrder(orderCall);
+            }
+
         });
 
 
@@ -215,6 +228,7 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
                     binding.deliveryLy.setVisibility(View.VISIBLE);
                     binding.DeliveryDateTv.setText(deliveryTimesList.get(0).getDate());
                     binding.TvDeliveryTime.setText(deliveryTimesList.get(0).getTime());
+                    deliveryDateId=deliveryTimesList.get(0).getId();
 
                     Log.i(TAG, "Log deliveryTimesList" + result.getData().size());
 
@@ -303,6 +317,9 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
                 GlobalData.errorDialog(getActivityy(), R.string.fail_to_send_order, message);
             } else {
                 if (IsSuccess) {
+
+
+
                     AwesomeSuccessDialog successDialog = new AwesomeSuccessDialog(getActivityy());
                     successDialog.setTitle(R.string.make_order).setMessage(R.string.sending_order).setColoredCircle(R.color.dialogSuccessBackgroundColor).setDialogIconAndColor(R.drawable.ic_check, R.color.white).show().setOnDismissListener(dialogInterface -> {
                         startMain();
@@ -327,6 +344,8 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
         startActivity(intent);
 
     }
+
+
 
 }
 

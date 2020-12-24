@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical">
 
 
     <FrameLayout
         android:layout_width="match_parent"
+        android:background="@color/white"
         android:layout_height="match_parent">
 
 
@@ -20,31 +19,28 @@
             android:layout_height="match_parent" />
 
         <ImageView
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
             android:layout_gravity="center"
-            android:src="@drawable/location_icons"
-            app:tint="@color/colorPrimaryDark" />
-
+            android:src="@drawable/location_icons" />
     </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="wrap_content">
+
         <include
             android:id="@+id/tool_bar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_80sdp"
-            layout="@layout/tool_bar_with_back" />
+            layout="@layout/tool_bar_with_back"
+           />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16sdp"
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_8sdp"
-            android:background="@drawable/round_corner_dark">
+            android:background="@drawable/round_corner_grey">
 
             <fragment
                 android:id="@+id/place_autocomplete_fragment"

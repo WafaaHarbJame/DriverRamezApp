@@ -27,11 +27,9 @@ public class ChangePassActivity extends ActivityBase {
         View view = binding.getRoot();
         setContentView(view);
 
-        binding.toolBar.mainTitleTxt.setText(getString(R.string.text_edit_profile_change_password));
+        setTitle(R.string.text_edit_profile_change_password);
 
-        binding.toolBar.backBtn.setOnClickListener(view1 -> {
-            onBackPressed();
-        });
+
         binding.confirmBut.setOnClickListener(view1 -> {
             if(isValidForm()){
                 ChangePassword();

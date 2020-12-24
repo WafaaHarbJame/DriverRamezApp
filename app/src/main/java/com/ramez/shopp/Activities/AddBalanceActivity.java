@@ -17,7 +17,7 @@ public class AddBalanceActivity extends ActivityBase {
         View view = binding.getRoot();
         setContentView(view);
 
-        binding.toolBar.mainTitleTxt.setText(R.string.add_balance);
+
         binding.toolBar.backBtn.setOnClickListener(view1 -> {
             onBackPressed();
         });
@@ -28,6 +28,7 @@ public class AddBalanceActivity extends ActivityBase {
         });
 
 
+        setTitle(R.string.add_balance);
 
 
     }

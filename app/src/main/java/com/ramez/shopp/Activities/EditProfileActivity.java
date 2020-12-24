@@ -59,11 +59,9 @@ public class EditProfileActivity extends ActivityBase {
         binding = ActivityEditProfileBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        binding.toolBar.mainTitleTxt.setText(getString(R.string.text_title_edit_profile));
 
-        binding.toolBar.backBtn.setOnClickListener(view1 -> {
-            onBackPressed();
-        });
+
+        setTitle(R.string.text_title_edit_profile);
 
         memberModel = UtilityApp.getUserData();
         userId = memberModel.getId();

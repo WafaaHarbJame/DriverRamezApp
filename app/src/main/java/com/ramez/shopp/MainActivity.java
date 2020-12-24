@@ -1,33 +1,24 @@
 package com.ramez.shopp;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 
-import com.google.gson.Gson;
 import com.ramez.shopp.Activities.ActivityBase;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.MessageEvent;
-import com.ramez.shopp.Classes.UtilityApp;
-import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Fragments.CartFragment;
 import com.ramez.shopp.Fragments.CategoryFragment;
 import com.ramez.shopp.Fragments.HomeFragment;
-import com.ramez.shopp.Fragments.InvoiceFragment;
 import com.ramez.shopp.Fragments.MyAccountFragment;
 import com.ramez.shopp.Fragments.OfferFragment;
-import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.databinding.ActivityMainBinding;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
-
-import kotlin.jvm.internal.Intrinsics;
 
 public class MainActivity extends ActivityBase {
     private ActivityMainBinding binding;

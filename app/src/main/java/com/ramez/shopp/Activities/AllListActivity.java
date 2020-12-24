@@ -31,18 +31,14 @@ public class AllListActivity extends ActivityBase implements ProductAdapter.OnIt
         View view=binding.getRoot();
         setContentView(view);
 
-        binding.toolBar.backBtn.setOnClickListener(view1 -> {
-            onBackPressed();
-        });
-
         list=new ArrayList<>();
         gridLayoutManager =new GridLayoutManager(getActiviy(),2);
         binding.recycler.setLayoutManager(gridLayoutManager);
         binding.recycler.setHasFixedSize(true);
 
         getIntentExtra();
-        binding.toolBar.mainTitleTxt.setText(name);
 
+        setTitle(name);
 
         binding.swipeDataContainer.setOnRefreshListener(() -> {
             binding.swipeDataContainer.setRefreshing(false);

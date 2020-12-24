@@ -34,6 +34,8 @@ import com.ramez.shopp.databinding.RowCartItemBinding;
 import java.io.IOException;
 import java.util.List;
 
+import static android.content.ContentValues.TAG;
+
 
 public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
@@ -85,6 +87,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             Log.d(TAG, "name p" + cartDM.getProductName());
 
             onCartItemClicked.onCartItemClicked(cartDM);
+
         });
 
         holder.binding.imageView1.setOnClickListener(v -> {
@@ -121,7 +124,6 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
         }
 
-
         calculateSubTotalPrice();
 
         if (Integer.parseInt(holder.binding.productCartQTY.getText().toString()) == 1) {
@@ -136,6 +138,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
 
         holder.binding.swipe.setShowMode(SwipeLayout.ShowMode.LayDown);
+
         holder.binding.swipe.addSwipeListener(new SwipeLayout.SwipeListener() {
             @Override
             public void onStartOpen(SwipeLayout layout) {
@@ -176,6 +179,8 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                 subTotal += cartDMS.get(i).getProductPrice() * cartDMS.get(i).getQuantity();
             }
         }
+        Log.i(TAG, "Log subTotal result" +subTotal);
+
 
         return subTotal;
     }
@@ -206,7 +211,6 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
 
             binding.plusCartBtn.setOnClickListener(v -> {
-
 
                 CartModel productModel = cartDMS.get(getAdapterPosition());
                 int count = productModel.getQuantity();
@@ -259,9 +263,12 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             new DataFeacher(false, (obj, func, IsSuccess) -> {
                 if (IsSuccess) {
 
+                    calculateSubTotalPrice();
+
                     initSnackBar(context.getString(R.string.success_to_update_cart),v);
                     cartDMS.get(position).setQuantity(quantity);
                     notifyItemChanged(position);
+
 
                 } else {
 
@@ -276,8 +283,9 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             new DataFeacher(false, (obj, func, IsSuccess) -> {
 
                 if (IsSuccess) {
-//                    cartDMS.get(position).setQuantity(0);
-//                    notifyItemChanged(position);
+
+                    calculateSubTotalPrice();
+
                     cartDMS.remove(position);
                     notifyItemRemoved(position);
 
@@ -307,6 +315,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
         });
         snackbar.show();
     }
+
 
 
 }

@@ -73,9 +73,15 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         productSellerList = new ArrayList<>();
         productOffersList = new ArrayList<>();
 
+
         if(UtilityApp.isLogin()){
-            MemberModel memberModel = UtilityApp.getUserData();
-            user_id = String.valueOf(memberModel.getId());
+
+            if (UtilityApp.getUserData()!=null){
+                MemberModel memberModel = UtilityApp.getUserData();
+                user_id = String.valueOf(memberModel.getId());
+            }
+
+
         }
 
         country_id = UtilityApp.getLocalData().getCountryId();

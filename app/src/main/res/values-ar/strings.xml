@@ -243,13 +243,17 @@
     <string name="please_wait_to_upload_photo">الرجاء الانتظار يتم الان تحميل الصورة</string>
     <string name="categories">الاصناف</string>
     <string name="all">الكل</string>
-    <string name="choose_time">Choose Time</string>
-    <string name="choose_day">Choose Day</string>
-    <string name="make_order">Make Order</string>
-    <string name="fail_to_send_order">Fail To send Order</string>
-    <string name="sending_order">Sendin Order Succes</string>
+    <string name="choose_time">اختر وقت التوصيل </string>
+    <string name="choose_day">اختر يوم  التوصيل </string>
+    <string name="make_order">ارسال الطلب </string>
+    <string name="fail_to_send_order">فشل ارسال الطلب </string>
+    <string name="sending_order">تم  ارسال الطلب بنجاح </string>
     <string name="textEmptyOrders">لم يتم إيجاد طلبات</string>
     <string name="textNoXadoxOrder">لم تقم بطلب منتجات من رامز  حتي الان</string>
     <string name="textStartShopping">ابدأ التسوق</string>
-    <string name="order_now">order_now</string>
+    <string name="order_now">اطلب الان </string>
+    <string name="zoom">تكبير </string>
+    <string name="searchaddress">ابحث عن العنوان من هنا </string>
+    <string name="send_orders"> لقد تم استلام طلبك , شكراً لتسوقكم معنا \n   نسعد بخدمتكم دائما </string>
+    <string name="back_to_home">العودة الى  الرئيسية </string>
 </resources>

@@ -20,6 +20,7 @@ import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.ErrorMessagesDialog;
 import com.ramez.shopp.MainActivity;
+import com.ramez.shopp.Models.GeneralModel;
 import com.ramez.shopp.Models.LoginResultModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ResultAPIModel;
@@ -31,12 +32,12 @@ public class LoginFragment extends FragmentBase {
     final String TAG = "Log";
     String FCMToken;
     private FragmentLoginBinding binding;
-    private  ViewPager viewPager;
+    private ViewPager viewPager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentLoginBinding.inflate(inflater, container, false);
-         viewPager=container.findViewById(R.id.viewPager);
+        viewPager = container.findViewById(R.id.viewPager);
         View view = binding.getRoot();
 
         getDeviceToken();
@@ -78,8 +79,7 @@ public class LoginFragment extends FragmentBase {
         memberModel.setPassword(passwordStr);
         memberModel.setDeviceType(Constants.deviceType);
         memberModel.setDeviceToken(FCMToken);
-//        memberModel.setDeviceId(UtilityApp.getUnique());
-        memberModel.setDeviceId(FCMToken);
+        memberModel.setDeviceId(UtilityApp.getUnique());
         memberModel.setUserType(Constants.user_type);
 
         GlobalData.progressDialog(getActivityy(), R.string.text_login_login, R.string.please_wait_login);
@@ -87,18 +87,36 @@ public class LoginFragment extends FragmentBase {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             GlobalData.hideProgressDialog();
             LoginResultModel result = (LoginResultModel) obj;
+
             if (func.equals(Constants.ERROR)) {
                 String message = getString(R.string.fail_signin);
                 if (result != null && result.getMessage() != null) {
                     message = result.getMessage();
                 }
+
                 GlobalData.errorDialog(getActivityy(), R.string.fail_signin, message);
-            } else {
+            }
+
+            else if (func.equals(Constants.FAIL)) {
+                String message = getString(R.string.fail_signin);
+                if (result != null && result.getMessage() != null) {
+                    message = result.getMessage();
+                }
+                GlobalData.errorDialog(getActivityy(), R.string.fail_signin, message);
+            }
+
+
+
+            else {
                 if (IsSuccess) {
                     MemberModel user = result.data;
                     UtilityApp.setUserData(user);
-                    UpdateToken();
-                    startMain();
+
+                    if(UtilityApp.getUserData()!=null){
+                        UpdateToken();
+                    }
+
+
 
                 } else {
                     Toast(getString(R.string.fail_signin));
@@ -146,7 +164,8 @@ public class LoginFragment extends FragmentBase {
         }
 
     }
-    public  void startMain(){
+
+    public void startMain() {
         Intent intent = new Intent(getActivityy(), MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
@@ -155,18 +174,21 @@ public class LoginFragment extends FragmentBase {
     }
 
     private void UpdateToken() {
-        MemberModel memberModel=UtilityApp.getUserData();
+
+        MemberModel memberModel = UtilityApp.getUserData();
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             GlobalData.hideProgressDialog();
-            LoginResultModel result = (LoginResultModel) obj;
+            GeneralModel result = (GeneralModel) obj;
             if (func.equals(Constants.ERROR)) {
                 String message = getString(R.string.fail_signin);
                 if (result != null && result.getMessage() != null) {
                     message = result.getMessage();
                 }
+                Toast(message);
+
             } else {
                 if (IsSuccess) {
-
+                    startMain();
 
                 } else {
                     Toast(getString(R.string.fail_signin));

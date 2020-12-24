@@ -47,8 +47,10 @@ public class SplashScreenActivity extends ActivityBase {
         new Handler().postDelayed(() -> {
 
             if (UtilityApp.isLogin()) {
-                getUserData(UtilityApp.getUserData().getId());
+                if(UtilityApp.getUserData()!=null){
+                    getUserData(UtilityApp.getUserData().getId());
 
+                }
 
             } else {
 

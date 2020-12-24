@@ -10,6 +10,7 @@ public class ResultAPIModel<T> {
     public T data;
     public ErrorModel error;
     public String message;
+    public int status;
 
 
 }

@@ -42,16 +42,7 @@ public class MyOrderActivity extends ActivityBase {
         View view = binding.getRoot();
         setContentView(view);
 
-
-
-        binding.toolBar.mainTitleTxt.setText(getString(R.string.my_order));
-
-
-
-        binding.toolBar.backBtn.setOnClickListener(view1 -> {
-            onBackPressed();
-        });
-
+        setTitle(R.string.my_order);
 
         binding.viewPager.setAdapter(new MyViewPagerAdapter(getSupportFragmentManager()));
         binding.tabs.setupWithViewPager(binding.viewPager);

@@ -4,19 +4,14 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
-
 import androidx.annotation.Nullable;
-
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.github.dhaval2404.form_validation.rule.NonEmptyRule;
 import com.github.dhaval2404.form_validation.validation.FormValidator;
-import com.hbb20.CountryCodePicker;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
@@ -25,15 +20,11 @@ import com.ramez.shopp.Models.AddressModel;
 import com.ramez.shopp.Models.AddressResultModel;
 import com.ramez.shopp.Models.AreasModel;
 import com.ramez.shopp.Models.AreasResultModel;
-import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.MapHandler;
 import com.ramez.shopp.databinding.ActivityAddNewAddressBinding;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 public class AddNewAddressActivity extends ActivityBase {
     //
@@ -68,18 +59,14 @@ public class AddNewAddressActivity extends ActivityBase {
         stateModelList = new ArrayList<>();
         stateNames = new ArrayList<>();
 
-
-        binding.toolBar.mainTitleTxt.setText(R.string.new_address);
-
-        binding.toolBar.backBtn.setOnClickListener(view1 -> {
-            onBackPressed();
-        });
+        setTitle(R.string.new_address);
         binding.locationBut.setOnClickListener(view1 -> {
+
             Intent intent = new Intent(getActiviy(), MapsActivity.class);
             startActivityForResult(intent, CHOOSE_LOCATION);
 
-
         });
+
 
         getIntentData();
 
@@ -102,17 +89,16 @@ public class AddNewAddressActivity extends ActivityBase {
             binding.toolBar.mainTitleTxt.setText(R.string.edit_address);
             binding.addNewTv.setVisibility(View.GONE);
 
+        }
 
-        } else {
+        else {
             binding.addNewAddressBut.setVisibility(View.VISIBLE);
             binding.editAddressBut.setVisibility(View.GONE);
 
-
         }
+
         countryId = UtilityApp.getLocalData().getCountryId();
-
         GetAreas(countryId);
-
 
         binding.codeSpinner.setOnCountryChangeListener(() -> {
             CountryCode = binding.codeSpinner.getSelectedCountryCodeWithPlus();

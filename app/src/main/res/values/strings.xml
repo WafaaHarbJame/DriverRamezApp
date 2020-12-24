@@ -271,5 +271,9 @@
     <string name="textNoXadoxOrder">You have not ordered products from Ramez yet</string>
     <string name="textStartShopping">Start Shopping</string>
     <string name="order_now">order Now</string>
+    <string name="zoom">Zoom</string>
+    <string name="searchaddress">Find the address here</string>
+    <string name="send_orders"> Your request has been received ,Thank you for shopping with us.\n  We are always happy to serve you </string>
+    <string name="back_to_home">Back To Home</string>
 
 </resources>

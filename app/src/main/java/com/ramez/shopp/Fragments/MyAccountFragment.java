@@ -38,41 +38,39 @@ import com.ramez.shopp.databinding.DialogCheckLoginBinding;
 import com.ramez.shopp.databinding.FragmentMyAccountBinding;
 
 public class MyAccountFragment extends FragmentBase {
+    boolean isLogin = false;
     private FragmentMyAccountBinding binding;
-    boolean isLogin=false;
     private CheckLoginDialog checkLoginDialog;
-
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMyAccountBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        isLogin=UtilityApp.isLogin();
+        isLogin = UtilityApp.isLogin();
 
 
-        if(UtilityApp.isLogin()){
+        if (UtilityApp.isLogin()) {
+
             binding.logoutText.setText(R.string.logout);
-        }
-        else {
-            binding.logoutText.setText(R.string.text_login_login);
-
-        }
-
-
-        if(UtilityApp.isLogin()){
             binding.editProfileBu.setVisibility(View.VISIBLE);
-            MemberModel memberModel=UtilityApp.getUserData();
-            binding.usernameTV.setText(memberModel.getName());
-            binding.emailTv.setText(memberModel.getEmail());
-            Glide.with(getActivityy()).asBitmap().load(memberModel.getProfilePicture()).placeholder(R.drawable.avatar).into(binding.userImg);
 
+            if (UtilityApp.getUserData() != null) {
 
-        }
-        else {
+                MemberModel memberModel = UtilityApp.getUserData();
+                binding.usernameTV.setText(memberModel.getName());
+                binding.emailTv.setText(memberModel.getEmail());
+
+                Glide.with(getActivityy()).asBitmap().load(memberModel.getProfilePicture()).placeholder(R.drawable.avatar).into(binding.userImg);
+
+            }
+
+        } else {
+
+            binding.logoutText.setText(R.string.text_login_login);
             binding.editProfileBu.setVisibility(View.GONE);
 
-
         }
+
 
         binding.termsBtn.setOnClickListener(view1 -> {
             startTermsActivity();
@@ -90,38 +88,34 @@ public class MyAccountFragment extends FragmentBase {
         });
         binding.rateBtn.setOnClickListener(view1 -> {
 
-            if(isLogin){
+            if (isLogin) {
                 startRateAppActivity();
-            }
-            else {
+            } else {
                 showDialog();
             }
         });
 
 
         binding.shareBtn.setOnClickListener(view1 -> {
-            ActivityHandler.shareTextUrl(getActivityy(),getString(R.string.app_name),"","");
+            ActivityHandler.shareTextUrl(getActivityy(), getString(R.string.app_name), "", "");
 
         });
 
         binding.changePassBtn.setOnClickListener(view1 -> {
-            if(isLogin){
+            if (isLogin) {
                 startChangeActivity();
-            }
-            else {
+            } else {
                 showDialog();
             }
-
 
 
         });
 
         binding.favProductBut.setOnClickListener(view1 -> {
-            if(isLogin){
+            if (isLogin) {
                 startFavProductActivity();
-            }
-            else {
-                 showDialog();
+            } else {
+                showDialog();
             }
 
 
@@ -129,10 +123,9 @@ public class MyAccountFragment extends FragmentBase {
 
         binding.myOrderBut.setOnClickListener(view1 -> {
 
-            if(isLogin){
+            if (isLogin) {
                 startOrderActivity();
-            }
-            else {
+            } else {
                 showDialog();
             }
 
@@ -140,26 +133,25 @@ public class MyAccountFragment extends FragmentBase {
         });
 
         binding.editProfileBu.setOnClickListener(view1 -> {
+
             startEditProfileActivity();
 
         });
 
         binding.addressBtn.setOnClickListener(view1 -> {
-            if(isLogin){
+            if (isLogin) {
                 startAddressActivity();
-            }
-            else {
+            } else {
                 showDialog();
             }
 
 
-
         });
         binding.changeCityBtn.setOnClickListener(view1 -> {
-            if(isLogin){
+
+            if (isLogin) {
                 startChangeBranch();
-            }
-            else {
+            } else {
                 showDialog();
             }
 
@@ -171,10 +163,9 @@ public class MyAccountFragment extends FragmentBase {
         });
 
         binding.SupportBtn.setOnClickListener(view1 -> {
-            if(isLogin){
+            if (isLogin) {
                 startSupport();
-            }
-            else {
+            } else {
                 showDialog();
             }
 
@@ -183,11 +174,10 @@ public class MyAccountFragment extends FragmentBase {
 
         binding.logoutBtn.setOnClickListener(view1 -> {
 
-            if(UtilityApp.isLogin()){
-                MemberModel memberModel=UtilityApp.getUserData();
+            if (UtilityApp.isLogin()) {
+                MemberModel memberModel = UtilityApp.getUserData();
                 signOut(memberModel);
-            }
-            else {
+            } else {
                 startLogin();
 
             }
@@ -197,71 +187,76 @@ public class MyAccountFragment extends FragmentBase {
     }
 
     private void showDialog() {
-        checkLoginDialog=new CheckLoginDialog(getActivityy(),R.string.please_login,R.string.text_login_login,R.string.register,null,null);
+        checkLoginDialog = new CheckLoginDialog(getActivityy(), R.string.please_login, R.string.text_login_login, R.string.register, null, null);
         checkLoginDialog.show();
     }
 
     private void startLogin() {
         Intent intent = new Intent(getActivityy(), RegisterLoginActivity.class);
-        intent.putExtra(Constants.LOGIN,true);
+        intent.putExtra(Constants.LOGIN, true);
         startActivity(intent);
     }
 
     private void startSupport() {
-        Intent intent=new Intent(getActivityy(), ContactSupportActivity.class);
+        Intent intent = new Intent(getActivityy(), ContactSupportActivity.class);
         startActivity(intent);
     }
 
     private void startChangeLang() {
-        Intent intent=new Intent(getActivityy(), ChangeLangCurrencyActivity.class);
+        Intent intent = new Intent(getActivityy(), ChangeLangCurrencyActivity.class);
         startActivity(intent);
     }
 
     private void startChangeBranch() {
-        Intent intent=new Intent(getActivityy(), ChangeCityBranchActivity.class);
+        Intent intent = new Intent(getActivityy(), ChangeCityBranchActivity.class);
         startActivity(intent);
     }
 
     private void startAddressActivity() {
-        Intent intent=new Intent(getActivityy(), AddressActivity.class);
+        Intent intent = new Intent(getActivityy(), AddressActivity.class);
         startActivity(intent);
     }
 
     private void startOrderActivity() {
-        Intent intent=new Intent(getActivityy(), MyOrderActivity.class);
+        Intent intent = new Intent(getActivityy(), MyOrderActivity.class);
         startActivity(intent);
     }
+
     private void startEditProfileActivity() {
-        Intent intent=new Intent(getActivityy(), EditProfileActivity.class);
+        Intent intent = new Intent(getActivityy(), EditProfileActivity.class);
         startActivity(intent);
     }
 
-    private void startTermsActivity(){
-        Intent intent=new Intent(getActivityy(), TermsActivity.class);
+    private void startTermsActivity() {
+        Intent intent = new Intent(getActivityy(), TermsActivity.class);
         startActivity(intent);
     }
 
-    private void startConditionActivity(){
-        Intent intent=new Intent(getActivityy(), ConditionActivity.class);
-        startActivity(intent);
-    }
-    private void startAboutActivity(){
-        Intent intent=new Intent(getActivityy(), AboutActivity.class);
+    private void startConditionActivity() {
+        Intent intent = new Intent(getActivityy(), ConditionActivity.class);
         startActivity(intent);
     }
 
-    private void startRateAppActivity(){
-        Intent intent=new Intent(getActivityy(), RatingActivity.class);
+    private void startAboutActivity() {
+        Intent intent = new Intent(getActivityy(), AboutActivity.class);
         startActivity(intent);
     }
-    private void startChangeActivity(){
-        Intent intent=new Intent(getActivityy(), ChangePassActivity.class);
+
+    private void startRateAppActivity() {
+        Intent intent = new Intent(getActivityy(), RatingActivity.class);
         startActivity(intent);
     }
-    private void startFavProductActivity(){
-        Intent intent=new Intent(getActivityy(), FavoriteActivity.class);
+
+    private void startChangeActivity() {
+        Intent intent = new Intent(getActivityy(), ChangePassActivity.class);
         startActivity(intent);
     }
+
+    private void startFavProductActivity() {
+        Intent intent = new Intent(getActivityy(), FavoriteActivity.class);
+        startActivity(intent);
+    }
+
     public void signOut(MemberModel memberModel) {
         ConfirmDialog.Click click = new ConfirmDialog.Click() {
             @Override
