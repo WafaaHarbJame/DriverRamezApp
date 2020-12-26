@@ -51,4 +51,5 @@ public class ProductDetailsModel {
     public void setData(ArrayList<ProductModel> data) {
         this.data = data;
     }
+
 }

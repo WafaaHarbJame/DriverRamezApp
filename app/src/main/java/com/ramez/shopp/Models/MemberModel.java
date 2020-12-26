@@ -54,6 +54,24 @@ public class MemberModel implements Serializable {
     @Expose
     private String profilePicture;
 
+    public String getFacebook_key() {
+        return facebook_key;
+    }
+
+    public void setFacebook_key(String facebook_key) {
+        this.facebook_key = facebook_key;
+    }
+
+    public String getGoogle_key() {
+        return google_key;
+    }
+
+    public void setGoogle_key(String google_key) {
+        this.google_key = google_key;
+    }
+
+    private String facebook_key;
+    private String google_key;
 
     public String getName() {
         return name;

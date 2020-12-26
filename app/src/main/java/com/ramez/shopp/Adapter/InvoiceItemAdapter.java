@@ -20,6 +20,7 @@ import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 import com.google.android.material.snackbar.Snackbar;
 import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.CallBack.DataCallback;
 import com.ramez.shopp.Classes.CartModel;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.R;
@@ -38,12 +39,14 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
     private Context context;
     private List<CartModel> cartDMS;
     private OnInvoiceItemClicked onInvoiceItemClicked;
+    DataCallback dataCallback;
 
 
-    public InvoiceItemAdapter(Context context, List<CartModel> cartDMS, OnInvoiceItemClicked onInvoiceItemClicked) {
+    public InvoiceItemAdapter(Context context, List<CartModel> cartDMS, OnInvoiceItemClicked onInvoiceItemClicked, DataCallback dataCallback) {
         this.context = context;
         this.cartDMS = cartDMS;
         this.onInvoiceItemClicked = onInvoiceItemClicked;
+        this.dataCallback=dataCallback;
 
     }
 
@@ -152,13 +155,16 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
         });
     }
 
+
     public double calculateSubTotalPrice() {
         double subTotal = 0;
         for (int i = 0; i < cartDMS.size(); i++) {
-            if (!cartDMS.get(i).getProductPrice().isNaN()) {
-                subTotal += cartDMS.get(i).getProductPrice() * cartDMS.get(i).getProductQuantity();
+            if (cartDMS.get(i).getProductPrice() > 0) {
+                subTotal += cartDMS.get(i).getProductPrice() * cartDMS.get(i).getQuantity();
             }
         }
+        Log.i(TAG, "Log subTotal result" +subTotal);
+
 
         return subTotal;
     }
@@ -204,13 +210,20 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
                 CartModel productModel = cartDMS.get(getAdapterPosition());
                 int count = productModel.getQuantity();
                 int product_barcode_id = productModel.getProductBarcodeId();
-
+                int cart_id=productModel.getId();
                 int position = getAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getProductId();
+                int stock=productModel.getProductQuantity();
 
-                updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, 0, "quantity");
+                if (count + 1 < stock) {
+                    updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, cart_id, "quantity");
+
+                } else {
+                    initSnackBar(context.getString(R.string.stock_empty), v);
+                }
+
 
             });
 
@@ -224,12 +237,25 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getProductId();
-                int cart_id = 0;
-
+                int cart_id=productModel.getId();
                 deleteCart(view1 ,position, productId, product_barcode_id, cart_id, userId, storeId);
 
             });
 
+
+            binding.deleteBut.setOnClickListener(view1 -> {
+
+                CartModel productModel = cartDMS.get(getAdapterPosition());
+                int count = productModel.getQuantity();
+                int product_barcode_id = productModel.getProductBarcodeId();
+                int position = getAdapterPosition();
+                int userId = UtilityApp.getUserData().getId();
+                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int productId = productModel.getProductId();
+                int cart_id=productModel.getId();
+                deleteCart(view1 ,position, productId, product_barcode_id, cart_id, userId, storeId);
+
+            });
             binding.minusCartBtn.setOnClickListener(v -> {
 
                 CartModel productModel = cartDMS.get(getAdapterPosition());
@@ -240,8 +266,9 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getProductId();
+                int cart_id=productModel.getId();
 
-                updateCart(v, position, productId, product_barcode_id, count - 1, userId, storeId, 0, "quantity");
+                updateCart(v, position, productId, product_barcode_id, count - 1, userId, storeId, cart_id, "quantity");
 
 
             });
@@ -255,8 +282,7 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getProductId();
-                int cart_id = 0;
-
+                int cart_id=productModel.getId();
                 deleteCart(v, position, productId, product_barcode_id, cart_id, userId, storeId);
 
             });
@@ -267,6 +293,11 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
             new DataFeacher(false, (obj, func, IsSuccess) -> {
                 if (IsSuccess) {
 
+                    calculateSubTotalPrice();
+                    if (dataCallback != null) {
+                        if(calculateSubTotalPrice()>0)
+                            dataCallback.dataResult(calculateSubTotalPrice(), "success", true);
+                    }
                     initSnackBar(context.getString(R.string.success_to_update_cart), v);
                     cartDMS.get(position).setQuantity(quantity);
                     notifyItemChanged(position);
@@ -284,8 +315,12 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
             new DataFeacher(false, (obj, func, IsSuccess) -> {
 
                 if (IsSuccess) {
-//                    cartDMS.get(position).setQuantity(0);
-//                    notifyItemChanged(position);
+
+                    calculateSubTotalPrice();
+                    if (dataCallback != null) {
+                        if(calculateSubTotalPrice()>0)
+                            dataCallback.dataResult(calculateSubTotalPrice(), "success", true);
+                    }
                     cartDMS.remove(position);
                     notifyItemRemoved(position);
 

@@ -204,7 +204,7 @@
     <string name="please_wait_sending">Please wait sending ...</string>
     <string name="send_code">"Send Code "</string>
     <string name="oman_shotname" translatable="false">OM</string>
-    <string name="bahrain_shotname" translatable="false">BH</string>
+    <string name="bahrain_shotname" translatable="false">AA</string>
     <string name="Kuwait_shotname" translatable="false">KW</string>
     <string name="United_Arab_Emirates_shotname" translatable="false">AE</string>
     <string name="Qatar_shotname" translatable="false">QA</string>
@@ -275,5 +275,10 @@
     <string name="searchaddress">Find the address here</string>
     <string name="send_orders"> Your request has been received ,Thank you for shopping with us.\n  We are always happy to serve you </string>
     <string name="back_to_home">Back To Home</string>
+    <string name="no_cities">No Cities</string>
+    <string name="stock_empty">Stock Empty</string>
+
+    <string name="facebook_app_id" translatable="false">1545102798941136</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb1545102798941136</string>
 
 </resources>

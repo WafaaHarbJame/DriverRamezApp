@@ -1,75 +1,117 @@
 package com.ramez.shopp.Activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
-import com.ramez.shopp.Adapter.CountriesAdapter;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.google.android.material.snackbar.Snackbar;
 import com.ramez.shopp.Adapter.OrderProductsAdapter;
-import com.ramez.shopp.Models.CountryModel;
-import com.ramez.shopp.Models.OrderProductsModel;
+import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Models.OrderModel;
+import com.ramez.shopp.Models.OrderProductModel;
 import com.ramez.shopp.R;
-import com.ramez.shopp.databinding.ActivityChooseCityBinding;
-import com.ramez.shopp.databinding.ActivityContactSupportBinding;
+import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.ActivityInvoiceInfoBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class InvoiceInfoActivity extends ActivityBase {
+    public String currency = "BHD";
     ActivityInvoiceInfoBinding binding;
-
+    List<OrderProductModel> list;
+    OrderModel orderModel;
     private OrderProductsAdapter orderProductsAdapter;
-    ArrayList<OrderProductsModel> list;
-    LinearLayoutManager linearLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding= ActivityInvoiceInfoBinding.inflate(getLayoutInflater());
-        View view=binding.getRoot();
+        binding = ActivityInvoiceInfoBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
         setContentView(view);
 
-        binding.toolBar.mainTitleTxt.setText(getString(R.string.invoice_details));
+        list = new ArrayList<>();
+        currency = UtilityApp.getLocalData().getCurrencyCode();
 
-        binding.toolBar.backBtn.setOnClickListener(view1 -> {
-            onBackPressed();
+        getIntentData();
+
+        setTitle(R.string.invoice_details);
+
+        binding.reOrderBut.setOnClickListener(view1 -> {
+            for (int i = 0; i <list.size() ; i++) {
+                OrderProductModel orderProductsDM = list.get(i);
+
+                int count = orderProductsDM.getQuantity();
+                int userId = UtilityApp.getUserData().getId();
+                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int productId =orderProductsDM.getProductId();
+                int product_barcode_id = orderProductsDM.getProductVariationId();
+
+                addToCart(view1, i, productId, product_barcode_id, count , userId, storeId);
+
+
+            }
+
         });
-
-
-        list=new ArrayList<>();
-
-        list.add(new OrderProductsModel(1,972,"15",
-                "شيبس ليز الملح 25 جرام","شيبس ليز الملح 25 جرام","12.45","149.40","https://images-na.ssl-images-amazon.com/images/I/91TKOKJe2zL._SL1500_.jpg",0,12));
-
-        list.add(new OrderProductsModel(1,972,"20",
-                "شيبس ليز الملح 25 جرام","شيبس ليز الملح 25 جرام","12.45","149.40","https://images-na.ssl-images-amazon.com/images/I/91TKOKJe2zL._SL1500_.jpg",0,12));
-
-        list.add(new OrderProductsModel(1,972,"20",
-                "شيبس ليز الملح 25 جرام","شيبس ليز الملح 25 جرام","12.45","149.40","https://images-na.ssl-images-amazon.com/images/I/91TKOKJe2zL._SL1500_.jpg",0,12));
-
-        list.add(new OrderProductsModel(1,972,"20",
-                "شيبس ليز الملح 25 جرام","شيبس ليز الملح 25 جرام","12.45","149.40","https://images-na.ssl-images-amazon.com/images/I/91TKOKJe2zL._SL1500_.jpg",0,12));
-
-        list.add(new OrderProductsModel(1,972,getString(R.string.text_registration_country),
-                "شيبس ليز الملح 25 جرام","شيبس ليز الملح 25 جرام","12.45","149.40","https://images-na.ssl-images-amazon.com/images/I/91TKOKJe2zL._SL1500_.jpg",0,12));
-
-        list.add(new OrderProductsModel(1,972,"10",
-                "شيبس ليز الملح 25 جرام","شيبس ليز الملح 25 جرام","12.45","149.40","https://images-na.ssl-images-amazon.com/images/I/91TKOKJe2zL._SL1500_.jpg",0,12));
-
-        list.add(new OrderProductsModel(1,972,"10",
-                "شيبس ليز الملح 25 جرام","شيبس ليز الملح 25 جرام","12.45","149.40","https://images-na.ssl-images-amazon.com/images/I/91TKOKJe2zL._SL1500_.jpg",0,12));
-
-        initAdapter();
 
     }
 
-    public void initAdapter(){
-        linearLayoutManager=new LinearLayoutManager(getActiviy());
+    private void getIntentData() {
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            orderModel = (OrderModel) bundle.getSerializable(Constants.ORDER_MODEL);
+            list = orderModel.getOrderProductsDMS();
+            initAdapter();
+        }
+    }
+
+    public void initAdapter() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActiviy());
         binding.productsRecycler.setLayoutManager(linearLayoutManager);
 
         orderProductsAdapter = new OrderProductsAdapter(getActiviy(), list);
         binding.productsRecycler.setAdapter(orderProductsAdapter);
+        binding.tvTotalPrice.setText((NumberHandler.formatDouble(orderModel.getOrderTotal(), UtilityApp.getLocalData().getFractional()) + " " + currency));
+
+
+    }
+
+    private void addToCart(View v, int i, int productId, int product_barcode_id, int quantity, int userId, int storeId) {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+
+            if (IsSuccess) {
+
+                if (i == list.size() - 1) {
+                    initSnackBar(" " +getResources().getString(R.string.success_to_update_cart), v);
+
+                }
+
+
+            } else {
+
+                initSnackBar(getString(R.string.fail_to_update_cart), v);
+            }
+
+
+        }).addCartHandle(productId, product_barcode_id, quantity, userId, storeId);
+    }
+
+
+    private void initSnackBar(String message, View viewBar) {
+        Snackbar snackbar = Snackbar.make(viewBar, message, Snackbar.LENGTH_SHORT);
+        View view = snackbar.getView();
+        TextView snackBarMessage = view.findViewById(R.id.snackbar_text);
+        snackBarMessage.setTextColor(Color.WHITE);
+        snackbar.setActionTextColor(ContextCompat.getColor(getActiviy(), R.color.green));
+        snackbar.setAction(getString(R.string.show_cart), v -> {
+
+        });
+        snackbar.show();
     }
 }

@@ -40,7 +40,6 @@ public class WelcomeActivity extends ActivityBase {
             binding.viewPager.setCurrentItem(getItem(+1), true);
 
             if(binding.viewPager.getAdapter().getCount()==binding.viewPager.getCurrentItem()+1){
-                UtilityApp.setIsFirstRun(false);
                 navigateChangeLanguage();
 
             }

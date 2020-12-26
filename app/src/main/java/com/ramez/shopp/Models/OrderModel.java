@@ -3,19 +3,13 @@ package com.ramez.shopp.Models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 
-public class OrdersModel {
-    @SerializedName("weight")
-    @Expose
-    private Integer weight;
-    @SerializedName("unit_name")
-    @Expose
-    private String unitName;
-    @SerializedName("h_unit_name")
-    @Expose
-    private String hUnitName;
+public class OrderModel implements Serializable {
+
     @SerializedName("order_code")
     @Expose
     private String orderCode;
@@ -52,27 +46,6 @@ public class OrdersModel {
     @SerializedName("to_date")
     @Expose
     private String toDate;
-    @SerializedName("product_name")
-    @Expose
-    private String productName;
-    @SerializedName("h_product_name")
-    @Expose
-    private String hProductName;
-    @SerializedName("product_id")
-    @Expose
-    private Integer productId;
-    @SerializedName("product_variation_id")
-    @Expose
-    private Integer productVariationId;
-    @SerializedName("quantity")
-    @Expose
-    private Integer quantity;
-    @SerializedName("image")
-    @Expose
-    private String image;
-    @SerializedName("brand_name")
-    @Expose
-    private String brandName;
     @SerializedName("full_address")
     @Expose
     private String fullAddress;
@@ -82,30 +55,18 @@ public class OrdersModel {
     @SerializedName("mobile_number")
     @Expose
     private Object mobileNumber;
+    private List<OrderProductModel> orderProductsDMS;
 
-    public Integer getWeight() {
-        return weight;
+
+
+    public List<OrderProductModel> getOrderProductsDMS() {
+        return orderProductsDMS;
     }
 
-    public void setWeight(Integer weight) {
-        this.weight = weight;
+    public void setOrderProductsDMS(List<OrderProductModel> orderProductsDMS) {
+        this.orderProductsDMS = orderProductsDMS;
     }
 
-    public String getUnitName() {
-        return unitName;
-    }
-
-    public void setUnitName(String unitName) {
-        this.unitName = unitName;
-    }
-
-    public String getHUnitName() {
-        return hUnitName;
-    }
-
-    public void setHUnitName(String hUnitName) {
-        this.hUnitName = hUnitName;
-    }
 
     public String getOrderCode() {
         return orderCode;
@@ -203,61 +164,6 @@ public class OrdersModel {
         this.toDate = toDate;
     }
 
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public String getHProductName() {
-        return hProductName;
-    }
-
-    public void setHProductName(String hProductName) {
-        this.hProductName = hProductName;
-    }
-
-    public Integer getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Integer productId) {
-        this.productId = productId;
-    }
-
-    public Integer getProductVariationId() {
-        return productVariationId;
-    }
-
-    public void setProductVariationId(Integer productVariationId) {
-        this.productVariationId = productVariationId;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public String getBrandName() {
-        return brandName;
-    }
-
-    public void setBrandName(String brandName) {
-        this.brandName = brandName;
-    }
 
     public String getFullAddress() {
         return fullAddress;

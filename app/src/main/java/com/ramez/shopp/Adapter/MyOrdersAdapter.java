@@ -2,12 +2,10 @@ package com.ramez.shopp.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.provider.SyncStateContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -21,14 +19,12 @@ import com.ramez.shopp.Activities.RatingActivity;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.OnLoadMoreListener;
 import com.ramez.shopp.Classes.UtilityApp;
-import com.ramez.shopp.Models.OrdersHeaderModel;
-import com.ramez.shopp.Models.OrdersModel;
+import com.ramez.shopp.Models.OrderModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.DateHandler;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.RowCurrentMyOrderItemBinding;
 import com.ramez.shopp.databinding.RowLoadingBinding;
-import com.ramez.shopp.databinding.RowOrderHeaderItemBinding;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,17 +41,18 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public int nextPage = 1;
     public boolean show_loading = true;
     public int visibleThreshold = 5;
+    public Context context;
     String lang;
-    private Context context;
-    private ArrayList<OrdersModel> objectsList;
+    private List<OrderModel> list;
     private int lastVisibleItem;
     private int totalItemCount;
     private int userId;
     private OnLoadMoreListener mOnLoadMoreListener;
 
-    public MyOrdersAdapter(Context context, RecyclerView rv, ArrayList<OrdersModel> ordersDMS, int userId) {
+
+    public MyOrdersAdapter(Context context, RecyclerView rv, List<OrderModel> ordersDMS, int userId) {
         this.context = context;
-        this.objectsList = ordersDMS;
+        this.list = ordersDMS;
         this.userId = userId;
 
 
@@ -93,7 +90,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder vh = null;
         if (viewType == VIEW_TYPE_ITEM) {
-            RowCurrentMyOrderItemBinding itemView = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.row_current_my_order_item, parent, false);
+            RowCurrentMyOrderItemBinding itemView = RowCurrentMyOrderItemBinding.inflate(LayoutInflater.from(context), parent, false);
             vh = new ItemHolder(itemView);
         } else if (viewType == VIEW_TYPE_LOADING) {
             RowLoadingBinding itemView = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.row_loading, parent, false);
@@ -108,7 +105,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         lang = UtilityApp.getLanguage();
         if (viewHolder instanceof ItemHolder) {
             ItemHolder holder = (ItemHolder) viewHolder;
-            final OrdersModel ordersDM = objectsList.get(position);
+            final OrderModel ordersDM = list.get(position);
 
             holder.binding.tvInvID.setText(ordersDM.getOrderCode());
             holder.binding.tvShopName.setText(R.string.app_name);
@@ -117,7 +114,15 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             // PP:PendingPayment || OH:OnHold || OP:Open  || CM:Complete  || CL:Canceled  || DV:Delivered || Not Defined || CheckoutArea
 
 
-            if (ordersDM.getDeliveryStatus().equals("Processing") || ordersDM.getDeliveryStatus().equals("Received") || ordersDM.getDeliveryStatus().equals("Pending") || ordersDM.getDeliveryStatus().equals("Open") || ordersDM.getDeliveryStatus().equals("CheckoutArea") || ordersDM.getDeliveryStatus().equals("Not Defined")) {
+            if (ordersDM.getDeliveryStatus().equals("Processing") ||
+                    ordersDM.getDeliveryStatus().equals("Received") ||
+                    ordersDM.getDeliveryStatus().equals("Pending") ||
+                    ordersDM.getDeliveryStatus().equals("Open") ||
+                    ordersDM.getDeliveryStatus().equals("CheckoutArea") ||
+                    ordersDM.getDeliveryStatus().equals("Checkout Area") ||
+                    ordersDM.getDeliveryStatus().equals("PendingPayment") ||
+                    ordersDM.getDeliveryStatus().equals("OnHold") ||
+                    ordersDM.getDeliveryStatus().equals("Not Defined")) {
 
                 holder.binding.completeOrderLy.setVisibility(View.GONE);
                 holder.binding.currentLY.setVisibility(View.VISIBLE);
@@ -151,23 +156,26 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             holder.binding.TvDeliveryTime.setText(ordersDM.getDeliveryTime());
 
-            //This order status that reading from Api :  PN:PENDING , RC RECEIVED  ,   CA CHECK OUT , PP PENDING PAYMENT , OH ON HOLD, OP:OPEN ,
+            //This order status that reading from Api :  PN:PENDING , RC RECEIVED  ,
+            // CA CHECK OUT , PP PENDING PAYMENT , OH ON HOLD, OP:OPEN ,
             // CM: COMPETE  CL CANCELED < DV DELIVERED done , cancelled
 
 
-            if (ordersDM.getOrderStatus().equals("PN")) {
+            if (ordersDM.getOrderStatus().equals("PN")||ordersDM.getOrderStatus().equals("RC")
+                    ||ordersDM.getOrderStatus().equals("IP")   ||ordersDM.getOrderStatus().equals("CA")) {
                 holder.binding.doneImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
-            } else if (ordersDM.getOrderStatus().equals("IP")) {
                 holder.binding.processImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
-                holder.binding.doneImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
 
-            } else if (ordersDM.getOrderStatus().equals("DV")) {
+
+            } else if (ordersDM.getOrderStatus().equals("PP")  ||ordersDM.getOrderStatus().equals("OP")
+                    ||ordersDM.getOrderStatus().equals("OH")) {
                 holder.binding.deliveryImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
                 holder.binding.processImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
                 holder.binding.doneImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
 
 
-            } else if (ordersDM.getOrderStatus().equals("CM")) {
+            } else if (ordersDM.getOrderStatus().equals("CM")   ||ordersDM.getOrderStatus().equals("CL")
+                    ||ordersDM.getOrderStatus().equals("DV")) {
                 holder.binding.doneDeliveryImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
                 holder.binding.deliveryImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
                 holder.binding.processImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
@@ -175,32 +183,6 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 
             }
-
-
-            holder.binding.rateOrderBtn.setOnClickListener(v -> {
-                Intent intent = new Intent(context, RatingActivity.class);
-                intent.putExtra(Constants.inv_id, ordersDM.getOrderCode() + "");
-                Log.d(TAG, "inv_id" + ordersDM.getOrderCode() + "");
-                context.startActivity(intent);
-            });
-
-            holder.binding.container.setOnClickListener(v -> {
-
-                Log.i(TAG, "inv_id " + ordersDM.getOrderCode() + "");
-                Intent intent = new Intent(context, OrderDetailsActivity.class);
-                intent.putExtra(Constants.inv_id, ordersDM.getOrderCode() + "");
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-
-
-            });
-
-            holder.binding.orderDetailsBut.setOnClickListener(view -> {
-                Intent intent = new Intent(context, InvoiceInfoActivity.class);
-                intent.putExtra(Constants.inv_id, ordersDM.getOrderCode() + "");
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-            });
 
 
         } else if (viewHolder instanceof LoadingViewHolder) {
@@ -213,12 +195,12 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return objectsList.size();
+        return list.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (objectsList.get(position) == null) return VIEW_TYPE_LOADING;
+        if (list.get(position) == null) return VIEW_TYPE_LOADING;
         else return VIEW_TYPE_ITEM;
 
     }
@@ -235,9 +217,9 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         setOnLoadMoreListener(() -> {
             System.out.println("Log add loading item");
-            if (!objectsList.contains(null)) {
-                objectsList.add(null);
-                notifyItemInserted(objectsList.size() - 1);
+            if (!list.contains(null)) {
+                list.add(null);
+                notifyItemInserted(list.size() - 1);
                 LoadData();
             }
 
@@ -250,17 +232,6 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     }
 
-
-    public static class ItemHolder extends RecyclerView.ViewHolder {
-        RowCurrentMyOrderItemBinding binding;
-
-        public ItemHolder(RowCurrentMyOrderItemBinding view) {
-            super(view.getRoot());
-            binding = view;
-
-        }
-    }
-
     static class LoadingViewHolder extends RecyclerView.ViewHolder {
 
         RowLoadingBinding rowLoadingBinding;
@@ -271,6 +242,46 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         }
 
+    }
+
+    public class ItemHolder extends RecyclerView.ViewHolder {
+        RowCurrentMyOrderItemBinding binding;
+
+        public ItemHolder(RowCurrentMyOrderItemBinding view) {
+            super(view.getRoot());
+            binding = view;
+
+
+            binding.rateOrderBtn.setOnClickListener(view1 -> {
+                int position=getAdapterPosition();
+                OrderModel ordersDM=list.get(position);
+                Intent intent = new Intent(context, RatingActivity.class);
+                intent.putExtra(Constants.inv_id, ordersDM.getOrderCode() + "");
+                Log.d(TAG, "inv_id" + ordersDM.getOrderCode() + "");
+                context.startActivity(intent);
+            });
+
+            binding.container.setOnClickListener(view1 -> {
+                int position=getAdapterPosition();
+
+                OrderModel ordersDM=list.get(position);
+                Intent intent = new Intent(context, InvoiceInfoActivity.class);
+                intent.putExtra(Constants.ORDER_MODEL, ordersDM);
+                context.startActivity(intent);
+
+
+            });
+
+            binding.orderDetailsBut.setOnClickListener(view1 -> {
+                int position=getAdapterPosition();
+                OrderModel ordersDM=list.get(position);
+                Intent intent = new Intent(context, InvoiceInfoActivity.class);
+                intent.putExtra(Constants.ORDER_MODEL, ordersDM);
+                context.startActivity(intent);
+            });
+
+
+        }
     }
 
 

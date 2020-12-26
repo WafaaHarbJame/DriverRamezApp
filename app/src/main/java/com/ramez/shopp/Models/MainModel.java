@@ -28,7 +28,7 @@ public class MainModel {
     private Integer minimumOrderAmount;
     @SerializedName("data")
     @Expose
-    private ArrayList<Object> data = null;
+    private List<Object> data = null;
     @SerializedName("sliders")
     @Expose
     private ArrayList<Slider> sliders = null;
@@ -90,15 +90,15 @@ public class MainModel {
         this.minimumOrderAmount = minimumOrderAmount;
     }
 
-    public ArrayList<Object> getData() {
+    public List<Object> getData() {
         return data;
     }
 
-    public void setData(ArrayList<Object> data) {
+    public void setData(List<Object> data) {
         this.data = data;
     }
 
-    public ArrayList<Slider> getSliders() {
+    public List<Slider> getSliders() {
         return sliders;
     }
 

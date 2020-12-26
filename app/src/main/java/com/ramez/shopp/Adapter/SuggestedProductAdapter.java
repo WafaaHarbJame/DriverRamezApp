@@ -56,7 +56,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        RowSuggestedProductItemBinding itemView =RowSuggestedProductItemBinding.inflate(LayoutInflater.from(context), parent, false);
+        RowSuggestedProductItemBinding itemView = RowSuggestedProductItemBinding.inflate(LayoutInflater.from(context), parent, false);
         return new Holder(itemView);
     }
 
@@ -118,8 +118,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
         }
 
 
-        Glide.with(context).asBitmap().load(productModel.getImages().get(0)).placeholder(R.drawable.holder_image)
-                .placeholder(R.drawable.image_product).addListener(new RequestListener<Bitmap>() {
+        Glide.with(context).asBitmap().load(productModel.getImages().get(0)).placeholder(R.drawable.holder_image).placeholder(R.drawable.image_product).addListener(new RequestListener<Bitmap>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
                 holder.binding.loadingLY.setVisibility(View.GONE);
@@ -205,10 +204,10 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
         View view = snackbar.getView();
         TextView snackBarMessage = view.findViewById(R.id.snackbar_text);
         snackBarMessage.setTextColor(Color.WHITE);
-        snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.green));
-        snackbar.setAction(context.getResources().getString(R.string.show_cart), v -> {
-
-        });
+//        snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.green));
+//        snackbar.setAction(context.getResources().getString(R.string.show_cart), v -> {
+//
+//        });
         snackbar.show();
     }
 
@@ -273,8 +272,16 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
                 int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
+                int cart_id=productModel.getProductBarcodes().get(0).getCartId();
 
-                updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, 0, "quantity");
+                int stock = productModel.getProductBarcodes().get(0).getStockQty();
+
+                if (count + 1 < stock) {
+                    updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, cart_id, "quantity");
+
+                } else {
+                    initSnackBar(context.getString(R.string.stock_empty), v);
+                }
 
             });
 
@@ -301,7 +308,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
                 int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
-                int cart_id = 0;
+                int cart_id=productModel.getProductBarcodes().get(0).getCartId();
 
                 deleteCart(v, position, productId, product_barcode_id, cart_id, userId, storeId);
 
@@ -314,7 +321,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
         @Override
         public void onClick(View v) {
             if (onItemClick != null) {
-                ProductModel productModel=productModels.get(getAdapterPosition());
+                ProductModel productModel = productModels.get(getAdapterPosition());
                 onItemClick.onItemClicked(getAdapterPosition(), productModels.get(getAdapterPosition()));
                 Intent intent = new Intent(context, ProductDetailsActivity.class);
                 intent.putExtra(Constants.DB_productModel, productModel);

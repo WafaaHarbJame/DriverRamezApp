@@ -4,33 +4,14 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
-import com.ramez.shopp.Adapter.MyOrdersAdapter;
-import com.ramez.shopp.ApiHandler.DataFeacher;
-import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Fragments.CurrentOrderFragment;
 import com.ramez.shopp.Fragments.PastOrderFragment;
-import com.ramez.shopp.Models.FavouriteResultModel;
-import com.ramez.shopp.Models.MemberModel;
-import com.ramez.shopp.Models.OrdersHeaderModel;
-import com.ramez.shopp.Models.OrdersModel;
-import com.ramez.shopp.Models.OrdersResultModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.ActivityMyOrderBinding;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static android.content.ContentValues.TAG;
 
 public class MyOrderActivity extends ActivityBase {
     ActivityMyOrderBinding binding;
@@ -75,7 +56,7 @@ public class MyOrderActivity extends ActivityBase {
                     return oldFragment;
 
                 default:
-                    return CurrentOrderFragment.newInstance(position);
+                    return new CurrentOrderFragment();
             }
         }
 

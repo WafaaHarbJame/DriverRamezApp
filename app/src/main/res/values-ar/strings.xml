@@ -165,7 +165,7 @@
     <string name="item">الصنف</string>
     <string name="quantity">الكمية </string>
     <string name="price1">السعر </string>
-    <string name="delete">delete</string>
+    <string name="delete">حذف </string>
     <string name="enter_phone_number">ادخل رقم الهاتف</string>
     <string name="enter_password">ادخل كلمة المرور</string>
     <string name="fail_signin">فشل في تسجيل الدخول </string>
@@ -256,4 +256,7 @@
     <string name="searchaddress">ابحث عن العنوان من هنا </string>
     <string name="send_orders"> لقد تم استلام طلبك , شكراً لتسوقكم معنا \n   نسعد بخدمتكم دائما </string>
     <string name="back_to_home">العودة الى  الرئيسية </string>
+    <string name="stock_empty">نفذ المخزون </string>
+    <string name="no_cities">لا يوجد مدن </string>
+
 </resources>

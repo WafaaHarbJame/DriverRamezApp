@@ -18,12 +18,12 @@ import com.ramez.shopp.RootApplication;
 
 public class GlobalData {
 
-   // public static final String BetaBaseURL = "https://risteh.com/BH/GroceryStoreApi/";
     public static final String BetaBaseURL = "https://risteh.com/";
     public static final String grocery = "/GroceryStoreApi/";
     public static final String BaseURL = BetaBaseURL;
     //public static final String ApiURL = BaseURL + "api/";
     public static final String Api = "api/";
+    public static final String COUNTRY = "AA";
 
 
 

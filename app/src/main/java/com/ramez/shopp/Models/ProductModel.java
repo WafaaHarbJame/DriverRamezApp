@@ -14,9 +14,6 @@ public class ProductModel  implements Serializable, Comparable<ProductModel>{
     @SerializedName("brand_id")
     @Expose
     private Integer brandId;
-    @SerializedName("cart_quantity")
-    @Expose
-    private Integer cartQuantity;
     @SerializedName("category_id")
     @Expose
     private Integer categoryId;
@@ -57,14 +54,6 @@ public class ProductModel  implements Serializable, Comparable<ProductModel>{
 
     public void setBrandId(Integer brandId) {
         this.brandId = brandId;
-    }
-
-    public Integer getCartQuantity() {
-        return cartQuantity;
-    }
-
-    public void setCartQuantity(Integer cartQuantity) {
-        this.cartQuantity = cartQuantity;
     }
 
     public Integer getCategoryId() {
@@ -155,14 +144,6 @@ public class ProductModel  implements Serializable, Comparable<ProductModel>{
         this.productBrand = productBrand;
     }
 
-    @Override
-    public int compareTo(ProductModel productModel) {
-        if (productBarcodes.get(0).getPrice() == 0 ||productModel.getProductBarcodes().get(0).getPrice() == 0) {
-            return 0;
-        }
-        return getProductBarcodes().get(0).getPrice().compareTo(productModel.getProductBarcodes().get(0).getPrice());
-    }
-
     public String getProductName(){
         if(UtilityApp.getLanguage().equals(Constants.English)){
             return name;
@@ -173,4 +154,9 @@ public class ProductModel  implements Serializable, Comparable<ProductModel>{
         }
     }
 
+
+    @Override
+    public int compareTo(ProductModel productModel) {
+        return 0;
+    }
 }

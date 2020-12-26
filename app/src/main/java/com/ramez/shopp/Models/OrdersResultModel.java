@@ -10,7 +10,7 @@ public class OrdersResultModel {
 
     @SerializedName("data")
     @Expose
-    private ArrayList<OrdersModel> data = null;
+    private List<OrderProductModel> data = null;
     @SerializedName("status")
     @Expose
     private Integer status;
@@ -18,11 +18,11 @@ public class OrdersResultModel {
     @Expose
     private String message;
 
-    public ArrayList<OrdersModel> getData() {
+    public List<OrderProductModel> getData() {
         return data;
     }
 
-    public void setData(ArrayList<OrdersModel> data) {
+    public void setData(List<OrderProductModel> data) {
         this.data = data;
     }
 

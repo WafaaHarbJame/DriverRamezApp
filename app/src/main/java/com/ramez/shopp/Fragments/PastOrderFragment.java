@@ -9,15 +9,16 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.ramez.shopp.Adapter.MyOrdersAdapter;
+import com.ramez.shopp.Adapter.OrderProductsAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.MemberModel;
-import com.ramez.shopp.Models.OrdersHeaderModel;
-import com.ramez.shopp.Models.OrdersModel;
+import com.ramez.shopp.Models.OrderProductModel;
+import com.ramez.shopp.Models.OrderProductsModel;
+import com.ramez.shopp.Models.OrderModel;
 import com.ramez.shopp.Models.OrdersResultModel;
 import com.ramez.shopp.R;
-import com.ramez.shopp.databinding.FragmentCurrentOrderBinding;
 import com.ramez.shopp.databinding.FragmentPastOrderBinding;
 
 import java.util.ArrayList;
@@ -27,14 +28,12 @@ import static android.content.ContentValues.TAG;
 
 
 public class PastOrderFragment extends FragmentBase {
-    ArrayList<OrdersModel> completedOrdersList;
+    List<OrderProductModel> completedOrdersList;
     LinearLayoutManager linearLayoutManager;
-    boolean showLoading = true;
     private FragmentPastOrderBinding binding;
     private MyOrdersAdapter myOrdersAdapter;
-    private MemberModel user;
     private int user_id;
-    private List ordersDMS;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,15 +41,14 @@ public class PastOrderFragment extends FragmentBase {
         View view = binding.getRoot();
 
         completedOrdersList = new ArrayList<>();
-        ordersDMS = new ArrayList<>();
 
         linearLayoutManager = new LinearLayoutManager(getActivity());
         binding.myOrderRecycler.setLayoutManager(linearLayoutManager);
 
-        user = UtilityApp.getUserData();
         user_id = UtilityApp.getUserData().getId();
 
         getPastOrder(user_id);
+
 
         binding.swipe.setOnRefreshListener(() -> {
             getPastOrder(user_id);
@@ -60,6 +58,8 @@ public class PastOrderFragment extends FragmentBase {
 
         return view;
     }
+
+
 
     public void getPastOrder(int user_id) {
 
@@ -101,9 +101,14 @@ public class PastOrderFragment extends FragmentBase {
                         binding.dataLY.setVisibility(View.VISIBLE);
                         binding.noDataLY.noDataLY.setVisibility(View.GONE);
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-                        removeDuplicate(result.getData());
 
-                        Log.i(TAG, "Log ordersDMS" + ordersDMS.size());
+                        completedOrdersList = result.getData();
+
+                        List<OrderModel> list= initOrderList();
+
+                        initOrdersAdapters(list);
+
+                        Log.i("TAG", "Log ordersDMS" + completedOrdersList.size());
 
 
                     } else {
@@ -129,30 +134,53 @@ public class PastOrderFragment extends FragmentBase {
     }
 
 
+    private void initOrdersAdapters(List<OrderModel> list) {
 
-    private void initOrdersAdapters() {
-
-        myOrdersAdapter = new MyOrdersAdapter(getActivity(), binding.myOrderRecycler, completedOrdersList, user_id);
+        myOrdersAdapter = new MyOrdersAdapter(getActivity(), binding.myOrderRecycler, list, user_id);
         binding.myOrderRecycler.setAdapter(myOrdersAdapter);
 
 
     }
 
-    private void removeDuplicate(ArrayList<OrdersModel> data) {
-        for (int i = 0; i < data.size(); i++) {
-            for (int j = i + 1; j < data.size(); j++) {
-                if (data.get(i).getOrderCode().equals(data.get(j).getOrderCode())) {
-                    data.remove(j);
+    private List<OrderModel> initOrderList() {
+        List<OrderModel> orderList=new ArrayList<>();
+
+        for (int i = 0; i < completedOrdersList.size(); i++) {
+            OrderProductModel currentProduct = completedOrdersList.get(i);
+
+            OrderModel orderModel=new OrderModel();
+            orderModel.setCartId( currentProduct.getCartId());
+            orderModel.setOrderCode( currentProduct.getOrderCode());
+            orderModel.setAddressName( currentProduct.getAddressName());
+            orderModel.setFullAddress( currentProduct.getFullAddress());
+            orderModel.setDeliveryDate( currentProduct.getDeliveryDate());
+            orderModel.setDeliveryStatus( currentProduct.getDeliveryStatus());
+            orderModel.setOrderStatus( currentProduct.getOrderStatus());
+            orderModel.setFromDate( currentProduct.getFromDate());
+            orderModel.setDeliveryTime( currentProduct.getDeliveryTime());
+            orderModel.setToDate( currentProduct.getToDate());
+            orderModel.setOrderTotal(currentProduct.getOrderTotal());
+            orderModel.setTotalWithoutTax(currentProduct.getTotalWithoutTax());
+            orderModel.setTotalWithTax(currentProduct.getTotalWithTax());
+            List<OrderProductModel> productsList = new ArrayList<>();
+
+            for (int j = 0; j < completedOrdersList.size(); j++) {
+
+                OrderProductModel orderProductModel = completedOrdersList.get(j);
+                if (currentProduct.getOrderCode().equals(orderProductModel.getOrderCode())) {
+                    productsList.add(orderProductModel);
+                    completedOrdersList.remove(j);
                     j--;
                 }
             }
+            orderModel.setOrderProductsDMS(productsList);
+            orderList.add(orderModel);
         }
 
-        if (data.size() > 0) {
-            completedOrdersList = data;
+        Log.i("TAG", "Log currentOrdersList" + orderList.size());
 
-        }
-        initOrdersAdapters();
+        return orderList;
+
     }
 
 }

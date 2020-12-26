@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="bottom"
-    android:background="@drawable/round_top_corner_white_fill"
     android:orientation="vertical">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/round_top_corner_white_fill"
         android:orientation="vertical"
-        android:paddingEnd="@dimen/_16sdp"
-        android:paddingStart="@dimen/_16sdp"
         android:paddingTop="@dimen/_30sdp">
+
 
 
         <com.ramez.shopp.SpichalViews.STextView
@@ -28,61 +27,66 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_16ssp"
+            android:background="@color/white"
             android:clipToPadding="true"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
             android:elevation="@dimen/_2sdp"
             app:cardCornerRadius="@dimen/_8sdp"
-            android:background="@color/white"
-            android:layout_marginBottom="@dimen/_16ssp"
-            app:cardUseCompatPadding="true"
-            android:layout_height="wrap_content">
+            app:cardUseCompatPadding="true">
+
             <com.ramez.shopp.SpichalViews.SEditText
+                android:id="@+id/remarkET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="start"
-                android:inputType="textMultiLine"
-                android:minHeight="@dimen/_100sdp"
                 android:background="@color/transparent"
-                />
+                android:gravity="start"
+                android:padding="@dimen/_8sdp"
+                android:textAlignment="viewStart"
+                android:hint="@string/add_comm"
+                android:inputType="textMultiLine"
+                android:minHeight="@dimen/_100sdp" />
         </androidx.cardview.widget.CardView>
 
         <LinearLayout
-    android:layout_width="match_parent"
-    android:orientation="horizontal"
-    android:layout_gravity="center_vertical"
-    android:gravity="center"
-    android:layout_marginStart="@dimen/_16sdp"
-    android:layout_marginEnd="@dimen/_16sdp"
-    android:layout_marginBottom="@dimen/_30sdp"
-    android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-    <com.ramez.shopp.SpichalViews.STextViewBold
-        android:id="@+id/yesBtn"
-        android:background="@drawable/round_corner_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:minWidth="@dimen/_100sdp"
-        android:padding="@dimen/_8sdp"
-        android:text="@string/add"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_12ssp" />
-    <com.ramez.shopp.SpichalViews.STextViewBold
-        android:id="@+id/noBtn"
-        android:background="@drawable/round_corner_grey"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:minWidth="@dimen/_100sdp"
-        android:text="@string/cancel_label"
-        android:padding="@dimen/_8sdp"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_12ssp" />
-</LinearLayout>
+            <com.ramez.shopp.SpichalViews.STextViewBold
+                android:id="@+id/yesBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/round_corner_next"
+                android:gravity="center"
+                android:minWidth="@dimen/_100sdp"
+                android:padding="@dimen/_8sdp"
+                android:text="@string/add"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp" />
 
-
+            <com.ramez.shopp.SpichalViews.STextViewBold
+                android:id="@+id/noBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:background="@drawable/round_corner_grey"
+                android:gravity="center"
+                android:minWidth="@dimen/_100sdp"
+                android:padding="@dimen/_8sdp"
+                android:text="@string/cancel_label"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_12ssp" />
+        </LinearLayout>
 
     </LinearLayout>
 

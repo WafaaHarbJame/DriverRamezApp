@@ -7,7 +7,6 @@ import java.io.Serializable;
 
 public class ProductBarcode implements Serializable {
 
-
     @SerializedName("cart_quantity")
     @Expose
     private Integer cartQuantity;
@@ -41,6 +40,9 @@ public class ProductBarcode implements Serializable {
     @SerializedName("unit_id")
     @Expose
     private Integer unitId;
+    @SerializedName("cart_id")
+    @Expose
+    private Integer cartId;
 
     public Integer getCartQuantity() {
         return cartQuantity;
@@ -129,4 +131,13 @@ public class ProductBarcode implements Serializable {
     public void setUnitId(Integer unitId) {
         this.unitId = unitId;
     }
+
+    public Integer getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(Integer cartId) {
+        this.cartId = cartId;
+    }
+
 }

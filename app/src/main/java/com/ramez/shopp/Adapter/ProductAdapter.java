@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,7 @@ import com.ramez.shopp.Activities.RegisterLoginActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
@@ -70,12 +73,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
         holder.binding.productNameTv.setText(productModel.getProductName().trim());
 
+
+
         if (productModel.getFavourite() != null && productModel.getFavourite()) {
             holder.binding.favBut.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.favorite_icon));
         } else {
             holder.binding.favBut.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.empty_fav));
 
         }
+
 
         int quantity = productModel.getProductBarcodes().get(0).getCartQuantity();
         if (quantity > 0) {
@@ -119,22 +125,26 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
         }
 
 
-        Glide.with(context).asBitmap().load(productModel.getImages().get(0)).placeholder(R.drawable.holder_image)
-                .placeholder(R.drawable.image_product).addListener(new RequestListener<Bitmap>() {
+        Log.i("tag","Log Image Url "+productModel.getImages().get(0));
+
+        Glide.with(context).load(productModel.getImages().get(0))
+                .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                .placeholder(R.drawable.holder_image).addListener(new RequestListener<Drawable>() {
             @Override
-            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                 holder.binding.loadingLY.setVisibility(View.GONE);
 
                 return false;
             }
 
             @Override
-            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                 holder.binding.loadingLY.setVisibility(View.GONE);
 
                 return false;
             }
-        }).into(holder.binding.productImg);
+        }).into(holder.binding.productImg);;
+
 
 
     }
@@ -206,10 +216,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
         View view = snackbar.getView();
         TextView snackBarMessage = view.findViewById(R.id.snackbar_text);
         snackBarMessage.setTextColor(Color.WHITE);
-        snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.green));
-        snackbar.setAction(context.getResources().getString(R.string.show_cart), v -> {
-
-        });
+//        snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.green));
+//        snackbar.setAction(context.getResources().getString(R.string.show_cart), v -> {
+//
+//        });
         snackbar.show();
     }
 
@@ -227,17 +237,25 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
             itemView.setOnClickListener(this);
 
             binding.favBut.setOnClickListener(view1 -> {
-                int position = getAdapterPosition();
-                int userId = UtilityApp.getUserData().getId();
-                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
-                int productId = productModels.get(position).getId();
-                boolean isFavorite = productModels.get(position).getFavourite();
-                if (isFavorite) {
-                    removeFromFavorite(view1, position, productId, userId, storeId);
+                if (!UtilityApp.isLogin()) {
+
+                    CheckLoginDialog  checkLoginDialog = new CheckLoginDialog(context, R.string.please_login, R.string.text_login_login, R.string.register, null, null);
+                    checkLoginDialog.show();
 
                 } else {
-                    addToFavorite(view1, position, productId, userId, storeId);
 
+                    int position = getAdapterPosition();
+                    int userId = UtilityApp.getUserData().getId();
+                    int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                    int productId = productModels.get(position).getId();
+                    boolean isFavorite = productModels.get(position).getFavourite();
+                    if (isFavorite) {
+                        removeFromFavorite(view1, position, productId, userId, storeId);
+
+                    } else {
+                        addToFavorite(view1, position, productId, userId, storeId);
+
+                    }
                 }
 
             });
@@ -268,14 +286,23 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
                 ProductModel productModel = productModels.get(getAdapterPosition());
                 int count = productModel.getProductBarcodes().get(0).getCartQuantity();
-
+                int stock=productModel.getProductBarcodes().get(0).getStockQty();
                 int position = getAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
                 int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
+                int cart_id=productModel.getProductBarcodes().get(0).getCartId();
 
-                updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, 0, "quantity");
+
+                if(count+1<stock){
+                    updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, cart_id, "quantity");
+
+                }
+                else {
+                    initSnackBar(context.getString(R.string.stock_empty),v);
+                }
+
 
             });
 
@@ -302,7 +329,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
                 int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
-                int cart_id = 0;
+                int cart_id=productModel.getProductBarcodes().get(0).getCartId();
 
                 deleteCart(v, position, productId, product_barcode_id, cart_id, userId, storeId);
 

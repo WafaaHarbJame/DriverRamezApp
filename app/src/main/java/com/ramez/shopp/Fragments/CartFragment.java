@@ -13,8 +13,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.ramez.shopp.Activities.AddCardActivity;
+import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.Adapter.CartAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.CallBack.DataCallback;
 import com.ramez.shopp.Classes.CartModel;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.MessageEvent;
@@ -25,6 +27,7 @@ import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.CartResultModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MemberModel;
+import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.FragmentCartBinding;
@@ -95,7 +98,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
             getCarts(storeId, userId);
 
-            if(cartAdapter!=null){
+            if (cartAdapter != null) {
 
                 cartAdapter.notifyDataSetChanged();
             }
@@ -108,7 +111,16 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
     }
 
     private void initAdapter() {
-        cartAdapter = new CartAdapter(getActivityy(), cartList, this);
+        cartAdapter = new CartAdapter(getActivityy(), cartList, this, new DataCallback() {
+            @Override
+            public void dataResult(Object obj, String func, boolean IsSuccess) {
+
+                total = NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction);
+                binding.totalTv.setText(total.concat(" " + currency));
+                binding.productCostTv.setText(NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction).concat(" " + currency));
+
+            }
+        });
         binding.cartRecycler.setAdapter(cartAdapter);
         productsSize = cartList.size();
         binding.productsSizeTv.setText(String.valueOf(cartAdapter.getItemCount()));
@@ -121,7 +133,13 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
     @Override
     public void onCartItemClicked(CartModel cartDM) {
-
+        Intent intent = new Intent(getActivityy(), ProductDetailsActivity.class);
+        ProductModel productModel = new ProductModel();
+        productModel.setId(cartDM.getProductId());
+        productModel.setName(cartDM.getName());
+        productModel.setHName(cartDM.getHProductName());
+        intent.putExtra(Constants.DB_productModel, productModel);
+        startActivity(intent);
     }
 
     private void startAddCardActivity() {
@@ -137,6 +155,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
         binding.dataLY.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             CartResultModel result = (CartResultModel) obj;

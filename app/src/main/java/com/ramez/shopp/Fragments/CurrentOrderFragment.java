@@ -7,18 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.ramez.shopp.Activities.AllListActivity;
-import com.ramez.shopp.Activities.CategoryProductsActivity;
 import com.ramez.shopp.Adapter.MyOrdersAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.MainActivity;
-import com.ramez.shopp.Models.MemberModel;
-import com.ramez.shopp.Models.OrdersModel;
+import com.ramez.shopp.Models.OrderModel;
+import com.ramez.shopp.Models.OrderProductModel;
 import com.ramez.shopp.Models.OrdersResultModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.FragmentCurrentOrderBinding;
@@ -27,20 +24,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CurrentOrderFragment extends Fragment {
-    static int positionss;
-    ArrayList<OrdersModel> currentOrdersList;
-    LinearLayoutManager linearLayoutManager;
+public class CurrentOrderFragment extends FragmentBase {
+
+    List<OrderProductModel> currentOrdersList;
     private FragmentCurrentOrderBinding binding;
     private MyOrdersAdapter myOrdersAdapter;
-    private MemberModel user;
     private int user_id;
-    private List ordersDMS;
-
-    public static Fragment newInstance(int position) {
-        positionss = position;
-        return new CurrentOrderFragment();
-    }
 
 
     @Override
@@ -49,22 +38,26 @@ public class CurrentOrderFragment extends Fragment {
         View view = binding.getRoot();
 
         currentOrdersList = new ArrayList<>();
-        ordersDMS = new ArrayList<>();
 
-        user = UtilityApp.getUserData();
         user_id = UtilityApp.getUserData().getId();
 
 
-        linearLayoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         binding.myOrderRecycler.setLayoutManager(linearLayoutManager);
 
 
         getUpcomingOrders(user_id);
 
         binding.swipe.setOnRefreshListener(() -> {
-            ordersDMS.clear();
             getUpcomingOrders(user_id);
             binding.swipe.setRefreshing(false);
+        });
+
+        binding.noDataLY.btnBrowseProducts.setOnClickListener(view1 -> {
+
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            startActivity(intent);
+
         });
 
 
@@ -111,8 +104,14 @@ public class CurrentOrderFragment extends Fragment {
                         binding.dataLY.setVisibility(View.VISIBLE);
                         binding.noDataLY.noDataLY.setVisibility(View.GONE);
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-                        removeDuplicateCurrent(result.getData());
-                        Log.i("TAG", "Log ordersDMS" + ordersDMS.size());
+
+                        currentOrdersList = result.getData();
+
+                        List<OrderModel> list= initOrderList();
+
+                        initOrdersAdapters(list);
+
+                        Log.i("TAG", "Log ordersDMS" + currentOrdersList.size());
 
 
                     } else {
@@ -137,38 +136,50 @@ public class CurrentOrderFragment extends Fragment {
         }).getUpcomingOrders(user_id);
     }
 
-    private void removeDuplicateCurrent(ArrayList<OrdersModel> data) {
-        for (int i = 0; i < data.size(); i++) {
-            for (int j = i + 1; j < data.size(); j++) {
-                if (data.get(i).getOrderCode().equals(data.get(j).getOrderCode())) {
-                    data.remove(j);
+    private List<OrderModel> initOrderList() {
+        List<OrderModel> orderList=new ArrayList<>();
+
+        for (int i = 0; i < currentOrdersList.size(); i++) {
+            OrderProductModel currentProduct = currentOrdersList.get(i);
+
+            OrderModel orderModel=new OrderModel();
+            orderModel.setCartId( currentProduct.getCartId());
+            orderModel.setOrderCode( currentProduct.getOrderCode());
+            orderModel.setAddressName( currentProduct.getAddressName());
+            orderModel.setFullAddress( currentProduct.getFullAddress());
+            orderModel.setDeliveryDate( currentProduct.getDeliveryDate());
+            orderModel.setDeliveryStatus( currentProduct.getDeliveryStatus());
+            orderModel.setOrderStatus( currentProduct.getOrderStatus());
+            orderModel.setFromDate( currentProduct.getFromDate());
+            orderModel.setDeliveryTime( currentProduct.getDeliveryTime());
+            orderModel.setToDate( currentProduct.getToDate());
+            orderModel.setOrderTotal(currentProduct.getOrderTotal());
+            orderModel.setTotalWithoutTax(currentProduct.getTotalWithoutTax());
+            orderModel.setTotalWithTax(currentProduct.getTotalWithTax());
+            List<OrderProductModel> productsList = new ArrayList<>();
+            for (int j = 0; j < currentOrdersList.size(); j++) {
+
+                OrderProductModel orderProductModel = currentOrdersList.get(j);
+                if (currentProduct.getOrderCode().equals(orderProductModel.getOrderCode())) {
+                    productsList.add(orderProductModel);
+                    currentOrdersList.remove(j);
                     j--;
                 }
             }
+            orderModel.setOrderProductsDMS(productsList);
+            orderList.add(orderModel);
         }
 
-        if (data.size() > 0) {
-            currentOrdersList = data;
-        }
+        Log.i("TAG", "Log currentOrdersList" + orderList.size());
 
-        Log.i("TAG", "Log currentOrdersList" + currentOrdersList.size());
-
-        initOrdersAdapters();
-
-
-        binding.noDataLY.btnBrowseProducts.setOnClickListener(view -> {
-
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            startActivity(intent);
-
-        });
+        return orderList;
 
     }
 
 
-    private void initOrdersAdapters() {
+    private void initOrdersAdapters(List<OrderModel> list) {
 
-        myOrdersAdapter = new MyOrdersAdapter(getActivity(), binding.myOrderRecycler, currentOrdersList, user_id);
+        myOrdersAdapter = new MyOrdersAdapter(getActivity(), binding.myOrderRecycler, list, user_id);
         binding.myOrderRecycler.setAdapter(myOrdersAdapter);
 
 

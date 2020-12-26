@@ -131,7 +131,8 @@ dependencies {
     }
     implementation 'com.amitshekhar.android:android-networking:1.0.2'
     implementation 'com.github.ajithvgiri:SearchDialog:v1.0'
-
+   // implementation 'com.facebook.android:facebook-login:[8.1)'
+    implementation 'com.facebook.android:facebook-android-sdk:4.26.0'
 
 }
 apply plugin: 'com.google.gms.google-services'

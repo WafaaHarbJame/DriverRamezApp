@@ -1,11 +1,13 @@
 package com.ramez.shopp.ApiHandler;
 
 
+import android.accounts.Account;
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.AddressModel;
 import com.ramez.shopp.Models.LoginResultModel;
@@ -30,7 +32,7 @@ import retrofit2.Response;
 
 public class DataFeacher {
     final String TAG = "Log";
-    final String LOGIN_URL = "/BH/GroceryStoreApi/api/v3/Account/login";
+    final String LOGIN_URL = "/"+ GlobalData.COUNTRY+ "/GroceryStoreApi/api/v3/Account/login";
     DataFetcherCallBack dataFetcherCallBack;
     ApiInterface apiService;
     //    int city;
@@ -118,20 +120,20 @@ public class DataFeacher {
                     System.out.println("Log url " + call.request().url().url().getPath());
 
                     String url = call.request().url().url().getPath();
-                    if (url.equals(LOGIN_URL)){
+                    if (url.equals(LOGIN_URL)) {
                         LoginResultModel result = (LoginResultModel) response.body();
 
                         if (dataFetcherCallBack != null) {
 
-                        if (result != null && result.getStatus() == 0) {
-                            dataFetcherCallBack.Result(response.body(), Constants.ERROR, false);
+                            if (result != null && result.getStatus() == 0) {
+                                dataFetcherCallBack.Result(response.body(), Constants.ERROR, false);
 
-                        } else {
-                            dataFetcherCallBack.Result(response.body(), Constants.success, true);
-                        }
+                            } else {
+                                dataFetcherCallBack.Result(response.body(), Constants.success, true);
+                            }
                         }
 
-                    }else{
+                    } else {
                         if (dataFetcherCallBack != null)
                             dataFetcherCallBack.Result(response.body(), Constants.success, true);
                     }
@@ -304,12 +306,18 @@ public class DataFeacher {
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log country_id " + country_id);
 
+        String countryCode = "";
+        if (UtilityApp.getLocalData().getShortname() != null)
+            countryCode = UtilityApp.getLocalData().getShortname();
+        else countryCode =GlobalData.COUNTRY;
+
+        String url = " https://risteh.com/" + countryCode + "/GroceryStoreApi/api/v3/Locations/citiesByCountry";
+
         if (UtilityApp.getLanguage() != null) {
             lang = UtilityApp.getLanguage();
         } else {
             lang = Locale.getDefault().getLanguage();
         }
-
 
         Log.i(TAG, "Log lang " + lang);
 
@@ -317,7 +325,7 @@ public class DataFeacher {
         params.put("country_id", country_id);
 
 
-        Call call = apiService.GetCity(headerMap, params);
+        Call call = apiService.GetCity(url, headerMap, params);
         call.enqueue(callbackApi);
     }
 
@@ -565,6 +573,26 @@ public class DataFeacher {
         Call call = apiService.deleteCartItems(headerMap, params);
         call.enqueue(callbackApi);
     }
+
+
+    public void updateRemarkCartHandle(int cart_id, String remark) {
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("cart_id", cart_id);
+        params.put("remark", remark);
+
+
+
+        Log.i(TAG, "Log updateRemarkCartHandle");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log remark " + remark);
+        Log.i(TAG, "Log cart_id " + cart_id);
+
+
+        Call call = apiService.updateRemark(headerMap, params);
+        call.enqueue(callbackApi);
+    }
+
 
     public void GetCarts(int sotre_id, int user_id) {
 

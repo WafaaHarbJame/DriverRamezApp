@@ -36,6 +36,7 @@ import retrofit2.http.HeaderMap;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 
 public interface
@@ -76,8 +77,8 @@ ApiInterface {
     @POST("v3/Locations/countryList")
     Call<CountryModelResult> GetCountry(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
-    @POST("v3/Locations/citiesByCountry")
-    Call<CityModelResult> GetCity(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
+    @POST
+    Call<CityModelResult> GetCity(@Url String url, @HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
     @GET("v3/Locations/getAreas")
     Call<AreasResultModel> GetAreas(@HeaderMap() Map<String, Object> headerParams, @Query("country_id") int country_id);
@@ -120,6 +121,10 @@ ApiInterface {
     @POST("v3/Carts/deleteCartItems")
     Call<GeneralModel> deleteCartItems(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
+    @POST("v3/Carts/updateRemark")
+    Call<GeneralModel> updateRemark(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
+
+
     @POST("v3/Carts/updateCart")
     Call<GeneralModel> updateCart(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
@@ -136,18 +141,13 @@ ApiInterface {
     Call<ResultAPIModel<GeneralModel>> uploadPhoto(@HeaderMap() Map<String, Object> headerParams, @Body RequestBody params, @Query("user_id") int user_id);
 
     @GET("v3/Products/search")
-    Call<FavouriteResultModel> searchProduct(@HeaderMap() Map<String, Object> headerParams, @Query("country_id")
-            int country_id, @Query("city_id") int city_id, @Query("user_id") String user_id, @Query("text") String text
-            , @Query("page_number") int page_number, @Query("page_size") int page_size);
+    Call<FavouriteResultModel> searchProduct(@HeaderMap() Map<String, Object> headerParams, @Query("country_id") int country_id, @Query("city_id") int city_id, @Query("user_id") String user_id, @Query("text") String text, @Query("page_number") int page_number, @Query("page_size") int page_size);
 
     @GET("v3/Products/barcodeSearch")
-    Call<FavouriteResultModel> barcodeSearch(@HeaderMap() Map<String, Object> headerParams, @Query("country_id")
-            int country_id, @Query("city_id") int city_id, @Query("user_id") String user_id, @Query("barcode") String barcode
-            , @Query("page_number") int page_number, @Query("page_size") int page_size);
+    Call<FavouriteResultModel> barcodeSearch(@HeaderMap() Map<String, Object> headerParams, @Query("country_id") int country_id, @Query("city_id") int city_id, @Query("user_id") String user_id, @Query("barcode") String barcode, @Query("page_number") int page_number, @Query("page_size") int page_size);
 
     @GET("v3/Products/autocomplete")
-    Call<AutoCompeteResult> autocomplete(@HeaderMap() Map<String, Object> headerParams, @Query("country_id")
-            int country_id, @Query("city_id") int city_id, @Query("user_id") String user_id, @Query("text") String text);
+    Call<AutoCompeteResult> autocomplete(@HeaderMap() Map<String, Object> headerParams, @Query("country_id") int country_id, @Query("city_id") int city_id, @Query("user_id") String user_id, @Query("text") String text);
 
     @GET("v3/Products/productList")
     Call<FavouriteResultModel> getCatProductList(@HeaderMap() Map<String, Object> headerParams, @Query("category_id") int category_id, @Query("country_id") int country_id, @Query("city_id") int city_id, @Query("user_id") String user_id, @Query("filter") String filter, @Query("page_number") int page_number, @Query("page_size") int page_size);
@@ -163,13 +163,11 @@ ApiInterface {
     Call<OrdersResultModel> getOrderDelivery(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id);
 
     @GET("v3/Orders/getPaymentMethod")
-    Call<PaymentResultModel> getPaymentMethod(@HeaderMap() Map<String, Object> headerParams, @Query("sotre_id")
-            int sotre_id);
+    Call<PaymentResultModel> getPaymentMethod(@HeaderMap() Map<String, Object> headerParams, @Query("sotre_id") int sotre_id);
 
 
     @GET("v3/Orders/deliveryTimeList")
-    Call<DeliveryResultModel> getDeliveryTimeList(@HeaderMap() Map<String, Object> headerParams, @Query("sotre_id")
-            int sotre_id);
+    Call<DeliveryResultModel> getDeliveryTimeList(@HeaderMap() Map<String, Object> headerParams, @Query("sotre_id") int sotre_id);
 
     @POST("v3/Orders/CreateOrder")
     Call<OrdersResultModel> makeOrder(@HeaderMap() Map<String, Object> headerParams, @Body OrderCall param);

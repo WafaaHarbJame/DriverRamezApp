@@ -1,40 +1,36 @@
 package com.ramez.shopp.Adapter;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
+import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 import com.google.android.material.snackbar.Snackbar;
+import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.CallBack.DataCallback;
 import com.ramez.shopp.Classes.CartModel;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
-import com.ramez.shopp.Models.CartData;
+import com.ramez.shopp.Dialogs.AddCommentDialog;
+import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.RowCartItemBinding;
 
-import java.io.IOException;
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 
 public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
@@ -42,15 +38,18 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
     private static final String TAG = "Log CartAdapter";
     public int count;
     public String currency = "BHD";
+    DataCallback dataCallback;
+    AddCommentDialog addCommentDialog;
     private Context context;
     private List<CartModel> cartDMS;
     private OnCartItemClicked onCartItemClicked;
 
 
-    public CartAdapter(Context context, List<CartModel> cartDMS, OnCartItemClicked onCartItemClicked) {
+    public CartAdapter(Context context, List<CartModel> cartDMS, OnCartItemClicked onCartItemClicked, DataCallback dataCallback) {
         this.context = context;
         this.cartDMS = cartDMS;
         this.onCartItemClicked = onCartItemClicked;
+        this.dataCallback = dataCallback;
 
     }
 
@@ -81,33 +80,22 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
         }
 
+
+        holder.binding.productMarkTv.setText(cartDM.getRemark());
+
         holder.binding.tvName.setText(cartDM.getName());
-
-        holder.binding.cardViewOuter.setOnClickListener(v -> {
-            Log.d(TAG, "name p" + cartDM.getProductName());
-
-            onCartItemClicked.onCartItemClicked(cartDM);
-
-        });
-
-        holder.binding.imageView1.setOnClickListener(v -> {
-            Log.d(TAG, "name p" + cartDM.getProductName());
-
-            onCartItemClicked.onCartItemClicked(cartDM);
-        });
 
 
         if (cartDM.getProductPrice() > 0) {
-            double subTotal=0;
-            if(cartDM.getSpecialPrice()==0){
+            double subTotal = 0;
+            if (cartDM.getSpecialPrice() == 0) {
                 holder.binding.priceTv.setText(cartDM.getProductPrice().toString());
-                 subTotal = cartDM.getProductPrice() * cartDM.getQuantity();
+                subTotal = cartDM.getProductPrice() * cartDM.getQuantity();
 
 
-            }
-            else {
+            } else {
                 holder.binding.priceTv.setText(cartDM.getSpecialPrice().toString());
-                 subTotal = cartDM.getSpecialPrice() * cartDM.getQuantity();
+                subTotal = cartDM.getSpecialPrice() * cartDM.getQuantity();
 
             }
 
@@ -170,6 +158,8 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
             }
         });
+
+
     }
 
     public double calculateSubTotalPrice() {
@@ -179,7 +169,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                 subTotal += cartDMS.get(i).getProductPrice() * cartDMS.get(i).getQuantity();
             }
         }
-        Log.i(TAG, "Log subTotal result" +subTotal);
+        Log.i(TAG, "Log subTotal result" + subTotal);
 
 
         return subTotal;
@@ -191,10 +181,41 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
         return cartDMS.size();
     }
 
+
     public int getSwipeLayoutResourceId(int position) {
         return R.id.swipe;
     }
 
+
+    private void initSnackBar(String message, View viewBar) {
+        Snackbar snackbar = Snackbar.make(viewBar, message, Snackbar.LENGTH_SHORT);
+        View view = snackbar.getView();
+        TextView snackBarMessage = view.findViewById(R.id.snackbar_text);
+        snackBarMessage.setTextColor(Color.WHITE);
+        snackbar.show();
+    }
+
+    private void updateMark(View v, int position, int cart_id, String remark) {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+
+            if (IsSuccess) {
+
+                addCommentDialog.dismiss();
+                notifyDataSetChanged();
+                notifyItemChanged(position);
+                initSnackBar(context.getString(R.string.success_to_update_cart), v);
+                cartDMS.get(position).setRemark(remark);
+
+
+            } else {
+                addCommentDialog.dismiss();
+
+                initSnackBar(context.getString(R.string.fail_to_update_cart), v);
+            }
+
+
+        }).updateRemarkCartHandle(cart_id, remark);
+    }
 
     public interface OnCartItemClicked {
         void onCartItemClicked(CartModel cartDM);
@@ -209,19 +230,91 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             super(view.getRoot());
             binding = view;
 
+            binding.cardView.setOnClickListener(v -> {
+
+                CartModel cartDM = cartDMS.get(getAdapterPosition());
+                onCartItemClicked.onCartItemClicked(cartDM);
+            });
+
+
+            binding.editBut.setOnClickListener(view1 -> {
+
+                int position = getAdapterPosition();
+                CartModel cartModel = cartDMS.get(position);
+
+                AddCommentDialog.Click okBut = new AddCommentDialog.Click() {
+                    @Override
+                    public void click() {
+                        String remark = ((EditText) addCommentDialog.findViewById(R.id.remarkET)).getText().toString();
+
+                        updateMark(view1, position, cartModel.getId(), remark);
+
+
+                    }
+                };
+
+                AddCommentDialog.Click cancelBut = new AddCommentDialog.Click() {
+                    @Override
+                    public void click() {
+                        addCommentDialog.dismiss();
+
+
+                    }
+                };
+
+                addCommentDialog = new AddCommentDialog(context,cartModel.getRemark() , R.string.add_comment, R.string.add_comment, okBut, cancelBut);
+
+                addCommentDialog.show();
+
+
+            });
+            binding.deleteBut.setOnClickListener(view1 -> {
+
+                CartModel productModel = cartDMS.get(getAdapterPosition());
+                int count = productModel.getQuantity();
+                int product_barcode_id = productModel.getProductBarcodeId();
+                int position = getAdapterPosition();
+                int userId = UtilityApp.getUserData().getId();
+                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int productId = productModel.getProductId();
+                int cart_id = 0;
+
+                deleteCart(view1, position, productId, product_barcode_id, cart_id, userId, storeId);
+
+
+            });
+
+            binding.menuBut.setOnClickListener(view1 -> {
+
+                CartModel cartModel = cartDMS.get(getAdapterPosition());
+                Intent intent = new Intent(context, ProductDetailsActivity.class);
+                ProductModel productModel = new ProductModel();
+                productModel.setId(cartModel.getProductId());
+                productModel.setHName(cartModel.getHProductName());
+                productModel.setName(cartModel.getHProductName());
+                intent.putExtra(Constants.DB_productModel, productModel);
+                context.startActivity(intent);
+
+            });
 
             binding.plusCartBtn.setOnClickListener(v -> {
 
                 CartModel productModel = cartDMS.get(getAdapterPosition());
                 int count = productModel.getQuantity();
+                int stock = productModel.getProductQuantity();
                 int product_barcode_id = productModel.getProductBarcodeId();
 
                 int position = getAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getProductId();
+                if (count + 1 < stock) {
+                    updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, 0, "quantity");
 
-                updateCart(v,position, productId, product_barcode_id, count + 1, userId, storeId, 0, "quantity");
+                } else {
+                    initSnackBar(context.getString(R.string.stock_empty), v);
+                }
+
 
             });
 
@@ -236,7 +329,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getProductId();
 
-                updateCart(v,position, productId, product_barcode_id, count - 1, userId, storeId, 0, "quantity");
+                updateCart(v, position, productId, product_barcode_id, count - 1, userId, storeId, 0, "quantity");
 
 
             });
@@ -252,49 +345,58 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                 int productId = productModel.getProductId();
                 int cart_id = 0;
 
-                deleteCart(v,position, productId, product_barcode_id, cart_id, userId, storeId);
+                deleteCart(v, position, productId, product_barcode_id, cart_id, userId, storeId);
 
             });
 
         }
 
 
-        private void updateCart(View v,int position, int productId, int product_barcode_id, int quantity, int userId, int storeId, int cart_id, String update_quantity) {
+        private void updateCart(View v, int position, int productId, int product_barcode_id, int quantity, int userId, int storeId, int cart_id, String update_quantity) {
             new DataFeacher(false, (obj, func, IsSuccess) -> {
                 if (IsSuccess) {
 
                     calculateSubTotalPrice();
 
-                    initSnackBar(context.getString(R.string.success_to_update_cart),v);
+                    if (dataCallback != null) {
+                        if (calculateSubTotalPrice() > 0)
+                            dataCallback.dataResult(calculateSubTotalPrice(), "success", true);
+                    }
+                    initSnackBar(context.getString(R.string.success_to_update_cart), v);
                     cartDMS.get(position).setQuantity(quantity);
                     notifyItemChanged(position);
 
 
                 } else {
 
-                    initSnackBar(context.getString(R.string.fail_to_update_cart),v);
+                    initSnackBar(context.getString(R.string.fail_to_update_cart), v);
 
                 }
 
             }).updateCartHandle(productId, product_barcode_id, quantity, userId, storeId, cart_id, update_quantity);
         }
 
-        private void deleteCart(View v,int position, int productId, int product_barcode_id, int cart_id, int userId, int storeId) {
+        private void deleteCart(View v, int position, int productId, int product_barcode_id, int cart_id, int userId, int storeId) {
             new DataFeacher(false, (obj, func, IsSuccess) -> {
 
                 if (IsSuccess) {
 
                     calculateSubTotalPrice();
 
+                    if (dataCallback != null) {
+                        if (calculateSubTotalPrice() > 0)
+                            dataCallback.dataResult(calculateSubTotalPrice(), "success", true);
+                    }
                     cartDMS.remove(position);
                     notifyItemRemoved(position);
 
-                    initSnackBar(context.getString(R.string.success_delete_from_cart),v);
+
+                    initSnackBar(context.getString(R.string.success_delete_from_cart), v);
 
 
                 } else {
 
-                    initSnackBar(context.getString(R.string.fail_to_delete_cart),v);
+                    initSnackBar(context.getString(R.string.fail_to_delete_cart), v);
                 }
 
 
@@ -303,19 +405,6 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
 
     }
-
-    private void initSnackBar(String message, View viewBar) {
-        Snackbar snackbar = Snackbar.make(viewBar, message, Snackbar.LENGTH_SHORT);
-        View view = snackbar.getView();
-        TextView snackBarMessage = view.findViewById(R.id.snackbar_text);
-        snackBarMessage.setTextColor(Color.WHITE);
-        snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.green));
-        snackbar.setAction(context.getResources().getString(R.string.show_cart), v -> {
-
-        });
-        snackbar.show();
-    }
-
 
 
 }

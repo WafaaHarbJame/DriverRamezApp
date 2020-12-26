@@ -79,7 +79,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         this.city_id = city_id;
         this.country_id = country_id;
         this.user_id = user_id;
-        this.rv=rv;
+        this.rv = rv;
 
 
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
@@ -301,10 +301,10 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         View view = snackbar.getView();
         TextView snackBarMessage = view.findViewById(R.id.snackbar_text);
         snackBarMessage.setTextColor(Color.WHITE);
-        snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.green));
-        snackbar.setAction(context.getResources().getString(R.string.show_cart), v -> {
-
-        });
+        //   snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.green));
+//        snackbar.setAction(context.getResources().getString(R.string.show_cart), v -> {
+//
+//        });
         snackbar.show();
     }
 
@@ -461,8 +461,17 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
                 int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
+                int stock = productModel.getProductBarcodes().get(0).getStockQty();
+                int cart_id = productModel.getProductBarcodes().get(0).getCartId();
 
-                updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, 0, "quantity");
+                if (count + 1 < stock) {
+
+                    updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, cart_id, "quantity");
+
+                } else {
+                    initSnackBar(context.getString(R.string.stock_empty), v);
+                }
+
 
             });
 
@@ -489,7 +498,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
                 int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
-                int cart_id = 0;
+                int cart_id = productModel.getProductBarcodes().get(0).getCartId();
 
                 deleteCart(v, position, productId, product_barcode_id, cart_id, userId, storeId);
 

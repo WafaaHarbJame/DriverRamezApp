@@ -14,8 +14,12 @@
         android:background="@drawable/toolbar_back1"
         android:orientation="vertical" />
 
+
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
+        android:id="@+id/dataLY"
+        android:visibility="visible"
         android:layout_height="match_parent">
 
 

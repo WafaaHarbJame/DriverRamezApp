@@ -29,7 +29,7 @@ public class CartModel implements Serializable {
     private Integer scheduled;
     @SerializedName("remark")
     @Expose
-    private Object remark;
+    private String remark="";
     @SerializedName("product_price")
     @Expose
     private Double productPrice;
@@ -153,11 +153,11 @@ public class CartModel implements Serializable {
         this.scheduled = scheduled;
     }
 
-    public Object getRemark() {
+    public String getRemark() {
         return remark;
     }
 
-    public void setRemark(Object remark) {
+    public void setRemark(String remark) {
         this.remark = remark;
     }
 

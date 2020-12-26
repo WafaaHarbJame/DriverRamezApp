@@ -75,10 +75,9 @@ public class ApiClient {
     public static Retrofit getClient() {
         if(UtilityApp.getLocalData().getShortname()!=null){
             country=UtilityApp.getLocalData().getShortname();
-
         }
         else {
-            country="BH";
+            country=GlobalData.COUNTRY;
 
         }
         BASE_URL=GlobalData.BetaBaseURL+ country+GlobalData.grocery+GlobalData.Api;
@@ -87,13 +86,14 @@ public class ApiClient {
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
-        if (retrofit == null) {
+//        if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .client(getOkClient())
                     .build();
-        }
+//        }
+
         return retrofit;
     }
 
@@ -103,7 +103,7 @@ public class ApiClient {
 
         }
         else {
-            country="BH";
+            country=GlobalData.COUNTRY;
 
         }
         BASE_URL=GlobalData.BetaBaseURL+ country+GlobalData.grocery+GlobalData.Api;
@@ -133,9 +133,9 @@ public class ApiClient {
         OkHttpClient.Builder client = new OkHttpClient.Builder()
 //                .addInterceptor(interceptor)
                 .connectionSpecs(specs)
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(10, TimeUnit.SECONDS)
-                .writeTimeout(10, TimeUnit.SECONDS);
+                .connectTimeout(20, TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS)
+                .writeTimeout(20, TimeUnit.SECONDS);
 
 
 
