@@ -23,8 +23,8 @@
 
             <com.wang.avi.AVLoadingIndicatorView
                 android:id="@+id/loadingLY"
-                android:layout_width="@dimen/_125sdp"
-                android:layout_height="@dimen/_125sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center_horizontal"
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:visibility="gone"
@@ -106,9 +106,9 @@
             android:id="@+id/productPriceTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_8sdp"
             android:gravity="center"
             android:text="@string/_10220_aed"
-            android:layout_marginEnd="@dimen/_8sdp"
             android:textColor="@color/green"
             android:textSize="@dimen/_10ssp"
             android:textStyle="bold" />
@@ -137,6 +137,7 @@
             android:visibility="visible" />
 
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/CartLy"
         android:layout_width="match_parent"
@@ -149,23 +150,21 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/productPriceLy"
-        >
+        app:layout_constraintTop_toBottomOf="@id/productPriceLy">
 
 
         <ImageView
             android:id="@+id/plusCartBtn"
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
-            android:minWidth="@dimen/_20sdp"
-            android:minHeight="@dimen/_20sdp"
-            android:visibility="visible"
-            android:padding="@dimen/_4sdp"
             android:layout_marginEnd="@dimen/_8sdp"
             android:background="@drawable/counter_green"
-            app:tint="@color/white"
+            android:minWidth="@dimen/_20sdp"
+            android:minHeight="@dimen/_20sdp"
+            android:padding="@dimen/_4sdp"
+            android:visibility="visible"
             app:srcCompat="@drawable/plus"
-            />
+            app:tint="@color/white" />
 
         <TextView
             android:id="@+id/productCartQTY"
@@ -173,10 +172,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="@dimen/_8ssp"
+            android:layout_marginEnd="@dimen/_8sdp"
             android:gravity="center"
             android:minWidth="@dimen/_20sdp"
             android:minHeight="@dimen/_20sdp"
-            android:layout_marginEnd="@dimen/_8sdp"
             android:text="1"
             android:textAllCaps="false"
             android:textColor="@color/black"
@@ -188,24 +187,24 @@
             android:id="@+id/minusCartBtn"
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
+            android:layout_marginStart="@dimen/_8ssp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:background="@drawable/counter_green"
             android:minWidth="@dimen/_20sdp"
             android:minHeight="@dimen/_20sdp"
-            android:visibility="visible"
-            android:padding="@dimen/_4sdp"
-            android:layout_marginEnd="@dimen/_8sdp"
 
-            android:background="@drawable/counter_green"
-            app:tint="@color/white"
-            android:layout_marginStart="@dimen/_8ssp"
-            app:srcCompat="@drawable/minues" />
+            android:padding="@dimen/_4sdp"
+            android:visibility="visible"
+            app:srcCompat="@drawable/minues"
+            app:tint="@color/white" />
 
         <ImageView
             android:id="@+id/deleteCartBtn"
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
+            android:layout_marginStart="@dimen/_16ssp"
             android:minWidth="@dimen/_20sdp"
             android:minHeight="@dimen/_20sdp"
-            android:layout_marginStart="@dimen/_16ssp"
             android:visibility="visible"
             app:srcCompat="@drawable/delete_icon" />
     </LinearLayout>

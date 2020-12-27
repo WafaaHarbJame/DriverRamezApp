@@ -45,7 +45,7 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
     int numColumn = 2;
     int selectedSubCat = 0;
     int category_id = 0, country_id, city_id;
-    private String user_id, filter;
+    private String user_id, filter="";
 
     private MemberModel user;
     private LocalModel localModel;
@@ -72,6 +72,10 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
         binding.listShopCategories.setLayoutManager(new LinearLayoutManager(getActiviy(), LinearLayoutManager.HORIZONTAL, false));
 
         binding.listSubCategory.setLayoutManager(new LinearLayoutManager(getActiviy(), LinearLayoutManager.HORIZONTAL, false));
+
+        binding.backBtn.setOnClickListener(view1 -> {
+            onBackPressed();
+        });
 
 
         data = new ArrayList<>();
@@ -124,7 +128,7 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
 
     public void initAdapter() {
 
-        adapter = new ProductCategoryAdapter(getActiviy(), productList, category_id, selectedSubCat, country_id, city_id, user_id, 0, binding.recycler, this);
+        adapter = new ProductCategoryAdapter(getActiviy(), productList, category_id, selectedSubCat, country_id, city_id, user_id, 0, binding.recycler,"", this);
         binding.recycler.setAdapter(adapter);
 
         binding.categoriesCountTv.setText(String.valueOf(productList.size()));
@@ -165,7 +169,7 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
             initSubCategoryAdapter();
             category_id = categoryModel.getId();
 
-            getProductList(category_id, country_id, city_id, user_id, "", 0, 10);
+            getProductList(category_id, country_id, city_id, user_id, filter, 0, 10);
 
         }
     }

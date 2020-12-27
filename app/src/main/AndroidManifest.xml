@@ -20,7 +20,8 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.SuccessOrders"></activity>
+        <activity android:name=".Activities.FullScannerActivity"></activity>
+        <activity android:name=".Activities.SuccessOrders" />
         <activity
             android:name=".Activities.CategoryProductsActivity"
             android:launchMode="singleTask"
@@ -221,7 +222,6 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

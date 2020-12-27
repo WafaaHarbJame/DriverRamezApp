@@ -1,19 +1,18 @@
 package com.ramez.shopp.Activities;
 
-import androidx.recyclerview.widget.GridLayoutManager;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+
 import com.ramez.shopp.Adapter.ProductAdapter;
+import com.ramez.shopp.Adapter.ProductCategoryAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.LocalModel;
-import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
@@ -23,10 +22,10 @@ import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
 
-public class FavoriteActivity extends ActivityBase implements ProductAdapter.OnItemClick {
+public class FavoriteActivity extends ActivityBase implements ProductCategoryAdapter.OnItemClick {
     ActivityFavoriteBinding binding;
     ArrayList<ProductModel> productList;
-    private ProductAdapter productFavAdapter;
+    private ProductCategoryAdapter productFavAdapter;
     private GridLayoutManager gridLayoutManager;
     private int category_id = 0, country_id, city_id;
     private String user_id, filter;
@@ -59,7 +58,7 @@ public class FavoriteActivity extends ActivityBase implements ProductAdapter.OnI
         country_id = localModel.getCountryId();
         city_id = Integer.parseInt(localModel.getCityId());
 
-        getFavoriteProducts(category_id, country_id, city_id, "14", filter, 0, 10);
+        getFavoriteProducts(category_id, country_id, city_id, user_id, filter, 0, 10);
 
 
     }
@@ -71,7 +70,8 @@ public class FavoriteActivity extends ActivityBase implements ProductAdapter.OnI
 
     public void initAdapter() {
 
-        productFavAdapter = new ProductAdapter(getActiviy(), productList, this, productList.size());
+        productFavAdapter = new ProductCategoryAdapter(getActiviy(), productList,0,0,country_id,city_id,user_id,productList.size(),
+                binding.favoriteRecycler,filter,this);
         binding.favoriteRecycler.setAdapter(productFavAdapter);
     }
 

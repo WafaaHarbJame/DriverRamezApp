@@ -10,10 +10,13 @@
         android:id="@+id/tool_bar"
         layout="@layout/tool_bar_with_back" />
 
+    <include
+        android:id="@+id/loadingProgressLY"
+        layout="@layout/layout_pre_loading" />
 
-    <include layout="@layout/layout_pre_loading" />
-
-    <include layout="@layout/layout_fail_get_data" />
+    <include
+        android:id="@+id/failGetDataLY"
+        layout="@layout/layout_fail_get_data" />
 
 
     <LinearLayout
@@ -23,6 +26,10 @@
         android:background="@color/white"
         android:orientation="vertical"
         android:visibility="visible">
+
+        <include
+            android:id="@+id/noDataLY"
+            layout="@layout/layout_no_data" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeDataContainer"

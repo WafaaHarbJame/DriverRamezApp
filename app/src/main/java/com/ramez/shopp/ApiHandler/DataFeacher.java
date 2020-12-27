@@ -815,4 +815,22 @@ public class DataFeacher {
     }
 
 
+    public void getProductList(int category_id, int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
+
+        Log.i(TAG, "Log getProductList");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log category_id " + category_id);
+        Log.i(TAG, "Log country_id " + country_id);
+        Log.i(TAG, "Log city_id " + city_id);
+        Log.i(TAG, "Log user_id " + user_id);
+        Log.i(TAG, "Log filter " + filter);
+        Log.i(TAG, "Log page_number " + page_number);
+        Log.i(TAG, "Log page_size " + page_size);
+
+        Call call = apiService.getProductList(headerMap, category_id, country_id, city_id, user_id, filter, page_number, page_size);
+        call.enqueue(callbackApi);
+    }
+
+
+
 }

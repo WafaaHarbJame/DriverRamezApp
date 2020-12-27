@@ -184,6 +184,7 @@ public class Constants {
     public static final String DB_AboutModel = "24";
     public static final String LIST_MODEL = "LIST_MODEL";
     public static final String LIST_MODEL_NAME = "LIST_MODEL_NAME";
+    public static final String FILTER_NAME = "FILTER_NAME";
     public static final String DB_Salary = "25";
     public static final String DB_Education = "26";
     public static final String DB_NumberOfChildren = "27";
@@ -225,6 +226,9 @@ public class Constants {
     public static final String CURRENCY = "CURRENCY";
     public static final String Fractional = "Fractional";
     public static final String favourite_filter = "favourite";
+    public static final String offered_filter  = "offered";
+    public static final String featured_filter = "featured";
+    public static final String quick_filter = "quick";
     public static final String SEARCH_BY_CODE_byCode = "SEARCH_BY_CODE_byCode";
     public static final String CODE = "CODE";
     public static final String SELECTED_POSITION = "SELECTED_POSITION";
@@ -238,6 +242,7 @@ public class Constants {
     public static final String CART_SUM = "CAT_LIST";
     public static final String CART_LIST = "CART_LIST";
     public static final String ORDER_MODEL = "ORDER_MODEL";
+    public static final String BARCODE_KEY = "BARCODE_KEY";
 
 
 }

@@ -60,7 +60,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        RowProductsItemBinding itemView =RowProductsItemBinding.inflate(LayoutInflater.from(context), parent, false);
+        RowProductsItemBinding itemView = RowProductsItemBinding.inflate(LayoutInflater.from(context), parent, false);
         return new Holder(itemView);
     }
 
@@ -72,7 +72,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
         currency = UtilityApp.getLocalData().getCurrencyCode();
 
         holder.binding.productNameTv.setText(productModel.getProductName().trim());
-
 
 
         if (productModel.getFavourite() != null && productModel.getFavourite()) {
@@ -125,11 +124,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
         }
 
 
-        Log.i("tag","Log Image Url "+productModel.getImages().get(0));
+        Log.i("tag", "Log Image Url " + productModel.getImages().get(0));
 
-        Glide.with(context).load(productModel.getImages().get(0))
-                .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-                .placeholder(R.drawable.holder_image).addListener(new RequestListener<Drawable>() {
+        Glide.with(context).load(productModel.getImages().get(0)).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).placeholder(R.drawable.holder_image).addListener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                 holder.binding.loadingLY.setVisibility(View.GONE);
@@ -143,8 +140,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
                 return false;
             }
-        }).into(holder.binding.productImg);;
-
+        }).into(holder.binding.productImg);
+        ;
 
 
     }
@@ -239,7 +236,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
             binding.favBut.setOnClickListener(view1 -> {
                 if (!UtilityApp.isLogin()) {
 
-                    CheckLoginDialog  checkLoginDialog = new CheckLoginDialog(context, R.string.please_login, R.string.text_login_login, R.string.register, null, null);
+                    CheckLoginDialog checkLoginDialog = new CheckLoginDialog(context, R.string.please_login, R.string.text_login_login, R.string.register, null, null);
                     checkLoginDialog.show();
 
                 } else {
@@ -286,21 +283,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
                 ProductModel productModel = productModels.get(getAdapterPosition());
                 int count = productModel.getProductBarcodes().get(0).getCartQuantity();
-                int stock=productModel.getProductBarcodes().get(0).getStockQty();
+                int stock = productModel.getProductBarcodes().get(0).getStockQty();
                 int position = getAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
                 int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
-                int cart_id=productModel.getProductBarcodes().get(0).getCartId();
+                int cart_id = productModel.getProductBarcodes().get(0).getCartId();
 
 
-                if(count+1<stock){
+                if (count + 1 < stock) {
                     updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, cart_id, "quantity");
 
-                }
-                else {
-                    initSnackBar(context.getString(R.string.stock_empty),v);
+                } else {
+                    initSnackBar(context.getString(R.string.stock_empty), v);
                 }
 
 
@@ -329,7 +325,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
                 int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
-                int cart_id=productModel.getProductBarcodes().get(0).getCartId();
+                int cart_id = productModel.getProductBarcodes().get(0).getCartId();
 
                 deleteCart(v, position, productId, product_barcode_id, cart_id, userId, storeId);
 
@@ -342,7 +338,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
         @Override
         public void onClick(View v) {
             if (onItemClick != null) {
-                ProductModel productModel=productModels.get(getAdapterPosition());
+                ProductModel productModel = productModels.get(getAdapterPosition());
                 onItemClick.onItemClicked(getAdapterPosition(), productModels.get(getAdapterPosition()));
                 Intent intent = new Intent(context, ProductDetailsActivity.class);
                 intent.putExtra(Constants.DB_productModel, productModel);
@@ -356,6 +352,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
 
                 if (IsSuccess) {
 
+//                    initSnackBar(context.getString(R.string.success_added_to_cart), v);
+//                    productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
+//                   binding.cartBut.setVisibility(View.GONE);
+//
+//                    if (position % 2 == 0) {
+//                        notifyItemRangeChanged(position > 0 ? position - 1 : position, 2);
+//                    } else {
+//                        notifyItemRangeChanged(position, 2);
+//                    }
+
+                    binding.cartBut.setVisibility(View.GONE);
                     initSnackBar(context.getString(R.string.success_added_to_cart), v);
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
                     notifyItemChanged(position);

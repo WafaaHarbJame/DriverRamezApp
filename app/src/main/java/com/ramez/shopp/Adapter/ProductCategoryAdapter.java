@@ -1,5 +1,6 @@
 package com.ramez.shopp.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -50,8 +51,8 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public static final int VIEW_TYPE_LOADING = 0;
     public static final int VIEW_TYPE_EMPTY = 2;
 
-    public boolean isLoading;
-    public int visibleThreshold = 10;
+    public boolean isLoading = false;
+    public int visibleThreshold = 5;
     public boolean show_loading = true;
     int category_id, country_id, city_id, subID;
     String user_id;
@@ -67,9 +68,10 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private String currency = "BHD";
     private int limit = 2;
     private RecyclerView rv;
+    private String filter_text;
 
 
-    public ProductCategoryAdapter(Context context, List<ProductModel> productModels, int category_id, int subID, int country_id, int city_id, String user_id, int limit, RecyclerView rv, OnItemClick onItemClick) {
+    public ProductCategoryAdapter(Context context, List<ProductModel> productModels, int category_id, int subID, int country_id, int city_id, String user_id, int limit, RecyclerView rv, String filter, OnItemClick onItemClick) {
         this.context = context;
         this.onItemClick = onItemClick;
         this.productModels = productModels;
@@ -80,7 +82,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         this.country_id = country_id;
         this.user_id = user_id;
         this.rv = rv;
-
+        this.filter_text = filter;
 
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
 
@@ -102,6 +104,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         rv.setLayoutManager(gridLayoutManager);
         rv.setLayoutManager(gridLayoutManager);
 
+
         rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -109,6 +112,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 totalItemCount = gridLayoutManager.getItemCount();
                 lastVisibleItem = gridLayoutManager.findLastVisibleItemPosition();
+
 
                 if (show_loading) {
                     if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
@@ -146,6 +150,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         return vh;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         if (viewHolder instanceof Holder) {
@@ -164,6 +169,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             }
 
             int quantity = productModel.getProductBarcodes().get(0).getCartQuantity();
+
             if (quantity > 0) {
                 holder.binding.productCartQTY.setText(String.valueOf(quantity));
                 holder.binding.CartLy.setVisibility(View.VISIBLE);
@@ -184,6 +190,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
 
             if (productModel.getProductBarcodes().get(0).getIsSpecial()) {
+
                 holder.binding.productPriceBeforeTv.setPaintFlags(holder.binding.productPriceBeforeTv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 if (productModel.getProductBarcodes().get(0).getSpecialPrice() != null) {
                     holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
@@ -205,7 +212,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             }
 
 
-            Glide.with(context).asBitmap().load(productModel.getImages().get(0)).placeholder(R.drawable.holder_image).placeholder(R.drawable.image_product).addListener(new RequestListener<Bitmap>() {
+            Glide.with(context).asBitmap().load(productModel.getImages().get(0)).placeholder(R.drawable.holder_image).placeholder(R.drawable.holder_image).addListener(new RequestListener<Bitmap>() {
                 @Override
                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
                     holder.binding.loadingLY.setVisibility(View.GONE);
@@ -320,22 +327,18 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         isLoading = false;
     }
 
+
     private void setOnloadListener() {
 
         setOnLoadMoreListener(() -> {
-
             System.out.println("Log add loading item");
-
             if (!productModels.contains(null)) {
+                productModels.add(null);
+                System.out.println("Log productDMS size " + productModels.size());
 
-                new Handler(Looper.getMainLooper()).post(() -> {
+                notifyItemInserted(productModels.size() - 1);
 
-                    productModels.add(null);
-
-                    notifyItemInserted(productModels.size() - 1);
-                });
-
-                LoadAllData(category_id, country_id, city_id, user_id, "", nextPage, 10);
+                LoadAllData(category_id, country_id, city_id, user_id, filter_text, nextPage, 10);
             }
 
         });
@@ -351,34 +354,33 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             FavouriteResultModel result = (FavouriteResultModel) obj;
             String message = context.getString(R.string.fail_to_get_data);
 
+            productModels.remove(productModels.size() - 1);
+            notifyItemRemoved(productModels.size());
+
             if (IsSuccess) {
                 if (result.getData() != null && result.getData().size() > 0) {
+
                     ArrayList<ProductModel> products = result.getData();
-
-                    productModels.remove(productModels.size() - 1);
-                    notifyItemRemoved(productModels.size());
-
                     int pos = productModels.size();
+
                     if (products != null && products.size() > 0) {
                         productModels.addAll(products);
                         notifyItemRangeInserted(pos, productModels.size());
                         nextPage++;
-                        setLoaded();
+                    } else {
+                        show_loading = false;
                     }
-                } else {
                     setLoaded();
+                } else {
                     show_loading = false;
+                    setLoaded();
                 }
 
 
-            } else {
-
-                setLoaded();
-                show_loading = false;
-
             }
 
-        }).getCatProductList(category_id, country_id, city_id, user_id, filter, page_number, page_size);
+
+        }).getFavorite(category_id, country_id, city_id, user_id, filter, page_number, page_size);
     }
 
     @Override
@@ -520,7 +522,6 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             new DataFeacher(false, (obj, func, IsSuccess) -> {
 
                 if (IsSuccess) {
-
                     initSnackBar(context.getString(R.string.success_added_to_cart), v);
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
                     notifyItemChanged(position);
@@ -591,6 +592,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
     }
 
+
     class EmptyViewHolder extends RecyclerView.ViewHolder {
 
         RowEmptyBinding rowEmptyBinding;
@@ -604,5 +606,6 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
 
     }
+
 
 }
