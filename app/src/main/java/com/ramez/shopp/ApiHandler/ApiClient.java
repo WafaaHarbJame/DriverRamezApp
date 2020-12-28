@@ -15,15 +15,12 @@ import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-
 import okhttp3.CipherSuite;
 import okhttp3.ConnectionSpec;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.TlsVersion;
 import retrofit2.Retrofit;

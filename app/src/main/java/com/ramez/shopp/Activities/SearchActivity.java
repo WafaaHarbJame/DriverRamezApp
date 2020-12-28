@@ -49,15 +49,9 @@ public class SearchActivity extends ActivityBase implements ProductAdapter.OnIte
     private ArrayList<String> autoCompleteList;
     private ProductAdapter adapter;
     private int country_id, city_id;
-    private String user_id, filter, result,searchQuery;
-
+    private String user_id = "0", filter, result, searchQuery;
     private MemberModel user;
     private LocalModel localModel;
-    private CheckLoginDialog checkLoginDialog;
-
-    private Barcode barcodeResult;
-
-
     private Call searchCall;
     private Runnable runnable;
     private Handler handler;
@@ -83,97 +77,101 @@ public class SearchActivity extends ActivityBase implements ProductAdapter.OnIte
         binding.recycler.setLayoutManager(gridLayoutManager);
 
 
-        if (!UtilityApp.isLogin()) {
+        if (UtilityApp.isLogin()) {
 
-            showLoginDialog();
-            binding.dataLY.setVisibility(View.GONE);
-
-        } else {
-
-            localModel = UtilityApp.getLocalData();
             user = UtilityApp.getUserData();
-            country_id = localModel.getCountryId();
-            city_id = Integer.parseInt(localModel.getCityId());
             user_id = String.valueOf(user.getId());
-            getIntentExtra();
-
-            binding.searchEt.setOnEditorActionListener((v, actionId, event) -> {
-
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-
-                    String text = v.getText().toString();
-                    searchTxt(country_id, city_id, user_id, text, 0, 10);
-                    return true;
-                }
-                return false;
-
-            });
-
-            handler = new Handler();
-            runnable = () -> {
-                autoComplete(country_id, city_id, user_id, searchQuery, 0, 10);
-            };
-
-            binding.searchEt.addTextChangedListener(new TextWatcher() {
-
-                public void afterTextChanged(Editable s) {
-                    binding.closeBtn.setText(R.string.fal_times);
-
-                    searchQuery = s.toString();
-                    handler.postDelayed(runnable, 500);
-
-                }
-
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    if (searchCall != null && searchCall.isExecuted()) searchCall.cancel();
-                    handler.removeCallbacks(runnable);
-                }
-
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                }
-            });
-
-
-            binding.view1But.setOnClickListener(view1 -> {
-                numColumn = 1;
-                gridLayoutManager.setSpanCount(numColumn);
-                adapter.notifyDataSetChanged();
-
-
-            });
-
-            binding.view2But.setOnClickListener(view1 -> {
-                numColumn = 2;
-                gridLayoutManager.setSpanCount(numColumn);
-                adapter.notifyDataSetChanged();
-
-            });
-
-            binding.priceBut.setOnClickListener(view1 -> {
-
-                // Collections.sort(productList);
-                Collections.sort(productList, Collections.reverseOrder());
-
-            });
-
-            binding.categoriesCountTv.setText(String.valueOf(productList.size()));
-            binding.offerCountTv.setText(String.valueOf(productList.size()));
-
-
-            binding.searchEt.setOnItemClickListener((adapterView, view12, position, l) -> {
-                String text = autoCompleteList.get(position).toString();
-                searchTxt(country_id, city_id, user_id, text, 0, 10);
-
-            });
-
-            binding.closeBtn.setOnClickListener(view1 -> {
-                productList.clear();
-                binding.searchEt.setText("");
-
-            });
 
         }
+
+
+        localModel = UtilityApp.getLocalData();
+        country_id = localModel.getCountryId();
+        city_id = Integer.parseInt(localModel.getCityId());
+
+        getIntentExtra();
+
+        binding.backBtn.setOnClickListener(view1 -> {
+            onBackPressed();
+        });
+
+
+        binding.searchEt.setOnEditorActionListener((v, actionId, event) -> {
+
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+
+                String text = v.getText().toString();
+                searchTxt(country_id, city_id, user_id, text, 0, 10);
+                return true;
+            }
+            return false;
+
+        });
+
+        handler = new Handler();
+        runnable = () -> {
+            autoComplete(country_id, city_id, user_id, searchQuery, 0, 10);
+        };
+
+        binding.searchEt.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                binding.closeBtn.setText(R.string.fal_times);
+
+                searchQuery = s.toString();
+                handler.postDelayed(runnable, 500);
+
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                if (searchCall != null && searchCall.isExecuted()) searchCall.cancel();
+                handler.removeCallbacks(runnable);
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+        });
+
+
+        binding.view1But.setOnClickListener(view1 -> {
+            numColumn = 1;
+            gridLayoutManager.setSpanCount(numColumn);
+            adapter.notifyDataSetChanged();
+
+
+        });
+
+        binding.view2But.setOnClickListener(view1 -> {
+            numColumn = 2;
+            gridLayoutManager.setSpanCount(numColumn);
+            adapter.notifyDataSetChanged();
+
+        });
+
+        binding.priceBut.setOnClickListener(view1 -> {
+
+            // Collections.sort(productList);
+            Collections.sort(productList, Collections.reverseOrder());
+
+        });
+
+        binding.categoriesCountTv.setText(String.valueOf(productList.size()));
+        binding.offerCountTv.setText(String.valueOf(productList.size()));
+
+
+        binding.searchEt.setOnItemClickListener((adapterView, view12, position, l) -> {
+            String text = autoCompleteList.get(position).toString();
+            searchTxt(country_id, city_id, user_id, text, 0, 10);
+
+        });
+
+        binding.closeBtn.setOnClickListener(view1 -> {
+            productList.clear();
+            binding.searchEt.setText("");
+
+        });
+
 
     }
 
@@ -327,7 +325,7 @@ public class SearchActivity extends ActivityBase implements ProductAdapter.OnIte
     }
 
     private void showLoginDialog() {
-        checkLoginDialog = new CheckLoginDialog(getActiviy(), R.string.please_login, R.string.text_login_login, R.string.register, null, null);
+        CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActiviy(), R.string.please_login, R.string.account_data, R.string.ok, R.string.cancel, null, null);
         checkLoginDialog.show();
     }
 

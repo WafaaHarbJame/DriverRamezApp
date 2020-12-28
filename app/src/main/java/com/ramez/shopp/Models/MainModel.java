@@ -5,7 +5,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainModel {
     @SerializedName("status")
@@ -28,7 +27,7 @@ public class MainModel {
     private Integer minimumOrderAmount;
     @SerializedName("data")
     @Expose
-    private List<Object> data = null;
+    private ArrayList<MainDatum> data = null;
     @SerializedName("sliders")
     @Expose
     private ArrayList<Slider> sliders = null;
@@ -90,15 +89,15 @@ public class MainModel {
         this.minimumOrderAmount = minimumOrderAmount;
     }
 
-    public List<Object> getData() {
+    public ArrayList<MainDatum> getData() {
         return data;
     }
 
-    public void setData(List<Object> data) {
+    public void setData(ArrayList<MainDatum> data) {
         this.data = data;
     }
 
-    public List<Slider> getSliders() {
+    public ArrayList<Slider> getSliders() {
         return sliders;
     }
 

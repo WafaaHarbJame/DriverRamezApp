@@ -439,9 +439,11 @@ public class DataFeacher {
 
     public void GetMainPage(int category_id, int country_id, int city_id, String user_id) {
 
-        Log.i(TAG, "Log GetAreasHandle");
+        Log.i(TAG, "Log GetMainPage");
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log country_id " + country_id);
+        Log.i(TAG, "Log user_id " + user_id);
+        Log.i(TAG, "Log city_id " + city_id);
 
         Call call = apiService.GetMainPage(headerMap, category_id, country_id, city_id, user_id);
         call.enqueue(callbackApi);

@@ -28,6 +28,7 @@
 
             <com.ramez.shopp.SpichalViews.STextView
                 android:layout_width="wrap_content"
+                android:id="@id/titleTxt"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_8sdp"
                 android:text="@string/please_login"
@@ -42,6 +43,7 @@
             android:layout_gravity="center"
             android:layout_marginBottom="@dimen/_20sdp"
             android:gravity="center"
+            android:id="@+id/messageTxt"
             android:text="@string/account_data"
             android:textColor="@color/black"
             android:textSize="@dimen/_12ssp" />

@@ -118,7 +118,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
         }
 
 
-        Glide.with(context).asBitmap().load(productModel.getImages().get(0)).placeholder(R.drawable.holder_image).placeholder(R.drawable.image_product).addListener(new RequestListener<Bitmap>() {
+        Glide.with(context).asBitmap().load(productModel.getImages().get(0)).placeholder(R.drawable.holder_image).placeholder(R.drawable.holder_image).addListener(new RequestListener<Bitmap>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
                 holder.binding.loadingLY.setVisibility(View.GONE);

@@ -12,32 +12,34 @@
         layout="@layout/tool_bar_with_back" />
 
 
-    <include
-        android:id="@+id/loadingProgressLY"
-        layout="@layout/layout_pre_loading" />
-
-    <include
-        android:id="@+id/failGetDataLY"
-        layout="@layout/layout_fail_get_data" />
-
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/dataLY"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:fillViewport="true"
-        android:overScrollMode="never">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <include
+                android:id="@+id/loadingProgressLY"
+                layout="@layout/layout_pre_loading" />
+
+            <include
+                android:id="@+id/noDataLY"
+                layout="@layout/layout_orders_no_list" />
+
+            <include
+                android:id="@+id/failGetDataLY"
+                layout="@layout/layout_fail_get_data" />
+
             <LinearLayout
+                android:id="@+id/dataLY"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/_8sdp">
+                android:visibility="visible">
 
                 <com.ramez.shopp.SpichalViews.STextView
                     android:id="@+id/addNewAddressBut"
@@ -55,13 +57,13 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/addressRecycler"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:layout_marginEnd="@dimen/_4sdp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:itemCount="3"
+                    tools:itemCount="8"
                     tools:listitem="@layout/row_address_item" />
-
 
                 <com.ramez.shopp.SpichalViews.STextViewBold
                     android:id="@+id/acceptBtu"
@@ -77,40 +79,10 @@
                     android:padding="@dimen/_12sdp"
                     android:text="@string/confirm"
                     android:textColor="@android:color/white" />
+
             </LinearLayout>
-
-
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
-
-    <View
-        android:id="@+id/shadowLY"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:layout_marginTop="-10dp" />
-
-    <LinearLayout
-        android:id="@+id/commentLY"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingStart="@dimen/_12sdp"
-        android:paddingTop="@dimen/_8sdp"
-        android:paddingEnd="@dimen/_8sdp"
-        android:paddingBottom="@dimen/_8sdp">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-
-        </LinearLayout>
-
-
-    </LinearLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </LinearLayout>

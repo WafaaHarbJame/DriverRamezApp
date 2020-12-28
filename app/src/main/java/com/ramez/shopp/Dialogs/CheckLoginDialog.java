@@ -19,9 +19,9 @@ public class CheckLoginDialog extends Dialog {
 
 
     Activity activity;
-    TextView loginBut, registerBut,closeBtn;
+    TextView loginBut, registerBut,closeBtn,messageTv,titleTv;
 
-    public CheckLoginDialog(Context context, int message, int okStr, int cancelStr, final ConfirmDialog.Click okCall, final ConfirmDialog.Click cancelCall) {
+    public CheckLoginDialog(Context context, int title ,int  message, int okStr, int cancelStr, final ConfirmDialog.Click okCall, final ConfirmDialog.Click cancelCall) {
         super(context);
 
         activity = (Activity) context;
@@ -37,6 +37,12 @@ public class CheckLoginDialog extends Dialog {
         loginBut = findViewById(R.id.loginBut);
         registerBut = findViewById(R.id.registerBut);
         closeBtn = findViewById(R.id.closeBtn);
+        messageTv=findViewById(R.id.messageTxt);
+        titleTv=findViewById(R.id.titleTxt);
+
+        messageTv.setText(message);
+        titleTv.setText(title);
+
         try {
             if (activity != null && !activity.isFinishing()) show();
         } catch (Exception e) {
@@ -44,18 +50,19 @@ public class CheckLoginDialog extends Dialog {
         }
 
         loginBut.setOnClickListener(view -> {
+
+            dismiss();
             Intent intent = new Intent(context, RegisterLoginActivity.class);
             intent.putExtra(Constants.LOGIN, true);
             context.startActivity(intent);
-            ((Activity) context).finish();
 
         });
         registerBut.setOnClickListener(view -> {
 
+            dismiss();
             Intent intent = new Intent(context, RegisterLoginActivity.class);
             intent.putExtra(Constants.REGISTER, true);
             context.startActivity(intent);
-            ((Activity) context).finish();
 
         });
 

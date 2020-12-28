@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack;
+import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Models.CountryModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.RowCountryCodeBinding;
@@ -18,13 +19,13 @@ import java.util.List;
 
 import kotlin.jvm.internal.Intrinsics;
 
-public  class CountryCodeAdapter extends RecyclerView.Adapter<CountryCodeAdapter.ViewHolder>  {
+public class CountryCodeAdapter extends RecyclerView.Adapter<CountryCodeAdapter.ViewHolder> {
     private Activity activity;
     private List<CountryModel> list;
-    private CountryModel selectedCountry;
+    private int  selectedCountry;
     private DataFetcherCallBack dataFetcherCallBack;
 
-    public CountryCodeAdapter(Activity activity, List<CountryModel> list, CountryModel selectedCountry, DataFetcherCallBack dataFetcherCallBack) {
+    public CountryCodeAdapter(Activity activity, List<CountryModel> list, int  selectedCountry, DataFetcherCallBack dataFetcherCallBack) {
         this.activity = activity;
         this.list = list;
         this.selectedCountry = selectedCountry;
@@ -40,27 +41,21 @@ public  class CountryCodeAdapter extends RecyclerView.Adapter<CountryCodeAdapter
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        CountryModel countryModel=list.get(position);
+        CountryModel countryModel = list.get(position);
         holder.binding.nameTxt.setText(countryModel.getName());
         String code = "+" + countryModel.getPhonecode();
         holder.binding.codeTxt.setText(code);
 
-        Glide.with(activity)
-            .asBitmap()
-                .load(countryModel.getFlag())
-                .placeholder(R.drawable.ic_flag_uae)
-                .into(holder.binding.flagImg);
+        Glide.with(activity).asBitmap().load(countryModel.getFlag()).placeholder(R.drawable.ic_flag_uae).into(holder.binding.flagImg);
 
-        if (selectedCountry.getId() == countryModel.getId()) {
+        if (selectedCountry==countryModel.getId()) {
             holder.binding.selectTxt.setText(activity.getString(R.string.fa_circle));
-            holder.binding.selectTxt.setTextColor(
-                    ContextCompat.getColor(
-                            activity,
-                            R.color.colorPrimaryDark));
+            holder.binding.selectTxt.setTextColor(ContextCompat.getColor(activity,R.color.colorPrimaryDark));
         } else {
             holder.binding.selectTxt.setText(activity.getString(R.string.fa_circle_o));
             holder.binding.selectTxt.setTextColor(ContextCompat.getColor(activity, R.color.header3));
         }
+
 
     }
 
@@ -68,9 +63,11 @@ public  class CountryCodeAdapter extends RecyclerView.Adapter<CountryCodeAdapter
     public int getItemCount() {
         return list.size();
     }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         RowCountryCodeBinding binding;
+
         public ViewHolder(RowCountryCodeBinding view) {
             super(view.getRoot());
             binding = view;
@@ -78,13 +75,12 @@ public  class CountryCodeAdapter extends RecyclerView.Adapter<CountryCodeAdapter
             itemView.setOnClickListener(v -> {
 
                 CountryModel countryCodeModel = list.get(getAdapterPosition());
-                if (selectedCountry == countryCodeModel) {
-                    selectedCountry = countryCodeModel;
-                    notifyDataSetChanged();
-                    if (dataFetcherCallBack != null){
-                        dataFetcherCallBack.Result(countryCodeModel, String.valueOf(getAdapterPosition()), true);
-                    }
+                selectedCountry=countryCodeModel.getId();
+                notifyDataSetChanged();
+                if (dataFetcherCallBack != null) {
+                    dataFetcherCallBack.Result(countryCodeModel, Constants.success, true);
                 }
+
 
             });
 

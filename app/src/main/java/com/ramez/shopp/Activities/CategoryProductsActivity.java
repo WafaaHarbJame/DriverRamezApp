@@ -45,7 +45,7 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
     int numColumn = 2;
     int selectedSubCat = 0;
     int category_id = 0, country_id, city_id;
-    private String user_id, filter="";
+    private String user_id="0", filter="";
 
     private MemberModel user;
     private LocalModel localModel;
@@ -82,10 +82,15 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
         autoCompleteList = new ArrayList<>();
 
         localModel = UtilityApp.getLocalData();
-        user = UtilityApp.getUserData();
         country_id = localModel.getCountryId();
+
+        if(UtilityApp.isLogin()){
+
+            user = UtilityApp.getUserData();
+            user_id = String.valueOf(user.getId());
+
+        }
         city_id = Integer.parseInt(localModel.getCityId());
-        user_id = String.valueOf(user.getId());
 
         getIntentExtra();
 

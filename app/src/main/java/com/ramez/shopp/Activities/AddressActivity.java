@@ -1,22 +1,18 @@
 package com.ramez.shopp.Activities;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.ramez.shopp.Adapter.AddressAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
-import com.ramez.shopp.Classes.CityModelResult;
 import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.GlobalData;
-import com.ramez.shopp.Classes.OtpModel;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Fragments.InvoiceFragment;
-import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.AddressModel;
 import com.ramez.shopp.Models.AddressResultModel;
 import com.ramez.shopp.Models.MemberModel;
@@ -25,14 +21,14 @@ import com.ramez.shopp.databinding.ActivityAddressBinding;
 
 import java.util.ArrayList;
 
-public class AddressActivity extends ActivityBase implements AddressAdapter.OnRadioAddressSelect,AddressAdapter.OnContainerSelect,AddressAdapter.OnDeleteClicked {
+public class AddressActivity extends ActivityBase implements AddressAdapter.OnRadioAddressSelect, AddressAdapter.OnContainerSelect, AddressAdapter.OnDeleteClicked {
     ActivityAddressBinding binding;
-    private AddressAdapter addressAdapter;
     ArrayList<AddressModel> addressList;
+    boolean deliveryChoose, addNewAddress;
+    private AddressAdapter addressAdapter;
     private LinearLayoutManager linearLayoutManager;
     private int defaultAddressId;
     private MemberModel user;
-    boolean deliveryChoose;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +39,7 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
 
         user = UtilityApp.getUserData();
 
+
         setTitle(R.string.address);
 
 
@@ -50,16 +47,24 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
         linearLayoutManager = new LinearLayoutManager(getActiviy());
         binding.addressRecycler.setLayoutManager(linearLayoutManager);
 
+        getIntentExtra();
 
-        if (UtilityApp.isLogin()) {
+        if (UtilityApp.isLogin() || addNewAddress) {
+            addressList.clear();
             GetUserAddress(user.getId());
+
         }
 
-        getIntentExtra();
 
 
         binding.addNewAddressBut.setOnClickListener(view1 -> {
             addNewAddress();
+        });
+
+        binding.swipe.setOnRefreshListener(() -> {
+            binding.swipe.setRefreshing(false);
+            GetUserAddress(user.getId());
+
         });
 
 
@@ -73,20 +78,17 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
         });
 
 
-
-
     }
-
 
 
     @Override
     public void onAddressSelected(AddressModel addressesDM) {
-        defaultAddressId=addressesDM.getId();
+        defaultAddressId = addressesDM.getId();
 
-        if(deliveryChoose) {
+        if (deliveryChoose) {
             Intent intent = new Intent(AddressActivity.this, InvoiceFragment.class);
-            intent.putExtra(Constants.ADDRESS_ID,addressesDM.getId());
-            intent.putExtra(Constants.ADDRESS_TITLE,addressesDM.getFullAddress());
+            intent.putExtra(Constants.ADDRESS_ID, addressesDM.getId());
+            intent.putExtra(Constants.ADDRESS_TITLE, addressesDM.getFullAddress());
             setResult(Activity.RESULT_OK, intent);
             finish();
 
@@ -99,49 +101,54 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
     public void onDeleteClicked(AddressModel addressModel, boolean isChecked) {
 
     }
-    public void initAdapter(){
 
-        addressAdapter=new AddressAdapter(getActiviy(),addressList,this,this,this);
+    public void initAdapter() {
+
+        addressAdapter = new AddressAdapter(getActiviy(), addressList, this, this, this);
         binding.addressRecycler.setAdapter(addressAdapter);
+        addressAdapter.notifyDataSetChanged();
+
+
     }
+
     private void addNewAddress() {
-        Intent intent=new Intent(getActiviy(),AddNewAddressActivity.class);
+        Intent intent = new Intent(getActiviy(), AddNewAddressActivity.class);
         startActivity(intent);
     }
 
     public void GetUserAddress(int user_id) {
+
+        addressList.clear();
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
+        binding.dataLY.setVisibility(View.GONE);
+
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
+            binding.dataLY.setVisibility(View.VISIBLE);
             binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
 
             AddressResultModel result = (AddressResultModel) obj;
 
-            if (func.equals(Constants.ERROR)) {
+            if (func.equals(Constants.ERROR) ||func.equals(Constants.FAIL)) {
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(R.string.error_in_data);
                 binding.dataLY.setVisibility(View.GONE);
 
-            } else if (func.equals(Constants.FAIL)) {
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(R.string.error_in_data);
-                binding.dataLY.setVisibility(View.GONE);
-            } else {
+            }  else {
                 if (IsSuccess) {
                     binding.dataLY.setVisibility(View.VISIBLE);
-                    if (result.getData() != null && result.getData().size() > 0) {
-                        addressList= result.getData();
-                        initAdapter();
 
-                    }
-                    else {
+                    if (result.getData() != null && result.getData().size() > 0) {
+                        addressList = result.getData();
+                        initAdapter();
+                        addressAdapter.notifyDataSetChanged();
+
+                    } else {
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                         binding.failGetDataLY.failTxt.setText(R.string.no_address);
                         binding.dataLY.setVisibility(View.GONE);
 
                     }
-
-
 
 
                 } else {
@@ -156,23 +163,31 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
     private void getIntentExtra() {
         Bundle bundle = getIntent().getExtras();
 
-        if(bundle!=null){
-            deliveryChoose=bundle.getBoolean(Constants.delivery_choose,false);
-
+        if (bundle != null) {
+            deliveryChoose = bundle.getBoolean(Constants.delivery_choose, false);
+            addNewAddress = bundle.getBoolean(Constants.KEY_ADD, false);
+            Log.i("TAG", "Log KEY_ADD from Add  "+addNewAddress);
 
         }
     }
 
     @Override
     public void onContainerSelectSelected(AddressModel addressesDM) {
-        if(deliveryChoose) {
+        if (deliveryChoose) {
             Intent intent = new Intent(AddressActivity.this, InvoiceFragment.class);
-            intent.putExtra(Constants.ADDRESS_ID,addressesDM.getId());
-            intent.putExtra(Constants.ADDRESS_TITLE,addressesDM.getFullAddress());
+            intent.putExtra(Constants.ADDRESS_ID, addressesDM.getId());
+            intent.putExtra(Constants.ADDRESS_TITLE, addressesDM.getFullAddress());
             setResult(Activity.RESULT_OK, intent);
             finish();
 
+        } else {
+
+            Intent intent = new Intent(getActiviy(), AddNewAddressActivity.class);
+            intent.putExtra(Constants.KEY_EDIT, true);
+            intent.putExtra(Constants.KEY_ADDRESS_ID, addressesDM.getId());
+            startActivity(intent);
         }
 
     }
+
 }

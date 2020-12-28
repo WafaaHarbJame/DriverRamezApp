@@ -22,7 +22,7 @@ public class EmptyCartDialog extends Dialog {
     Activity activity;
     TextView yesBtn, noBtn,closeBtn;
 
-    public EmptyCartDialog(Context context, int message, int okStr, int cancelStr, final Click okCall, final ConfirmDialog.Click cancelCall) {
+    public EmptyCartDialog(Context context, int message, int okStr, int cancelStr, final Click okCall, final Click  cancelCall) {
         super(context);
 
         activity = (Activity) context;
@@ -45,11 +45,14 @@ public class EmptyCartDialog extends Dialog {
                 okCall.click();
             dismiss();
         });
+
+
         noBtn.setOnClickListener(view -> {
             if (cancelCall != null)
                 cancelCall.click();
             dismiss();
         });
+
 
 
         try {

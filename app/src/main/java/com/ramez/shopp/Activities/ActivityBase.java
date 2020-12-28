@@ -53,13 +53,6 @@ public class ActivityBase extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        // TODO Auto-generated method stub
-        super.onStart();
-
-
-    }
 
     @Override
     public void setTitle(CharSequence title) {

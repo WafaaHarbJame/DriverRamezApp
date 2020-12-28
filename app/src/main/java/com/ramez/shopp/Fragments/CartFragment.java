@@ -155,6 +155,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
         binding.dataLY.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+        binding.contBut.setVisibility(View.GONE);
 
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
@@ -189,6 +190,8 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
                         binding.noDataLY.noDataLY.setVisibility(View.GONE);
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
                         cartList = result.getData().getCartData();
+                        binding.contBut.setVisibility(View.VISIBLE);
+
 
                         Log.i(TAG, "Log cart" + result.getData().getCartData().size());
                         initAdapter();
@@ -196,9 +199,8 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
 
                     } else {
-
-                        binding.dataLY.setVisibility(View.GONE);
                         binding.contBut.setVisibility(View.GONE);
+                        binding.dataLY.setVisibility(View.GONE);
                         showEmptyCartDialog();
                     }
 
@@ -223,17 +225,24 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
             public void click() {
                 EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_main));
 
-                Intent intent = new Intent(getActivityy(), MainActivity.class);
-                intent.putExtra(Constants.CART, true);
-                startActivity(intent);
             }
         };
-        emptyCartDialog = new EmptyCartDialog(getActivityy(), R.string.please_login, R.string.text_login_login, R.string.register, okClick, null);
+
+
+        EmptyCartDialog.Click cancelClick = new EmptyCartDialog.Click() {
+            @Override
+            public void click() {
+                EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_main));
+
+            }
+        };
+
+        emptyCartDialog = new EmptyCartDialog(getActivityy(), R.string.please_login, R.string.text_login_login, R.string.register, okClick, cancelClick);
         emptyCartDialog.show();
     }
 
     private void showLoginDialog() {
-        checkLoginDialog = new CheckLoginDialog(getActivityy(), R.string.please_login, R.string.text_login_login, R.string.register, null, null);
+        CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActivityy(), R.string.please_login, R.string.account_data, R.string.ok, R.string.cancel,null,null);
         checkLoginDialog.show();
     }
 

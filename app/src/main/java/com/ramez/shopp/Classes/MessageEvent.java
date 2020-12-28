@@ -3,6 +3,7 @@ public class MessageEvent {
 
     public static final String TYPE_invoice = "invoice";
     public static final String TYPE_main = "main";
+    public static final String TYPE_ADDRESS = "address";
 
     //    public int PagerPosition;
     public Object data;

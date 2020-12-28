@@ -13,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,6 +25,7 @@ import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
+import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.CountryModel;
 import com.ramez.shopp.Models.CountryModelResult;
 import com.ramez.shopp.R;
@@ -38,11 +40,13 @@ public class CountryCodeDialog extends Dialog {
 
     List<CountryModel> countries;
     RecyclerView rv;
-    Button okBtn,closeBut;
+    Button okBtn;
+    TextView closeBut;
     EditText searchTxt;
     Activity activity;
     private int selectedPos;
-    private CountryModel selectedCountry;
+    private int selectedCountry;
+    private CountryModel selectedCountryModel;
     private int countryCode;
     private LinearLayoutManager linearLayoutManager;
     private CountryCodeAdapter countriesAdapter;
@@ -52,7 +56,7 @@ public class CountryCodeDialog extends Dialog {
         super(context);
         activity = (Activity) context;
         this.dataFetcherCallBack = dataFetcherCallBack;
-        this.countryCode=countryCode;
+        this.countryCode = countryCode;
 
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -62,13 +66,29 @@ public class CountryCodeDialog extends Dialog {
         rv = findViewById(R.id.rv);
         okBtn = findViewById(R.id.okBtn);
         closeBut = findViewById(R.id.closeBtn);
-        searchTxt= findViewById(R.id.searchTxt);
-
-        linearLayoutManager=new LinearLayoutManager(activity);
+        searchTxt = findViewById(R.id.searchTxt);
+        linearLayoutManager = new LinearLayoutManager(activity);
         rv.setLayoutManager(linearLayoutManager);
 
         rv.hasFixedSize();
-        getCountryList();
+
+//        getCountryList();
+
+        if (UtilityApp.getCountriesData().size() > 0) {
+            countries = UtilityApp.getCountriesData();
+            initAdapter(countries);
+
+
+        } else {
+            countries.add(new CountryModel(4, context.getString(R.string.Oman), context.getString(R.string.oman_shotname), 968, "OMR", 3, R.drawable.ic_flag_oman));
+            countries.add(new CountryModel(17, context.getString(R.string.Bahrain), context.getString(R.string.bahrain_shotname), 973, "BHD", 3, R.drawable.ic_flag_behrain));
+            countries.add(new CountryModel(117, context.getString(R.string.Kuwait), context.getString(R.string.Kuwait_shotname), 965, "KWD", 2, R.drawable.ic_flag_kuwait));
+            countries.add(new CountryModel(178, context.getString(R.string.Qatar), context.getString(R.string.Qatar_shotname), 974, "QAR", 2, R.drawable.ic_flag_qatar));
+            countries.add(new CountryModel(191, context.getString(R.string.Saudi_Arabia), context.getString(R.string.Saudi_Arabia_shortname), 191, "SAR", 2, R.drawable.ic_flag_saudi_arabia));
+            countries.add(new CountryModel(229, context.getString(R.string.United_Arab_Emirates), context.getString(R.string.United_Arab_Emirates_shotname), 971, "AED", 2, R.drawable.ic_flag_uae));
+            initAdapter(countries);
+        }
+
 
         try {
             if (activity != null && !activity.isFinishing()) show();
@@ -78,9 +98,12 @@ public class CountryCodeDialog extends Dialog {
 
 
         okBtn.setOnClickListener(view -> {
-            if (dataFetcherCallBack != null)
-                dataFetcherCallBack.Result(selectedCountry, "InfoDialog", true);
+
+                if (dataFetcherCallBack != null) {
+                    dataFetcherCallBack.Result(selectedCountryModel, Constants.success, true);
+                }
             dismiss();
+
         });
 
 
@@ -102,13 +125,11 @@ public class CountryCodeDialog extends Dialog {
             @Override
             public void afterTextChanged(Editable s) {
                 String searchStr = NumberHandler.arabicToDecimal(s.toString());
-                List<CountryModel> countriesList=new ArrayList<>();
-                for (int i = 0; i <countries.size() ; i++) {
-                    CountryModel countryModel=countries.get(i);
+                List<CountryModel> countriesList = new ArrayList<>();
+                for (int i = 0; i < countries.size(); i++) {
+                    CountryModel countryModel = countries.get(i);
 
-                    if (countryModel.getName().toLowerCase()
-                            .contains(searchStr) || countryModel.getPhonecode().toString()
-                            .contains(searchStr))
+                    if (countryModel.getName().toLowerCase().contains(searchStr) || countryModel.getPhonecode().toString().contains(searchStr))
                         countriesList.add(countryModel);
                     initAdapter(countriesList);
 
@@ -116,50 +137,25 @@ public class CountryCodeDialog extends Dialog {
                 }
 
 
-
-
             }
         });
 
 
-
     }
 
-    private void getCountryList() {
-
-        GlobalData.progressDialog(activity, R.string.upload_date, R.string.please_wait_upload);
-        new DataFeacher(false, (obj, func, IsSuccess) -> {
-            GlobalData.hideProgressDialog();
-            CountryModelResult result = (CountryModelResult) obj;
-            if (func.equals(Constants.ERROR)) {
-                String message = activity.getString(R.string.fail_to_get_data);
-                if (result != null && result.getMessage() != null) {
-                    message = result.getMessage();
-                }
-                GlobalData.errorDialog(activity, R.string.fail_to_get_data, message);
-            } else {
-                if (IsSuccess) {
-                    countries = result.getData();
-                    initAdapter(countries);
-
-                } else {
-                    Toast.makeText(activity, "" + activity.getString(R.string.fail_to_get_data), Toast.LENGTH_SHORT).show();
-
-                }
-            }
-
-
-        }).CountryHandle();
-
-    }
 
     public void initAdapter(List<CountryModel> countries) {
-        countriesAdapter = new CountryCodeAdapter(activity,countries,selectedCountry,dataFetcherCallBack);
+        countriesAdapter = new CountryCodeAdapter(activity, countries, countryCode, new DataFetcherCallBack() {
+            @Override
+            public void Result(Object obj, String func, boolean IsSuccess) {
+                selectedCountryModel= (CountryModel) obj;
+                selectedCountry=selectedCountryModel.getId();
+            }
+        });
         rv.setAdapter(countriesAdapter);
-        rv.scrollToPosition(selectedPos);
+        //  rv.scrollToPosition(selectedPos);
 
     }
-
 
 
 }

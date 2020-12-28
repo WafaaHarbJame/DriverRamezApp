@@ -18,7 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.zxing.Result;
@@ -38,6 +39,7 @@ import com.ramez.shopp.Adapter.ProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProductModel;
@@ -60,10 +62,10 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     ArrayList<ProductModel> productBestList;
     ArrayList<ProductModel> productSellerList;
     ArrayList<ProductModel> productOffersList;
-    GridLayoutManager bestProductGridLayoutManager;
-    GridLayoutManager bestSellerLayoutManager;
-    GridLayoutManager bestOfferGridLayoutManager;
-    String user_id = "";
+    LinearLayoutManager bestProductGridLayoutManager;
+    LinearLayoutManager bestSellerLayoutManager;
+    LinearLayoutManager bestOfferGridLayoutManager;
+    String user_id = "0";
     private FragmentHomeBinding binding;
     private ProductAdapter productBestAdapter;
     private ProductAdapter productSellerAdapter;
@@ -101,9 +103,9 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         country_id = UtilityApp.getLocalData().getCountryId();
         city_id = Integer.parseInt(UtilityApp.getLocalData().getCityId());
 
-        bestProductGridLayoutManager = new GridLayoutManager(getActivityy(), 2);
-        bestOfferGridLayoutManager = new GridLayoutManager(getActivityy(), 2);
-        bestSellerLayoutManager = new GridLayoutManager(getActivityy(), 2);
+        bestProductGridLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
+        bestOfferGridLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
+        bestSellerLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
 
         binding.bestSellerRecycler.setLayoutManager(bestSellerLayoutManager);
         binding.bestProductRecycler.setLayoutManager(bestProductGridLayoutManager);
@@ -115,14 +117,6 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
         GetHomePage();
 
-        binding.moreBestBut.setOnClickListener(view1 -> {
-
-            Intent intent = new Intent(getActivityy(), AllListActivity.class);
-            intent.putExtra(Constants.LIST_MODEL_NAME, getString(R.string.best_products));
-            intent.putExtra(Constants.FILTER_NAME, Constants.featured_filter);
-            startActivity(intent);
-
-        });
 
         binding.searchBut.setOnClickListener(view1 -> {
             Intent intent = new Intent(getActivityy(), SearchActivity.class);
@@ -130,22 +124,40 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
         });
 
+
+        binding.moreBestBut.setOnClickListener(view1 -> {
+
+            Intent intent = new Intent(getActivityy(), AllListActivity.class);
+            intent.putExtra(Constants.LIST_MODEL_NAME, getString(R.string.best_products));
+            intent.putExtra(Constants.FILTER_NAME, Constants.featured_filter);
+            startActivity(intent);
+
+
+        });
+
         binding.moreBoughtBut.setOnClickListener(view1 -> {
+
             Intent intent = new Intent(getActivityy(), AllListActivity.class);
             intent.putExtra(Constants.LIST_MODEL_NAME, getString(R.string.best_sell));
             intent.putExtra(Constants.FILTER_NAME, Constants.quick_filter);
             startActivity(intent);
 
+
         });
         binding.moreOfferBut.setOnClickListener(view1 -> {
+
             Intent intent = new Intent(getActivityy(), AllListActivity.class);
+            intent.putExtra(Constants.LIST_MODEL_NAME, getString(R.string.offers));
             intent.putExtra(Constants.FILTER_NAME, Constants.offered_filter);
             startActivity(intent);
+
 
         });
 
         binding.barcodeBut.setOnClickListener(view1 -> {
+
             checkCameraPermission();
+
 
         });
 
@@ -167,9 +179,9 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
     public void initAdapter() {
 
-        productBestAdapter = new ProductAdapter(getActivityy(), productBestList, this, 2);
-        productSellerAdapter = new ProductAdapter(getActivityy(), productSellerList, this, 2);
-        productOfferAdapter = new ProductAdapter(getActivityy(), productOffersList, this, 2);
+        productBestAdapter = new ProductAdapter(getActivityy(), productBestList, this, 10);
+        productSellerAdapter = new ProductAdapter(getActivityy(), productSellerList, this, 10);
+        productOfferAdapter = new ProductAdapter(getActivityy(), productOffersList, this, 10);
 
         binding.bestProductRecycler.setAdapter(productBestAdapter);
         binding.bestSellerRecycler.setAdapter(productSellerAdapter);

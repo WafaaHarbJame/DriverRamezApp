@@ -141,7 +141,7 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:hint="@string/block"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:paddingStart="@dimen/_8sdp"
                     android:paddingTop="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp"
@@ -160,7 +160,7 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:hint="@string/street_num"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:paddingStart="@dimen/_8sdp"
                     android:paddingTop="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp"
@@ -180,7 +180,7 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:hint="@string/building"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:paddingStart="@dimen/_8sdp"
                     android:paddingTop="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp"
@@ -201,7 +201,7 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:hint="@string/flat"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:paddingStart="@dimen/_8sdp"
                     android:paddingTop="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp"
@@ -219,6 +219,7 @@
                     android:layout_width="match_parent"
                     android:layout_gravity="center_vertical"
                     android:orientation="horizontal"
+                    android:gravity="center_vertical"
                     android:layout_height="wrap_content">
 
                     <com.ramez.shopp.SpichalViews.SEditText
@@ -239,24 +240,17 @@
                         android:textSize="@dimen/_12ssp" />
 
 
-                    <com.hbb20.CountryCodePicker
+                    <com.ramez.shopp.SpichalViews.STextView
                         android:id="@+id/codeSpinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:background="@color/white"
                         android:paddingStart="@dimen/_8sdp"
-                        app:ccp_defaultNameCode="BH"
                         android:paddingTop="@dimen/_8sdp"
                         android:paddingEnd="@dimen/_8sdp"
+                        android:text="البحرين (973)"
+                        android:background="@drawable/textlines"
                         android:layout_marginStart="@dimen/_8sdp"
-                        android:paddingBottom="@dimen/_8sdp"
-                        app:ccp_showFullName="false"
-                        app:ccp_showFlag="true"
-                        app:ccp_showNameCode="false"
-                        app:ccp_autoDetectLanguage="true"
-                        app:ccp_defaultLanguage="ARABIC"
-                        app:ccp_showPhoneCode="true" />
+                        android:paddingBottom="@dimen/_8sdp" />
 
                 </LinearLayout>
 

@@ -187,7 +187,8 @@ public class MyAccountFragment extends FragmentBase {
     }
 
     private void showDialog() {
-        checkLoginDialog = new CheckLoginDialog(getActivityy(), R.string.please_login, R.string.text_login_login, R.string.register, null, null);
+        CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActivityy(), R.string.LoginFirst, R.string.to_add_cart, R.string.ok, R.string.cancel,null,null);
+        checkLoginDialog.show();
         checkLoginDialog.show();
     }
 

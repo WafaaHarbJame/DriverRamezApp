@@ -200,7 +200,7 @@
     <string name="get_data">يتم التحميل </string>
     <string name="please_wait_get">الرجاء الانتظار يتم تحميل البيانات</string>
     <string name="address_default">تم تعيين هذا العنوان كعنوان افتراضي</string>
-    <string name="edit_address">تعديل عنوان </string>
+    <string name="edit_address">تفاصيل العنوان </string>
     <string name="choose_address">اختر العنوان</string>
     <string name="enter_area">اختر المدينة </string>
     <string name="enter_block">ادخل رقم المبني </string>
@@ -215,7 +215,7 @@
     <string name="fail_to_remove_favorite">فشل الازالة من المفضلة </string>
     <string name="success_add">تم الاضافة للمفضلة بنجاح</string>
     <string name="success_delete">تم الازالة من المفضلة بنجاح </string>
-    <string name="textLoginFirst">يجب عليك الدخول للاضفة للعربة </string>
+    <string name="textLoginFirst">يجب عليك الدخول للاضافة للعربة </string>
     <string name="fail_to_add_cart">فشل الاضافة للسلة </string>
     <string name="success_added_to_cart">تم الاضافة للعربة بنجاح </string>
     <string name="show_cart">مشاهدة العربة </string>
@@ -258,5 +258,12 @@
     <string name="back_to_home">العودة الى  الرئيسية </string>
     <string name="stock_empty">نفذ المخزون </string>
     <string name="no_cities">لا يوجد مدن </string>
+    <string name="LoginFirst">يجب عليك تسجيل الدخول  </string>
+    <string name="to_add_cart">للاضافة للعربة </string>
+    <string name="to_add_favorite">للاضافة للمفضلة  </string>
+    <string name="to_show_product_details">لمشاهدة تفاصيل المنتج </string>
+    <string name="to_search_product">للبحث عن منتج </string>
+    <string name="to_show_products">لمشاهدة المنتجات  </string>
+    <string name="search_country">ابحث عن الدولة من هنا </string>
 
 </resources>

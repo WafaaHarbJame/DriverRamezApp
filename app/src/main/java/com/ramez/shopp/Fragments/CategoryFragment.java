@@ -17,6 +17,8 @@ import com.ramez.shopp.Adapter.CategoryAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Models.CategoryResultModel;
 import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.R;
@@ -68,6 +70,8 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
         intent.putExtra(Constants.position, position);
         intent.putExtra(Constants.CAT_MODEL, categoryModel);
         startActivity(intent);
+
+
 
     }
 

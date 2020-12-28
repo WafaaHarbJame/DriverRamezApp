@@ -219,8 +219,8 @@
     <string name="get_data">Get Data</string>
     <string name="please_wait_get">Please wait to get Data</string>
     <string name="address_default">This address is set as the default address</string>
-    <string name="edit_address">Edit Address</string>
-    <string name="choose_address">Select Addresss</string>
+    <string name="edit_address"> Address Details </string>
+    <string name="choose_address">Select Address</string>
     <string name="enter_area">Enter Area</string>
     <string name="enter_block">Enter  Block</string>
     <string name="enter_flat">Enter Flat</string>
@@ -258,7 +258,7 @@
     <string name="textTryAgain">Upload Photo Fail</string>
     <string name="failtoupdate_profile">Fail to update profile</string>
     <string name="update_profile">"Update Profile "</string>
-    <string name="success_update">Succes Update</string>
+    <string name="success_update">Success Update</string>
     <string name="please_wait_to_upload_photo">Please wait to upload Photo</string>
     <string name="categories">categories</string>
     <string name="all">All</string>
@@ -266,7 +266,7 @@
     <string name="choose_day">Choose Day</string>
     <string name="make_order">Make Order</string>
     <string name="fail_to_send_order">Fail To send Order</string>
-    <string name="sending_order">Sendin Order Succes</string>
+    <string name="sending_order">Sending Order Success</string>
     <string name="textEmptyOrders">No orders found</string>
     <string name="textNoXadoxOrder">You have not ordered products from Ramez yet</string>
     <string name="textStartShopping">Start Shopping</string>
@@ -280,5 +280,14 @@
 
     <string name="facebook_app_id" translatable="false">1545102798941136</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb1545102798941136</string>
+    <string name="LoginFirst">You Must Login </string>
+    <string name="to_add_cart">to adding to Cart </string>
+    <string name="to_add_favorite">to adding to favourite  </string>
+    <string name="to_show_product_details">To show product Details </string>
+    <string name="to_search_product">to start search </string>
+    <string name="to_show_products"> to show products </string>
+    <string name="ph" translatable="false">Ph : </string>
+    <string name="search_country">Search for country From Here</string>
+
 
 </resources>

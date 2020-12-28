@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,7 +33,7 @@ public class AllListActivity extends ActivityBase implements ProductCategoryAdap
     GridLayoutManager gridLayoutManager;
     String name;
     private int category_id = 0, country_id, city_id;
-    private String user_id, filter;
+    private String user_id="0", filter;
     private MemberModel user;
     private LocalModel localModel;
     @Override
@@ -52,7 +53,11 @@ public class AllListActivity extends ActivityBase implements ProductCategoryAdap
 
         country_id = localModel.getCountryId();
         city_id = Integer.parseInt(localModel.getCityId());
-        user_id= String.valueOf(user.getId());
+
+        if(UtilityApp.isLogin()){
+            user_id= String.valueOf(user.getId());
+
+        }
 
         getIntentExtra();
 
@@ -74,7 +79,9 @@ public class AllListActivity extends ActivityBase implements ProductCategoryAdap
 
     @Override
     public void onItemClicked(int position, ProductModel productModel) {
-
+        Intent intent = new Intent(getActiviy(), ProductDetailsActivity.class);
+        intent.putExtra(Constants.DB_productModel, productModel);
+        startActivity(intent);
     }
 
 

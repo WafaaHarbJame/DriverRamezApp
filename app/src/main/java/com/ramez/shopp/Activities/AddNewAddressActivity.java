@@ -13,16 +13,23 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.github.dhaval2404.form_validation.rule.NonEmptyRule;
 import com.github.dhaval2404.form_validation.validation.FormValidator;
 import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.ApiHandler.DataFetcherCallBack;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
+import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Dialogs.CountryCodeDialog;
 import com.ramez.shopp.Models.AddressModel;
 import com.ramez.shopp.Models.AddressResultModel;
 import com.ramez.shopp.Models.AreasModel;
 import com.ramez.shopp.Models.AreasResultModel;
+import com.ramez.shopp.Models.CountryModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.MapHandler;
 import com.ramez.shopp.databinding.ActivityAddNewAddressBinding;
+
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,6 +67,7 @@ public class AddNewAddressActivity extends ActivityBase {
         stateNames = new ArrayList<>();
 
         setTitle(R.string.new_address);
+
         binding.locationBut.setOnClickListener(view1 -> {
 
             Intent intent = new Intent(getActiviy(), MapsActivity.class);
@@ -81,10 +89,14 @@ public class AddNewAddressActivity extends ActivityBase {
 
         });
 
+        binding.cancelBtu.setOnClickListener(view1 -> {
+            onBackPressed();
+        });
+
 
         if (isEdit) {
             binding.addNewAddressBut.setVisibility(View.GONE);
-            binding.editAddressBut.setVisibility(View.VISIBLE);
+            binding.editAddressBut.setVisibility(View.GONE);
             binding.cancelBtu.setVisibility(View.GONE);
             binding.toolBar.mainTitleTxt.setText(R.string.edit_address);
             binding.addNewTv.setVisibility(View.GONE);
@@ -100,13 +112,29 @@ public class AddNewAddressActivity extends ActivityBase {
         countryId = UtilityApp.getLocalData().getCountryId();
         GetAreas(countryId);
 
-        binding.codeSpinner.setOnCountryChangeListener(() -> {
-            CountryCode = binding.codeSpinner.getSelectedCountryCodeWithPlus();
-            phonePrefix=binding.codeSpinner.getSelectedCountryCode();
+        binding.codeSpinner.setOnClickListener(view1 -> {
+            CountryCodeDialog countryCodeDialog=new CountryCodeDialog(getActiviy(), 17, new DataFetcherCallBack() {
+                @Override
+                public void Result(Object obj, String func, boolean IsSuccess) {
+                    CountryModel countryModel= (CountryModel) obj;
+                    CountryCode= "+".concat(String.valueOf(countryModel.getPhonecode()));
+                    phonePrefix= String.valueOf(countryModel.getPhonecode());
+                    binding.codeSpinner.setText(countryModel.getName().concat( " " +"("+countryModel.getPhonecode()+")"));
+
+                }
+            });
+            countryCodeDialog.show();
+        });
+
+        binding.addNewTv.setOnClickListener(view1 -> {
+
+            Intent intent = new Intent(getActiviy(), MapsActivity.class);
+            startActivityForResult(intent, CHOOSE_LOCATION);
         });
 
 
     }
+
 
     private void CreateNewAddress() {
         state_id= Integer.parseInt(UtilityApp.getLocalData().getCityId());
@@ -141,8 +169,15 @@ public class AddNewAddressActivity extends ActivityBase {
                 Toast(R.string.fail_to_get_data);
             } else {
                 if (IsSuccess) {
+
+//                    EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_ADDRESS));
                     Intent intent = new Intent(getActiviy(), AddressActivity.class);
+                    intent.putExtra(Constants.KEY_ADD,true);
+                    Log.i("TAG", "Log KEY_ADD "+" true");
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
+
+
 
 
                 } else {

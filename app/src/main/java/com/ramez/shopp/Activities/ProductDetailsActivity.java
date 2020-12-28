@@ -34,7 +34,7 @@ import java.util.ArrayList;
 
 public class ProductDetailsActivity extends ActivityBase implements SuggestedProductAdapter.OnItemClick {
     ActivityProductDeatilsBinding binding;
-    int user_id;
+    int user_id=0;
     ArrayList<String> sliderList;
     ArrayList<ProductModel> productList;
     ArrayList<ReviewModel> reviewList;
@@ -59,7 +59,6 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         MemberModel memberModel = UtilityApp.getUserData();
         country_id = UtilityApp.getLocalData().getCountryId();
         city_id = Integer.parseInt(UtilityApp.getLocalData().getCityId());
-        user_id = Integer.parseInt(String.valueOf(memberModel.getId()));
 
         sliderList = new ArrayList<String>();
         productList = new ArrayList<>();
@@ -81,6 +80,11 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         binding.reviewRecycler.setHasFixedSize(true);
 
         getIntentExtra();
+
+        if(UtilityApp.isLogin()){
+            user_id = Integer.parseInt(String.valueOf(memberModel.getId()));
+
+        }
 
         getSingleProduct(country_id, city_id, product_id, String.valueOf(user_id));
 
