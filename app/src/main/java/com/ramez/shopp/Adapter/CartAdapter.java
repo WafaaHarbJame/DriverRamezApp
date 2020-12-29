@@ -25,6 +25,7 @@ import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.AddCommentDialog;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
+import com.ramez.shopp.Models.CartProcessModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
@@ -380,18 +381,28 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             new DataFeacher(false, (obj, func, IsSuccess) -> {
 
                 if (IsSuccess) {
+                    CartProcessModel cartProcessModel= (CartProcessModel) obj;
 
-                    calculateSubTotalPrice();
-
-                    if (dataCallback != null) {
-                        if (calculateSubTotalPrice() > 0)
-                            dataCallback.dataResult(calculateSubTotalPrice(), "success", true);
+                    if(cartProcessModel.getCartCount()==0){
+                        dataCallback.dataResult(0.0, Constants.success, true);
                     }
-                    cartDMS.remove(position);
-                    notifyItemRemoved(position);
+                    else {
+                        calculateSubTotalPrice();
+
+                        if (dataCallback != null) {
+                                dataCallback.dataResult(calculateSubTotalPrice(), Constants.success, true);
+                        }
+                        cartDMS.remove(position);
+                        notifyItemRemoved(position);
+
+                        initSnackBar(context.getString(R.string.success_delete_from_cart), v);
+
+                    }
 
 
-                    initSnackBar(context.getString(R.string.success_delete_from_cart), v);
+
+
+
 
 
                 } else {

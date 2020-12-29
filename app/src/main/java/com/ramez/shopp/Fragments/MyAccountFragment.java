@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.ramez.shopp.Activities.AboutActivity;
@@ -27,21 +28,29 @@ import com.ramez.shopp.Activities.TermsActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
+import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Dialogs.ConfirmDialog;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.MemberModel;
+import com.ramez.shopp.Models.ProfileData;
+import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.ActivityHandler;
 import com.ramez.shopp.databinding.DialogCheckLoginBinding;
 import com.ramez.shopp.databinding.FragmentMyAccountBinding;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+import org.jetbrains.annotations.NotNull;
+
 public class MyAccountFragment extends FragmentBase {
     boolean isLogin = false;
+    MemberModel memberModel;
+    int user_id = 0;
     private FragmentMyAccountBinding binding;
     private CheckLoginDialog checkLoginDialog;
-
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMyAccountBinding.inflate(inflater, container, false);
@@ -56,12 +65,12 @@ public class MyAccountFragment extends FragmentBase {
 
             if (UtilityApp.getUserData() != null) {
 
-                MemberModel memberModel = UtilityApp.getUserData();
-                binding.usernameTV.setText(memberModel.getName());
-                binding.emailTv.setText(memberModel.getEmail());
+                memberModel = UtilityApp.getUserData();
+                initData(memberModel);
 
-                Glide.with(getActivityy()).asBitmap().load(memberModel.getProfilePicture()).placeholder(R.drawable.avatar).into(binding.userImg);
 
+            } else {
+                getUserData(memberModel.getId());
             }
 
         } else {
@@ -186,8 +195,15 @@ public class MyAccountFragment extends FragmentBase {
         return view;
     }
 
+    private void initData(MemberModel memberModel) {
+        user_id = memberModel.getId();
+        binding.usernameTV.setText(memberModel.getName());
+        binding.emailTv.setText(memberModel.getEmail());
+        Glide.with(getActivityy()).asBitmap().load(memberModel.getProfilePicture()).placeholder(R.drawable.avatar).into(binding.userImg);
+    }
+
     private void showDialog() {
-        CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActivityy(), R.string.LoginFirst, R.string.to_add_cart, R.string.ok, R.string.cancel,null,null);
+        CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActivityy(), R.string.LoginFirst, R.string.to_add_cart, R.string.ok, R.string.cancel, null, null);
         checkLoginDialog.show();
         checkLoginDialog.show();
     }
@@ -288,4 +304,36 @@ public class MyAccountFragment extends FragmentBase {
 
     }
 
+
+    public void getUserData(int user_id) {
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            ResultAPIModel<ProfileData> result = (ResultAPIModel<ProfileData>) obj;
+            String message = getString(R.string.fail_to_get_data);
+
+            if (IsSuccess) {
+
+                MemberModel memberModel = UtilityApp.getUserData();
+                memberModel.setName(result.data.getName());
+                memberModel.setEmail(result.data.getEmail());
+                memberModel.setProfilePicture(result.data.getProfilePicture());
+                initData(memberModel);
+                UtilityApp.setUserData(memberModel);
+
+
+            }
+
+
+        }).getUserDetails(user_id);
+    }
+
+    @Override
+    public void onResume() {
+        if(UtilityApp.isLogin()){
+            memberModel = UtilityApp.getUserData();
+            initData(memberModel);
+        }
+
+        super.onResume();
+    }
 }

@@ -27,7 +27,7 @@
     <string name="dummy2" translatable="false">جولة في التطبيق  </string>
     <string name="dummy1">نص تجريبي نص تجريبي
 نص تجريبي نص تجريبي نص تجريبي </string>
-    <string name="dummy" >نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي </string>
+    <string name="dummy">نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي </string>
     <string name="share_with">انشر التطبيق </string>
     <string name="no_address">no_address</string>
     <string name="by_app">by_app</string>
@@ -265,5 +265,6 @@
     <string name="to_search_product">للبحث عن منتج </string>
     <string name="to_show_products">لمشاهدة المنتجات  </string>
     <string name="search_country">ابحث عن الدولة من هنا </string>
+    <string name="minimum_order_amount">لا يمكنك الشراء لان الحد الادنى لاتمام عملية الشراء هو : </string>
 
 </resources>

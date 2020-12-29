@@ -12,12 +12,9 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.aminography.choosephotohelper.ChoosePhotoHelper;
 import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.androidnetworking.interfaces.UploadProgressListener;
 import com.bumptech.glide.Glide;
 import com.kcode.permissionslib.main.OnRequestPermissionsCallBack;
 import com.kcode.permissionslib.main.PermissionCompat;
@@ -26,17 +23,15 @@ import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.PickImageDialog;
-import com.ramez.shopp.Models.GeneralModel;
 import com.ramez.shopp.Models.LoginResultModel;
 import com.ramez.shopp.Models.MemberModel;
-import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.R;
-import com.ramez.shopp.Utils.ImageHandler;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.Utils.PathUtil;
 import com.ramez.shopp.databinding.ActivityEditProfileBinding;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -70,6 +65,7 @@ public class EditProfileActivity extends ActivityBase {
         binding.edtUserName.setText(memberModel.getName());
         binding.etEmail.setText(memberModel.getEmail());
         binding.edtPhoneNumber.setText(memberModel.getMobileNumber());
+        Log.i("tag", "Log data" + memberModel.getProfilePicture());
 
         Glide.with(getActiviy()).asBitmap().load(memberModel.getProfilePicture()).placeholder(R.drawable.avatar).into(binding.userImg);
 
@@ -115,7 +111,6 @@ public class EditProfileActivity extends ActivityBase {
                 Glide.with(getActiviy()).load(userImageBitmap).into(binding.userImg);
                 String imagePath = PathUtil.getPath(getActiviy(), data.getData());
                 selectedPhotoFil = new File(imagePath);
-
                 uploadPhoto(userId, selectedPhotoFil);
 
             } catch (Exception e) {
@@ -157,7 +152,7 @@ public class EditProfileActivity extends ActivityBase {
     private final void openPicker() {
         try {
             PermissionCompat.Builder builder = new PermissionCompat.Builder((getActiviy()));
-            builder.addPermissions(new String[]{Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE});
+            builder.addPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE});
             builder.addPermissionRationale(getString(R.string.should_allow_permission));
 
             builder.addRequestPermissionsCallBack(new OnRequestPermissionsCallBack() {
@@ -202,8 +197,9 @@ public class EditProfileActivity extends ActivityBase {
             } else {
                 if (IsSuccess) {
 
-//                    MemberModel user = result.data;
-                    UtilityApp.setUserData(memberModel);
+                    MemberModel user = result.data;
+                    UtilityApp.setUserData(user);
+
 
                     GlobalData.successDialog(getActiviy(), getString(R.string.update_profile), getString(R.string.success_update));
 
@@ -249,48 +245,72 @@ public class EditProfileActivity extends ActivityBase {
 //
 //    }
 
-    private void uploadPhoto(int userId, File photo){
-        if(UtilityApp.getLocalData().getShortname()!=null){
-            country=UtilityApp.getLocalData().getShortname();
+    private void uploadPhoto(int userId, File photo) {
+
+        Log.i("tag", "Log  userId " + userId);
+        Log.i("tag", "Log  photo " + photo.getName());
+        Log.i("tag", "Log  uploadPhoto " + photo.getName());
+
+        GlobalData.progressDialog(getActiviy(), R.string.upload_photo, R.string.please_wait_to_upload_photo);
+
+        if (UtilityApp.getLocalData().getShortname() != null) {
+            country = UtilityApp.getLocalData().getShortname();
+
+        } else {
+            country = GlobalData.COUNTRY;
 
         }
-        else {
-            country="BH";
 
-        }
+        AndroidNetworking.upload(GlobalData.BetaBaseURL + country + GlobalData.grocery + GlobalData.Api + "v3/Account/UploadPhoto" + "?user_id=" + userId).addMultipartFile("file", photo)
 
-        AndroidNetworking.upload(GlobalData.BetaBaseURL+ country+GlobalData.grocery+GlobalData.Api+"v3/Account/UploadPhoto")
-                .addMultipartFile("file",photo)
-                .addMultipartParameter("user_id", String.valueOf(userId))
-                .setTag("uploadTest")
-                .setPriority(Priority.HIGH)
-                .build()
-                .setUploadProgressListener((bytesUploaded, totalBytes) -> {
+                .addHeaders("ApiKey", Constants.api_key).build().
+                setUploadProgressListener((bytesUploaded, totalBytes) -> {
                     // do anything with progress
-                })
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
+                }).getAsJSONObject(new JSONObjectRequestListener() {
+            @Override
+            public void onResponse(JSONObject response) {
+                GlobalData.hideProgressDialog();
+                Log.i("tag", "Log data response " + response);
 
-                        if (response.equals(Constants.ERROR)) {
-                            String message = getString(R.string.failtoupdate_profile);
-                            GlobalData.errorDialog(getActiviy(), R.string.failtoupdate_profile, message);
+                String message = getString(R.string.failtoupdate_profile);
+
+                if (response.equals(Constants.ERROR)) {
+                    GlobalData.errorDialog(getActiviy(), R.string.failtoupdate_profile, message);
+                } else {
+
+                    String data = null;
+                    try {
+                        JSONObject jsonObject = response;
+                        int status = jsonObject.getInt("status");
+                        if (status == 200) {
+                            data = jsonObject.getString("data");
+
+                            memberModel.setProfilePicture(data);
+                            UtilityApp.setUserData(memberModel);
+                            Log.i("tag", "Log data result " + data);
+                            GlobalData.successDialog(getActiviy(), getString(R.string.upload_photo), getString(R.string.success_update));
+
                         } else {
-
-                                GlobalData.successDialog(getActiviy(), getString(R.string.upload_photo), getString(R.string.success_update));
-
+                            message = jsonObject.getString("message");
+                            GlobalData.errorDialog(getActiviy(), R.string.failtoupdate_profile, message);
 
                         }
-                        // do anything with response
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                    @Override
-                    public void onError(ANError error) {
-                        // handle error
-                    }
-                });
+
+
+                }
+            }
+
+            @Override
+            public void onError(ANError error) {
+                // handle error
+            }
+        });
     }
-
-
 
 
 }

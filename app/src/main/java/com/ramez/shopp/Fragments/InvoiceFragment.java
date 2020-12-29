@@ -26,8 +26,11 @@ import com.ramez.shopp.CallBack.DataCallback;
 import com.ramez.shopp.Classes.CartModel;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
+import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.MainActivity;
+import com.ramez.shopp.Models.CartProcessModel;
+import com.ramez.shopp.Models.CartResultModel;
 import com.ramez.shopp.Models.DeliveryResultModel;
 import com.ramez.shopp.Models.DeliveryTime;
 import com.ramez.shopp.Models.LocalModel;
@@ -41,6 +44,8 @@ import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.FragmentInvoiceBinding;
 import com.ramez.shopp.searchdialog.SearchableDialog;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +78,7 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
     private int addressId = 0;
     private String addressTitle;
     private double deliveryFees = 0.0;
+    private CartResultModel cartResultModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentInvoiceBinding.inflate(inflater, container, false);
@@ -115,6 +121,8 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
         });
 
 
+
+
         binding.DeliveryDateTv.setOnClickListener(view1 -> {
             deliverDayDialog.show();
         });
@@ -124,6 +132,11 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
             intent.putExtra(Constants.delivery_choose, true);
             startActivityForResult(intent, ADDRESS_CODE);
 
+        });
+
+
+        binding.saveBut.setOnClickListener(view1 -> {
+            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_cart));
         });
 
         binding.sendOrder.setOnClickListener(view1 -> {
@@ -181,9 +194,12 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
 
                 if(paymentMethod.equals("CC")){
                     binding.DeliverLY.setVisibility(View.GONE);
+                    expressDelivery=true;
+
                 }
                 else {
                     binding.DeliverLY.setVisibility(View.VISIBLE);
+                    expressDelivery=false;
 
                 }
 
@@ -311,7 +327,9 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
         if (bundle != null) {
             total = bundle.getString(Constants.CART_SUM);
             productsSize = bundle.getInt(Constants.CART_PRODUCT_COUNT, 0);
-            productList = (ArrayList<CartModel>) bundle.getSerializable(Constants.CART_LIST);
+            cartResultModel = (CartResultModel) bundle.getSerializable(Constants.CART_MODEL);
+            deliveryFees=cartResultModel.getDeliveryCharges();
+            productList = cartResultModel.getData().getCartData();
             binding.productsSizeTv.setText(String.valueOf(productsSize));
             binding.totalTv.setText(total.concat(" " + currency));
             initProductAdapter();
@@ -326,8 +344,10 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
             @Override
             public void dataResult(Object obj, String func, boolean IsSuccess) {
 
-                total = NumberHandler.formatDouble(invoiceProductAdapter.calculateSubTotalPrice(), fraction);
+                CartProcessModel cartProcessModel= (CartProcessModel) obj;
+                total = NumberHandler.formatDouble(cartProcessModel.getTotal(), fraction);
                 binding.totalTv.setText(total.concat(" " + currency));
+                binding.productsSizeTv.setText(String.valueOf(cartProcessModel.getCartCount()));
 
             }
         });

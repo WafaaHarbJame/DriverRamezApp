@@ -217,7 +217,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_4sdp"
                     android:layout_marginEnd="@dimen/_4sdp"
-                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:layout_marginBottom="@dimen/_16sdp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:itemCount="2"

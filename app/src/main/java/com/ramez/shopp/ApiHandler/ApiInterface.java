@@ -6,6 +6,7 @@ import com.ramez.shopp.Classes.OtpModel;
 import com.ramez.shopp.Models.AddressResultModel;
 import com.ramez.shopp.Models.AreasResultModel;
 import com.ramez.shopp.Models.AutoCompeteResult;
+import com.ramez.shopp.Models.CartProcessModel;
 import com.ramez.shopp.Models.CartResultModel;
 import com.ramez.shopp.Models.CategoryResultModel;
 import com.ramez.shopp.Models.CityModel;
@@ -116,17 +117,17 @@ ApiInterface {
     Call<GeneralModel> deleteFavouriteProduct(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
     @POST("v3/Carts/addToCart")
-    Call<GeneralModel> addToCart(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
+    Call<CartProcessModel> addToCart(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
     @POST("v3/Carts/deleteCartItems")
-    Call<GeneralModel> deleteCartItems(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
+    Call<CartProcessModel> deleteCartItems(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
     @POST("v3/Carts/updateRemark")
-    Call<GeneralModel> updateRemark(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
+    Call<CartProcessModel> updateRemark(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
 
     @POST("v3/Carts/updateCart")
-    Call<GeneralModel> updateCart(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
+    Call<CartProcessModel> updateCart(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
     @GET("v3/Carts/checkOut")
     Call<CartResultModel> GetACarts(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id, @Query("store_ID") int sotre_id);

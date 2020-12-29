@@ -242,6 +242,7 @@ public class Constants {
     public static final String CART_PRODUCT_COUNT = "CART_PRODUCT_COUNT";
     public static final String CART_SUM = "CAT_LIST";
     public static final String CART_LIST = "CART_LIST";
+    public static final String CART_MODEL = "CART_MODEL";
     public static final String ORDER_MODEL = "ORDER_MODEL";
     public static final String BARCODE_KEY = "BARCODE_KEY";
 

@@ -23,6 +23,7 @@ import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.CallBack.DataCallback;
 import com.ramez.shopp.Classes.CartModel;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Models.CartProcessModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.RowInvoiceProductItemBinding;
@@ -36,17 +37,17 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
     private static final String TAG = "Log CartAdapter";
     public int count;
     public String currency = "BHD";
+    DataCallback dataCallback;
     private Context context;
     private List<CartModel> cartDMS;
     private OnInvoiceItemClicked onInvoiceItemClicked;
-    DataCallback dataCallback;
 
 
     public InvoiceItemAdapter(Context context, List<CartModel> cartDMS, OnInvoiceItemClicked onInvoiceItemClicked, DataCallback dataCallback) {
         this.context = context;
         this.cartDMS = cartDMS;
         this.onInvoiceItemClicked = onInvoiceItemClicked;
-        this.dataCallback=dataCallback;
+        this.dataCallback = dataCallback;
 
     }
 
@@ -163,7 +164,7 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
                 subTotal += cartDMS.get(i).getProductPrice() * cartDMS.get(i).getQuantity();
             }
         }
-        Log.i(TAG, "Log subTotal result" +subTotal);
+        Log.i(TAG, "Log subTotal result" + subTotal);
 
 
         return subTotal;
@@ -184,10 +185,10 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
         View view = snackbar.getView();
         TextView snackBarMessage = view.findViewById(R.id.snackbar_text);
         snackBarMessage.setTextColor(Color.WHITE);
-        snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.green));
-        snackbar.setAction(context.getResources().getString(R.string.show_cart), v -> {
-
-        });
+//        snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.green));
+//        snackbar.setAction(context.getResources().getString(R.string.show_cart), v -> {
+//
+//        });
         snackbar.show();
     }
 
@@ -210,12 +211,12 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
                 CartModel productModel = cartDMS.get(getAdapterPosition());
                 int count = productModel.getQuantity();
                 int product_barcode_id = productModel.getProductBarcodeId();
-                int cart_id=productModel.getId();
+                int cart_id = productModel.getId();
                 int position = getAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getProductId();
-                int stock=productModel.getProductQuantity();
+                int stock = productModel.getProductQuantity();
 
                 if (count + 1 < stock) {
                     updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, cart_id, "quantity");
@@ -237,8 +238,8 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getProductId();
-                int cart_id=productModel.getId();
-                deleteCart(view1 ,position, productId, product_barcode_id, cart_id, userId, storeId);
+                int cart_id = productModel.getId();
+                deleteCart(view1, position, productId, product_barcode_id, cart_id, userId, storeId);
 
             });
 
@@ -252,8 +253,8 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getProductId();
-                int cart_id=productModel.getId();
-                deleteCart(view1 ,position, productId, product_barcode_id, cart_id, userId, storeId);
+                int cart_id = productModel.getId();
+                deleteCart(view1, position, productId, product_barcode_id, cart_id, userId, storeId);
 
             });
             binding.minusCartBtn.setOnClickListener(v -> {
@@ -266,7 +267,7 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getProductId();
-                int cart_id=productModel.getId();
+                int cart_id = productModel.getId();
 
                 updateCart(v, position, productId, product_barcode_id, count - 1, userId, storeId, cart_id, "quantity");
 
@@ -282,7 +283,7 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getProductId();
-                int cart_id=productModel.getId();
+                int cart_id = productModel.getId();
                 deleteCart(v, position, productId, product_barcode_id, cart_id, userId, storeId);
 
             });
@@ -293,11 +294,16 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
             new DataFeacher(false, (obj, func, IsSuccess) -> {
                 if (IsSuccess) {
 
+                    CartProcessModel cartProcessModel = (CartProcessModel) obj;
+
                     calculateSubTotalPrice();
+
                     if (dataCallback != null) {
-                        if(calculateSubTotalPrice()>0)
-                            dataCallback.dataResult(calculateSubTotalPrice(), "success", true);
+                        if (calculateSubTotalPrice() > 0)
+                            cartProcessModel.setTotal(calculateSubTotalPrice());
+                        dataCallback.dataResult(cartProcessModel, "success", true);
                     }
+
                     initSnackBar(context.getString(R.string.success_to_update_cart), v);
                     cartDMS.get(position).setQuantity(quantity);
                     notifyItemChanged(position);
@@ -317,9 +323,14 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
                 if (IsSuccess) {
 
                     calculateSubTotalPrice();
+                    getItemCount();
+                    Log.i("tag", "Log Cart num" + getItemCount());
+                    CartProcessModel cartProcessModel = (CartProcessModel) obj;
+                    cartProcessModel.setTotal(calculateSubTotalPrice());
+
                     if (dataCallback != null) {
-                        if(calculateSubTotalPrice()>0)
-                            dataCallback.dataResult(calculateSubTotalPrice(), "success", true);
+                        if (calculateSubTotalPrice() > 0)
+                        dataCallback.dataResult(cartProcessModel, "success", true);
                     }
                     cartDMS.remove(position);
                     notifyItemRemoved(position);

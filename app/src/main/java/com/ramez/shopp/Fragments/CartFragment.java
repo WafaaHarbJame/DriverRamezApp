@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.ramez.shopp.Activities.AddCardActivity;
 import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.Adapter.CartAdapter;
@@ -53,6 +54,9 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
     private CartAdapter cartAdapter;
     private EmptyCartDialog emptyCartDialog;
     private CheckLoginDialog checkLoginDialog;
+    private int minimum_order_amount;
+    private int delivery_charges=0;
+    private CartResultModel cartResultModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCartBinding.inflate(inflater, container, false);
@@ -68,7 +72,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
         user = UtilityApp.getUserData();
         if (!isLogin) {
-            binding.cartContainer.setVisibility(View.GONE);
+            binding.dataLY.setVisibility(View.GONE);
             binding.contBut.setVisibility(View.GONE);
             showLoginDialog();
         } else {
@@ -81,17 +85,26 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
             binding.contBut.setOnClickListener(view1 -> {
 
-                EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_invoice));
-                FragmentManager fragmentManager = getParentFragmentManager();
+                if(cartAdapter.calculateSubTotalPrice()<minimum_order_amount){
+                    Snackbar snackbar = Snackbar
+                            .make(view1, getString(R.string.minimum_order_amount)+minimum_order_amount, Snackbar.LENGTH_LONG);
+                    snackbar.show();
 
-                InvoiceFragment invoiceFragment = new InvoiceFragment();
-                Bundle bundle = new Bundle();
-                bundle.putInt(Constants.CART_PRODUCT_COUNT, productsSize);
-                bundle.putString(Constants.CART_SUM, total);
-                bundle.putSerializable(Constants.CART_LIST, cartList);
-                invoiceFragment.setArguments(bundle);
+                }
+                else {
+                    EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_invoice));
+                    FragmentManager fragmentManager = getParentFragmentManager();
+                    InvoiceFragment invoiceFragment = new InvoiceFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(Constants.CART_PRODUCT_COUNT, productsSize);
+                    bundle.putString(Constants.CART_SUM, total);
+                    bundle.putSerializable(Constants.CART_MODEL, cartResultModel);
+                    invoiceFragment.setArguments(bundle);
+                    fragmentManager.beginTransaction().replace(R.id.mainContainer, invoiceFragment, "InvoiceFragment").commit();
 
-                fragmentManager.beginTransaction().replace(R.id.mainContainer, invoiceFragment, "InvoiceFragment").commit();
+                }
+
+
 
             });
 
@@ -115,9 +128,19 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
             @Override
             public void dataResult(Object obj, String func, boolean IsSuccess) {
 
-                total = NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction);
-                binding.totalTv.setText(total.concat(" " + currency));
-                binding.productCostTv.setText(NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction).concat(" " + currency));
+                double numProducts= (double) obj;
+
+                if(numProducts == 0.0){
+                   getCarts(storeId,userId);
+
+                }
+                else {
+
+                    total = NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction);
+                    binding.totalTv.setText(total.concat(" " + currency));
+                    binding.productCostTv.setText(NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction).concat(" " + currency));
+                }
+
 
             }
         });
@@ -128,6 +151,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
         binding.totalTv.setText(total.concat(" " + currency));
         binding.productCostTv.setText(NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction).concat(" " + currency));
         cartAdapter.notifyDataSetChanged();
+
 
     }
 
@@ -159,15 +183,15 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            CartResultModel result = (CartResultModel) obj;
+            cartResultModel = (CartResultModel) obj;
             String message = getString(R.string.fail_to_get_data);
 
             binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
 
             if (func.equals(Constants.ERROR)) {
 
-                if (result != null) {
-                    message = result.getMessage();
+                if (cartResultModel != null) {
+                    message = cartResultModel.getMessage();
                 }
                 binding.dataLY.setVisibility(View.GONE);
                 binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -184,16 +208,16 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
             } else {
                 if (IsSuccess) {
-                    if (result.getData().getCartData() != null && result.getData().getCartData().size() > 0) {
+                    if (cartResultModel.getData().getCartData() != null && cartResultModel.getData().getCartData().size() > 0) {
 
                         binding.dataLY.setVisibility(View.VISIBLE);
                         binding.noDataLY.noDataLY.setVisibility(View.GONE);
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-                        cartList = result.getData().getCartData();
+                        cartList = cartResultModel.getData().getCartData();
                         binding.contBut.setVisibility(View.VISIBLE);
-
-
-                        Log.i(TAG, "Log cart" + result.getData().getCartData().size());
+                        minimum_order_amount=cartResultModel.getMinimumOrderAmount();
+                        delivery_charges=cartResultModel.getDeliveryCharges();
+                        Log.i(TAG, "Log cart" + cartResultModel.getData().getCartData().size());
                         initAdapter();
                         cartAdapter.notifyDataSetChanged();
 

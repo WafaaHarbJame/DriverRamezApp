@@ -217,6 +217,7 @@ public class DataFeacher {
         params.put("city", memberModel.getCity());
         params.put("email", memberModel.getEmail());
         params.put("device_id", memberModel.getDeviceId());
+        params.put("prefix", memberModel.getPrefix());
 
         Log.i(TAG, "Log RegisterHandle");
         Log.i(TAG, "Log headerMap " + headerMap);
@@ -226,6 +227,11 @@ public class DataFeacher {
         Log.i(TAG, "Log device_token " + memberModel.getDeviceToken());
         Log.i(TAG, "Log city ID  " + memberModel.getCity());
         Log.i(TAG, "Log country Name " + memberModel.getCountry());
+        Log.i(TAG, "Log mobile_number " + memberModel.getMobileNumber());
+        Log.i(TAG, "Log device_id " + memberModel.getDeviceId());
+        Log.i(TAG, "Log prefix " + memberModel.getPrefix());
+        Log.i(TAG, "Log device_token " + memberModel.getDeviceToken());
+        Log.i(TAG, "Log EMAIL " + memberModel.getEmail());
 
         Call call = apiService.registerUserHandle(headerMap, params);
         call.enqueue(callbackApi);

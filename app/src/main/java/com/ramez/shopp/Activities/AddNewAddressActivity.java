@@ -110,18 +110,16 @@ public class AddNewAddressActivity extends ActivityBase {
         }
 
         countryId = UtilityApp.getLocalData().getCountryId();
+        
         GetAreas(countryId);
 
         binding.codeSpinner.setOnClickListener(view1 -> {
-            CountryCodeDialog countryCodeDialog=new CountryCodeDialog(getActiviy(), 17, new DataFetcherCallBack() {
-                @Override
-                public void Result(Object obj, String func, boolean IsSuccess) {
-                    CountryModel countryModel= (CountryModel) obj;
-                    CountryCode= "+".concat(String.valueOf(countryModel.getPhonecode()));
-                    phonePrefix= String.valueOf(countryModel.getPhonecode());
-                    binding.codeSpinner.setText(countryModel.getName().concat( " " +"("+countryModel.getPhonecode()+")"));
+            CountryCodeDialog countryCodeDialog=new CountryCodeDialog(getActiviy(), 17, (obj, func, IsSuccess) -> {
+                CountryModel countryModel= (CountryModel) obj;
+                CountryCode= "+".concat(String.valueOf(countryModel.getPhonecode()));
+                phonePrefix= String.valueOf(countryModel.getPhonecode());
+                binding.codeSpinner.setText(countryModel.getName().concat( " " +"("+countryModel.getPhonecode()+")"));
 
-                }
             });
             countryCodeDialog.show();
         });

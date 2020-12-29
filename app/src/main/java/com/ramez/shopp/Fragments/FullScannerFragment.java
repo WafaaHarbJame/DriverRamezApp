@@ -91,8 +91,8 @@ public class FullScannerFragment extends Fragment implements ZBarScannerView.Res
         }
 
         Intent intent = new Intent(getActivity(), SearchActivity.class);
-//          intent.putExtra(Constants.CODE,rawResult.getContents());
-        intent.putExtra(Constants.CODE, "6221155068897");
+          intent.putExtra(Constants.CODE,rawResult.getContents());
+//        intent.putExtra(Constants.CODE, "6221155068897");
         intent.putExtra(Constants.SEARCH_BY_CODE_byCode, true);
         startActivity(intent);
         getActivity().finish();

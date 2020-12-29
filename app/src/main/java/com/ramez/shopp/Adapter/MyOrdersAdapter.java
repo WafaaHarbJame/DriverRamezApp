@@ -159,6 +159,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             //This order status that reading from Api :  PN:PENDING , RC RECEIVED  ,
             // CA CHECK OUT , PP PENDING PAYMENT , OH ON HOLD, OP:OPEN ,
             // CM: COMPETE  CL CANCELED < DV DELIVERED done , cancelled
+            Log.i("tag","Log getOrderStatus"+ordersDM.getOrderStatus());
 
 
             if (ordersDM.getOrderStatus().equals("PN")||ordersDM.getOrderStatus().equals("RC")

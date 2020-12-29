@@ -32,7 +32,7 @@
     <string name="dummy1">Lorem Ipsum is simply dummy text </string>
     <string name="dummy2" translatable="false">A tour of the application </string>
     <string name="by_app">by_app</string>
-    <string name="share_with">share_with</string>
+    <string name="share_with">share with</string>
     <string name="no_address">no_address</string>
     <string name="choose_country">please Choose Country </string>
     <string name="choose_nearest">please Choose Nearest  Branch </string>
@@ -90,7 +90,7 @@
     <string name="add_rate">Please add a rating for the application services</string>
     <string name="add_rate_product">Please add a review to the product</string>
     <string name="rate_product">Rating Product</string>
-    <string name="Edit">edit</string>
+    <string name="Edit">Edit</string>
     <string name="complete_request">Complete Order</string>
     <string name="DeliveryTime1">Delivery Time </string>
     <string name="rateRequest">Rate Order</string>
@@ -288,6 +288,6 @@
     <string name="to_show_products"> to show products </string>
     <string name="ph" translatable="false">Ph : </string>
     <string name="search_country">Search for country From Here</string>
-
+    <string name="minimum_order_amount">you can\'t complete order because The minimum amount to complete the purchase is:    </string>
 
 </resources>

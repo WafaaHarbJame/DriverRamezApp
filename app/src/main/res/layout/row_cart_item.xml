@@ -20,8 +20,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/_4sdp">
+            android:layout_height="wrap_content">
 
             <com.daimajia.swipe.SwipeLayout
                 android:id="@+id/swipe"
@@ -90,8 +89,8 @@
 
                         <com.makeramen.roundedimageview.RoundedImageView
                             android:id="@+id/imageView1"
-                            android:layout_width="@dimen/_100sdp"
-                            android:layout_height="@dimen/_80sdp"
+                            android:layout_width="@dimen/_80sdp"
+                            android:layout_height="@dimen/_60sdp"
                             android:layout_margin="4dp"
                             android:background="@drawable/round_card_corner_white"
                             android:elevation="4dp"
@@ -108,7 +107,7 @@
                             android:maxLines="2"
                             android:text="اسم المنتج"
                             android:textAlignment="viewStart"
-                            android:textSize="@dimen/_12ssp" />
+                            android:textSize="@dimen/_10ssp" />
 
 
                     </LinearLayout>
@@ -117,9 +116,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_margin="@dimen/_4sdp"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/_4sdp">
+                        android:layout_margin="@dimen/_2sdp"
+                        android:orientation="horizontal">
 
                         <com.ramez.shopp.SpichalViews.STextView
                             android:layout_width="wrap_content"
@@ -128,7 +126,7 @@
                             android:lines="1"
                             android:text="@string/price"
                             android:textColor="@color/colorPrimaryDark"
-                            android:textSize="@dimen/_12ssp" />
+                            android:textSize="@dimen/_10ssp" />
 
                         <com.ramez.shopp.SpichalViews.STextViewBold
                             android:id="@+id/priceTv"
@@ -139,16 +137,16 @@
                             android:lines="1"
                             android:text="35555"
                             android:textColor="@color/green"
-                            android:textSize="@dimen/_12ssp" />
+                            android:textSize="@dimen/_10ssp" />
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_2sdp"
                         android:layout_gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/_4sdp">
+                        android:orientation="horizontal">
 
                         <com.ramez.shopp.SpichalViews.STextView
                             android:layout_width="wrap_content"
@@ -157,7 +155,7 @@
                             android:lines="1"
                             android:text="@string/total1"
                             android:textColor="@color/colorPrimaryDark"
-                            android:textSize="@dimen/_12ssp" />
+                            android:textSize="@dimen/_10ssp" />
 
                         <com.ramez.shopp.SpichalViews.STextViewBold
                             android:id="@+id/totalTv"
@@ -168,7 +166,7 @@
                             android:lines="1"
                             android:text="35555"
                             android:textColor="@color/green"
-                            android:textSize="@dimen/_12ssp" />
+                            android:textSize="@dimen/_10ssp" />
 
                     </LinearLayout>
 
@@ -176,8 +174,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/_4sdp">
+                        android:layout_margin="@dimen/_2sdp"
+                        android:orientation="horizontal">
 
                         <com.ramez.shopp.SpichalViews.STextView
                             android:layout_width="wrap_content"
@@ -186,7 +184,7 @@
                             android:lines="1"
                             android:text="@string/pieces"
                             android:textColor="@color/colorPrimaryDark"
-                            android:textSize="@dimen/_12ssp" />
+                            android:textSize="@dimen/_10ssp" />
 
                         <com.ramez.shopp.SpichalViews.STextViewBold
                             android:id="@+id/weight_unitTv"
@@ -197,7 +195,7 @@
                             android:lines="1"
                             android:text="10"
                             android:textColor="@color/green"
-                            android:textSize="@dimen/_12ssp" />
+                            android:textSize="@dimen/_10ssp" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -233,7 +231,7 @@
                                 android:text="1"
                                 android:textAllCaps="false"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/_11ssp"
+                                android:textSize="@dimen/_10ssp"
                                 android:visibility="visible" />
 
 
@@ -268,7 +266,7 @@
                         android:paddingStart="@dimen/_4sdp"
                         android:textColor="@color/green"
                         android:textAlignment="viewStart"
-                        android:textSize="@dimen/_12ssp" />
+                        android:textSize="@dimen/_10ssp" />
                 </LinearLayout>
             </com.daimajia.swipe.SwipeLayout>
         </LinearLayout>

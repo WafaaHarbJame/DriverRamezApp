@@ -30,7 +30,7 @@ public class MainActivity extends ActivityBase {
         View view = binding.getRoot();
         setContentView(view);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commitAllowingStateLoss();
+        getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
         binding.toolBar.mainTitleTxt.setText(getString(R.string.string_menu_home));
         binding.toolBar.backBtn.setVisibility(View.GONE);
 
@@ -39,6 +39,7 @@ public class MainActivity extends ActivityBase {
         getIntentExtra();
 
         binding.homeButn.setOnClickListener(view1 -> {
+            binding.toolBar.backBtn.setVisibility(View.GONE);
             binding.toolBar.mainTitleTxt.setText(getString(R.string.string_menu_home));
             binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_clicked));
             binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.category_icon));
@@ -46,11 +47,12 @@ public class MainActivity extends ActivityBase {
             binding.offerBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.offer_icon));
             binding.myAccountBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.myaccount_icon));
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commitAllowingStateLoss();
+            getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
 
         });
 
         binding.categoryBut.setOnClickListener(view1 -> {
+            binding.toolBar.backBtn.setVisibility(View.GONE);
             binding.toolBar.mainTitleTxt.setText(getString(R.string.category));
             binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_icon));
             binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.category_click));
@@ -58,41 +60,44 @@ public class MainActivity extends ActivityBase {
             binding.offerBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.offer_icon));
             binding.myAccountBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.myaccount_icon));
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CategoryFragment(), "CategoryFragment").commitAllowingStateLoss();
+            getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CategoryFragment(), "CategoryFragment").commit();
 
         });
 
         binding.cartBut.setOnClickListener(view1 -> {
 
+            binding.toolBar.backBtn.setVisibility(View.GONE);
             binding.toolBar.mainTitleTxt.setText(getString(R.string.cart));
             binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_icon));
             binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.category_icon));
             binding.cartBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.cart_icon_bottom));
             binding.offerBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.offer_icon));
             binding.myAccountBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.myaccount_icon));
-            getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CartFragment(), "CartFragment").commitAllowingStateLoss();
+            getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CartFragment(), "CartFragment").commit();
 
         });
 
         binding.offerBut.setOnClickListener(view1 -> {
+            binding.toolBar.backBtn.setVisibility(View.GONE);
             binding.toolBar.mainTitleTxt.setText(getString(R.string.offer_text));
             binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_icon));
             binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.category_icon));
             binding.cartBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.cart_icon_before));
             binding.offerBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.offer_clicked));
             binding.myAccountBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.myaccount_icon));
-            getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new OfferFragment(), "OfferFragment").commitAllowingStateLoss();
+            getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new OfferFragment(), "OfferFragment").commit();
 
         });
 
         binding.myAccountBut.setOnClickListener(view1 -> {
+            binding.toolBar.backBtn.setVisibility(View.GONE);
             binding.toolBar.mainTitleTxt.setText(getString(R.string.myaccount));
             binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_icon));
             binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.category_icon));
             binding.cartBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.cart_icon_before));
             binding.offerBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.offer_icon));
             binding.myAccountBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.my_account_clciked));
-            getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new MyAccountFragment(), "MyAccountFragment").commitAllowingStateLoss();
+            getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new MyAccountFragment(), "MyAccountFragment").commit();
 
         });
 
@@ -120,18 +125,27 @@ public class MainActivity extends ActivityBase {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(@NotNull MessageEvent event) {
+
         if (event.type.equals(MessageEvent.TYPE_invoice)) {
+
             binding.toolBar.mainTitleTxt.setText(R.string.invoice_details);
+
             binding.toolBar.backBtn.setVisibility(View.VISIBLE);
+
             binding.toolBar.backBtn.setOnClickListener(view -> {
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CartFragment(), "MyAccountFragment").commit();
+
                 binding.toolBar.mainTitleTxt.setText(R.string.cart);
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CartFragment(), "MyAccountFragment").commit();
+
+
 
             });
 
         }
 
-        if (event.type.equals(MessageEvent.TYPE_main)) {
+        else if (event.type.equals(MessageEvent.TYPE_main)) {
+            binding.toolBar.backBtn.setVisibility(View.GONE);
             binding.toolBar.mainTitleTxt.setText(getString(R.string.string_menu_home));
             binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_clicked));
             binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.category_icon));
@@ -143,10 +157,23 @@ public class MainActivity extends ActivityBase {
 
         }
 
+        else if (event.type.equals(MessageEvent.TYPE_cart)) {
+            binding.toolBar.backBtn.setVisibility(View.GONE);
+            binding.toolBar.mainTitleTxt.setText(getString(R.string.cart));
+            binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_icon));
+            binding.categoryBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.category_icon));
+            binding.cartBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.cart_icon_bottom));
+            binding.offerBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.offer_icon));
+            binding.myAccountBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.myaccount_icon));
+            getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CartFragment(), "CartFragment").commitAllowingStateLoss();
+
+        }
         else {
             binding.toolBar.backBtn.setVisibility(View.GONE);
 
         }
+
+
 
     }
 

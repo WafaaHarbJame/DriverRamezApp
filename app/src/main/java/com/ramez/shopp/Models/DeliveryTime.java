@@ -3,7 +3,9 @@ package com.ramez.shopp.Models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class DeliveryTime {
+import java.io.Serializable;
+
+public class DeliveryTime implements Serializable {
     @SerializedName("id")
     @Expose
     private Integer id;

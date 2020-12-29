@@ -178,8 +178,8 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         if (bundle != null) {
 
             ProductModel productModel = (ProductModel) bundle.getSerializable(Constants.DB_productModel);
-            if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
                 product_id = productModel.getId();
+
                 if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
                     productName = productModel.getHName();
 
@@ -194,8 +194,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
             }
 
-
-        }
+        
     }
 
     public void initAdapter() {

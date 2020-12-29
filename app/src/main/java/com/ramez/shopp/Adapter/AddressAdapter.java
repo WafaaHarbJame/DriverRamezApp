@@ -57,7 +57,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Holder> 
             holder.binding.rbSelectAddress.setChecked(false);
         }
 
-        binding.tvAddressMark.setText(context.getString(R.string.ph).concat( addressModel.getMobileNumber()));
+        binding.tvAddressMark.setText(context.getString(R.string.ph).concat(" "+addressModel.getMobileNumber()));
         binding.tvAddressNote.setText(addressModel.getFullAddress());
         binding.tvaAddressTitle.setText(addressModel.getName());
 

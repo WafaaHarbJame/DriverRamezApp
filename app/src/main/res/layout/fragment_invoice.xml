@@ -356,6 +356,7 @@
                     <com.ramez.shopp.SpichalViews.STextViewBold
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:id="@+id/saveBut"
                         android:layout_marginEnd="@dimen/_16sdp"
                         android:layout_weight="1"
                         android:background="@drawable/round_corner_next"
