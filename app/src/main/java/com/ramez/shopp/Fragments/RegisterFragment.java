@@ -81,7 +81,6 @@ public class RegisterFragment extends FragmentBase {
         CountryCode = String.valueOf(localModel.getPhonecode());
         city_id = localModel.getCityId();
 
-        Toast("dd" + localModel.getCityId());
         MemberModel memberModel = new MemberModel();
         memberModel.setMobileNumber(mobileStr);
         memberModel.setPassword(passwordStr);
