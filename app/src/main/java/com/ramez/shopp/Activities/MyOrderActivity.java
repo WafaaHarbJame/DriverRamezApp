@@ -5,13 +5,23 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.ramez.shopp.Classes.MessageEvent;
+import com.ramez.shopp.Fragments.CartFragment;
 import com.ramez.shopp.Fragments.CurrentOrderFragment;
+import com.ramez.shopp.Fragments.HomeFragment;
 import com.ramez.shopp.Fragments.PastOrderFragment;
+import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.ActivityMyOrderBinding;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+import org.jetbrains.annotations.NotNull;
 
 public class MyOrderActivity extends ActivityBase {
     ActivityMyOrderBinding binding;
@@ -75,6 +85,23 @@ public class MyOrderActivity extends ActivityBase {
 
 
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(@NotNull MessageEvent event) {
+
+        if (event.type.equals(MessageEvent.TYPE_main)) {
+
+            EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_main));
+            Intent intent = new Intent(getActiviy(), MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+
+//                getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "MyAccountFragment").commit();
+
+        }
+
+
+
+    }
 
 
 }

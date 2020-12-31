@@ -38,8 +38,8 @@ public class RegisterFragment extends FragmentBase {
     String CountryCode = "+966";
     boolean select_country = false;
     String country_name = "bh";
-    String city_id = "bh";
-    String prefix = "966";
+    String city_id = "7263";
+    String prefix = "973";
     SharedPManger sharedPManger;
     private FragmentRegisterBinding binding;
     private ViewPager viewPager;

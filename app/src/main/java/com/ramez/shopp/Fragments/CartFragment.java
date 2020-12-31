@@ -31,6 +31,7 @@ import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
+import com.ramez.shopp.Utils.SharedPManger;
 import com.ramez.shopp.databinding.FragmentCartBinding;
 
 import org.greenrobot.eventbus.EventBus;
@@ -86,8 +87,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
             binding.contBut.setOnClickListener(view1 -> {
 
                 if(cartAdapter.calculateSubTotalPrice()<minimum_order_amount){
-                    Snackbar snackbar = Snackbar
-                            .make(view1, getString(R.string.minimum_order_amount)+minimum_order_amount, Snackbar.LENGTH_LONG);
+                    Snackbar snackbar = Snackbar.make(view1, getString(R.string.minimum_order_amount) + minimum_order_amount, Snackbar.LENGTH_LONG);
                     snackbar.show();
 
                 }
@@ -216,6 +216,9 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
                         cartList = cartResultModel.getData().getCartData();
                         binding.contBut.setVisibility(View.VISIBLE);
                         minimum_order_amount=cartResultModel.getMinimumOrderAmount();
+                        localModel.setMinimum_order_amount(minimum_order_amount);
+                        UtilityApp.setLocalData(localModel);
+
                         delivery_charges=cartResultModel.getDeliveryCharges();
                         Log.i(TAG, "Log cart" + cartResultModel.getData().getCartData().size());
                         initAdapter();

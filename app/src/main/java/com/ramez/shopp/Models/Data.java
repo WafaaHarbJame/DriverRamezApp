@@ -4,9 +4,10 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.ramez.shopp.Classes.CartModel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Data {
+public class Data implements Serializable {
 
     @SerializedName("cart_data")
     @Expose

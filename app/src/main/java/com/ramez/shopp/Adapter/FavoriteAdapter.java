@@ -3,12 +3,9 @@ package com.ramez.shopp.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +28,7 @@ import com.bumptech.glide.request.target.Target;
 import com.google.android.material.snackbar.Snackbar;
 import com.ramez.shopp.Activities.RegisterLoginActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.CallBack.DataCallback;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.OnLoadMoreListener;
 import com.ramez.shopp.Classes.UtilityApp;
@@ -46,7 +44,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class FavoriteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
     public static final int VIEW_TYPE_ITEM = 1;
@@ -71,9 +69,10 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private int limit = 2;
     private RecyclerView rv;
     private String filter_text;
+    private DataCallback dataCallback;
 
 
-    public ProductCategoryAdapter(Context context, List<ProductModel> productModels, int category_id, int subID, int country_id, int city_id, String user_id, int limit, RecyclerView rv, String filter, OnItemClick onItemClick) {
+    public FavoriteAdapter(Context context, List<ProductModel> productModels, int category_id, int subID, int country_id, int city_id, String user_id, int limit, RecyclerView rv, String filter, OnItemClick onItemClick, DataCallback dataCallback) {
         this.context = context;
         this.onItemClick = onItemClick;
         this.productModels = productModels;
@@ -85,6 +84,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         this.user_id = user_id;
         this.rv = rv;
         this.filter_text = filter;
+        this.dataCallback = dataCallback;
 
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
 
@@ -280,10 +280,14 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
             } else {
                 if (IsSuccess) {
-                    productModels.get(position).setFavourite(false);
-                    Toast.makeText(context, "" + context.getString(R.string.success_delete), Toast.LENGTH_SHORT).show();
-                    notifyItemChanged(position);
-                    notifyDataSetChanged();
+                    if (dataCallback != null) {
+                        Toast.makeText(context, "" + context.getString(R.string.success_delete), Toast.LENGTH_SHORT).show();
+                        productModels.remove(position);
+                        notifyDataSetChanged();
+                        notifyItemRemoved(position);
+                        dataCallback.dataResult(productModels.size(), "success", true);
+
+                    }
 
 
                 } else {
@@ -316,7 +320,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         snackbar.show();
     }
 
-    private ProductCategoryAdapter getAdapter() {
+    private FavoriteAdapter getAdapter() {
         return this;
     }
 

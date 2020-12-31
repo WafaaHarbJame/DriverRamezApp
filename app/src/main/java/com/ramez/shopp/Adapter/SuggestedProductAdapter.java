@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,7 +82,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
         if (quantity > 0) {
             holder.binding.productCartQTY.setText(String.valueOf(quantity));
             holder.binding.CartLy.setVisibility(View.VISIBLE);
-            holder.binding.cartBut.setVisibility(View.GONE);
+            holder.binding.cartBut.setVisibility(View.INVISIBLE);
 
             if (quantity == 1) {
                 holder.binding.deleteCartBtn.setVisibility(View.VISIBLE);
@@ -91,10 +93,9 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
             }
 
         } else {
-            holder.binding.CartLy.setVisibility(View.GONE);
+            holder.binding.CartLy.setVisibility(View.INVISIBLE);
             holder.binding.cartBut.setVisibility(View.VISIBLE);
         }
-
 
         if (productModel.getProductBarcodes().get(0).getIsSpecial()) {
             holder.binding.productPriceBeforeTv.setPaintFlags(holder.binding.productPriceBeforeTv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -118,22 +119,23 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
         }
 
 
-        Glide.with(context).asBitmap().load(productModel.getImages().get(0)).placeholder(R.drawable.holder_image).placeholder(R.drawable.holder_image).addListener(new RequestListener<Bitmap>() {
+        Log.i("tag", "Log Image Url " + productModel.getImages().get(0));
+
+        Glide.with(context).load(productModel.getImages().get(0)).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).placeholder(R.drawable.holder_image).addListener(new RequestListener<Drawable>() {
             @Override
-            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                 holder.binding.loadingLY.setVisibility(View.GONE);
 
                 return false;
             }
 
             @Override
-            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                 holder.binding.loadingLY.setVisibility(View.GONE);
 
                 return false;
             }
         }).into(holder.binding.productImg);
-
 
     }
 

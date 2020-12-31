@@ -97,11 +97,11 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
 
         if (cartDM.getProductPrice() > 0) {
             if (cartDM.getSpecialPrice() == 0) {
-                holder.binding.productPriceTv.setText(cartDM.getProductPrice().toString());
+                holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(cartDM.getProductPrice().toString()), UtilityApp.getLocalData().getFractional()) + " " + currency);
 
 
             } else {
-                holder.binding.productPriceTv.setText(cartDM.getSpecialPrice().toString());
+                holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(cartDM.getSpecialPrice().toString()), UtilityApp.getLocalData().getFractional()) + " " + currency);
 
             }
 
@@ -334,6 +334,7 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
                     }
                     cartDMS.remove(position);
                     notifyItemRemoved(position);
+                    notifyDataSetChanged();
 
                     initSnackBar(context.getString(R.string.success_delete_from_cart), v);
 

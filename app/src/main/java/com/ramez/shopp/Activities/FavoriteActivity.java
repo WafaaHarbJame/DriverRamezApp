@@ -6,9 +6,9 @@ import android.view.View;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import com.ramez.shopp.Adapter.ProductAdapter;
-import com.ramez.shopp.Adapter.ProductCategoryAdapter;
+import com.ramez.shopp.Adapter.FavoriteAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.CallBack.DataCallback;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.FavouriteResultModel;
@@ -22,10 +22,10 @@ import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
 
-public class FavoriteActivity extends ActivityBase implements ProductCategoryAdapter.OnItemClick {
+public class FavoriteActivity extends ActivityBase implements FavoriteAdapter.OnItemClick {
     ActivityFavoriteBinding binding;
     ArrayList<ProductModel> productList;
-    private ProductCategoryAdapter productFavAdapter;
+    private FavoriteAdapter productFavAdapter;
     private GridLayoutManager gridLayoutManager;
     private int category_id = 0, country_id, city_id;
     private String user_id, filter;
@@ -70,8 +70,20 @@ public class FavoriteActivity extends ActivityBase implements ProductCategoryAda
 
     public void initAdapter() {
 
-        productFavAdapter = new ProductCategoryAdapter(getActiviy(), productList,0,0,country_id,city_id,user_id,productList.size(),
-                binding.favoriteRecycler,filter,this);
+        productFavAdapter = new FavoriteAdapter(getActiviy(), productList, 0, 0, country_id, city_id, user_id, productList.size(), binding.favoriteRecycler, filter, this, new DataCallback() {
+            @Override
+            public void dataResult(Object obj, String func, boolean IsSuccess) {
+                int size = (int) obj;
+
+                if (size == 0) {
+
+                    binding.dataLY.setVisibility(View.GONE);
+                    binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
+                    binding.noDataLY.noDataTxt.setText(R.string.no_products_fav);
+
+                }
+            }
+        });
         binding.favoriteRecycler.setAdapter(productFavAdapter);
     }
 
@@ -114,13 +126,14 @@ public class FavoriteActivity extends ActivityBase implements ProductCategoryAda
                         binding.noDataLY.noDataLY.setVisibility(View.GONE);
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
                         productList = result.getData();
-                        Log.i(TAG, "Log productList" + productList.size());
+                        Log.i(TAG, "Log getFavoriteProducts " + productList.size());
                         initAdapter();
 
                     } else {
 
                         binding.dataLY.setVisibility(View.GONE);
                         binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
+                        binding.noDataLY.noDataTxt.setText(R.string.no_products_fav);
 
                     }
 

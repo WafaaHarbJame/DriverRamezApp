@@ -87,6 +87,9 @@ ApiInterface {
     @GET("v3/Address/getUserAddress")
     Call<AddressResultModel> GetUserAddress(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id);
 
+    @GET("v3/Address/setDefaultAddress")
+    Call<GeneralModel> setDefaultAddress(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id,@Query("address_id") int address_id);
+
     @GET("v3/Address/getAddressById")
     Call<AddressResultModel> GetAddressById(@HeaderMap() Map<String, Object> headerParams, @Query("address_id") int address_id);
 

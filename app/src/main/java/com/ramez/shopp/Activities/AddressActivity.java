@@ -8,13 +8,16 @@ import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+
 import com.ramez.shopp.Adapter.AddressAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Fragments.InvoiceFragment;
 import com.ramez.shopp.Models.AddressModel;
 import com.ramez.shopp.Models.AddressResultModel;
+import com.ramez.shopp.Models.GeneralModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.ActivityAddressBinding;
@@ -67,13 +70,20 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
 
         });
 
+        binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
+            GetUserAddress(user.getId());
+        });
+
+
+        binding.noDataLY.addAddressBut.setOnClickListener(view1 -> {
+            addNewAddress();
+
+        });
+
 
         binding.acceptBtu.setOnClickListener(view1 -> {
-            user.setLastSelectedAddress(defaultAddressId);
-            UtilityApp.setUserData(user);
-            addressAdapter.notifyDataSetChanged();
-            Toast(R.string.address_default);
 
+            setDefaultAddress(user.getId(),defaultAddressId);
 
         });
 
@@ -130,11 +140,14 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
             AddressResultModel result = (AddressResultModel) obj;
 
             if (func.equals(Constants.ERROR) ||func.equals(Constants.FAIL)) {
+
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(R.string.error_in_data);
                 binding.dataLY.setVisibility(View.GONE);
 
+
             }  else {
+
                 if (IsSuccess) {
                     binding.dataLY.setVisibility(View.VISIBLE);
 
@@ -144,15 +157,18 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
                         addressAdapter.notifyDataSetChanged();
 
                     } else {
-                        binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
                         binding.failGetDataLY.failTxt.setText(R.string.no_address);
-                        binding.dataLY.setVisibility(View.GONE);
+                        binding.dataLY.setVisibility(View.VISIBLE);
+                        binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
 
                     }
 
 
                 } else {
-                    Toast(R.string.fail_to_get_data);
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(R.string.no_address);
+                    binding.dataLY.setVisibility(View.VISIBLE);
 
                 }
             }
@@ -189,5 +205,37 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
         }
 
     }
+
+    public void setDefaultAddress(int user_id,int address_id) {
+        GlobalData.progressDialog(getActiviy(),R.string.default_address,R.string.please_wait_sending);
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+
+            binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
+            binding.dataLY.setVisibility(View.VISIBLE);
+
+            if (func.equals(Constants.ERROR)) {
+
+                Toast(R.string.error_in_data);
+
+            } else if (func.equals(Constants.FAIL)) {
+                Toast(R.string.fail_to_get_data);
+            } else {
+
+                if (IsSuccess) {
+
+                 GlobalData.hideProgressDialog();
+
+                 GlobalData.successDialog(getActiviy(),getString(R.string.default_address),getString(R.string.address_default));
+
+                    user.setLastSelectedAddress(defaultAddressId);
+                    UtilityApp.setUserData(user);
+                    addressAdapter.notifyDataSetChanged();
+
+                }
+            }
+
+        }).setDefaultAddress(user_id,address_id);
+    }
+
 
 }

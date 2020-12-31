@@ -289,5 +289,7 @@
     <string name="ph" translatable="false">Ph : </string>
     <string name="search_country">Search for country From Here</string>
     <string name="minimum_order_amount">you can\'t complete order because The minimum amount to complete the purchase is:    </string>
+    <string name="default_address">Default Address</string>
+    <string name="no_products_fav">No Products adding in favorite </string>
 
 </resources>

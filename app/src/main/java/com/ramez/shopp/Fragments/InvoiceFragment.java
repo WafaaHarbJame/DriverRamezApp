@@ -18,6 +18,7 @@ import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeSuccessDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
 import com.github.dhaval2404.form_validation.rule.NonEmptyRule;
 import com.github.dhaval2404.form_validation.validation.FormValidator;
+import com.google.android.material.snackbar.Snackbar;
 import com.ramez.shopp.Activities.AddressActivity;
 import com.ramez.shopp.Adapter.InvoiceItemAdapter;
 import com.ramez.shopp.Adapter.PaymentAdapter;
@@ -70,7 +71,7 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
     String total, currency;
     List<SearchListItem> deliverTimeList;
     List<SearchListItem> deliverDayList;
-    com.ramez.shopp.searchdialog.SearchableDialog deliverTimeDialog, deliverDayDialog;
+   SearchableDialog deliverTimeDialog, deliverDayDialog;
     int fraction = 2;
     private FragmentInvoiceBinding binding;
     private PaymentAdapter paymentAdapter;
@@ -79,6 +80,7 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
     private String addressTitle;
     private double deliveryFees = 0.0;
     private CartResultModel cartResultModel;
+    private int minimum_order_amount=0;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentInvoiceBinding.inflate(inflater, container, false);
@@ -95,6 +97,7 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
         localModel = UtilityApp.getLocalData();
         currency = localModel.getCurrencyCode();
         fraction = localModel.getFractional();
+        minimum_order_amount=localModel.getMinimum_order_amount();
 
 
         storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
@@ -141,40 +144,50 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
 
         binding.sendOrder.setOnClickListener(view1 -> {
 
-            OrderCall orderCall = new OrderCall();
-            orderCall.user_id = userId;
-            orderCall.store_ID = storeId;
-            orderCall.address_id = addressId;
-            orderCall.payment_method = paymentMethod;
-            orderCall.coupon_code_id = couponCodeId;
-            orderCall.delivery_date_id = deliveryDateId;
-            orderCall.expressDelivery = expressDelivery;
+            if(NumberHandler.getDouble(total)<minimum_order_amount){
 
-            Log.i(TAG, "Log makeOrder");
-            Log.i(TAG, "Log user_id " + userId);
-            Log.i(TAG, "Log store_ID " + storeId);
-            Log.i(TAG, "Log addressId " + addressId);
-            Log.i(TAG, "Log payment_method " + paymentMethod);
-            Log.i(TAG, "Log coupon_code_id " + couponCodeId);
-            Log.i(TAG, "Log delivery_date_id " + deliveryDateId);
-            Log.i(TAG, "Log expressDelivery " + expressDelivery);
-
-
-            if (addressId == 0) {
-                if(paymentMethod.equals("CC")){
-                    binding.DeliverLY.setVisibility(View.GONE);
-                }
-                else {
-                    Toast(R.string.choose_address);
-                    binding.deliveryAddressTv.setError(getString(R.string.choose_address));
-                    binding.deliveryAddressTv.requestFocus();
-                }
-
-
-
-            } else {
-                sendOrder(orderCall);
+                Snackbar snackbar = Snackbar
+                        .make(view1, getString(R.string.minimum_order_amount)+minimum_order_amount, Snackbar.LENGTH_LONG);
+                snackbar.show();
             }
+            else {
+                OrderCall orderCall = new OrderCall();
+                orderCall.user_id = userId;
+                orderCall.store_ID = storeId;
+                orderCall.address_id = addressId;
+                orderCall.payment_method = paymentMethod;
+                orderCall.coupon_code_id = couponCodeId;
+                orderCall.delivery_date_id = deliveryDateId;
+                orderCall.expressDelivery = expressDelivery;
+
+                Log.i(TAG, "Log makeOrder");
+                Log.i(TAG, "Log user_id " + userId);
+                Log.i(TAG, "Log store_ID " + storeId);
+                Log.i(TAG, "Log addressId " + addressId);
+                Log.i(TAG, "Log payment_method " + paymentMethod);
+                Log.i(TAG, "Log coupon_code_id " + couponCodeId);
+                Log.i(TAG, "Log delivery_date_id " + deliveryDateId);
+                Log.i(TAG, "Log expressDelivery " + expressDelivery);
+
+
+                if (addressId == 0) {
+                    if(paymentMethod.equals("CC")){
+                        binding.DeliverLY.setVisibility(View.GONE);
+                    }
+                    else {
+                        Toast(R.string.choose_address);
+                        binding.deliveryAddressTv.setError(getString(R.string.choose_address));
+                        binding.deliveryAddressTv.requestFocus();
+                    }
+
+
+
+                } else {
+                    sendOrder(orderCall);
+                }
+
+            }
+
 
         });
 

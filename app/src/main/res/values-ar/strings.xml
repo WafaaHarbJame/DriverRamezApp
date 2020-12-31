@@ -29,8 +29,8 @@
 نص تجريبي نص تجريبي نص تجريبي </string>
     <string name="dummy">نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي نص تجريبي </string>
     <string name="share_with">انشر التطبيق </string>
-    <string name="no_address">no_address</string>
-    <string name="by_app">by_app</string>
+    <string name="no_address">لا يوجد عناوين </string>
+    <string name="by_app">بواسطة </string>
     <string name="choose_country">الرجاء أختيار البلد</string>
     <string name="choose_nearest">الرجاءاختيار الفرع الأقرب </string>
     <string name="create_account">انشاء حساب </string>
@@ -248,7 +248,7 @@
     <string name="make_order">ارسال الطلب </string>
     <string name="fail_to_send_order">فشل ارسال الطلب </string>
     <string name="sending_order">تم  ارسال الطلب بنجاح </string>
-    <string name="textEmptyOrders">لم يتم إيجاد طلبات</string>
+    <string name="textEmptyOrders">لا يوجد طلبات</string>
     <string name="textNoXadoxOrder">لم تقم بطلب منتجات من رامز  حتي الان</string>
     <string name="textStartShopping">ابدأ التسوق</string>
     <string name="order_now">اطلب الان </string>
@@ -266,5 +266,7 @@
     <string name="to_show_products">لمشاهدة المنتجات  </string>
     <string name="search_country">ابحث عن الدولة من هنا </string>
     <string name="minimum_order_amount">لا يمكنك الشراء لان الحد الادنى لاتمام عملية الشراء هو : </string>
+    <string name="default_address">تعين العنوان الافتراضي </string>
+    <string name="no_products_fav">لا يوجد منتجات مضافة للمفضلة </string>
 
 </resources>

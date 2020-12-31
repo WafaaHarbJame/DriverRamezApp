@@ -1,5 +1,6 @@
 package com.ramez.shopp.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import com.ramez.shopp.Adapter.OrderProductsAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.OrderProductModel;
 import com.ramez.shopp.Models.OrderProductsModel;
@@ -54,6 +56,15 @@ public class PastOrderFragment extends FragmentBase {
             getPastOrder(user_id);
             binding.swipe.setRefreshing(false);
         });
+
+        binding.noDataLY.btnBrowseProducts.setOnClickListener(view1 -> {
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+
+
+        });
+
 
 
         return view;

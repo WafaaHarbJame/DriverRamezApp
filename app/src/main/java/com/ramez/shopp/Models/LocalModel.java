@@ -11,6 +11,7 @@ public class LocalModel {
     private String currencyCode;
     private String cityId;
     private int fractional;
+    private int minimum_order_amount=0;
 
 
     public Integer getCountryId() {
@@ -67,5 +68,13 @@ public class LocalModel {
 
     public void setFractional(int fractional) {
         this.fractional = fractional;
+    }
+
+    public int getMinimum_order_amount() {
+        return minimum_order_amount;
+    }
+
+    public void setMinimum_order_amount(int minimum_order_amount) {
+        this.minimum_order_amount = minimum_order_amount;
     }
 }

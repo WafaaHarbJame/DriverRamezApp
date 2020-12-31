@@ -18,22 +18,23 @@
         android:id="@+id/failGetDataLY"
         layout="@layout/layout_fail_get_data" />
 
-
+    <include
+        android:id="@+id/noDataLY"
+        layout="@layout/layout_no_data" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
             android:id="@+id/dataLY"
+            android:visibility="visible"
             android:orientation="vertical">
-            <include
-                android:id="@+id/noDataLY"
-                layout="@layout/layout_no_data" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/favoriteRecycler"
                 android:layout_width="match_parent"
                 android:layout_marginStart="@dimen/_4sdp"
                 android:layout_marginEnd="@dimen/_4sdp"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent" />
 
 
         </LinearLayout>

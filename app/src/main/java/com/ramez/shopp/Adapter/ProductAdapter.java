@@ -86,7 +86,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
         if (quantity > 0) {
             holder.binding.productCartQTY.setText(String.valueOf(quantity));
             holder.binding.CartLy.setVisibility(View.VISIBLE);
-            holder.binding.cartBut.setVisibility(View.GONE);
+            holder.binding.cartBut.setVisibility(View.INVISIBLE);
 
             if (quantity == 1) {
                 holder.binding.deleteCartBtn.setVisibility(View.VISIBLE);
@@ -97,7 +97,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
             }
 
         } else {
-            holder.binding.CartLy.setVisibility(View.GONE);
+            holder.binding.CartLy.setVisibility(View.INVISIBLE);
             holder.binding.cartBut.setVisibility(View.VISIBLE);
         }
 
@@ -141,7 +141,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                 return false;
             }
         }).into(holder.binding.productImg);
-        ;
+
 
 
     }
@@ -346,17 +346,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
             new DataFeacher(false, (obj, func, IsSuccess) -> {
 
                 if (IsSuccess) {
-
-//                    initSnackBar(context.getString(R.string.success_added_to_cart), v);
-//                    productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
-//                   binding.cartBut.setVisibility(View.GONE);
-//
-//                    if (position % 2 == 0) {
-//                        notifyItemRangeChanged(position > 0 ? position - 1 : position, 2);
-//                    } else {
-//                        notifyItemRangeChanged(position, 2);
-//                    }
-
                     binding.cartBut.setVisibility(View.GONE);
                     initSnackBar(context.getString(R.string.success_added_to_cart), v);
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);

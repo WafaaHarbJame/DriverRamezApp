@@ -213,7 +213,8 @@ public class DataFeacher {
         params.put("device_type", memberModel.getDeviceType());
         params.put("device_token", memberModel.getDeviceToken());
         params.put("name", memberModel.getName());
-        params.put("country", memberModel.getCountry());
+       // params.put("country", memberModel.getCountry());
+        params.put("country", "BH");
         params.put("city", memberModel.getCity());
         params.put("email", memberModel.getEmail());
         params.put("device_id", memberModel.getDeviceId());
@@ -369,6 +370,20 @@ public class DataFeacher {
         Call call = apiService.GetUserAddress(headerMap, user_id);
         call.enqueue(callbackApi);
     }
+
+
+    public void setDefaultAddress(int user_id,int address_id) {
+
+        Log.i(TAG, "Log setDefaultAddress");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log user_id " + user_id);
+        Log.i(TAG, "Log addressId " + address_id);
+
+
+        Call call = apiService.setDefaultAddress(headerMap, user_id,address_id);
+        call.enqueue(callbackApi);
+    }
+
 
     public void GetAddressByIdHandle(int address_id) {
 
@@ -640,7 +655,8 @@ public class DataFeacher {
         params.put("user_id", memberModel.getId());
         params.put("name", memberModel.getName());
         params.put("email", memberModel.getEmail());
-        params.put("country", memberModel.getCountry());
+      //  params.put("country", memberModel.getCountry());
+        params.put("country", "BH");
         params.put("state", "1");
         params.put("city", Integer.parseInt(memberModel.getCity()));
 
