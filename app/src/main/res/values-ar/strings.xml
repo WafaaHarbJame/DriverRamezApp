@@ -268,5 +268,7 @@
     <string name="minimum_order_amount">لا يمكنك الشراء لان الحد الادنى لاتمام عملية الشراء هو : </string>
     <string name="default_address">تعين العنوان الافتراضي </string>
     <string name="no_products_fav">لا يوجد منتجات مضافة للمفضلة </string>
+    <string name="fail_to_load">فشل تحميل الصورة </string>
+    <string name="success_upload">تم تحميل الصورة بنجاح</string>
 
 </resources>

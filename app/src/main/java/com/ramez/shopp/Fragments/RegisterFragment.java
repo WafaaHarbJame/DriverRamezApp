@@ -37,7 +37,7 @@ public class RegisterFragment extends FragmentBase {
     String FCMToken;
     String CountryCode = "+966";
     boolean select_country = false;
-    String country_name = "bh";
+    String country_name = "BH";
     String city_id = "7263";
     String prefix = "973";
     SharedPManger sharedPManger;
@@ -109,6 +109,7 @@ public class RegisterFragment extends FragmentBase {
                 if (IsSuccess) {
                     Log.i("TAG", "Log otp " + result.getOtp());
                     MemberModel user = result.data;
+                    user.setRegisterType(Constants.BY_PHONE);
                     UtilityApp.setUserData(user);
                     SendOtp(mobileStr);
                 } else {
@@ -170,7 +171,6 @@ public class RegisterFragment extends FragmentBase {
                 if (IsSuccess) {
                     OtpModel otpModel = (OtpModel) obj;
                     Log.i("TAG", "Log otp " + otpModel.getData());
-
                     Intent intent = new Intent(getActivityy(), ConfirmActivity.class);
                     intent.putExtra(Constants.KEY_MOBILE, mobileStr);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

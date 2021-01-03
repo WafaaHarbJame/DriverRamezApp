@@ -278,8 +278,14 @@
     <string name="no_cities">No Cities</string>
     <string name="stock_empty">Stock Empty</string>
 
+    //social Login
     <string name="facebook_app_id" translatable="false">1545102798941136</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb1545102798941136</string>
+    <!-- Twitter consumer key and secret -->
+
+    <string name="twitter_consumer_key" translatable="false">358358461-CQcJHqppXF9UHhJcLLtNqpRXDOsbPj2EujKjNzKk</string>
+    <string name="twitter_consumer_secret" translatable="false">9gOURv8rUAfBbt1XnC8cnWYU8W5qiOrhpbUrY6Q8dRzg9</string>
+
     <string name="LoginFirst">You Must Login </string>
     <string name="to_add_cart">to adding to Cart </string>
     <string name="to_add_favorite">to adding to favourite  </string>
@@ -291,5 +297,8 @@
     <string name="minimum_order_amount">you can\'t complete order because The minimum amount to complete the purchase is:    </string>
     <string name="default_address">Default Address</string>
     <string name="no_products_fav">No Products adding in favorite </string>
+    <string name="fail_to_load">Fail to load Photo</string>
+    <string name="success_upload">Success Upload Photo </string>
+    <string name="default_notification_channel_id" translatable="false">channelId</string>
 
 </resources>

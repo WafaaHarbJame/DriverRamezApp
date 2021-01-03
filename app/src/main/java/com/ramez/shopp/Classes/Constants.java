@@ -245,6 +245,10 @@ public class Constants {
     public static final String CART_MODEL = "CART_MODEL";
     public static final String ORDER_MODEL = "ORDER_MODEL";
     public static final String BARCODE_KEY = "BARCODE_KEY";
-
+    public static final String BY_PHONE = "BY_PHONE";
+    public static final String BY_SOCIAL = "BY_SOCIAL";
+    public static final String PARAMS_EMAIL = "email";
+    public static final String PARAMS_NAME = "name";
+    public static final String PARAMS_ID = "id";
 
 }

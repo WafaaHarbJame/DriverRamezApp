@@ -82,7 +82,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
         if (quantity > 0) {
             holder.binding.productCartQTY.setText(String.valueOf(quantity));
             holder.binding.CartLy.setVisibility(View.VISIBLE);
-            holder.binding.cartBut.setVisibility(View.INVISIBLE);
+            holder.binding.cartBut.setVisibility(View.GONE);
 
             if (quantity == 1) {
                 holder.binding.deleteCartBtn.setVisibility(View.VISIBLE);

@@ -57,17 +57,40 @@
 
 
         </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingStart="8dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="4dp">
+
             <com.ramez.shopp.SpichalViews.STextView
                 android:id="@+id/dateTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:text="18/12/2020 5.30 م"
                 android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:text="18/12/2020 5.30 م"
                 android:textAlignment="viewStart"
                 android:textColor="@color/gray4"
                 android:textSize="@dimen/_10ssp" />
+
+            <ImageView
+                android:id="@+id/readImv"
+                android:layout_width="@dimen/_14sdp"
+                android:layout_height="@dimen/_14sdp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_seen" />
+
+        </LinearLayout>
+
 
 
         </LinearLayout>

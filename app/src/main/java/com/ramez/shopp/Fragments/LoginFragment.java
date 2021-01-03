@@ -2,81 +2,107 @@ package com.ramez.shopp.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
 import androidx.viewpager.widget.ViewPager;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.firebase.ui.auth.AuthUI;
 import com.github.dhaval2404.form_validation.rule.NonEmptyRule;
 import com.github.dhaval2404.form_validation.validation.FormValidator;
-import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.FacebookAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.OAuthProvider;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.ramez.shopp.Activities.ConfirmPhoneActivity;
-import com.ramez.shopp.Activities.RegisterLoginActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
-import com.ramez.shopp.Dialogs.ErrorMessagesDialog;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.GeneralModel;
+import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.LoginResultModel;
 import com.ramez.shopp.Models.MemberModel;
-import com.ramez.shopp.Models.ResultAPIModel;
-import com.ramez.shopp.Models.SocialRequestModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.FragmentLoginBinding;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.twitter.sdk.android.core.Twitter;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterConfig;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
-public class LoginFragment extends FragmentBase implements  GraphRequest.GraphJSONObjectCallback, GoogleApiClient.OnConnectionFailedListener {
+import static android.app.Activity.RESULT_OK;
+
+public class LoginFragment extends FragmentBase {
+    private static final int RC_SIGN_IN = 1001;
+    private static final int TWITTER_SIGN_IN = 1002;
     final String TAG = "Log";
     String FCMToken;
+    String CountryCode = "+966";
+    boolean select_country = false;
+    String country_name = "BH";
+    String city_id = "7263";
+    LocalModel localModel;
     private FragmentLoginBinding binding;
     private ViewPager viewPager;
-    private CallbackManager _callbackManager;
-    private static final int RC_SIGN_IN = 1001;
-    private GoogleApiClient _googleApiClient;
+    private CallbackManager callbackManager;
+    private GoogleSignInClient mGoogleSignInClient;
+    private FirebaseAuth firebaseAuth;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         binding = FragmentLoginBinding.inflate(inflater, container, false);
-        viewPager = container.findViewById(R.id.viewPager);
+
+        TwitterAuthConfig mTwitterAuthConfig = new TwitterAuthConfig(getString(R.string.twitter_consumer_key), getString(R.string.twitter_consumer_secret));
+        TwitterConfig twitterConfig = new TwitterConfig.Builder(getActivityy()).twitterAuthConfig(mTwitterAuthConfig).build();
+        Twitter.initialize(twitterConfig);
+
+
         View view = binding.getRoot();
+
+        localModel = UtilityApp.getLocalData();
+
+        viewPager = container.findViewById(R.id.viewPager);
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(getActivityy(), gso);
+
+        firebaseAuth = FirebaseAuth.getInstance();
 
         getDeviceToken();
 
-        _callbackManager = CallbackManager.Factory.create();
+        binding.edtPassword.setTransformationMethod(new PasswordTransformationMethod());
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
 
-        _googleApiClient = new GoogleApiClient.Builder(getActivityy())
-                .enableAutoManage(getActivity(), this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
-
+        callbackManager = CallbackManager.Factory.create();
 
         binding.textForgotPassword.setOnClickListener(view1 -> {
             startRestPassword();
@@ -85,6 +111,8 @@ public class LoginFragment extends FragmentBase implements  GraphRequest.GraphJS
         binding.skipButton.setOnClickListener(view1 -> {
             startMain();
         });
+
+
         binding.loginBut.setOnClickListener(view1 -> {
             if (isValidForm()) {
                 loginUser();
@@ -93,6 +121,7 @@ public class LoginFragment extends FragmentBase implements  GraphRequest.GraphJS
 
 
         });
+
 
         binding.loginGoogleBut.setOnClickListener(view1 -> {
             googleSignIn();
@@ -108,6 +137,23 @@ public class LoginFragment extends FragmentBase implements  GraphRequest.GraphJS
             startLogin();
 
 
+        });
+
+
+        binding.loginTwitterBut.setOnClickListener(view1 -> {
+            twitterSignIn();
+        });
+
+        binding.showPassBut.setOnClickListener(view1 -> {
+
+            if(binding.edtPassword.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
+                ((ImageView)(view1)).setImageResource(R.drawable.ic_visibility_off);
+                binding.edtPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            }
+            else{
+                ((ImageView)(view1)).setImageResource(R.drawable.ic_visibility);
+                binding.edtPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            }
         });
 
 
@@ -140,27 +186,21 @@ public class LoginFragment extends FragmentBase implements  GraphRequest.GraphJS
                 }
 
                 GlobalData.errorDialog(getActivityy(), R.string.fail_signin, message);
-            }
-
-            else if (func.equals(Constants.FAIL)) {
+            } else if (func.equals(Constants.FAIL)) {
                 String message = getString(R.string.fail_signin);
                 if (result != null && result.getMessage() != null) {
                     message = result.getMessage();
                 }
                 GlobalData.errorDialog(getActivityy(), R.string.fail_signin, message);
-            }
-
-
-
-            else {
+            } else {
                 if (IsSuccess) {
                     MemberModel user = result.data;
+                    user.setRegisterType(Constants.BY_PHONE);
                     UtilityApp.setUserData(user);
 
-                    if(UtilityApp.getUserData()!=null){
+                    if (UtilityApp.getUserData() != null) {
                         UpdateToken();
                     }
-
 
 
                 } else {
@@ -247,96 +287,227 @@ public class LoginFragment extends FragmentBase implements  GraphRequest.GraphJS
     }
 
     private void facebookSignIn() {
-        if (AccessToken.getCurrentAccessToken() != null) {
-            LoginManager.getInstance().logOut();
-        }
-        LoginManager.getInstance().logInWithReadPermissions(this,
-                Arrays.asList("public_profile", "user_friends", "email"));
 
-        LoginManager.getInstance().registerCallback(_callbackManager, new FacebookCallback<LoginResult>() {
+        if (AccessToken.getCurrentAccessToken() != null) {
+          signOut();
+        }
+
+        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends", "email"));
+
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onCancel() {
+                Log.d(TAG, " Log facebook:onCancel");
+
             }
 
             @Override
-            public void onError(FacebookException arg0) {
+            public void onError(FacebookException error) {
+                Log.d(TAG, "Log facebook:onError", error);
+
             }
 
             @Override
-            public void onSuccess(LoginResult arg0) {
-                GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), null);
-                Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,name,email,gender, birthday,picture,first_name,last_name");
-                request.setParameters(parameters);
-                request.executeAsync();
+            public void onSuccess(LoginResult loginResult) {
+                handleFacebookAccessToken(loginResult.getAccessToken());
+
+
             }
+        });
+    }
+
+    private void twitterSignIn() {
+
+        OAuthProvider.Builder provider = OAuthProvider.newBuilder("twitter.com");
+        provider.addCustomParameter("lang", UtilityApp.getLanguage());
+
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+
+        List<AuthUI.IdpConfig> providers = Arrays.asList(new AuthUI.IdpConfig.TwitterBuilder().build());
+
+        startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).setTosAndPrivacyPolicyUrls("https://example.com/terms.html", "https://example.com/privacy.html").build(),
+
+                TWITTER_SIGN_IN);
+
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == RC_SIGN_IN) {
+
+                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+
+                try {
+
+                    GoogleSignInAccount account = task.getResult(ApiException.class);
+                    Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
+                    firebaseAuthWithGoogle(task.getResult().getIdToken());
+
+                } catch (ApiException e) {
+
+                    Log.w(TAG, "Google sign in failed", e);
+
+                }
+            } else if (requestCode == TWITTER_SIGN_IN) {
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                Log.i(TAG, "Log" + user.getPhoneNumber());
+                Log.i(TAG, "Log" + user.getEmail());
+                Log.i(TAG, "Log" + user.getDisplayName());
+
+
+            } else {
+                callbackManager.onActivityResult(requestCode, resultCode, data);
+
+            }
+        }
+
+    }
+
+
+    private void googleSignIn() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+
+    private void RegisterUser(String nameStr, String emailStr) {
+        country_name = localModel.getShortname();
+        CountryCode = String.valueOf(localModel.getPhonecode());
+        city_id = localModel.getCityId();
+
+        Random r = new Random();
+        int randomNumber = r.nextInt(100000000);
+
+        MemberModel memberModel = new MemberModel();
+        memberModel.setMobileNumber(String.valueOf(randomNumber));
+        memberModel.setPassword(String.valueOf(randomNumber));
+        memberModel.setName(nameStr);
+        memberModel.setEmail(emailStr);
+        memberModel.setCity(city_id);
+        memberModel.setCountry(country_name);
+        memberModel.setDeviceToken(FCMToken);
+        memberModel.setDeviceId(UtilityApp.getUnique());
+        memberModel.setDeviceType(Constants.deviceType);
+        memberModel.setPrefix(CountryCode);
+        memberModel.setUserType(Constants.user_type);
+
+
+        GlobalData.progressDialog(getActivityy(), R.string.register, R.string.please_wait_register);
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            GlobalData.hideProgressDialog();
+            LoginResultModel result = (LoginResultModel) obj;
+            if (func.equals(Constants.ERROR)) {
+                String message = getString(R.string.fail_register);
+                if (result != null && result.getMessage() != null) {
+                    message = result.getMessage();
+                }
+                GlobalData.errorDialog(getActivityy(), R.string.fail_register, message);
+            } else {
+                if (IsSuccess) {
+                    Log.i("TAG", "Log otp " + result.getOtp());
+                    MemberModel user = result.data;
+                    user.setRegisterType(Constants.BY_SOCIAL);
+                    UtilityApp.setUserData(user);
+                    Intent intent = new Intent(getActivityy(), MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+
+                } else {
+                    Toast(getString(R.string.fail_register));
+
+                }
+            }
+
+
+        }).RegisterHandle(memberModel);
+
+
+    }
+
+    private void firebaseAuthWithGoogle(String idToken) {
+
+        GlobalData.progressDialog(getActivityy(), R.string.text_login_login, R.string.please_wait_login);
+
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        firebaseAuth.signInWithCredential(credential).addOnCompleteListener(getActivityy(), task -> {
+            GlobalData.hideProgressDialog();
+
+            if (task.isSuccessful()) {
+
+                Log.d(TAG, "signInWithCredential:success");
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                Log.i(TAG, "Log nameStr" + user.getDisplayName());
+                Log.i(TAG, "Log getEmail" + user.getEmail());
+                Log.i(TAG, "Log Uid" + user.getUid());
+                Log.i(TAG, "Log getServerAuthCode" + user.getIdToken(true));
+                Log.i(TAG, "Log getPhotoUrl" + user.getPhotoUrl());
+
+                RegisterUser(user.getDisplayName(), user.getEmail());
+
+            } else {
+
+                Log.w(TAG, "signInWithCredential:failure", task.getException());
+                GlobalData.errorDialog(getActivityy(), R.string.fail_register, getString(R.string.fail_register));
+
+            }
+
+            GlobalData.hideProgressDialog();
+        });
+    }
+
+
+    private void handleFacebookAccessToken(AccessToken token) {
+        Log.d(TAG, "handleFacebookAccessToken:" + token);
+
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        firebaseAuth.signInWithCredential(credential).addOnCompleteListener(getActivityy(), task -> {
+            if (task.isSuccessful()) {
+
+                Log.d(TAG, "Log signInWithCredential:success");
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                RegisterUser(user.getDisplayName(), user.getEmail());
+
+            } else {
+                // If sign in fails, display a message to the user.
+                Log.w(TAG, "Log signInWithCredential:failure", task.getException());
+                Toast("Authentication failed");
+                GlobalData.errorDialog(getActivityy(), R.string.fail_register, getString(R.string.fail_register));
+
+            }
+
+            // ...
         });
     }
 
 
     @Override
-    public void onCompleted(JSONObject object, GraphResponse response) {
-//        String email = null;
-//        String facebookId = null;
-//        String name = null;
-//        try {
-//            email = object.getString(PARAMS_EMAIL);
-//            facebookId = object.getString(PARAMS_ID);
-//            name = object.getString(PARAMS_NAME);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//        SocialRequestModel request = new SocialRequestModel();
-//        request.setName(name);
-//        request.setEmail(email);
-//        request.setFacebookKey(facebookId);
-//
-//
-//        if (_loginPresenter != null) {
-//            _loginPresenter.fbLogin(request);
-//        }
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        if(currentUser!=null){
+            RegisterUser(currentUser.getDisplayName(),currentUser.getEmail());
 
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            handleSignInResult(result);
-        } else {
-            _callbackManager.onActivityResult(requestCode, resultCode, data);
         }
-    }
 
-    private void handleSignInResult(GoogleSignInResult result) {
-        if (result.isSuccess()) {
-            GoogleSignInAccount acct = result.getSignInAccount();
-            SocialRequestModel request = new SocialRequestModel();
-            request.setEmail(acct.getEmail());
-            request.setName(acct.getDisplayName());
-            /*  if (_textPhoneCode.getTag() != null) {
-                CountryModel countryModel = (CountryModel) _textPhoneCode.getTag();
-                request.setCountryId(countryModel.getCountryId());
-            }*/
-            request.setGoogleKey(acct.getId());
-            Auth.GoogleSignInApi.signOut(_googleApiClient);
-//            if (_loginPresenter != null)
-//                _loginPresenter.googleLogin(request);
-        } /*else {
-            onError(Constant.EMPTY_STRING);
-        }*/
+
 
     }
 
-    private void googleSignIn() {
-        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(_googleApiClient);
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+
+    public void signOut() {
+        firebaseAuth.signOut();
+        LoginManager.getInstance().logOut();
     }
 
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
-    }
+
+
 }

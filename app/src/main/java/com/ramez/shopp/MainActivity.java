@@ -1,6 +1,7 @@
 package com.ramez.shopp;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.core.content.ContextCompat;
@@ -20,6 +21,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Random;
+
 public class MainActivity extends ActivityBase {
     private ActivityMainBinding binding;
 
@@ -35,6 +38,7 @@ public class MainActivity extends ActivityBase {
         binding.toolBar.backBtn.setVisibility(View.GONE);
 
         binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_clicked));
+
 
         getIntentExtra();
 

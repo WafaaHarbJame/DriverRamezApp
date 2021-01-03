@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 import com.ramez.shopp.Activities.AboutActivity;
 import com.ramez.shopp.Activities.AddressActivity;
 import com.ramez.shopp.Activities.ChangeCityBranchActivity;
@@ -67,6 +68,9 @@ public class MyAccountFragment extends FragmentBase {
 
                 memberModel = UtilityApp.getUserData();
                 initData(memberModel);
+                if(memberModel.getRegisterType().equals(Constants.BY_SOCIAL)){
+                    binding.changePassBtn.setVisibility(View.GONE);
+                }
 
 
             } else {
@@ -186,6 +190,7 @@ public class MyAccountFragment extends FragmentBase {
             if (UtilityApp.isLogin()) {
                 MemberModel memberModel = UtilityApp.getUserData();
                 signOut(memberModel);
+
             } else {
                 startLogin();
 
@@ -284,7 +289,11 @@ public class MyAccountFragment extends FragmentBase {
                     } else if (func.equals(Constants.FAIL)) {
                         Toast(R.string.fail_to_get_data);
                     } else {
+
                         if (IsSuccess) {
+                            if(memberModel.getRegisterType().equals(Constants.BY_SOCIAL)){
+                                FirebaseAuth.getInstance().signOut();
+                            }
                             UtilityApp.logOut();
                             GlobalData.Position = 0;
 

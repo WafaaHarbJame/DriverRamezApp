@@ -36,6 +36,9 @@ public class ChatModel {
         this.is_read = is_read;
     }
 
+    public ChatModel() {
+    }
+
     public String getSenderID() {
         return senderID;
     }
