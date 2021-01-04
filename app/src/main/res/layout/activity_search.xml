@@ -94,6 +94,7 @@
                 <ImageView
                     android:id="@+id/sortBut"
                     android:layout_width="@dimen/_20sdp"
+                    android:visibility="gone"
                     android:layout_height="@dimen/_20sdp"
                     android:layout_marginStart="@dimen/_8sdp"
                     android:src="@drawable/sort" />

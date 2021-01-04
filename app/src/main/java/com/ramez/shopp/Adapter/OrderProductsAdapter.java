@@ -49,7 +49,7 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
     public void onBindViewHolder(final Holder holder, int position) {
         OrderProductModel orderProductsDM = orderProductsDMS.get(position);
 
-            holder.textItemName.setText(orderProductsDM.getProductName());
+            holder.textItemName.setText(orderProductsDM.getName());
 
         holder.textQTY.setText(orderProductsDM.getQuantity() + " * " + orderProductsDM.getTotalWithTax() + " " + currency);
         holder.textItemPrice.setText(orderProductsDM.getTotalWithTax() + " " + currency);
@@ -67,7 +67,6 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
 
     public class Holder extends RecyclerView.ViewHolder {
         TextView textQTY, textItemName, textItemPrice;
-        RecyclerView listExtras;
         ImageView productImage;
         Button reOrderProductBtn;
 

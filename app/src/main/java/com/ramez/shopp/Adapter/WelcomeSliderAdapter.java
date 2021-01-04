@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -42,13 +43,13 @@ public class WelcomeSliderAdapter extends PagerAdapter {
         try {
 
             TextView textInfoTitle =  view.findViewById(R.id.infoTitle);
-            TextView textInfoTv1 =  view.findViewById(R.id.infoTv1);
+            ImageView IvWelcome =  view.findViewById(R.id.IvWelcome);
             TextView textInfoTv2 =  view.findViewById(R.id.infoTv2);
 
             WelcomeModel welcomeSliderModel=welcomeSliderModels.get(position);
 
             textInfoTitle.setText(welcomeSliderModel.getInfoTxtTitle());
-            textInfoTv1.setText(welcomeSliderModel.getInfoTxt1());
+            IvWelcome.setImageResource(welcomeSliderModel.getImage());
             textInfoTv2.setText(welcomeSliderModel.getInfoTxt2());
             container.addView(view);
         } catch (Exception e) {

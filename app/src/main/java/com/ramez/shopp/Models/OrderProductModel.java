@@ -2,6 +2,8 @@ package com.ramez.shopp.Models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.UtilityApp;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -309,6 +311,14 @@ public class OrderProductModel implements Serializable {
         this.mobileNumber = mobileNumber;
     }
 
+    public String getName(){
+        if(UtilityApp.getLanguage().equals(Constants.English)){
+            return productName;
 
+        }
+        else {
+            return hProductName;
+        }
+    }
 
 }

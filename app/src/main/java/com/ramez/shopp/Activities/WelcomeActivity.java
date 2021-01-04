@@ -28,9 +28,10 @@ public class WelcomeActivity extends ActivityBase {
 
 
         welcomeSliderModels=new ArrayList<>();
-        welcomeSliderModels.add(new WelcomeModel(getString(R.string.dummy2),getString(R.string.dummy),getString(R.string.dummy1)));
-        welcomeSliderModels.add(new WelcomeModel(getString(R.string.dummy2),getString(R.string.dummy),getString(R.string.dummy1)));
-        welcomeSliderModels.add(new WelcomeModel(getString(R.string.dummy2),getString(R.string.dummy),getString(R.string.dummy1)));
+        welcomeSliderModels.add(new WelcomeModel(getString(R.string.dummy2),R.drawable.screen1,getString(R.string.string_menu_home)));
+        welcomeSliderModels.add(new WelcomeModel(getString(R.string.dummy2),R.drawable.screen4,getString(R.string.categories)));
+        welcomeSliderModels.add(new WelcomeModel(getString(R.string.dummy2),R.drawable.screen3,getString(R.string.offer_text)));
+
         welcomeSliderAdapter=new  WelcomeSliderAdapter(this,welcomeSliderModels);
         binding.viewPager.setAdapter(welcomeSliderAdapter);
 

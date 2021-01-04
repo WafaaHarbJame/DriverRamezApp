@@ -475,6 +475,8 @@ public class DataFeacher {
         Log.i(TAG, "Log GetSingleProduct");
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log country_id " + country_id);
+        Log.i(TAG, "Log product_id " + product_id);
+        Log.i(TAG, "Log user_id " + user_id);
 
         Call call = apiService.GetSignalProducts(headerMap, country_id, city_id, product_id, user_id);
         call.enqueue(callbackApi);

@@ -2,13 +2,13 @@ package com.ramez.shopp.Models;
 
 public class WelcomeModel {
     private String infoTxtTitle;
-    private String infoTxt1;
+    private int image;
     private String infoTxt2;
 
 
-    public WelcomeModel(String infoTxtTitle, String infoTxt1, String infoTxt2) {
+    public WelcomeModel(String infoTxtTitle, int image, String infoTxt2) {
         this.infoTxtTitle = infoTxtTitle;
-        this.infoTxt1 = infoTxt1;
+        this.image = image;
         this.infoTxt2 = infoTxt2;
     }
 
@@ -20,12 +20,12 @@ public class WelcomeModel {
         this.infoTxtTitle = infoTxtTitle;
     }
 
-    public String getInfoTxt1() {
-        return infoTxt1;
+    public int getImage() {
+        return image;
     }
 
-    public void setInfoTxt1(String infoTxt1) {
-        this.infoTxt1 = infoTxt1;
+    public void setImage(int image) {
+        this.image = image;
     }
 
     public String getInfoTxt2() {

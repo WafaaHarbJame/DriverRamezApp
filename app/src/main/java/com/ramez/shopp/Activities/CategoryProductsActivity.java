@@ -133,7 +133,7 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
 
     public void initAdapter() {
 
-        adapter = new ProductCategoryAdapter(getActiviy(), productList, category_id, selectedSubCat, country_id, city_id, user_id, 0, binding.recycler,"", this);
+        adapter = new ProductCategoryAdapter(getActiviy(), productList, category_id, selectedSubCat, country_id, city_id, user_id, 0, binding.recycler,"", this,1);
         binding.recycler.setAdapter(adapter);
 
         binding.categoriesCountTv.setText(String.valueOf(productList.size()));

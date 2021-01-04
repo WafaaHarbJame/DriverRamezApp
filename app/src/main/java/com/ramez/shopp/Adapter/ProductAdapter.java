@@ -1,10 +1,8 @@
 package com.ramez.shopp.Adapter;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
@@ -17,7 +15,6 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -27,7 +24,6 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.google.android.material.snackbar.Snackbar;
 import com.ramez.shopp.Activities.ProductDetailsActivity;
-import com.ramez.shopp.Activities.RegisterLoginActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
@@ -61,6 +57,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         RowProductsItemBinding itemView = RowProductsItemBinding.inflate(LayoutInflater.from(context), parent, false);
+
         return new Holder(itemView);
     }
 

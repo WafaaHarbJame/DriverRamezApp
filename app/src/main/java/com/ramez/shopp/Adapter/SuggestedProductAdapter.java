@@ -28,12 +28,15 @@ import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.Activities.RegisterLoginActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.RowProductsItemBinding;
 import com.ramez.shopp.databinding.RowSuggestedProductItemBinding;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -148,6 +151,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
     }
 
     private void addToFavorite(View v, int position, int productId, int userId, int storeId) {
+
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
                 Toast.makeText(context, "" + context.getString(R.string.fail_to_add_favorite), Toast.LENGTH_SHORT).show();
@@ -324,10 +328,13 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
         public void onClick(View v) {
             if (onItemClick != null) {
                 ProductModel productModel = productModels.get(getAdapterPosition());
+                EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_main));
                 onItemClick.onItemClicked(getAdapterPosition(), productModels.get(getAdapterPosition()));
                 Intent intent = new Intent(context, ProductDetailsActivity.class);
                 intent.putExtra(Constants.DB_productModel, productModel);
                 context.startActivity(intent);
+
+
             }
         }
 

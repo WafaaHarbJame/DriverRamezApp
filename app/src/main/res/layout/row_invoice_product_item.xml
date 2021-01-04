@@ -51,6 +51,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:orientation="vertical">
 
 
@@ -65,8 +66,8 @@
 
                     <com.makeramen.roundedimageview.RoundedImageView
                         android:id="@+id/productImage"
-                        android:layout_width="@dimen/_45sdp"
-                        android:layout_height="@dimen/_45sdp"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
                         android:elevation="4dp"
                         android:padding="@dimen/_8sdp"
                         android:scaleType="fitXY"
@@ -78,10 +79,11 @@
                         android:layout_height="wrap_content"
                         android:maxLines="2"
                         android:lines="2"
+                        android:ellipsize="end"
+                        android:textAlignment="viewStart"
                         android:layout_weight="1"
-                        android:layout_marginStart="@dimen/_2sdp"
-                        android:text=" اسم المنتجات "
-                        android:textSize="@dimen/_10ssp" />
+                        android:text="200X240  11.5LBS بطانية ريماس"
+                        android:textSize="@dimen/_8sdp" />
 
 
 

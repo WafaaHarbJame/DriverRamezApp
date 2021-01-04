@@ -80,13 +80,16 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
 
         }
 
-        holder.binding.productName.setText(cartDM.getProductName());
+        holder.binding.productName.setText(cartDM.getName());
+
 
         holder.binding.cardViewOuter.setOnClickListener(v -> {
             Log.d(TAG, "name p" + cartDM.getProductName());
 
             onInvoiceItemClicked.onInvoiceItemClicked(cartDM);
         });
+
+
 
         holder.binding.productImage.setOnClickListener(v -> {
             Log.d(TAG, "name p" + cartDM.getProductName());

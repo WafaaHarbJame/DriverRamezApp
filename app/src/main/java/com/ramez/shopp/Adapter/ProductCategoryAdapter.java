@@ -71,9 +71,10 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private int limit = 2;
     private RecyclerView rv;
     private String filter_text;
+    private int gridNumber;
 
 
-    public ProductCategoryAdapter(Context context, List<ProductModel> productModels, int category_id, int subID, int country_id, int city_id, String user_id, int limit, RecyclerView rv, String filter, OnItemClick onItemClick) {
+    public ProductCategoryAdapter(Context context, List<ProductModel> productModels, int category_id, int subID, int country_id, int city_id, String user_id, int limit, RecyclerView rv, String filter, OnItemClick onItemClick,int gridNumber) {
         this.context = context;
         this.onItemClick = onItemClick;
         this.productModels = productModels;
@@ -85,6 +86,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         this.user_id = user_id;
         this.rv = rv;
         this.filter_text = filter;
+        this.gridNumber=gridNumber;
 
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
 
@@ -140,6 +142,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         if (viewType == VIEW_TYPE_ITEM) {
             RowProductsItemBinding itemView = RowProductsItemBinding.inflate(LayoutInflater.from(context), parent, false);
             vh = new Holder(itemView);
+
         } else if (viewType == VIEW_TYPE_LOADING) {
             RowLoadingBinding itemView = RowLoadingBinding.inflate(LayoutInflater.from(context), parent, false);
             vh = new LoadingViewHolder(itemView);
@@ -158,7 +161,6 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         if (viewHolder instanceof Holder) {
             Holder holder = (Holder) viewHolder;
             ProductModel productModel = productModels.get(position);
-
             currency = UtilityApp.getLocalData().getCurrencyCode();
 
             holder.binding.productNameTv.setText(productModel.getProductName().trim());
@@ -414,8 +416,8 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         Holder(RowProductsItemBinding view) {
             super(view.getRoot());
             binding = view;
-            itemView.setOnClickListener(this);
 
+            itemView.setOnClickListener(this);
             binding.favBut.setOnClickListener(view1 -> {
                 int position = getAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();

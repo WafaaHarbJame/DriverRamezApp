@@ -41,9 +41,9 @@
                 android:background="@color/colorPrimary"
                 app:tabIndicatorColor="@color/white"
                 app:tabTextColor="@color/black"
-                app:tabTextAppearance="@style/TextAppearance.AppCompat.Medium"
                 app:tabSelectedTextColor="@color/white"
                 />
+<!--            app:tabTextAppearance="@style/TextAppearance.AppCompat.Medium"-->
 
             <com.duolingo.open.rtlviewpager.RtlViewPager
                 android:id="@+id/viewPager"
