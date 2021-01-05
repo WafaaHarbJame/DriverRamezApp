@@ -1,14 +1,28 @@
 package com.ramez.shopp.Activities;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.DexterError;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.PermissionRequestErrorListener;
+import com.karumi.dexter.listener.single.PermissionListener;
 import com.ramez.shopp.Adapter.MainCategoryAdapter;
 import com.ramez.shopp.Adapter.ProductCategoryAdapter;
 import com.ramez.shopp.Adapter.SubCategoryAdapter;
@@ -33,24 +47,21 @@ import static android.content.ContentValues.TAG;
 
 public class CategoryProductsActivity extends ActivityBase implements ProductCategoryAdapter.OnItemClick, MainCategoryAdapter.OnMainCategoryItemClicked {
 
+    private static final int ZBAR_CAMERA_PERMISSION = 1;
     ActivityCategoryProductsActivityBinding binding;
-
     ArrayList<ProductModel> productList;
     ArrayList<AutoCompleteModel> data = null;
     ArrayList<String> autoCompleteList;
     ArrayList<CategoryModel> mainCategoryDMS;
     ArrayList<ChildCat> subCategoryDMS = new ArrayList<>();
-
     GridLayoutManager gridLayoutManager;
     int numColumn = 2;
     int selectedSubCat = 0;
     int category_id = 0, country_id, city_id;
-    private String user_id="0", filter="";
-
+    private String user_id = "0", filter = "";
     private MemberModel user;
     private LocalModel localModel;
     private ProductCategoryAdapter adapter;
-
     private CheckLoginDialog checkLoginDialog;
 
     @Override
@@ -68,15 +79,9 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
         gridLayoutManager = new GridLayoutManager(getActiviy(), numColumn);
         binding.recycler.setLayoutManager(gridLayoutManager);
 
-
         binding.listShopCategories.setLayoutManager(new LinearLayoutManager(getActiviy(), LinearLayoutManager.HORIZONTAL, false));
 
         binding.listSubCategory.setLayoutManager(new LinearLayoutManager(getActiviy(), LinearLayoutManager.HORIZONTAL, false));
-
-        binding.backBtn.setOnClickListener(view1 -> {
-            onBackPressed();
-        });
-
 
         data = new ArrayList<>();
         autoCompleteList = new ArrayList<>();
@@ -84,7 +89,7 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
         localModel = UtilityApp.getLocalData();
         country_id = localModel.getCountryId();
 
-        if(UtilityApp.isLogin()){
+        if (UtilityApp.isLogin()) {
 
             user = UtilityApp.getUserData();
             user_id = String.valueOf(user.getId());
@@ -102,9 +107,32 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
         });
 
 
+        binding.backBtn.setOnClickListener(view1 -> {
+            onBackPressed();
+        });
+
+
+        binding.view1But.setOnClickListener(view1 -> {
+            numColumn = 1;
+            initAdapter();
+            gridLayoutManager.setSpanCount(numColumn);
+            adapter.notifyDataSetChanged();
+
+
+        });
+
+        binding.view2But.setOnClickListener(view1 -> {
+            numColumn = 2;
+            gridLayoutManager.setSpanCount(numColumn);
+            initAdapter();
+            adapter.notifyDataSetChanged();
+
+        });
+
         binding.view1But.setOnClickListener(view1 -> {
             numColumn = 1;
             gridLayoutManager.setSpanCount(numColumn);
+            initAdapter();
             adapter.notifyDataSetChanged();
 
 
@@ -114,6 +142,7 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
         binding.view2But.setOnClickListener(view1 -> {
             numColumn = 2;
             gridLayoutManager.setSpanCount(numColumn);
+            initAdapter();
             adapter.notifyDataSetChanged();
 
         });
@@ -121,6 +150,13 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
 
         binding.priceBut.setOnClickListener(view1 -> {
             Collections.sort(productList, Collections.reverseOrder());
+
+        });
+
+
+        binding.barcodeBut.setOnClickListener(view1 -> {
+
+            checkCameraPermission();
 
         });
 
@@ -133,7 +169,7 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
 
     public void initAdapter() {
 
-        adapter = new ProductCategoryAdapter(getActiviy(), productList, category_id, selectedSubCat, country_id, city_id, user_id, 0, binding.recycler,"", this,1);
+        adapter = new ProductCategoryAdapter(getActiviy(), productList, category_id, selectedSubCat, country_id, city_id, user_id, 0, binding.recycler, "", this, numColumn);
         binding.recycler.setAdapter(adapter);
 
         binding.categoriesCountTv.setText(String.valueOf(productList.size()));
@@ -160,7 +196,7 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
             CategoryModel categoryModel = (CategoryModel) bundle.getSerializable(Constants.CAT_MODEL);
             int position = bundle.getInt(Constants.position, 0);
 
-            ChildCat childCat=new ChildCat();
+            ChildCat childCat = new ChildCat();
             childCat.setId(0);
             childCat.setHName(getString(R.string.all));
             childCat.setName(getString(R.string.all));
@@ -276,6 +312,48 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
         getProductList(category_id, country_id, city_id, user_id, "", 0, 10);
         initSubCategoryAdapter();
 
+
+    }
+
+
+    private void checkCameraPermission() {
+        Dexter.withContext(getActiviy()).withPermission(Manifest.permission.CAMERA).withListener(new PermissionListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onPermissionGranted(PermissionGrantedResponse response) {
+                startScan();
+
+
+            }
+
+            @Override
+            public void onPermissionDenied(PermissionDeniedResponse response) {
+                Toast.makeText(getActiviy(), "" + getString(R.string.permission_camera_rationale), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                token.continuePermissionRequest();
+
+            }
+        }).withErrorListener(new PermissionRequestErrorListener() {
+            @Override
+            public void onError(DexterError error) {
+                Toast.makeText(getActiviy(), "" + getString(R.string.error_in_data), Toast.LENGTH_SHORT).show();
+
+            }
+        }).onSameThread().check();
+    }
+
+
+    private void startScan() {
+
+        if (ContextCompat.checkSelfPermission(getActiviy(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActiviy(), new String[]{Manifest.permission.CAMERA}, ZBAR_CAMERA_PERMISSION);
+        } else {
+            Intent intent = new Intent(getActiviy(), FullScannerActivity.class);
+            startActivity(intent);
+        }
 
     }
 }

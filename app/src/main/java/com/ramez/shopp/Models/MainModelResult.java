@@ -1,12 +1,13 @@
 package com.ramez.shopp.Models;
 
+import com.google.android.material.slider.Slider;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.List;
 
-public class MainModel implements Serializable {
+public class MainModelResult {
+
     @SerializedName("status")
     @Expose
     private Integer status;
@@ -27,19 +28,19 @@ public class MainModel implements Serializable {
     private Integer minimumOrderAmount;
     @SerializedName("data")
     @Expose
-    private ArrayList<MainDatum> data = null;
+    private List<Object> data = null;
     @SerializedName("sliders")
     @Expose
-    private ArrayList<Slider> sliders = null;
+    private List<Slider> sliders = null;
     @SerializedName("featured")
     @Expose
-    private ArrayList<ProductModel> featured = null;
+    private List<Featured> featured = null;
     @SerializedName("quick_products")
     @Expose
-    private ArrayList<ProductModel> quickProducts = null;
+    private List<QuickProduct> quickProducts = null;
     @SerializedName("offered_products")
     @Expose
-    private ArrayList<ProductModel> offeredProducts = null;
+    private List<OfferedProduct> offeredProducts = null;
 
     public Integer getStatus() {
         return status;
@@ -89,45 +90,45 @@ public class MainModel implements Serializable {
         this.minimumOrderAmount = minimumOrderAmount;
     }
 
-    public ArrayList<MainDatum> getData() {
+    public List<Object> getData() {
         return data;
     }
 
-    public void setData(ArrayList<MainDatum> data) {
+    public void setData(List<Object> data) {
         this.data = data;
     }
 
-    public ArrayList<Slider> getSliders() {
+    public List<Slider> getSliders() {
         return sliders;
     }
 
-    public void setSliders(ArrayList<Slider> sliders) {
+    public void setSliders(List<Slider> sliders) {
         this.sliders = sliders;
     }
 
-    public ArrayList<ProductModel> getFeatured() {
+    public List<Featured> getFeatured() {
         return featured;
     }
 
-    public void setFeatured(ArrayList<ProductModel> featured) {
+    public void setFeatured(List<Featured> featured) {
         this.featured = featured;
     }
 
-    public ArrayList<ProductModel> getQuickProducts() {
+    public List<QuickProduct> getQuickProducts() {
         return quickProducts;
     }
 
-    public void setQuickProducts(ArrayList<ProductModel> quickProducts) {
+    public void setQuickProducts(List<QuickProduct> quickProducts) {
         this.quickProducts = quickProducts;
     }
 
-    public ArrayList<ProductModel> getOfferedProducts() {
+    public List<OfferedProduct> getOfferedProducts() {
         return offeredProducts;
     }
 
-    public void setOfferedProducts(ArrayList<ProductModel> offeredProducts) {
+    public void setOfferedProducts(List<OfferedProduct> offeredProducts) {
         this.offeredProducts = offeredProducts;
     }
 
-}
 
+}

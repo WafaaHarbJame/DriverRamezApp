@@ -1,18 +1,35 @@
 package com.ramez.shopp.Fragments;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.gson.Gson;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.DexterError;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.PermissionRequestErrorListener;
+import com.karumi.dexter.listener.single.PermissionListener;
 import com.ramez.shopp.Activities.CategoryProductsActivity;
+import com.ramez.shopp.Activities.FullScannerActivity;
+import com.ramez.shopp.Activities.SearchActivity;
 import com.ramez.shopp.Adapter.CategoryAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.CategoryModel;
@@ -34,6 +51,7 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
     GridLayoutManager gridLayoutManager;
     private FragmentCategoryBinding binding;
     private CategoryAdapter categoryAdapter;
+    private static final int ZBAR_CAMERA_PERMISSION = 1;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCategoryBinding.inflate(inflater, container, false);
@@ -50,6 +68,22 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
             getCategories(1);
 
         });
+
+
+
+        binding.searchBut.setOnClickListener(view1 -> {
+            Intent intent = new Intent(getActivityy(), SearchActivity.class);
+            startActivity(intent);
+
+        });
+
+
+        binding.barcodeBut.setOnClickListener(view1 -> {
+
+            checkCameraPermission();
+
+        });
+
 
         return view;
     }
@@ -139,5 +173,47 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
             }
 
         }).GetAllCategories(storeId);
+    }
+
+
+    private void checkCameraPermission() {
+        Dexter.withContext(getActivity()).withPermission(Manifest.permission.CAMERA).withListener(new PermissionListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onPermissionGranted(PermissionGrantedResponse response) {
+                startScan();
+
+
+            }
+
+            @Override
+            public void onPermissionDenied(PermissionDeniedResponse response) {
+                Toast.makeText(getActivityy(), "" + getString(R.string.permission_camera_rationale), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                token.continuePermissionRequest();
+
+            }
+        }).withErrorListener(new PermissionRequestErrorListener() {
+            @Override
+            public void onError(DexterError error) {
+                Toast.makeText(getActivityy(), "" + getString(R.string.error_in_data), Toast.LENGTH_SHORT).show();
+
+            }
+        }).onSameThread().check();
+    }
+
+
+    private void startScan() {
+
+        if (ContextCompat.checkSelfPermission(getActivityy(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivityy(), new String[]{Manifest.permission.CAMERA}, ZBAR_CAMERA_PERMISSION);
+        } else {
+            Intent intent = new Intent(getActivityy(), FullScannerActivity.class);
+            startActivity(intent);
+        }
+
     }
 }

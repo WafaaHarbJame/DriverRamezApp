@@ -6,7 +6,8 @@
     <Button
         android:id="@+id/btnCategory"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/_30sdp"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/_30sdp"
         android:layout_margin="8dp"
         android:background="@drawable/shape_selected_category"
         android:gravity="center"

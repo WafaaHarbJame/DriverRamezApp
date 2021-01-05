@@ -125,6 +125,13 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         });
 
 
+        binding.barcodeBut.setOnClickListener(view1 -> {
+
+            checkCameraPermission();
+
+        });
+
+
         binding.moreBestBut.setOnClickListener(view1 -> {
 
             Intent intent = new Intent(getActivityy(), AllListActivity.class);
@@ -154,12 +161,6 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
         });
 
-        binding.barcodeBut.setOnClickListener(view1 -> {
-
-            checkCameraPermission();
-
-
-        });
 
         if (savedInstanceState != null) {
             mFlash = savedInstanceState.getBoolean(FLASH_STATE, false);

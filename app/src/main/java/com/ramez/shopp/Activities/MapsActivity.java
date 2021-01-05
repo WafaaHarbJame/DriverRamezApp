@@ -59,7 +59,7 @@ import java.util.Objects;
 
 import io.nlopez.smartlocation.SmartLocation;
 
-public class MapsActivity extends ActivityBase implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
+public class MapsActivity extends ActivityBase implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = "MapsActivity";
     //// ACTIVITY_RESULT
@@ -332,22 +332,7 @@ public class MapsActivity extends ActivityBase implements OnMapReadyCallback, Go
 
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
-        try {
 
-            if (!intentWithLocation) {
-                addMarkerOnMap(new LatLng(location.getLatitude(), location.getLongitude()), cameraUpdate, "onLocationChanged");
-            }
-            //stop location updates
-            if (client != null) {
-                LocationServices.FusedLocationApi.removeLocationUpdates(client, this);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
@@ -355,9 +340,7 @@ public class MapsActivity extends ActivityBase implements OnMapReadyCallback, Go
         locationRequest.setInterval(10);
         locationRequest.setFastestInterval(100);
         locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(client, locationRequest, this);
-        }
+
     }
 
     @Override

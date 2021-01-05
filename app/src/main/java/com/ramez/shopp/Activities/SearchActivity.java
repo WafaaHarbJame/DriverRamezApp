@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.ramez.shopp.Adapter.ProductAdapter;
+import com.ramez.shopp.Adapter.SearchAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
@@ -37,7 +38,7 @@ import retrofit2.Call;
 
 import static android.content.ContentValues.TAG;
 
-public class SearchActivity extends ActivityBase implements ProductAdapter.OnItemClick {
+public class SearchActivity extends ActivityBase implements SearchAdapter.OnItemClick {
 
     ActivitySearchBinding binding;
 
@@ -48,7 +49,7 @@ public class SearchActivity extends ActivityBase implements ProductAdapter.OnIte
     int numColumn = 2;
     private ArrayList<AutoCompleteModel> data = null;
     private ArrayList<String> autoCompleteList;
-    private ProductAdapter adapter;
+    private SearchAdapter adapter;
     private int country_id, city_id;
     private String user_id = "0", filter, result, searchQuery;
     private MemberModel user;
@@ -180,7 +181,7 @@ public class SearchActivity extends ActivityBase implements ProductAdapter.OnIte
 
     public void initAdapter() {
 
-        adapter = new ProductAdapter(getActiviy(), productList, this, 0);
+        adapter = new SearchAdapter(getActiviy(), productList, this, 0);
         binding.recycler.setAdapter(adapter);
 
         binding.categoriesCountTv.setText(String.valueOf(productList.size()));

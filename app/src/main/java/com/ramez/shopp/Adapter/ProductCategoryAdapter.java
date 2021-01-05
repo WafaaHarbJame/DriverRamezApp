@@ -3,12 +3,9 @@ package com.ramez.shopp.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +37,7 @@ import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.RowEmptyBinding;
 import com.ramez.shopp.databinding.RowLoadingBinding;
-import com.ramez.shopp.databinding.RowProductsItemBinding;
+import com.ramez.shopp.databinding.RowSearchProductItemBinding;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -88,7 +85,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         this.filter_text = filter;
         this.gridNumber=gridNumber;
 
-        final GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
+        final GridLayoutManager gridLayoutManager = new GridLayoutManager(context, gridNumber);
 
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
@@ -99,7 +96,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     case VIEW_TYPE_LOADING:
                         return 2; //number of columns of the grid
                     case VIEW_TYPE_EMPTY:
-                        return 2; //number of columns of the grid
+                        return gridNumber; //number of columns of the grid
                     default:
                         return 0;
                 }
@@ -140,7 +137,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder vh = null;
         if (viewType == VIEW_TYPE_ITEM) {
-            RowProductsItemBinding itemView = RowProductsItemBinding.inflate(LayoutInflater.from(context), parent, false);
+            RowSearchProductItemBinding itemView = RowSearchProductItemBinding.inflate(LayoutInflater.from(context), parent, false);
             vh = new Holder(itemView);
 
         } else if (viewType == VIEW_TYPE_LOADING) {
@@ -411,9 +408,9 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        RowProductsItemBinding binding;
+        RowSearchProductItemBinding binding;
 
-        Holder(RowProductsItemBinding view) {
+        Holder(RowSearchProductItemBinding view) {
             super(view.getRoot());
             binding = view;
 

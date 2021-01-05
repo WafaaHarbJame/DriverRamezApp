@@ -1,6 +1,5 @@
 package com.ramez.shopp.Fragments;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,9 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ajithvgiri.searchdialog.SearchListItem;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeSuccessDialog;
-import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
-import com.github.dhaval2404.form_validation.rule.NonEmptyRule;
-import com.github.dhaval2404.form_validation.validation.FormValidator;
 import com.google.android.material.snackbar.Snackbar;
 import com.ramez.shopp.Activities.AddressActivity;
 import com.ramez.shopp.Adapter.InvoiceItemAdapter;
@@ -35,8 +31,6 @@ import com.ramez.shopp.Models.CartResultModel;
 import com.ramez.shopp.Models.DeliveryResultModel;
 import com.ramez.shopp.Models.DeliveryTime;
 import com.ramez.shopp.Models.LocalModel;
-import com.ramez.shopp.Models.LoginResultModel;
-import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.OrderCall;
 import com.ramez.shopp.Models.OrdersResultModel;
 import com.ramez.shopp.Models.PaymentModel;

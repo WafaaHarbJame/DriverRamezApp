@@ -467,7 +467,7 @@ public class DataFeacher {
         Log.i(TAG, "Log city_id " + city_id);
 
         Call call = apiService.GetMainPage(headerMap, category_id, country_id, city_id, user_id);
-        call.enqueue(callbackApi);
+        call.enqueue( callbackApi);
     }
 
     public void GetSingleProduct(int country_id, int city_id, int product_id, String user_id) {

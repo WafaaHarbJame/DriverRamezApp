@@ -3,7 +3,9 @@ package com.ramez.shopp.Models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MainDatum {
+import java.io.Serializable;
+
+public class MainDatum implements Serializable {
 
     @SerializedName("aws_image")
     @Expose
