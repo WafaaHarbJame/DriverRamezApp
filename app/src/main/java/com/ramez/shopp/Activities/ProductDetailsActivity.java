@@ -232,6 +232,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         binding.dataLY.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+        binding.cartBut.setVisibility(View.GONE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ProductDetailsModel result = (ProductDetailsModel) obj;
@@ -245,6 +246,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                     message = result.getMessage();
                 }
                 binding.dataLY.setVisibility(View.GONE);
+                binding.cartBut.setVisibility(View.VISIBLE);
                 binding.noDataLY.noDataLY.setVisibility(View.GONE);
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(message);
@@ -255,6 +257,8 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 binding.noDataLY.noDataLY.setVisibility(View.GONE);
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(message);
+                binding.cartBut.setVisibility(View.GONE);
+
 
 
             } else {
@@ -264,6 +268,8 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                         binding.dataLY.setVisibility(View.VISIBLE);
                         binding.noDataLY.noDataLY.setVisibility(View.GONE);
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+                        binding.cartBut.setVisibility(View.VISIBLE);
+
 
                         productModel = result.getData().get(0);
                         binding.productDescTv.setText(Html.fromHtml(productModel.getDescription().toString()));
@@ -307,6 +313,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
                         binding.dataLY.setVisibility(View.GONE);
                         binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
+                        binding.cartBut.setVisibility(View.GONE);
 
                     }
 
@@ -317,6 +324,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                     binding.noDataLY.noDataLY.setVisibility(View.GONE);
                     binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                     binding.failGetDataLY.failTxt.setText(message);
+                    binding.cartBut.setVisibility(View.GONE);
 
 
                 }

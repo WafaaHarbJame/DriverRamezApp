@@ -109,6 +109,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/remember"
                         android:textColor="@color/black"
+                        android:checked="true"
                         android:textSize="@dimen/_12ssp"
                         android:theme="@style/checkBoxStyle" />
                 </LinearLayout>
