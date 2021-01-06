@@ -140,7 +140,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.Holder> {
         }).into(holder.binding.productImg);
 
 
-
     }
 
     @Override
@@ -225,8 +224,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.Holder> {
 
             binding.favBut.setOnClickListener(view1 -> {
                 if (!UtilityApp.isLogin()) {
-
-                    CheckLoginDialog checkLoginDialog = new CheckLoginDialog(context, R.string.LoginFirst, R.string.to_add_favorite, R.string.ok, R.string.cancel,null,null);
+                    CheckLoginDialog checkLoginDialog = new CheckLoginDialog(context, R.string.LoginFirst, R.string.to_add_favorite, R.string.ok, R.string.cancel, null, null);
                     checkLoginDialog.show();
 
                 } else {
@@ -250,7 +248,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.Holder> {
             binding.cartBut.setOnClickListener(view1 -> {
 
                 if (!UtilityApp.isLogin()) {
-                    CheckLoginDialog checkLoginDialog = new CheckLoginDialog(context, R.string.LoginFirst, R.string.to_add_cart, R.string.ok, R.string.cancel,null,null);
+                    CheckLoginDialog checkLoginDialog = new CheckLoginDialog(context, R.string.LoginFirst, R.string.to_add_cart, R.string.ok, R.string.cancel, null, null);
                     checkLoginDialog.show();
                 } else {
 
@@ -329,11 +327,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.Holder> {
         @Override
         public void onClick(View v) {
             if (onItemClick != null) {
-                    ProductModel productModel = productModels.get(getAdapterPosition());
-                    onItemClick.onItemClicked(getAdapterPosition(), productModels.get(getAdapterPosition()));
-                    Intent intent = new Intent(context, ProductDetailsActivity.class);
-                    intent.putExtra(Constants.DB_productModel, productModel);
-                    context.startActivity(intent);
+                ProductModel productModel = productModels.get(getAdapterPosition());
+                onItemClick.onItemClicked(getAdapterPosition(), productModels.get(getAdapterPosition()));
+                Intent intent = new Intent(context, ProductDetailsActivity.class);
+                intent.putExtra(Constants.DB_productModel, productModel);
+                context.startActivity(intent);
 
             }
         }
