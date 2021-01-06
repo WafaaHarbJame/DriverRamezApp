@@ -31,6 +31,7 @@ import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.OnLoadMoreListener;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
@@ -71,7 +72,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private int gridNumber;
 
 
-    public ProductCategoryAdapter(Context context, List<ProductModel> productModels, int category_id, int subID, int country_id, int city_id, String user_id, int limit, RecyclerView rv, String filter, OnItemClick onItemClick,int gridNumber) {
+    public ProductCategoryAdapter(Context context, List<ProductModel> productModels, int category_id, int subID, int country_id, int city_id, String user_id, int limit, RecyclerView rv, String filter, OnItemClick onItemClick, int gridNumber) {
         this.context = context;
         this.onItemClick = onItemClick;
         this.productModels = productModels;
@@ -83,7 +84,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         this.user_id = user_id;
         this.rv = rv;
         this.filter_text = filter;
-        this.gridNumber=gridNumber;
+        this.gridNumber = gridNumber;
 
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(context, gridNumber);
 
@@ -416,16 +417,26 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
             itemView.setOnClickListener(this);
             binding.favBut.setOnClickListener(view1 -> {
-                int position = getAdapterPosition();
-                int userId = UtilityApp.getUserData().getId();
-                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
-                int productId = productModels.get(position).getId();
-                boolean isFavorite = productModels.get(position).getFavourite();
-                if (isFavorite) {
-                    removeFromFavorite(view1, position, productId, userId, storeId);
+
+                if (!UtilityApp.isLogin()) {
+
+                    CheckLoginDialog checkLoginDialog = new CheckLoginDialog(context, R.string.LoginFirst, R.string.to_add_favorite, R.string.ok, R.string.cancel, null, null);
+                    checkLoginDialog.show();
 
                 } else {
-                    addToFavorite(view1, position, productId, userId, storeId);
+
+                    int position = getAdapterPosition();
+                    int userId = UtilityApp.getUserData().getId();
+                    int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                    int productId = productModels.get(position).getId();
+                    boolean isFavorite = productModels.get(position).getFavourite();
+                    if (isFavorite) {
+                        removeFromFavorite(view1, position, productId, userId, storeId);
+
+                    } else {
+                        addToFavorite(view1, position, productId, userId, storeId);
+
+                    }
 
                 }
 
@@ -434,7 +445,8 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             binding.cartBut.setOnClickListener(view1 -> {
 
                 if (!UtilityApp.isLogin()) {
-                    loginFirst();
+                    CheckLoginDialog checkLoginDialog = new CheckLoginDialog(context, R.string.LoginFirst, R.string.to_add_cart, R.string.ok, R.string.cancel, null, null);
+                    checkLoginDialog.show();
                 } else {
 
                     ProductModel productModel = productModels.get(getAdapterPosition());

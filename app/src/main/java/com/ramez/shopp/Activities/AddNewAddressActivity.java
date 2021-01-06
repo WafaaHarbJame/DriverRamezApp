@@ -7,16 +7,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+
 import androidx.annotation.Nullable;
+
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.github.dhaval2404.form_validation.rule.NonEmptyRule;
 import com.github.dhaval2404.form_validation.validation.FormValidator;
 import com.ramez.shopp.ApiHandler.DataFeacher;
-import com.ramez.shopp.ApiHandler.DataFetcherCallBack;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
-import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CountryCodeDialog;
 import com.ramez.shopp.Models.AddressModel;
@@ -27,8 +27,6 @@ import com.ramez.shopp.Models.CountryModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.MapHandler;
 import com.ramez.shopp.databinding.ActivityAddNewAddressBinding;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -47,6 +47,17 @@ public class ProductModel  implements Serializable, Comparable<ProductModel>{
     @SerializedName("product_brand")
     @Expose
     private ProductBrand productBrand;
+    @SerializedName("rate")
+    @Expose
+    private Integer rate;
+
+    public Integer getRate() {
+        return rate;
+    }
+
+    public void setRate(Integer rate) {
+        this.rate = rate;
+    }
 
     public Integer getBrandId() {
         return brandId;

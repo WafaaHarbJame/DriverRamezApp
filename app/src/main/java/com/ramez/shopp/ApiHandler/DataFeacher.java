@@ -14,6 +14,7 @@ import com.ramez.shopp.Models.LoginResultModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.OrderCall;
 import com.ramez.shopp.Models.ResultAPIModel;
+import com.ramez.shopp.Models.ReviewModel;
 
 import java.io.File;
 import java.net.NoRouteToHostException;
@@ -856,6 +857,90 @@ public class DataFeacher {
         Call call = apiService.getProductList(headerMap, category_id, country_id, city_id, user_id, filter, page_number, page_size);
         call.enqueue(callbackApi);
     }
+
+
+
+    public void getRate(int productId, int store_id) {
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("store_id", store_id);
+        params.put("product_id", productId);
+
+        Log.i(TAG, "Log getRate");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log store_ID " + store_id);
+        Log.i(TAG, "Log product_id " + productId);
+
+
+        Call call = apiService.GetRates(headerMap, params);
+        call.enqueue(callbackApi);
+    }
+
+    public void getAppRate() {
+
+        Map<String, Object> params = new HashMap<>();
+
+        Log.i(TAG, "Log getAppRate");
+        Log.i(TAG, "Log headerMap " + headerMap);
+
+
+        Call call = apiService.getAppRate(headerMap, params);
+        call.enqueue(callbackApi);
+    }
+
+
+
+    public void setRate(ReviewModel reviewModel) {
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("store_id", reviewModel.getStoreId());
+        params.put("user_id", reviewModel.getUser_id());
+        params.put("product_id", reviewModel.getProductId());
+        params.put("rate", reviewModel.getRate());
+        params.put("comment", reviewModel.getComment());
+
+
+        Log.i(TAG, "Log setRate");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log store_ID " + reviewModel.getStoreId());
+        Log.i(TAG, "Log product_id " + reviewModel.getProductId());
+        Log.i(TAG, "Log rate " + reviewModel.getRate());
+        Log.i(TAG, "Log comment " + reviewModel.getComment());
+
+
+        Call call = apiService.setRate(headerMap, params);
+        call.enqueue(callbackApi);
+    }
+
+    public void setAppRate(ReviewModel reviewModel) {
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("user_id", reviewModel.getUser_id());
+        params.put("rate", reviewModel.getRate());
+        params.put("comment", reviewModel.getComment());
+
+        Log.i(TAG, "Log setAppRate");
+
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log user_id " + reviewModel.getUser_id());
+        Log.i(TAG, "Log rate " + reviewModel.getRate());
+        Log.i(TAG, "Log comment " + reviewModel.getComment());
+
+
+        Call call = apiService.setAppRate(headerMap, params);
+        call.enqueue(callbackApi);
+    }
+
+
+    public void getSetting() {
+
+        Log.i(TAG, "Log getSetting");
+
+        Call call = apiService.getSetting(headerMap);
+        call.enqueue(callbackApi);
+    }
+
+
 
 
 

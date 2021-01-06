@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,24 +16,28 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.material.snackbar.Snackbar;
 import com.ramez.shopp.Adapter.ProductSliderAdapter;
 import com.ramez.shopp.Adapter.ReviewAdapter;
 import com.ramez.shopp.Adapter.SuggestedProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
-import com.ramez.shopp.Fragments.CartFragment;
-import com.ramez.shopp.Fragments.HomeFragment;
+import com.ramez.shopp.Dialogs.AddRateDialog;
+import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.MemberModel;
-import com.ramez.shopp.Models.ProductBarcode;
 import com.ramez.shopp.Models.ProductDetailsModel;
 import com.ramez.shopp.Models.ProductModel;
+import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.Models.ReviewModel;
 import com.ramez.shopp.R;
+import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.ActivityProductDeatilsBinding;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -42,12 +48,14 @@ import java.util.ArrayList;
 
 public class ProductDetailsActivity extends ActivityBase implements SuggestedProductAdapter.OnItemClick {
     ActivityProductDeatilsBinding binding;
-    int user_id=0;
+    int user_id = 0;
     ArrayList<String> sliderList;
     ArrayList<ProductModel> productList;
     ArrayList<ReviewModel> reviewList;
     String productName;
     ProductModel productModel;
+    String currency;
+    AddRateDialog addCommentDialog;
     private int category_id = 0, country_id, city_id, product_id;
     private ProductSliderAdapter productSliderAdapter;
     private SuggestedProductAdapter productOfferAdapter;
@@ -71,12 +79,10 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         sliderList = new ArrayList<String>();
         productList = new ArrayList<>();
         reviewList = new ArrayList<>();
-        storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
 
-//        reviewList.add(new ReviewModel(1, "very good"));
-//        reviewList.add(new ReviewModel(1, "good"));
-//        reviewList.add(new ReviewModel(1, "very good"));
-//
+        storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+        currency = UtilityApp.getLocalData().getCurrencyCode();
+
 
         productLayoutManager = new LinearLayoutManager(getActiviy(), RecyclerView.HORIZONTAL, false);
         binding.offerRecycler.setLayoutManager(productLayoutManager);
@@ -89,27 +95,116 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
         getIntentExtra();
 
-        if(UtilityApp.isLogin()){
+        if (UtilityApp.isLogin()) {
             user_id = Integer.parseInt(String.valueOf(memberModel.getId()));
 
         }
 
         getSingleProduct(country_id, city_id, product_id, String.valueOf(user_id));
 
+
         getSuggestedProduct();
+
+        getReviews(product_id, storeId);
+
+        initListener();
+
+
+    }
+
+    private void initListener() {
 
         binding.backBtn.setOnClickListener(view1 -> {
             onBackPressed();
         });
 
+
+        binding.rateBtn.setOnClickListener(view -> {
+
+            ReviewModel reviewModel = new ReviewModel();
+
+            AddRateDialog.Click okClick = new AddRateDialog.Click() {
+
+
+                @Override
+                public void click() {
+
+                    if (!UtilityApp.isLogin()) {
+
+                        CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActiviy(), R.string.add_comm, R.string.to_add_comment, R.string.ok, R.string.cancel, null, null);
+                        checkLoginDialog.show();
+
+                    } else {
+                        EditText note = addCommentDialog.findViewById(R.id.rateEt);
+                        RatingBar ratingBar = addCommentDialog.findViewById(R.id.ratingBar);
+                        String notes = note.getText().toString();
+
+                        reviewModel.setComment(notes);
+                        reviewModel.setProductId(product_id);
+                        reviewModel.setStoreId(storeId);
+                        reviewModel.setUser_id(user_id);
+                        reviewModel.setRate((int) ratingBar.getRating());
+
+                        if (ratingBar.getRating() == 0) {
+                            Toast(R.string.please_fill_rate);
+                            YoYo.with(Techniques.Shake).playOn(ratingBar);
+                            ratingBar.requestFocus();
+
+                        } else if (note.getText().toString().isEmpty()) {
+
+                            note.requestFocus();
+                            note.setError(getString(R.string.please_fill_comment));
+
+
+                        } else {
+                            addComment(view, reviewModel);
+                        }
+
+                    }
+
+
+                }
+
+            };
+
+
+            AddRateDialog.Click cancelClick = new AddRateDialog.Click() {
+                @Override
+                public void click() {
+                    if (!UtilityApp.isLogin()) {
+
+                        CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActiviy(), R.string.add_comm, R.string.to_add_comment, R.string.ok, R.string.cancel, null, null);
+                        checkLoginDialog.show();
+
+                    } else {
+                        addCommentDialog.dismiss();
+                    }
+
+
+                }
+            };
+
+            addCommentDialog = new AddRateDialog(getActiviy(), getString(R.string.add_comment), R.string.ok, R.string.cancel, okClick, cancelClick);
+            addCommentDialog.show();
+
+
+        });
         binding.favBut.setOnClickListener(v -> {
             Log.i("tag", "Log isFavorite" + isFavorite);
 
-            if (isFavorite) {
-                removeFromFavorite(v, product_id, user_id, storeId);
+            if (!UtilityApp.isLogin()) {
+
+                CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActiviy(), R.string.LoginFirst, R.string.to_add_favorite, R.string.ok, R.string.cancel, null, null);
+                checkLoginDialog.show();
 
             } else {
-                addToFavorite(v, product_id, user_id, storeId);
+                if (isFavorite) {
+                    removeFromFavorite(v, product_id, user_id, storeId);
+
+                } else {
+                    addToFavorite(v, product_id, user_id, storeId);
+
+                }
 
             }
 
@@ -119,13 +214,22 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
         binding.cartBut.setOnClickListener(view1 -> {
 
-            int count = productModel.getProductBarcodes().get(0).getCartQuantity();
-            int userId = UtilityApp.getUserData().getId();
-            int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
-            int productId = productModel.getId();
-            int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
 
-            addToCart(view1, productId, product_barcode_id, count + 1, userId, storeId);
+            if (!UtilityApp.isLogin()) {
+
+                CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActiviy(), R.string.LoginFirst, R.string.to_add_cart, R.string.ok, R.string.cancel, null, null);
+                checkLoginDialog.show();
+
+            } else {
+                int count = productModel.getProductBarcodes().get(0).getCartQuantity();
+                int userId = UtilityApp.getUserData().getId();
+                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int productId = productModel.getId();
+                int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
+
+                addToCart(view1, productId, product_barcode_id, count + 1, userId, storeId);
+
+            }
 
 
         });
@@ -138,7 +242,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
             int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
             int productId = productModel.getId();
             int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
-            int cartId=productModel.getProductBarcodes().get(0).getCartId();
+            int cartId = productModel.getProductBarcodes().get(0).getCartId();
 
             if (count + 1 < stock) {
                 updateCart(v, productId, product_barcode_id, count + 1, userId, storeId, cartId, "quantity");
@@ -152,13 +256,13 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
         binding.minusCartBtn.setOnClickListener(v -> {
 
-           // int count = productModel.getProductBarcodes().get(0).getCartQuantity();
+            // int count = productModel.getProductBarcodes().get(0).getCartQuantity();
             int count = Integer.parseInt(binding.productCartQTY.getText().toString());
             int userId = UtilityApp.getUserData().getId();
             int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
             int productId = productModel.getId();
             int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
-            int cart_id=productModel.getProductBarcodes().get(0).getCartId();
+            int cart_id = productModel.getProductBarcodes().get(0).getCartId();
 
             updateCart(v, productId, product_barcode_id, count - 1, userId, storeId, cart_id, "quantity");
 
@@ -171,14 +275,13 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
             int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
             int productId = productModel.getId();
             int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
-            int cart_id=productModel.getProductBarcodes().get(0).getCartId();
+            int cart_id = productModel.getProductBarcodes().get(0).getCartId();
 
             deleteCart(v, productId, product_barcode_id, cart_id, userId, storeId);
 
         });
-
-
     }
+
 
     private void getIntentExtra() {
         Bundle bundle = getIntent().getExtras();
@@ -186,23 +289,23 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         if (bundle != null) {
 
             ProductModel productModel = (ProductModel) bundle.getSerializable(Constants.DB_productModel);
-                product_id = productModel.getId();
+            product_id = productModel.getId();
 
-                if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
-                    productName = productModel.getHName();
+            if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
+                productName = productModel.getHName();
 
-                } else {
-                    productName = productModel.getName();
-
-                }
-                binding.productNameTv.setText(productName);
-
-                binding.mainTitleTxt.setText(productName);
-
+            } else {
+                productName = productModel.getName();
 
             }
+            binding.productNameTv.setText(productName);
 
-        
+            binding.mainTitleTxt.setText(productName);
+
+
+        }
+
+
     }
 
     public void initAdapter() {
@@ -212,17 +315,16 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
     }
 
     public void initReviewAdapter() {
-
         reviewAdapter = new ReviewAdapter(getActiviy(), reviewList);
         binding.reviewRecycler.setAdapter(reviewAdapter);
+        reviewAdapter.notifyDataSetChanged();
     }
 
 
     @Override
     public void onItemClicked(int position, ProductModel productModel) {
-        Intent intent = new Intent(getActiviy(), ProductDetailsActivity.class);
-        intent.putExtra(Constants.DB_productModel, productModel);
-        startActivity(intent);
+
+        //getSingleProduct(country_id,city_id,productModel.getId(), String.valueOf(user_id));
 
     }
 
@@ -260,7 +362,6 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 binding.cartBut.setVisibility(View.GONE);
 
 
-
             } else {
                 if (IsSuccess) {
                     if (result.getData() != null && result.getData().size() > 0) {
@@ -269,13 +370,14 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                         binding.noDataLY.noDataLY.setVisibility(View.GONE);
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
                         binding.cartBut.setVisibility(View.VISIBLE);
-
-
                         productModel = result.getData().get(0);
                         binding.productDescTv.setText(Html.fromHtml(productModel.getDescription().toString()));
-                        binding.productPriceTv.setText(productModel.getProductBarcodes().get(0).getPrice().toString());
+                        binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(productModel.getProductBarcodes().get(0).getPrice().toString()), UtilityApp.getLocalData().getFractional()) + " " + currency);
+
                         sliderList = productModel.getImages();
-                       // binding.weightUnitTv.setText(productModel.getProductBarcodes().get(0));
+                        binding.ratingBar.setRating((float) productModel.getRate());
+
+                        // binding.weightUnitTv.setText(productModel.getProductBarcodes().get(0));
 
                         isFavorite = productModel.getFavourite();
 
@@ -305,7 +407,6 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                             binding.CartLy.setVisibility(View.GONE);
                             binding.cartBut.setVisibility(View.VISIBLE);
                         }
-
 
                         initAdapter();
 
@@ -379,6 +480,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
 
     public void getSuggestedProduct() {
+        productList.clear();
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -512,16 +614,103 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
     public void onMessageEvent(@NotNull MessageEvent event) {
 
 
-         if (event.type.equals(MessageEvent.TYPE_main)) {
-             binding.backBtn.setOnClickListener(view -> {
-                 Intent intent = new Intent(getActiviy(), MainActivity.class);
-                 startActivity(intent);
-             });
+        if (event.type.equals(MessageEvent.TYPE_main)) {
+            binding.backBtn.setOnClickListener(view -> {
+                Intent intent = new Intent(getActiviy(), MainActivity.class);
+                startActivity(intent);
+            });
 
         }
 
 
+    }
+
+
+    public void getReviews(int product_id, int storeId) {
+        reviewList.clear();
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            ResultAPIModel<ArrayList<ReviewModel>> result = (ResultAPIModel<ArrayList<ReviewModel>>) obj;
+
+            if (IsSuccess) {
+                if (result.data != null && result.data.size() > 0) {
+
+                    reviewList = result.data;
+                    binding.productReviewTv.setVisibility(View.VISIBLE);
+                    binding.reviewRecycler.setVisibility(View.VISIBLE);
+                    initReviewAdapter();
+
+
+                } else {
+
+                    binding.productReviewTv.setVisibility(View.GONE);
+                    binding.reviewRecycler.setVisibility(View.GONE);
+
+                }
+
+
+            }
+
+
+        }).getRate(product_id, storeId);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Bundle bundle = intent.getExtras();
+
+        if (bundle != null) {
+
+            ProductModel productModel = (ProductModel) bundle.getSerializable(Constants.DB_productModel);
+            product_id = productModel.getId();
+
+            if (UtilityApp.getLanguage().equals(Constants.Arabic)) {
+                productName = productModel.getHName();
+
+            } else {
+                productName = productModel.getName();
+
+            }
+
+            getSingleProduct(country_id, city_id, product_id, String.valueOf(user_id));
+
+            getReviews(product_id, storeId);
+
+            getSuggestedProduct();
+
+            binding.productNameTv.setText(productName);
+
+            binding.mainTitleTxt.setText(productName);
+
+
+        }
 
     }
+
+
+    private void addComment(View v, ReviewModel reviewModel) {
+        GlobalData.progressDialog(getActiviy(), R.string.add_comm, R.string.please_wait_sending);
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+
+            if (IsSuccess) {
+
+                addCommentDialog.dismiss();
+                GlobalData.hideProgressDialog();
+                getReviews(product_id, storeId);
+                GlobalData.successDialog(getActiviy(), getString(R.string.rate_product), getString(R.string.success_rate_product));
+
+
+            } else {
+                addCommentDialog.dismiss();
+                GlobalData.hideProgressDialog();
+                GlobalData.errorDialog(getActiviy(), R.string.rate_product, getString(R.string.fail_add_comment));
+
+            }
+
+
+        }).setRate(reviewModel);
+    }
+
 
 }

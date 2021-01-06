@@ -2,13 +2,11 @@ package com.ramez.shopp.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,22 +27,15 @@ import com.ramez.shopp.Activities.TermsActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
-import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Dialogs.ConfirmDialog;
-import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProfileData;
 import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.ActivityHandler;
-import com.ramez.shopp.databinding.DialogCheckLoginBinding;
 import com.ramez.shopp.databinding.FragmentMyAccountBinding;
-
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-import org.jetbrains.annotations.NotNull;
 
 public class MyAccountFragment extends FragmentBase {
     boolean isLogin = false;
@@ -104,7 +95,7 @@ public class MyAccountFragment extends FragmentBase {
             if (isLogin) {
                 startRateAppActivity();
             } else {
-                showDialog();
+                showDialog(R.string.to_rate_app);
             }
         });
 
@@ -118,7 +109,7 @@ public class MyAccountFragment extends FragmentBase {
             if (isLogin) {
                 startChangeActivity();
             } else {
-                showDialog();
+                showDialog(R.string.to_change_pass);
             }
 
 
@@ -128,7 +119,7 @@ public class MyAccountFragment extends FragmentBase {
             if (isLogin) {
                 startFavProductActivity();
             } else {
-                showDialog();
+                showDialog(R.string.to_show_products);
             }
 
 
@@ -139,7 +130,7 @@ public class MyAccountFragment extends FragmentBase {
             if (isLogin) {
                 startOrderActivity();
             } else {
-                showDialog();
+                showDialog(R.string.to_show_orders);
             }
 
 
@@ -155,7 +146,7 @@ public class MyAccountFragment extends FragmentBase {
             if (isLogin) {
                 startAddressActivity();
             } else {
-                showDialog();
+                showDialog(R.string.to_show_address);
             }
 
 
@@ -165,7 +156,7 @@ public class MyAccountFragment extends FragmentBase {
             if (isLogin) {
                 startChangeBranch();
             } else {
-                showDialog();
+                showDialog(R.string.to_change_city);
             }
 
 
@@ -179,7 +170,7 @@ public class MyAccountFragment extends FragmentBase {
             if (isLogin) {
                 startSupport();
             } else {
-                showDialog();
+                showDialog(R.string.to_contact_support);
             }
 
 
@@ -207,8 +198,8 @@ public class MyAccountFragment extends FragmentBase {
         Glide.with(getActivityy()).asBitmap().load(memberModel.getProfilePicture()).placeholder(R.drawable.avatar).into(binding.userImg);
     }
 
-    private void showDialog() {
-        CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActivityy(), R.string.LoginFirst, R.string.to_add_cart, R.string.ok, R.string.cancel, null, null);
+    private void showDialog(int message) {
+        CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActivityy(), R.string.LoginFirst, message, R.string.ok, R.string.cancel, null, null);
         checkLoginDialog.show();
         checkLoginDialog.show();
     }

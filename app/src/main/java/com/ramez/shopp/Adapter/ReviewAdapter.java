@@ -37,7 +37,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.Holder> {
     @Override
     public void onBindViewHolder(final Holder holder, int position) {
         ReviewModel reviewModel = list.get(position);
-        holder.binding.reviewTv.setText(reviewModel.getReviewText());
+        holder.binding.reviewTv.setText(reviewModel.getComment());
 
         if (position == getItemCount() - 1) {
             holder.binding.divider.setVisibility(View.GONE);

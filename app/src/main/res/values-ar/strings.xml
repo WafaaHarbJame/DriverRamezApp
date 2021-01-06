@@ -263,12 +263,24 @@
     <string name="to_add_favorite">للاضافة للمفضلة  </string>
     <string name="to_show_product_details">لمشاهدة تفاصيل المنتج </string>
     <string name="to_search_product">للبحث عن منتج </string>
-    <string name="to_show_products">لمشاهدة المنتجات  </string>
+    <string name="to_show_products">لمشاهدة المنتجات المفضلة   </string>
     <string name="search_country">ابحث عن الدولة من هنا </string>
     <string name="minimum_order_amount">لا يمكنك الشراء لان الحد الادنى لاتمام عملية الشراء هو : </string>
     <string name="default_address">تعين العنوان الافتراضي </string>
     <string name="no_products_fav">لا يوجد منتجات مضافة للمفضلة </string>
     <string name="fail_to_load">فشل تحميل الصورة </string>
     <string name="success_upload">تم تحميل الصورة بنجاح</string>
-
+    <string name="successadd_comment">تم اضافة التعليق بنجاح </string>
+    <string name="please_fill_comment">الرجاء ادخل نص التعليق</string>
+    <string name="please_fill_rate">الرجاء الضغط على النجوم  </string>
+    <string name="to_add_comment">لاضافة تعليق</string>
+    <string name="success_rate_app">تم تقييم التطبيق  بنجاح </string>
+    <string name="success_rate_product">تم تقييم المنتج بنجاح </string>
+    <string name="fail_add_comment">فشل اضافة التعليق </string>
+    <string name="to_change_city">لتغير الفرع </string>
+    <string name="to_rate_app">لتقييم التطبيق </string>
+    <string name="to_change_pass">لتغير كلمة المرور</string>
+    <string name="to_show_orders">لمشاهدة الطلبات </string>
+    <string name="to_show_address">لمشاهدة العناوين</string>
+    <string name="to_contact_support">للتواصل مع الدعم الفني </string>
 </resources>

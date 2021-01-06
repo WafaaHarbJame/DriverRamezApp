@@ -250,6 +250,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
             binding.cartBut.setOnClickListener(view1 -> {
 
                 if (!UtilityApp.isLogin()) {
+
                     CheckLoginDialog checkLoginDialog = new CheckLoginDialog(context, R.string.LoginFirst, R.string.to_add_cart, R.string.ok, R.string.cancel,null,null);
                     checkLoginDialog.show();
                 } else {

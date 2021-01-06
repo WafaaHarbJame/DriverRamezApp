@@ -16,9 +16,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.google.gson.Gson;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.DexterError;
@@ -34,14 +32,10 @@ import com.ramez.shopp.Adapter.CategoryAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.UtilityApp;
-import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Models.CategoryResultModel;
-import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.FragmentCategoryBinding;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;

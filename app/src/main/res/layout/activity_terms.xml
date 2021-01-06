@@ -24,9 +24,14 @@
 
             <com.ramez.shopp.SpichalViews.STextView
                 android:layout_width="match_parent"
+                android:id="@+id/textTv"
+                android:justificationMode="inter_word"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:gravity="start|center_vertical"
+                android:textSize="@dimen/_12ssp"
+                android:textAlignment="viewStart"
+                android:lineSpacingExtra="@dimen/_4sdp"
                 android:text="@string/dummy_text"
                 android:textColor="@color/colorLoginText" />
 

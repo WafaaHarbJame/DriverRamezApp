@@ -3,7 +3,6 @@ package com.ramez.shopp.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
@@ -28,15 +27,12 @@ import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.Activities.RegisterLoginActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
-import com.ramez.shopp.databinding.RowProductsItemBinding;
 import com.ramez.shopp.databinding.RowSuggestedProductItemBinding;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -231,16 +227,25 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
             itemView.setOnClickListener(this);
 
             binding.favBut.setOnClickListener(view1 -> {
-                int position = getAdapterPosition();
-                int userId = UtilityApp.getUserData().getId();
-                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
-                int productId = productModels.get(position).getId();
-                boolean isFavorite = productModels.get(position).getFavourite();
-                if (isFavorite) {
-                    removeFromFavorite(view1, position, productId, userId, storeId);
+
+                if (!UtilityApp.isLogin()) {
+
+                    CheckLoginDialog checkLoginDialog = new CheckLoginDialog(context, R.string.LoginFirst, R.string.to_add_favorite, R.string.ok, R.string.cancel,null,null);
+                    checkLoginDialog.show();
 
                 } else {
-                    addToFavorite(view1, position, productId, userId, storeId);
+                    int position = getAdapterPosition();
+                    int userId = UtilityApp.getUserData().getId();
+                    int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                    int productId = productModels.get(position).getId();
+                    boolean isFavorite = productModels.get(position).getFavourite();
+                    if (isFavorite) {
+                        removeFromFavorite(view1, position, productId, userId, storeId);
+
+                    } else {
+                        addToFavorite(view1, position, productId, userId, storeId);
+
+                    }
 
                 }
 
@@ -249,7 +254,10 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
             binding.cartBut.setOnClickListener(view1 -> {
 
                 if (!UtilityApp.isLogin()) {
-                    loginFirst();
+
+                    CheckLoginDialog checkLoginDialog = new CheckLoginDialog(context, R.string.LoginFirst, R.string.to_add_cart, R.string.ok, R.string.cancel, null, null);
+                    checkLoginDialog.show();
+
                 } else {
 
                     ProductModel productModel = productModels.get(getAdapterPosition());
@@ -326,10 +334,11 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
 
         @Override
         public void onClick(View v) {
+
             if (onItemClick != null) {
-                ProductModel productModel = productModels.get(getAdapterPosition());
-                EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_main));
+
                 onItemClick.onItemClicked(getAdapterPosition(), productModels.get(getAdapterPosition()));
+                ProductModel productModel = productModels.get(getAdapterPosition());
                 Intent intent = new Intent(context, ProductDetailsActivity.class);
                 intent.putExtra(Constants.DB_productModel, productModel);
                 context.startActivity(intent);

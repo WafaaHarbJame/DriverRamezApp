@@ -172,16 +172,16 @@
                     android:paddingEnd="@dimen/_8sdp"
                     android:paddingBottom="@dimen/_8sdp">
 
-                    <androidx.appcompat.widget.AppCompatRatingBar
+                    <RatingBar
                         android:id="@+id/ratingBar"
                         style="@style/Widget.AppCompat.RatingBar.Small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:numStars="5"
+                        android:rating="5"
                         android:text="@string/product_name"
-                        android:textColor="@color/black"
-                        android:theme="@style/RatingBarStyle" />
+                        android:theme="@style/RatingBarStyle2" />
 
                     <Space
                         android:layout_width="0dp"
@@ -190,10 +190,21 @@
 
                     <ImageView
                         android:id="@+id/favBut"
-                        android:layout_width="@dimen/_18sdp"
-                        android:layout_height="@dimen/_18sdp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/_20sdp"
+                        android:minWidth="@dimen/_20sdp"
                         android:layout_marginEnd="@dimen/_2sdp"
                         android:src="@drawable/favorite_menu_icon"
+                        app:tint="@color/colorAppRed" />
+                    <ImageView
+                        android:id="@+id/rateBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:minHeight="@dimen/_20sdp"
+                        android:minWidth="@dimen/_20sdp"
+                        android:src="@drawable/ic_add_comment"
                         app:tint="@color/colorAppRed" />
                 </LinearLayout>
 
@@ -276,6 +287,7 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp"
+                    android:id="@+id/productReviewTv"
                     android:paddingBottom="@dimen/_6sdp"
                     android:text="@string/product_review"
                     android:textColor="@color/gray3"

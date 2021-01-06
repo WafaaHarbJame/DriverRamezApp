@@ -15,10 +15,12 @@ import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+
 import okhttp3.CipherSuite;
 import okhttp3.ConnectionSpec;
 import okhttp3.OkHttpClient;
@@ -29,93 +31,58 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    public static  String BASE_URL = "";
+    public static String BASE_URL = "";
     private static Retrofit retrofit = null;
     private static Retrofit retrofitCustom = null;
     private static Retrofit retrofitLong = null;
     private static String country;
 
-    private static ConnectionSpec spec = new ConnectionSpec.Builder(ConnectionSpec.COMPATIBLE_TLS)
-            .supportsTlsExtensions(true)
-            .tlsVersions(TlsVersion.TLS_1_2, TlsVersion.TLS_1_1, TlsVersion.TLS_1_0)
-            .cipherSuites(
-                    CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
-                    CipherSuite.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
-                    CipherSuite.TLS_DHE_RSA_WITH_AES_128_GCM_SHA256,
-                    CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA,
-                    CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,
-                    CipherSuite.TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
-                    CipherSuite.TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
-                    CipherSuite.TLS_ECDHE_ECDSA_WITH_RC4_128_SHA,
-                    CipherSuite.TLS_ECDHE_RSA_WITH_RC4_128_SHA,
-                    CipherSuite.TLS_DHE_RSA_WITH_AES_128_CBC_SHA,
-                    CipherSuite.TLS_DHE_DSS_WITH_AES_128_CBC_SHA,
-                    CipherSuite.TLS_DHE_RSA_WITH_AES_256_CBC_SHA)
-            .build();
+    private static ConnectionSpec spec = new ConnectionSpec.Builder(ConnectionSpec.COMPATIBLE_TLS).supportsTlsExtensions(true).tlsVersions(TlsVersion.TLS_1_2, TlsVersion.TLS_1_1, TlsVersion.TLS_1_0).cipherSuites(CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, CipherSuite.TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, CipherSuite.TLS_DHE_RSA_WITH_AES_128_GCM_SHA256, CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, CipherSuite.TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, CipherSuite.TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, CipherSuite.TLS_ECDHE_ECDSA_WITH_RC4_128_SHA, CipherSuite.TLS_ECDHE_RSA_WITH_RC4_128_SHA, CipherSuite.TLS_DHE_RSA_WITH_AES_128_CBC_SHA, CipherSuite.TLS_DHE_DSS_WITH_AES_128_CBC_SHA, CipherSuite.TLS_DHE_RSA_WITH_AES_256_CBC_SHA).build();
 
     public static Retrofit getCustomClient(String baseUrl) {
-        Gson gson = new GsonBuilder()
-                .setLenient()
-                .create();
+        Gson gson = new GsonBuilder().setLenient().create();
 
 //        if (retrofit == null) {
-        retrofitCustom = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .client(getOkClient())
-                .build();
+        retrofitCustom = new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create(gson)).client(getOkClient()).build();
 //        }
         return retrofitCustom;
     }
 
 
     public static Retrofit getClient() {
-        if(UtilityApp.getLocalData().getShortname()!=null){
-            country=UtilityApp.getLocalData().getShortname();
-        }
-        else {
-            country=GlobalData.COUNTRY;
+
+        if (UtilityApp.getLocalData() != null && UtilityApp.getLocalData().getShortname() != null) {
+            country = UtilityApp.getLocalData().getShortname();
+        } else {
+            country = GlobalData.COUNTRY;
 
         }
-        BASE_URL=GlobalData.BetaBaseURL+ country+GlobalData.grocery+GlobalData.Api;
+        BASE_URL = GlobalData.BetaBaseURL + country + GlobalData.grocery + GlobalData.Api;
         Log.i("TAG", "Log BASE_URL " + BASE_URL);
 
-        Gson gson = new GsonBuilder()
-                .setLenient()
-                .create();
+        Gson gson = new GsonBuilder().setLenient().create();
 //        if (retrofit == null) {
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .client(getOkClient())
-                    .build();
+        retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create(gson)).client(getOkClient()).build();
 //        }
 
         return retrofit;
     }
 
     public static Retrofit getLongClient() {
-        if(UtilityApp.getLocalData().getShortname()!=null){
-            country=UtilityApp.getLocalData().getShortname();
+        if (UtilityApp.getLocalData().getShortname() != null) {
+            country = UtilityApp.getLocalData().getShortname();
+
+        } else {
+            country = GlobalData.COUNTRY;
 
         }
-        else {
-            country=GlobalData.COUNTRY;
+        BASE_URL = GlobalData.BetaBaseURL + country + GlobalData.grocery + GlobalData.Api;
 
-        }
-        BASE_URL=GlobalData.BetaBaseURL+ country+GlobalData.grocery+GlobalData.Api;
-
-        Gson gson = new GsonBuilder()
-                .setLenient()
-                .create();
+        Gson gson = new GsonBuilder().setLenient().create();
 
 
         if (retrofitLong == null) {
-            retrofitLong = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .client(getLongOkClient())
-                    .build();
+            retrofitLong = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create(gson)).client(getLongOkClient()).build();
         }
         return retrofitLong;
     }
@@ -129,34 +96,27 @@ public class ApiClient {
 
         OkHttpClient.Builder client = new OkHttpClient.Builder()
 //                .addInterceptor(interceptor)
-                .connectionSpecs(specs)
-                .connectTimeout(20, TimeUnit.SECONDS)
-                .readTimeout(20, TimeUnit.SECONDS)
-                .writeTimeout(20, TimeUnit.SECONDS);
-
-
+                .connectionSpecs(specs).connectTimeout(20, TimeUnit.SECONDS).readTimeout(20, TimeUnit.SECONDS).writeTimeout(20, TimeUnit.SECONDS);
 
 
         try {
 //            ProviderInstaller.installIfNeeded(RootApplication.getInstance());
 
             // Create a trust manager that does not validate certificate chains
-            final TrustManager[] trustAllCerts = new TrustManager[]{
-                    new X509TrustManager() {
-                        @Override
-                        public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-                        }
+            final TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+                @Override
+                public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                }
 
-                        @Override
-                        public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-                        }
+                @Override
+                public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                }
 
-                        @Override
-                        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                            return new java.security.cert.X509Certificate[]{};
-                        }
-                    }
-            };
+                @Override
+                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                    return new java.security.cert.X509Certificate[]{};
+                }
+            }};
 
 
             client.sslSocketFactory(new TLSSocketFactory(), (X509TrustManager) trustAllCerts[0]);
@@ -184,31 +144,26 @@ public class ApiClient {
 
         OkHttpClient.Builder client = new OkHttpClient.Builder()
 //                .addInterceptor(interceptor)
-                .connectionSpecs(specs)
-                .connectTimeout(5, TimeUnit.MINUTES)
-                .readTimeout(5, TimeUnit.MINUTES)
-                .writeTimeout(5, TimeUnit.MINUTES);
+                .connectionSpecs(specs).connectTimeout(5, TimeUnit.MINUTES).readTimeout(5, TimeUnit.MINUTES).writeTimeout(5, TimeUnit.MINUTES);
 
         try {
 //            ProviderInstaller.installIfNeeded(RootApplication.getInstance());
 
             // Create a trust manager that does not validate certificate chains
-            final TrustManager[] trustAllCerts = new TrustManager[]{
-                    new X509TrustManager() {
-                        @Override
-                        public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-                        }
+            final TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
+                @Override
+                public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                }
 
-                        @Override
-                        public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
-                        }
+                @Override
+                public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                }
 
-                        @Override
-                        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                            return new java.security.cert.X509Certificate[]{};
-                        }
-                    }
-            };
+                @Override
+                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                    return new java.security.cert.X509Certificate[]{};
+                }
+            }};
 
             // Install the all-trusting trust manager
 //            final SSLContext sslContext = SSLContext.getInstance("SSL");

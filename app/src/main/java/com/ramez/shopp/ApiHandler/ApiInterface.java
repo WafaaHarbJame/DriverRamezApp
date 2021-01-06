@@ -3,6 +3,7 @@ package com.ramez.shopp.ApiHandler;
 
 import com.ramez.shopp.Classes.CityModelResult;
 import com.ramez.shopp.Classes.OtpModel;
+import com.ramez.shopp.Classes.SettingModel;
 import com.ramez.shopp.Models.AddressResultModel;
 import com.ramez.shopp.Models.AreasResultModel;
 import com.ramez.shopp.Models.AutoCompeteResult;
@@ -25,7 +26,9 @@ import com.ramez.shopp.Models.PaymentResultModel;
 import com.ramez.shopp.Models.ProductDetailsModel;
 import com.ramez.shopp.Models.ProfileData;
 import com.ramez.shopp.Models.ResultAPIModel;
+import com.ramez.shopp.Models.ReviewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -88,7 +91,7 @@ ApiInterface {
     Call<AddressResultModel> GetUserAddress(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id);
 
     @GET("v3/Address/setDefaultAddress")
-    Call<GeneralModel> setDefaultAddress(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id,@Query("address_id") int address_id);
+    Call<GeneralModel> setDefaultAddress(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id, @Query("address_id") int address_id);
 
     @GET("v3/Address/getAddressById")
     Call<AddressResultModel> GetAddressById(@HeaderMap() Map<String, Object> headerParams, @Query("address_id") int address_id);
@@ -112,6 +115,24 @@ ApiInterface {
 
     @GET("v3/Products/AllCategories")
     Call<CategoryResultModel> GetAllCategories(@HeaderMap() Map<String, Object> headerParams, @Query("sotre_id") int sotre_id);
+
+    @POST("v3/Products/setrate")
+    Call<ResultAPIModel<ReviewModel>>setRate(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
+
+    @POST("v3/Products/GetRates")
+    Call<ResultAPIModel<ArrayList<ReviewModel>>> GetRates(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
+
+
+    @POST("v3/Company/setrate")
+    Call<ResultAPIModel<ReviewModel>>setAppRate(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
+
+
+    @POST("v3/Company/GetRates")
+    Call<ResultAPIModel<ArrayList<ReviewModel>>> getAppRate(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
+
+
+    @GET("v3/Company/AboutAs")
+    Call<ResultAPIModel<SettingModel>>getSetting(@HeaderMap() Map<String, Object> headerParams);
 
     @POST("v3/Favourite/addFavouriteProduct")
     Call<GeneralModel> addFavouriteProduct(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);

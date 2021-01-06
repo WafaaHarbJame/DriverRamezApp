@@ -26,6 +26,18 @@
             android:textColor="@color/black"
             android:textSize="@dimen/_14ssp" />
 
+        <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/ratingBar"
+            android:theme="@style/RatingBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:stepSize="1"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:rating="0"
+        />
+
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,7 +51,7 @@
             app:cardUseCompatPadding="true">
 
             <com.ramez.shopp.SpichalViews.SEditText
-                android:id="@+id/remarkET"
+                android:id="@+id/rateEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"

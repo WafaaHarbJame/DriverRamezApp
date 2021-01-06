@@ -291,7 +291,7 @@
     <string name="to_add_favorite">to adding to favourite  </string>
     <string name="to_show_product_details">To show product Details </string>
     <string name="to_search_product">to start search </string>
-    <string name="to_show_products"> to show products </string>
+    <string name="to_show_products"> to show  Favorite products </string>
     <string name="ph" translatable="false">Ph : </string>
     <string name="search_country">Search for country From Here</string>
     <string name="minimum_order_amount">you can\'t complete order because The minimum amount to complete the purchase is:    </string>
@@ -300,5 +300,18 @@
     <string name="fail_to_load">Fail to load Photo</string>
     <string name="success_upload">Success Upload Photo </string>
     <string name="default_notification_channel_id" translatable="false">channelId</string>
+    <string name="successadd_comment">Adding Comment Success </string>
+    <string name="fail_add_comment">Fail to add Comment</string>
+    <string name="please_fill_comment">please fill comment text </string>
+    <string name="please_fill_rate">Please Fill rate Value</string>
+    <string name="to_add_comment">To add comment please Login </string>
+    <string name="success_rate_app">Success Rate app</string>
+    <string name="success_rate_product">Success Rate product </string>
+    <string name="to_show_orders">To Show Orders</string>
+    <string name="to_show_address">To show address</string>
+    <string name="to_contact_support">To contact with support</string>
+    <string name="to_change_city">To change city</string>
+    <string name="to_rate_app">To rate App</string>
+    <string name="to_change_pass">To change password</string>
 
 </resources>

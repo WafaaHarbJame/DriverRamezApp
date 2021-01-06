@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.SettingModel;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.FavouriteResultModel;
@@ -38,6 +39,8 @@ public class SplashScreenActivity extends ActivityBase {
 
         setContentView(R.layout.activity_splash_screen);
 
+        getSetting();
+
         initData();
 
     }
@@ -47,7 +50,7 @@ public class SplashScreenActivity extends ActivityBase {
         new Handler().postDelayed(() -> {
 
             if (UtilityApp.isLogin()) {
-                if(UtilityApp.getUserData()!=null){
+                if (UtilityApp.getUserData() != null) {
                     getUserData(UtilityApp.getUserData().getId());
 
                 }
@@ -81,27 +84,41 @@ public class SplashScreenActivity extends ActivityBase {
             ResultAPIModel<ProfileData> result = (ResultAPIModel<ProfileData>) obj;
             String message = getString(R.string.fail_to_get_data);
 
-                if (IsSuccess) {
-                    MemberModel memberModel=UtilityApp.getUserData();
-                    memberModel.setName(result.data.getName());
-                    memberModel.setEmail(result.data.getEmail());
-                    memberModel.setProfilePicture(result.data.getProfilePicture());
-                    UtilityApp.setUserData(memberModel);
-                    Intent intent = new Intent(getActiviy(), MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
+            if (IsSuccess) {
+                MemberModel memberModel = UtilityApp.getUserData();
+                memberModel.setName(result.data.getName());
+                memberModel.setEmail(result.data.getEmail());
+                memberModel.setProfilePicture(result.data.getProfilePicture());
+                UtilityApp.setUserData(memberModel);
+                Intent intent = new Intent(getActiviy(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
 
-                }
+            } else {
+                Intent intent = new Intent(getActiviy(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
 
-                else {
-                    Intent intent = new Intent(getActiviy(), MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
-                }
+        }).getUserDetails(user_id);
+    }
 
-        }).getUserDetails(user_id );
+    public void getSetting() {
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            ResultAPIModel<SettingModel> result = (ResultAPIModel<SettingModel>) obj;
+
+            if (IsSuccess) {
+                SettingModel settingModel = new SettingModel();
+                settingModel.setAbout(result.data.getAbout());
+                settingModel.setConditions(result.data.getConditions());
+                settingModel.setPrivacy(result.data.getPrivacy());
+                UtilityApp.setSetting(settingModel);
+            }
+
+        }).getSetting();
     }
 
 }

@@ -16,9 +16,11 @@ import com.github.dhaval2404.form_validation.rule.NonEmptyRule;
 import com.github.dhaval2404.form_validation.validation.FormValidator;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.ramez.shopp.Activities.ChooseCityActivity;
+import com.ramez.shopp.Activities.ConditionActivity;
 import com.ramez.shopp.Activities.ConfirmActivity;
 import com.ramez.shopp.Activities.RegisterLoginActivity;
 import com.ramez.shopp.Activities.SplashScreenActivity;
+import com.ramez.shopp.Activities.TermsActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
@@ -67,6 +69,19 @@ public class RegisterFragment extends FragmentBase {
 
             }
         });
+
+        binding.privacyBut.setOnClickListener(view1 -> {
+            startConditionActivity();
+
+
+        });
+
+        binding.termsBut.setOnClickListener(view1 -> {
+            startTermsActivity();
+
+
+        });
+
         return view;
     }
 
@@ -183,6 +198,17 @@ public class RegisterFragment extends FragmentBase {
             }
 
         }).sendOpt(mobile);
+    }
+
+
+    private void startTermsActivity() {
+        Intent intent = new Intent(getActivityy(), TermsActivity.class);
+        startActivity(intent);
+    }
+
+    private void startConditionActivity() {
+        Intent intent = new Intent(getActivityy(), ConditionActivity.class);
+        startActivity(intent);
     }
 
 }
