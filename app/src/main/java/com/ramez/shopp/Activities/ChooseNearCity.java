@@ -92,7 +92,14 @@ public class ChooseNearCity extends ActivityBase implements CityAdapter.OnCityCl
                 }
                 GlobalData.errorDialog(getActiviy(), R.string.fail_to_get_data, message);
 
-            } else {
+            }
+            else if (func.equals(Constants.NO_CONNECTION)) {
+
+                GlobalData.Toast(getActiviy(),getString(R.string.no_internet_connection));
+
+            }
+
+            else {
                 if (IsSuccess ) {
                     if (result != null){
                         list = result.getData();

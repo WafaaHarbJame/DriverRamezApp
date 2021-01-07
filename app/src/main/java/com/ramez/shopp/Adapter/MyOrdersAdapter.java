@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ramez.shopp.Activities.InvoiceInfoActivity;
-import com.ramez.shopp.Activities.OrderDetailsActivity;
 import com.ramez.shopp.Activities.RatingActivity;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.OnLoadMoreListener;
@@ -28,7 +27,6 @@ import com.ramez.shopp.databinding.RowLoadingBinding;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

@@ -80,6 +80,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.Holder> {
 
 
         int quantity = productModel.getProductBarcodes().get(0).getCartQuantity();
+
         if (quantity > 0) {
             holder.binding.productCartQTY.setText(String.valueOf(quantity));
             holder.binding.CartLy.setVisibility(View.VISIBLE);

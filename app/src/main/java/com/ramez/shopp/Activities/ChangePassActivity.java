@@ -65,7 +65,11 @@ public class ChangePassActivity extends ActivityBase {
                 Toast(R.string.error_in_data);
             } else if (func.equals(Constants.FAIL)) {
                 Toast(R.string.fail_to_change_password);
-            } else {
+            }
+            else if (func.equals(Constants.NO_CONNECTION)) {
+                GlobalData.Toast(getActiviy(), R.string.no_internet_connection);
+            }
+            else {
                 if (IsSuccess) {
                     Intent intent=new Intent(this, MainActivity.class);
                     startActivity(intent);

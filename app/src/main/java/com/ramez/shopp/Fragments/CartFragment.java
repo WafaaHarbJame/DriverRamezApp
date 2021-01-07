@@ -119,6 +119,11 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
         }
 
+
+        binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
+            getCarts(storeId,userId);
+        });
+
         return view;
 
     }
@@ -205,8 +210,17 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(message);
 
+            }
 
-            } else {
+            else if (func.equals(Constants.NO_CONNECTION)) {
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                binding.dataLY.setVisibility(View.GONE);
+
+            }
+
+            else {
                 if (IsSuccess) {
                     if (cartResultModel.getData().getCartData() != null && cartResultModel.getData().getCartData().size() > 0) {
 

@@ -61,6 +61,11 @@ public class OfferFragment extends FragmentBase implements ProductAdapter.OnItem
 
       });
 
+        binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
+            getOfferList(0,country_id,city_id,user_id);
+        });
+
+
         return view;
     }
 
@@ -103,8 +108,16 @@ public class OfferFragment extends FragmentBase implements ProductAdapter.OnItem
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(message);
 
+            }
 
-            } else {
+            else if (func.equals(Constants.NO_CONNECTION)) {
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                binding.dataLY.setVisibility(View.GONE);
+
+            }
+            else {
                 if (IsSuccess) {
                     if (result.getOfferedProducts() != null && result.getOfferedProducts().size() > 0) {
 

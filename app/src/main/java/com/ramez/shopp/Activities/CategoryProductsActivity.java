@@ -99,6 +99,11 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
 
         getIntentExtra();
 
+        binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
+            getProductList(category_id, country_id, city_id, user_id, filter, 0, 10);
+
+        });
+
 
         binding.searchBut.setOnClickListener(view1 -> {
             Intent intent = new Intent(getActiviy(), SearchActivity.class);
@@ -267,7 +272,17 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
                 binding.failGetDataLY.failTxt.setText(message);
 
 
-            } else {
+            }
+
+            else if (func.equals(Constants.NO_CONNECTION)) {
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                binding.dataLY.setVisibility(View.GONE);
+
+            }
+
+            else {
                 if (IsSuccess) {
                     if (result.getData() != null && result.getData().size() > 0) {
 

@@ -60,6 +60,11 @@ public class FavoriteActivity extends ActivityBase implements FavoriteAdapter.On
 
         getFavoriteProducts(category_id, country_id, city_id, user_id, filter, 0, 10);
 
+        binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
+
+            getFavoriteProducts(category_id, country_id, city_id, user_id, filter, 0, 10);
+
+        });
 
     }
 
@@ -117,6 +122,11 @@ public class FavoriteActivity extends ActivityBase implements FavoriteAdapter.On
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(message);
 
+            } else if (func.equals(Constants.NO_CONNECTION)) {
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                binding.dataLY.setVisibility(View.GONE);
 
             } else {
                 if (IsSuccess) {

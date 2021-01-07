@@ -115,17 +115,12 @@
         android:id="@+id/noDataLY"
         layout="@layout/layout_no_data" />
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/dataLY"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:overScrollMode="never"
-        android:visibility="visible">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/dataLY"
+            android:visibility="visible"
+            android:fillViewport="true"
             android:orientation="vertical">
 
             <LinearLayout
@@ -229,6 +224,5 @@
 
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

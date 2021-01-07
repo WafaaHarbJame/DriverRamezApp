@@ -163,7 +163,14 @@ public class AddNewAddressActivity extends ActivityBase {
 
             } else if (func.equals(Constants.FAIL)) {
                 Toast(R.string.fail_to_get_data);
-            } else {
+            }
+
+            else if (func.equals(Constants.NO_CONNECTION)) {
+                GlobalData.Toast(getActiviy(),getString(R.string.no_internet_connection));
+
+            }
+
+            else {
                 if (IsSuccess) {
 
 //                    EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_ADDRESS));

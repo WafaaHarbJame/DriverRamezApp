@@ -194,7 +194,14 @@ public class EditProfileActivity extends ActivityBase {
                     message = result.getMessage();
                 }
                 GlobalData.errorDialog(getActiviy(), R.string.failtoupdate_profile, message);
-            } else {
+            }
+
+            else if (func.equals(Constants.NO_CONNECTION)) {
+                GlobalData.errorDialog(getActiviy(), R.string.failtoupdate_profile, getString(R.string.no_internet_connection));
+
+
+            }
+            else {
                 if (IsSuccess) {
 
                     MemberModel user = result.data;

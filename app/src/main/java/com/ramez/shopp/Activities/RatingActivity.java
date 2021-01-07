@@ -6,8 +6,11 @@ import android.view.View;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.Classes.CityModelResult;
+import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.Models.ReviewModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
@@ -60,19 +63,49 @@ public class RatingActivity extends ActivityBase {
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
 
-            if (IsSuccess) {
+            String message = getString(R.string.fail_add_comment);
 
-                GlobalData.hideProgressDialog();
-                binding.rateEt.setText("");
-                binding.ratingBr.setRating(0);
-                GlobalData.successDialog(getActiviy(), getString(R.string.rate_app), getString(R.string.success_rate_app));
+            ResultAPIModel<ReviewModel> result = (ResultAPIModel<ReviewModel>) obj;
 
+            if(result!=null){
 
-            } else {
-                GlobalData.hideProgressDialog();
-                GlobalData.errorDialog(getActiviy(), R.string.rate_app, getString(R.string.fail_add_comment));
+                message=result.message;
+
             }
 
+
+
+
+            GlobalData.hideProgressDialog();
+
+            if (func.equals(Constants.ERROR)) {
+
+                GlobalData.errorDialog(getActiviy(), R.string.rate_app, message);
+
+
+            } else if (func.equals(Constants.FAIL)) {
+                GlobalData.errorDialog(getActiviy(), R.string.rate_app, message);
+
+
+            } else if (func.equals(Constants.NO_CONNECTION)) {
+                GlobalData.errorDialog(getActiviy(), R.string.rate_app, getString(R.string.no_internet_connection));
+
+            } else {
+
+                if (IsSuccess) {
+
+                    GlobalData.hideProgressDialog();
+                    binding.rateEt.setText("");
+                    binding.ratingBr.setRating(0);
+                    GlobalData.successDialog(getActiviy(), getString(R.string.rate_app), getString(R.string.success_rate_app));
+
+
+                } else {
+                    GlobalData.hideProgressDialog();
+                    GlobalData.errorDialog(getActiviy(), R.string.rate_app, getString(R.string.fail_add_comment));
+                }
+
+            }
 
         }).setAppRate(reviewModel);
     }

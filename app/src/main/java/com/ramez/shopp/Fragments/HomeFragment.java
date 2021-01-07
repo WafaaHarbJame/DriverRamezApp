@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.vision.barcode.Barcode;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.zxing.Result;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
@@ -35,15 +36,23 @@ import com.ramez.shopp.Activities.AllListActivity;
 import com.ramez.shopp.Activities.FullScannerActivity;
 import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.Activities.SearchActivity;
+import com.ramez.shopp.Activities.SplashScreenActivity;
 import com.ramez.shopp.Adapter.ProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.ApiHandler.DataFetcherCallBack;
+import com.ramez.shopp.BuildConfig;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
+import com.ramez.shopp.Dialogs.ConfirmDialog;
+import com.ramez.shopp.Dialogs.InfoDialog;
+import com.ramez.shopp.Models.GeneralModel;
 import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
+import com.ramez.shopp.Utils.ActivityHandler;
 import com.ramez.shopp.databinding.FragmentHomeBinding;
 
 import java.util.ArrayList;
@@ -116,11 +125,18 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         binding.bestSellerRecycler.setHasFixedSize(true);
 
         GetHomePage();
-
+        getValidation();
 
         binding.searchBut.setOnClickListener(view1 -> {
             Intent intent = new Intent(getActivityy(), SearchActivity.class);
             startActivity(intent);
+
+        });
+
+
+        binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
+
+            GetHomePage();
 
         });
 
@@ -227,8 +243,16 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(message);
 
+            }
+            else if (func.equals(Constants.NO_CONNECTION)) {
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                binding.dataLY.setVisibility(View.GONE);
 
-            } else {
+            }
+
+            else {
                 if (IsSuccess) {
                     if (result.getFeatured() != null && result.getFeatured().size() > 0) {
 
@@ -359,4 +383,39 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         mScannerView.stopCamera();
 
     }
+
+    public void getValidation() {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+
+            if (IsSuccess) {
+
+                GeneralModel result = (GeneralModel) obj;
+
+                if (result.getMessage() != null) {
+                    if(result.getStatus().equals(Constants.OK_STATUS)){
+                        Log.i(TAG, "Log getValidation" + result.getMessage());
+
+                    }
+                    else {
+
+                        ConfirmDialog.Click click = new ConfirmDialog.Click() {
+                            @Override
+                            public void click() {
+                                ActivityHandler.OpenGooglePlay(getActivityy());
+
+
+                            }
+                        };
+
+                        new ConfirmDialog(getActivityy(), R.string.updateMessage, R.string.ok, R.string.cancel_label, click, null);
+
+                    }
+                    Log.i(TAG, "Log getValidation" + result.getMessage());
+
+                }
+            }
+
+        }).getValidate(Constants.deviceType, UtilityApp.getAppVersionStr(), BuildConfig.VERSION_CODE);
+    }
+
 }

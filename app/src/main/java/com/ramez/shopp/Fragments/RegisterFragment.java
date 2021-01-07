@@ -120,7 +120,12 @@ public class RegisterFragment extends FragmentBase {
                     message = result.getMessage();
                 }
                 GlobalData.errorDialog(getActivityy(), R.string.fail_register, message);
-            } else {
+            }
+
+            else if (func.equals(Constants.NO_CONNECTION)) {
+                GlobalData.Toast(getActivityy(), R.string.no_internet_connection);
+            }
+            else {
                 if (IsSuccess) {
                     Log.i("TAG", "Log otp " + result.getOtp());
                     MemberModel user = result.data;

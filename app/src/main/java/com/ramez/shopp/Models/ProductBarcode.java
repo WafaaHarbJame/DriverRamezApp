@@ -43,6 +43,36 @@ public class ProductBarcode implements Serializable {
     @SerializedName("cart_id")
     @Expose
     private Integer cartId;
+    @SerializedName("product_units")
+    @Expose
+    private ProductUnits productUnits;
+    @SerializedName("weight")
+    @Expose
+    private Integer weight;
+
+    public Boolean getSpecial() {
+        return isSpecial;
+    }
+
+    public void setSpecial(Boolean special) {
+        isSpecial = special;
+    }
+
+    public ProductUnits getProductUnits() {
+        return productUnits;
+    }
+
+    public void setProductUnits(ProductUnits productUnits) {
+        this.productUnits = productUnits;
+    }
+
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
+    }
 
     public Integer getCartQuantity() {
         return cartQuantity;

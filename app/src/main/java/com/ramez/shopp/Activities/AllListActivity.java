@@ -28,34 +28,35 @@ import static android.content.ContentValues.TAG;
 public class AllListActivity extends ActivityBase implements ProductCategoryAdapter.OnItemClick {
 
     ActivityAllListBinding binding;
-    private ProductCategoryAdapter adapter;
     ArrayList<ProductModel> list;
     GridLayoutManager gridLayoutManager;
     String name;
+    private ProductCategoryAdapter adapter;
     private int category_id = 0, country_id, city_id;
-    private String user_id="0", filter;
+    private String user_id = "0", filter;
     private MemberModel user;
     private LocalModel localModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding=ActivityAllListBinding.inflate(getLayoutInflater());
-        View view=binding.getRoot();
+        binding = ActivityAllListBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
         setContentView(view);
 
-        list=new ArrayList<>();
-        gridLayoutManager =new GridLayoutManager(getActiviy(),2);
+        list = new ArrayList<>();
+        gridLayoutManager = new GridLayoutManager(getActiviy(), 2);
         binding.recycler.setLayoutManager(gridLayoutManager);
         binding.recycler.setHasFixedSize(true);
 
         localModel = UtilityApp.getLocalData();
-        user=UtilityApp.getUserData();
+        user = UtilityApp.getUserData();
 
         country_id = localModel.getCountryId();
         city_id = Integer.parseInt(localModel.getCityId());
 
-        if(UtilityApp.isLogin()){
-            user_id= String.valueOf(user.getId());
+        if (UtilityApp.isLogin()) {
+            user_id = String.valueOf(user.getId());
 
         }
 
@@ -64,16 +65,22 @@ public class AllListActivity extends ActivityBase implements ProductCategoryAdap
 
         binding.swipeDataContainer.setOnRefreshListener(() -> {
             binding.swipeDataContainer.setRefreshing(false);
+            getProductList(0, country_id, city_id, user_id, filter, 0, 10);
+
+
+
+        });
+        binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
+            getProductList(0, country_id, city_id, user_id, filter, 0, 10);
+
 
         });
 
 
-
     }
 
-    public void initAdapter(){
-        adapter = new ProductCategoryAdapter(getActiviy(), list,0,0,country_id,city_id,user_id,list.size(),
-                binding.recycler,filter,this,Constants.twoRow);
+    public void initAdapter() {
+        adapter = new ProductCategoryAdapter(getActiviy(), list, 0, 0, country_id, city_id, user_id, list.size(), binding.recycler, filter, this, Constants.twoRow);
         binding.recycler.setAdapter(adapter);
     }
 
@@ -86,25 +93,21 @@ public class AllListActivity extends ActivityBase implements ProductCategoryAdap
 
 
     private void getIntentExtra() {
-        Bundle bundle=getIntent().getExtras();
+        Bundle bundle = getIntent().getExtras();
 
-        if(bundle!=null){
-            name=bundle.getString(Constants.LIST_MODEL_NAME);
-            filter=bundle.getString(Constants.FILTER_NAME);
-
+        if (bundle != null) {
+            name = bundle.getString(Constants.LIST_MODEL_NAME);
+            filter = bundle.getString(Constants.FILTER_NAME);
             setTitle(name);
             getProductList(0, country_id, city_id, user_id, filter, 0, 10);
-
-
 
 
         }
     }
 
 
-
-
     public void getProductList(int category_id, int country_id, int city_id, String user_id, String filter, int page_number, int page_size) {
+        list.clear();
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -133,6 +136,12 @@ public class AllListActivity extends ActivityBase implements ProductCategoryAdap
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(message);
 
+
+            } else if (func.equals(Constants.NO_CONNECTION)) {
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                binding.dataLY.setVisibility(View.GONE);
 
             } else {
                 if (IsSuccess) {

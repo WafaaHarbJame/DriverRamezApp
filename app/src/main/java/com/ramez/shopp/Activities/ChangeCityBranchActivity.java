@@ -13,6 +13,7 @@ import com.ramez.shopp.Adapter.CountriesAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.CityModelResult;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.CityModel;
 import com.ramez.shopp.Models.CountryModel;
@@ -69,7 +70,7 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
 
         binding.chooseCountryTv.setOnClickListener(view1 -> {
 
-            toggleLangButton= !toggleLangButton;
+            toggleLangButton = !toggleLangButton;
 
             if (toggleLangButton) {
                 binding.countryContainer.setVisibility(View.VISIBLE);
@@ -82,11 +83,23 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
         });
 
 
-
         linearLayoutManager = new LinearLayoutManager(getActiviy());
         binding.branchRecycler.setLayoutManager(linearLayoutManager);
 
-         countryId = localModel.getCountryId();
+        countryId = localModel.getCountryId();
+
+        if (UtilityApp.getCountriesData().size() > 0) {
+            countries = UtilityApp.getCountriesData();
+        } else {
+            countries.add(new CountryModel(4, getString(R.string.Oman), getString(R.string.oman_shotname), 968, "OMR", 3, R.drawable.ic_flag_oman));
+            countries.add(new CountryModel(17, getString(R.string.Bahrain), getString(R.string.bahrain_shotname), 973, "BHD", 3, R.drawable.ic_flag_behrain));
+            countries.add(new CountryModel(117, getString(R.string.Kuwait), getString(R.string.Kuwait_shotname), 965, "KWD", 2, R.drawable.ic_flag_kuwait));
+            countries.add(new CountryModel(178, getString(R.string.Qatar), getString(R.string.Qatar_shotname), 974, "QAR", 2, R.drawable.ic_flag_qatar));
+            countries.add(new CountryModel(191, getString(R.string.Saudi_Arabia), getString(R.string.Saudi_Arabia_shortname), 191, "SAR", 2, R.drawable.ic_flag_saudi_arabia));
+            countries.add(new CountryModel(229, getString(R.string.United_Arab_Emirates), getString(R.string.United_Arab_Emirates_shotname), 971, "AED", 2, R.drawable.ic_flag_uae));
+        }
+        initAdapter();
+
 
         getCityList(countryId);
 
@@ -99,25 +112,17 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
 
         });
 
-        if (UtilityApp.getCountriesData().size() > 0) {
-            countries = UtilityApp.getCountriesData();
-            initAdapter();
-        } else {
-            countries.add(new CountryModel(4, getString(R.string.Oman), getString(R.string.oman_shotname), 968, "OMR", 3, R.drawable.ic_flag_oman));
-            countries.add(new CountryModel(17, getString(R.string.Bahrain), getString(R.string.bahrain_shotname), 973, "BHD", 3, R.drawable.ic_flag_behrain));
-            countries.add(new CountryModel(117, getString(R.string.Kuwait), getString(R.string.Kuwait_shotname), 965, "KWD", 2, R.drawable.ic_flag_kuwait));
-            countries.add(new CountryModel(178, getString(R.string.Qatar), getString(R.string.Qatar_shotname), 974, "QAR", 2, R.drawable.ic_flag_qatar));
-            countries.add(new CountryModel(191, getString(R.string.Saudi_Arabia), getString(R.string.Saudi_Arabia_shortname), 191, "SAR", 2, R.drawable.ic_flag_saudi_arabia));
-            countries.add(new CountryModel(229, getString(R.string.United_Arab_Emirates), getString(R.string.United_Arab_Emirates_shotname), 971, "AED", 2, R.drawable.ic_flag_uae));
-            initAdapter();
-        }
+        binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
+            getCityList(countryId);
+        });
+
 
         binding.saveBut.setOnClickListener(view1 -> {
-           localModel.setCountryId(countryId);
-           localModel.setCityId(String.valueOf(city_id));
-           UtilityApp.setLocalData(localModel);
+            localModel.setCountryId(countryId);
+            localModel.setCityId(String.valueOf(city_id));
+            UtilityApp.setLocalData(localModel);
             Toast(R.string.change_success);
-            Intent intent=new Intent(getActiviy(),SplashScreenActivity.class);
+            Intent intent = new Intent(getActiviy(), SplashScreenActivity.class);
             startActivity(intent);
 
 
@@ -128,7 +133,7 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
 
     public void initAdapter() {
 
-        countriesAdapter = new CountriesAdapter(getActiviy(), this, countries,countryId);
+        countriesAdapter = new CountriesAdapter(getActiviy(), this, countries, countryId);
         binding.countryRecycler.setAdapter(countriesAdapter);
     }
 
@@ -140,6 +145,7 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
 
 
     }
+
     @Override
     public void onCityClicked(int position, CityModel cityModel) {
         city_id = cityModel.getId();
@@ -149,17 +155,41 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
     private void getCityList(int country_id) {
 
         cityModelArrayList.clear();
+        binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
+        binding.dataLY.setVisibility(View.GONE);
+        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+
 
         Log.i("TAG", "Log country_id" + country_id);
         new DataFeacher(false, (obj, func, IsSuccess) -> {
 
+            String message = getString(R.string.fail_to_get_data);
+            binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
             CityModelResult result = (CityModelResult) obj;
             if (func.equals(Constants.ERROR)) {
-                String message = getString(R.string.fail_to_get_data);
-                if (result != null && result.getMessage() != null) {
+
+                if (result.getMessage() != null) {
                     message = result.getMessage();
                 }
+                binding.dataLY.setVisibility(View.GONE);
+                binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(message);
 
+            } else if (func.equals(Constants.FAIL)) {
+
+                binding.dataLY.setVisibility(View.GONE);
+                binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(message);
+
+
+            } else if (func.equals(Constants.NO_CONNECTION)) {
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                binding.dataLY.setVisibility(View.GONE);
 
             } else {
                 if (IsSuccess) {
@@ -181,11 +211,11 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
 
     @Override
     public void onCountryClicked(int position, CountryModel countryModel) {
-        countryId=countryModel.getId();
+        countryId = countryModel.getId();
         localModel.setShortname(countryModel.getShortname());
         UtilityApp.setLocalData(localModel);
-        Log.i("tag","Log click countryId"+countryId);
-        Log.i("tag","Log click ShortName"+countryModel.getShortname());
+        Log.i("tag", "Log click countryId" + countryId);
+        Log.i("tag", "Log click ShortName" + countryModel.getShortname());
         getCityList(countryId);
 
     }

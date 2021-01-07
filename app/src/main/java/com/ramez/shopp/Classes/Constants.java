@@ -253,5 +253,6 @@ public class Constants {
     public static final String PARAMS_ID = "id";
     public static final int twoRow =2;
     public static final int oneRow =1;
+    public static final int OK_STATUS =200;
 
 }

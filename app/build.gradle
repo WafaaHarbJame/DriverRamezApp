@@ -10,8 +10,8 @@ android {
         applicationId "com.ramez.shopp"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.2"
+        versionCode 29
+        versionName "4.9"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

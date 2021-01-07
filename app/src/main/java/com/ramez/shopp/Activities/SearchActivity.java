@@ -16,8 +16,7 @@ import android.widget.ArrayAdapter;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import com.ramez.shopp.Adapter.ProductAdapter;
-import com.ramez.shopp.Adapter.SearchAdapter;
+import com.ramez.shopp.Adapter.SearchProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
@@ -38,18 +37,18 @@ import retrofit2.Call;
 
 import static android.content.ContentValues.TAG;
 
-public class SearchActivity extends ActivityBase implements SearchAdapter.OnItemClick {
+public class SearchActivity extends ActivityBase implements SearchProductAdapter.OnItemClick {
 
     ActivitySearchBinding binding;
-
     ArrayList<ProductModel> productList;
     ArrayList<ProductModel> offerList;
+
     GridLayoutManager gridLayoutManager;
     boolean searchByCode = false;
     int numColumn = 2;
     private ArrayList<AutoCompleteModel> data = null;
     private ArrayList<String> autoCompleteList;
-    private SearchAdapter adapter;
+    private SearchProductAdapter adapter;
     private int country_id, city_id;
     private String user_id = "0", filter, result, searchQuery;
     private MemberModel user;
@@ -103,6 +102,13 @@ public class SearchActivity extends ActivityBase implements SearchAdapter.OnItem
         });
 
 
+        binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
+            String text = binding.searchEt.getText().toString();
+            searchTxt(country_id, city_id, user_id, text, 0, 10);
+
+        });
+
+
         binding.searchEt.setOnEditorActionListener((v, actionId, event) -> {
 
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -142,19 +148,20 @@ public class SearchActivity extends ActivityBase implements SearchAdapter.OnItem
 
 
         binding.view1But.setOnClickListener(view1 -> {
-            numColumn = 1;
-            gridLayoutManager.setSpanCount(numColumn);
-            adapter.notifyDataSetChanged();
 
+            numColumn = 1;
+            initAdapter();
+            adapter.notifyDataSetChanged();
 
         });
 
         binding.view2But.setOnClickListener(view1 -> {
             numColumn = 2;
-            gridLayoutManager.setSpanCount(numColumn);
+            initAdapter();
             adapter.notifyDataSetChanged();
 
         });
+
 
         binding.priceBut.setOnClickListener(view1 -> {
 
@@ -181,7 +188,7 @@ public class SearchActivity extends ActivityBase implements SearchAdapter.OnItem
 
     public void initAdapter() {
 
-        adapter = new SearchAdapter(getActiviy(), productList, this, 0);
+        adapter = new SearchProductAdapter(getActiviy(), productList, country_id,city_id,user_id,binding.recycler, binding.searchEt.getText().toString(),this, numColumn);
         binding.recycler.setAdapter(adapter);
 
         binding.categoriesCountTv.setText(String.valueOf(productList.size()));
@@ -229,7 +236,16 @@ public class SearchActivity extends ActivityBase implements SearchAdapter.OnItem
                 binding.failGetDataLY.failTxt.setText(message);
 
 
-            } else {
+            }
+
+            else if (func.equals(Constants.NO_CONNECTION)) {
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                binding.dataLY.setVisibility(View.GONE);
+
+            }
+            else {
                 if (IsSuccess) {
                     if (result.getData() != null && result.getData().size() > 0) {
 
@@ -266,6 +282,7 @@ public class SearchActivity extends ActivityBase implements SearchAdapter.OnItem
 
         productList.clear();
         offerList.clear();
+
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -295,7 +312,16 @@ public class SearchActivity extends ActivityBase implements SearchAdapter.OnItem
                 binding.failGetDataLY.failTxt.setText(message);
 
 
-            } else {
+            }
+            else if (func.equals(Constants.NO_CONNECTION)) {
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                binding.dataLY.setVisibility(View.GONE);
+
+            }
+
+            else {
                 if (IsSuccess) {
                     if (result.getData() != null && result.getData().size() > 0) {
 

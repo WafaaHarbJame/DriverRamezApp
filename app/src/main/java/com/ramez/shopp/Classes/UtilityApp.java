@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.ramez.shopp.BuildConfig;
 import com.ramez.shopp.Models.CountryModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MemberModel;
@@ -35,8 +36,11 @@ public class UtilityApp {
             pinfo = RootApplication.getInstance().getPackageManager().getPackageInfo(RootApplication.getInstance().getPackageName(), 0);
 
             int versionNumber = pinfo.versionCode;
+            String versionName = pinfo.versionName;
 
-//            Log.i("Utility", "Log versionNumber " + versionNumber);
+            Log.i("Utility", "Log versionNumber " + versionNumber);
+            Log.i("Utility", "Log versionName " + versionName);
+            Log.i("Utility", "Log VERSION_CODE " + BuildConfig.VERSION_CODE);
 
             return versionNumber;
         } catch (PackageManager.NameNotFoundException e) {
@@ -57,6 +61,10 @@ public class UtilityApp {
             pinfo = RootApplication.getInstance().getPackageManager().getPackageInfo(RootApplication.getInstance().getPackageName(), 0);
 
             String versionName = pinfo.versionName;
+
+            Log.i("Utility", "Log versionName " + versionName);
+            Log.i("Utility", "Log VERSION_CODE " + BuildConfig.VERSION_CODE);
+
 
 //            Log.i("Utility", "Log versionNumber " + versionNumber);
 

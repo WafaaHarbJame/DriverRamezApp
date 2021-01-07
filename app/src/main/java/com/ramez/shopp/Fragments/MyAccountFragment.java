@@ -276,10 +276,15 @@ public class MyAccountFragment extends FragmentBase {
             public void click() {
                 new DataFeacher(false, (obj, func, IsSuccess) -> {
                     if (func.equals(Constants.ERROR)) {
-                        Toast(R.string.error_in_data);
+                        Toast(R.string.fail_to_sign_out);
                     } else if (func.equals(Constants.FAIL)) {
-                        Toast(R.string.fail_to_get_data);
-                    } else {
+                        Toast(R.string.fail_to_sign_out);
+                    }
+
+                    else if (func.equals(Constants.NO_CONNECTION)) {
+                        GlobalData.Toast(getActivityy(), R.string.no_internet_connection);
+                    }
+                    else {
 
                         if (IsSuccess) {
                             if(memberModel.getRegisterType().equals(Constants.BY_SOCIAL)){

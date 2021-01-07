@@ -30,6 +30,7 @@ public class ConfirmDialog extends Dialog {
         setCancelable(false);
 //        setTitle(title);
 
+
         messageTxt = findViewById(R.id.messageTxt);
         cancelBtn = findViewById(R.id.cancelBtn);
         okBtn = findViewById(R.id.okBtn);

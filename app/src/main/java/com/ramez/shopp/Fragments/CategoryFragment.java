@@ -32,7 +32,9 @@ import com.ramez.shopp.Adapter.CategoryAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.CategoryResultModel;
+import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.FragmentCategoryBinding;
 
@@ -41,11 +43,12 @@ import java.util.ArrayList;
 import static android.content.ContentValues.TAG;
 
 public class CategoryFragment extends FragmentBase implements CategoryAdapter.OnItemClick {
+    private static final int ZBAR_CAMERA_PERMISSION = 1;
     ArrayList<CategoryModel> categoryModelList;
     GridLayoutManager gridLayoutManager;
+    LocalModel localModel;
     private FragmentCategoryBinding binding;
     private CategoryAdapter categoryAdapter;
-    private static final int ZBAR_CAMERA_PERMISSION = 1;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCategoryBinding.inflate(inflater, container, false);
@@ -54,15 +57,15 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
         gridLayoutManager = new GridLayoutManager(getActivityy(), 3);
         binding.catRecycler.setHasFixedSize(true);
         binding.catRecycler.setLayoutManager(gridLayoutManager);
+        localModel = UtilityApp.getLocalData();
 
-        getCategories(1);
+        getCategories(Integer.parseInt(localModel.getCityId()));
+
         binding.swipeDataContainer.setOnRefreshListener(() -> {
             binding.swipeDataContainer.setRefreshing(false);
-
-            getCategories(1);
+            getCategories(Integer.parseInt(localModel.getCityId()));
 
         });
-
 
 
         binding.searchBut.setOnClickListener(view1 -> {
@@ -75,6 +78,12 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
         binding.barcodeBut.setOnClickListener(view1 -> {
 
             checkCameraPermission();
+
+        });
+
+        binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
+
+            getCategories(Integer.parseInt(localModel.getCityId()));
 
         });
 
@@ -98,7 +107,6 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
         intent.putExtra(Constants.position, position);
         intent.putExtra(Constants.CAT_MODEL, categoryModel);
         startActivity(intent);
-
 
 
     }
@@ -133,6 +141,12 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
                     binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                     binding.failGetDataLY.failTxt.setText(message);
 
+
+                } else if (func.equals(Constants.NO_CONNECTION)) {
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                    binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                    binding.dataLY.setVisibility(View.GONE);
 
                 } else {
                     if (IsSuccess) {

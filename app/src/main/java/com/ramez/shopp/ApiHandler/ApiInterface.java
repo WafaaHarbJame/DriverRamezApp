@@ -4,6 +4,7 @@ package com.ramez.shopp.ApiHandler;
 import com.ramez.shopp.Classes.CityModelResult;
 import com.ramez.shopp.Classes.OtpModel;
 import com.ramez.shopp.Classes.SettingModel;
+import com.ramez.shopp.Classes.orderListCall;
 import com.ramez.shopp.Models.AddressResultModel;
 import com.ramez.shopp.Models.AreasResultModel;
 import com.ramez.shopp.Models.AutoCompeteResult;
@@ -81,6 +82,10 @@ ApiInterface {
     @POST("v3/Locations/countryList")
     Call<CountryModelResult> GetCountry(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
+
+    @GET("v3/Locations/getValidate")
+    Call<GeneralModel> getValidate(@HeaderMap() Map<String, Object> headerParams,@Query("device_type") String device_type,
+                                       @Query("app_version") String app_version,  @Query("app_build") int app_build);
     @POST
     Call<CityModelResult> GetCity(@Url String url, @HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
@@ -183,6 +188,13 @@ ApiInterface {
 
     @GET("v3/Orders/getUpcomingOrders")
     Call<OrdersResultModel> getUpcomingOrders(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id);
+
+    @GET("v3/Orders/GetOrdersList")
+    Call<OrdersResultModel> GetOrdersList(@HeaderMap() Map<String, Object> headerParams, @Body orderListCall param);
+
+    @POST("v3/Orders/GetOrderDetails")
+    Call<OrdersResultModel> GetOrderDetails(@HeaderMap() Map<String, Object> headerParams, @Body orderListCall param);
+
 
     @GET("v3/Orders/GetOrderDelivery")
     Call<OrdersResultModel> getOrderDelivery(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id);

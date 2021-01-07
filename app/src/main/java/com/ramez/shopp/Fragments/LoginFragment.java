@@ -192,7 +192,12 @@ public class LoginFragment extends FragmentBase {
                     message = result.getMessage();
                 }
                 GlobalData.errorDialog(getActivityy(), R.string.fail_signin, message);
-            } else {
+            }
+
+            else if (func.equals(Constants.NO_CONNECTION)) {
+                GlobalData.Toast(getActivityy(), R.string.no_internet_connection);
+            }
+            else {
                 if (IsSuccess) {
                     MemberModel user = result.data;
                     user.setRegisterType(Constants.BY_PHONE);

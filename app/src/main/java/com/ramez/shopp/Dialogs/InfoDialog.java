@@ -18,6 +18,7 @@ public class InfoDialog extends Dialog {
     TextView messageTxt;
     Activity activity;
     DataFetcherCallBack dataFetcherCallBack;
+    TextView closeBtn;
     private LinearLayout okBtn;
 
 
@@ -35,6 +36,7 @@ public class InfoDialog extends Dialog {
 
         messageTxt = findViewById(R.id.messageTxt);
         okBtn = findViewById(R.id.okBtn);
+        closeBtn = findViewById(R.id.closeBtn);
 
         if (isHtml) {
             messageTxt.setText(Html.fromHtml(message));
@@ -45,15 +47,17 @@ public class InfoDialog extends Dialog {
 
         }
 
-        okBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (dataFetcherCallBack != null)
-                    dataFetcherCallBack.Result(getDialog(), "InfoDialog", true);
-                dismiss();
-            }
+        okBtn.setOnClickListener(view -> {
+
+            if (dataFetcherCallBack != null)
+                dataFetcherCallBack.Result(getDialog(), "InfoDialog", true);
+            dismiss();
         });
 
+
+        closeBtn.setOnClickListener(view -> {
+            dismiss();
+        });
 
         try {
             if (activity != null && !activity.isFinishing())

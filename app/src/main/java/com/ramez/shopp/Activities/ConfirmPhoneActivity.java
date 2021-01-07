@@ -96,7 +96,12 @@ public class ConfirmPhoneActivity extends ActivityBase {
                 Toast(R.string.error_in_data);
             } else if (func.equals(Constants.FAIL)) {
                 Toast(R.string.fail_to_sen_otp);
-            } else {
+            }
+
+            else if (func.equals(Constants.NO_CONNECTION)) {
+                GlobalData.Toast(getActiviy(), R.string.no_internet_connection);
+            }
+            else {
                 if (IsSuccess) {
                     SendOtp(memberModel.getMobileNumber());
                     OtpModel otpModel = (OtpModel) obj;

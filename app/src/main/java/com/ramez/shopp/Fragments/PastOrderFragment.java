@@ -57,19 +57,23 @@ public class PastOrderFragment extends FragmentBase {
             binding.swipe.setRefreshing(false);
         });
 
+
+        binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
+
+            getPastOrder(user_id);
+
+        });
+
         binding.noDataLY.btnBrowseProducts.setOnClickListener(view1 -> {
             Intent intent = new Intent(getActivity(), MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
 
-
         });
-
 
 
         return view;
     }
-
 
 
     public void getPastOrder(int user_id) {
@@ -105,6 +109,12 @@ public class PastOrderFragment extends FragmentBase {
                 binding.failGetDataLY.failTxt.setText(message);
 
 
+            } else if (func.equals(Constants.NO_CONNECTION)) {
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                binding.dataLY.setVisibility(View.GONE);
+
             } else {
                 if (IsSuccess) {
                     if (result.getData() != null && result.getData().size() > 0) {
@@ -115,7 +125,7 @@ public class PastOrderFragment extends FragmentBase {
 
                         completedOrdersList = result.getData();
 
-                        List<OrderModel> list= initOrderList();
+                        List<OrderModel> list = initOrderList();
 
                         initOrdersAdapters(list);
 
@@ -154,22 +164,22 @@ public class PastOrderFragment extends FragmentBase {
     }
 
     private List<OrderModel> initOrderList() {
-        List<OrderModel> orderList=new ArrayList<>();
+        List<OrderModel> orderList = new ArrayList<>();
 
         for (int i = 0; i < completedOrdersList.size(); i++) {
             OrderProductModel currentProduct = completedOrdersList.get(i);
 
-            OrderModel orderModel=new OrderModel();
-            orderModel.setCartId( currentProduct.getCartId());
-            orderModel.setOrderCode( currentProduct.getOrderCode());
-            orderModel.setAddressName( currentProduct.getAddressName());
-            orderModel.setFullAddress( currentProduct.getFullAddress());
-            orderModel.setDeliveryDate( currentProduct.getDeliveryDate());
-            orderModel.setDeliveryStatus( currentProduct.getDeliveryStatus());
-            orderModel.setOrderStatus( currentProduct.getOrderStatus());
-            orderModel.setFromDate( currentProduct.getFromDate());
-            orderModel.setDeliveryTime( currentProduct.getDeliveryTime());
-            orderModel.setToDate( currentProduct.getToDate());
+            OrderModel orderModel = new OrderModel();
+            orderModel.setCartId(currentProduct.getCartId());
+            orderModel.setOrderCode(currentProduct.getOrderCode());
+            orderModel.setAddressName(currentProduct.getAddressName());
+            orderModel.setFullAddress(currentProduct.getFullAddress());
+            orderModel.setDeliveryDate(currentProduct.getDeliveryDate());
+            orderModel.setDeliveryStatus(currentProduct.getDeliveryStatus());
+            orderModel.setOrderStatus(currentProduct.getOrderStatus());
+            orderModel.setFromDate(currentProduct.getFromDate());
+            orderModel.setDeliveryTime(currentProduct.getDeliveryTime());
+            orderModel.setToDate(currentProduct.getToDate());
             orderModel.setOrderTotal(currentProduct.getOrderTotal());
             orderModel.setTotalWithoutTax(currentProduct.getTotalWithoutTax());
             orderModel.setTotalWithTax(currentProduct.getTotalWithTax());

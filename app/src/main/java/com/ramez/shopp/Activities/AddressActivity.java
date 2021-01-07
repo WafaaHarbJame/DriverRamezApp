@@ -59,7 +59,6 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
         }
 
 
-
         binding.addNewAddressBut.setOnClickListener(view1 -> {
             addNewAddress();
         });
@@ -83,7 +82,7 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
 
         binding.acceptBtu.setOnClickListener(view1 -> {
 
-            setDefaultAddress(user.getId(),defaultAddressId);
+            setDefaultAddress(user.getId(), defaultAddressId);
 
         });
 
@@ -139,14 +138,20 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
 
             AddressResultModel result = (AddressResultModel) obj;
 
-            if (func.equals(Constants.ERROR) ||func.equals(Constants.FAIL)) {
+            if (func.equals(Constants.ERROR) || func.equals(Constants.FAIL)) {
 
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(R.string.error_in_data);
                 binding.dataLY.setVisibility(View.GONE);
 
 
-            }  else {
+            } else if (func.equals(Constants.NO_CONNECTION)) {
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                binding.dataLY.setVisibility(View.GONE);
+
+            } else {
 
                 if (IsSuccess) {
                     binding.dataLY.setVisibility(View.VISIBLE);
@@ -182,7 +187,7 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
         if (bundle != null) {
             deliveryChoose = bundle.getBoolean(Constants.delivery_choose, false);
             addNewAddress = bundle.getBoolean(Constants.KEY_ADD, false);
-            Log.i("TAG", "Log KEY_ADD from Add  "+addNewAddress);
+            Log.i("TAG", "Log KEY_ADD from Add  " + addNewAddress);
 
         }
     }
@@ -206,8 +211,8 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
 
     }
 
-    public void setDefaultAddress(int user_id,int address_id) {
-        GlobalData.progressDialog(getActiviy(),R.string.default_address,R.string.please_wait_sending);
+    public void setDefaultAddress(int user_id, int address_id) {
+        GlobalData.progressDialog(getActiviy(), R.string.default_address, R.string.please_wait_sending);
         new DataFeacher(false, (obj, func, IsSuccess) -> {
 
             binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
@@ -223,9 +228,9 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
 
                 if (IsSuccess) {
 
-                 GlobalData.hideProgressDialog();
+                    GlobalData.hideProgressDialog();
 
-                 GlobalData.successDialog(getActiviy(),getString(R.string.default_address),getString(R.string.address_default));
+                    GlobalData.successDialog(getActiviy(), getString(R.string.default_address), getString(R.string.address_default));
 
                     user.setLastSelectedAddress(defaultAddressId);
                     UtilityApp.setUserData(user);
@@ -234,7 +239,7 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
                 }
             }
 
-        }).setDefaultAddress(user_id,address_id);
+        }).setDefaultAddress(user_id, address_id);
     }
 
 

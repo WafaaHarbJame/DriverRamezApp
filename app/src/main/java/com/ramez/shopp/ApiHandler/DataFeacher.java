@@ -29,6 +29,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Query;
 
 
 public class DataFeacher {
@@ -920,8 +921,8 @@ public class DataFeacher {
         params.put("comment", reviewModel.getComment());
 
         Log.i(TAG, "Log setAppRate");
-
         Log.i(TAG, "Log headerMap " + headerMap);
+
         Log.i(TAG, "Log user_id " + reviewModel.getUser_id());
         Log.i(TAG, "Log rate " + reviewModel.getRate());
         Log.i(TAG, "Log comment " + reviewModel.getComment());
@@ -942,6 +943,15 @@ public class DataFeacher {
 
 
 
+    public void getValidate(String device_type, String  app_version, int app_build) {
 
+        Log.i(TAG, "Log getValidate");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log app_version " + app_version);
+        Log.i(TAG, "Log app_build " + app_build);
+
+        Call call = apiService.getValidate(headerMap, device_type,app_version,app_build);
+        call.enqueue(callbackApi);
+    }
 
 }

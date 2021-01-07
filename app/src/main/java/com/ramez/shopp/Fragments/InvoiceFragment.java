@@ -231,20 +231,39 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
         binding.loadingLYPay.setVisibility(View.VISIBLE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
+            String message = getString(R.string.fail_to_get_data);
             binding.loadingLYPay.setVisibility(View.GONE);
             PaymentResultModel result = (PaymentResultModel) obj;
+            if (func.equals(Constants.ERROR)) {
 
-            if (IsSuccess) {
-                if (result.getData() != null && result.getData().size() > 0) {
-                    paymentList = result.getData();
-                    paymentMethod = result.getData().get(0).getShortname();
-                    initAdapter();
-                    Log.i(TAG, "Log getPaymentMethod" + result.getData().size());
+                if (result != null && result.getMessage() != null) {
+                    message = result.getMessage();
+                }
+                GlobalData.Toast(getActivityy(),message);
+
+
+            }
+            else if (func.equals(Constants.FAIL)) {
+                GlobalData.Toast(getActivityy(),message);
+
+            }
+            else if (func.equals(Constants.NO_CONNECTION)) {
+                GlobalData.Toast(getActivityy(),R.string.no_internet_connection);
+            }
+
+            else {
+                if (IsSuccess) {
+                    if (result.getData() != null && result.getData().size() > 0) {
+                        paymentList = result.getData();
+                        paymentMethod = result.getData().get(0).getShortname();
+                        initAdapter();
+                        Log.i(TAG, "Log getPaymentMethod" + result.getData().size());
+
+
+                    }
 
 
                 }
-
-
             }
 
 
@@ -260,8 +279,28 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             binding.loadingDelivery.setVisibility(View.GONE);
+            String message = getString(R.string.fail_to_get_data);
             DeliveryResultModel result = (DeliveryResultModel) obj;
 
+
+            if (func.equals(Constants.ERROR)) {
+
+                if (result != null && result.getMessage() != null) {
+                    message = result.getMessage();
+                }
+                GlobalData.Toast(getActivityy(),message);
+
+
+            }
+            else if (func.equals(Constants.FAIL)) {
+                GlobalData.Toast(getActivityy(),message);
+
+            }
+            else if (func.equals(Constants.NO_CONNECTION)) {
+             GlobalData.Toast(getActivityy(),R.string.no_internet_connection);
+            }
+
+            else {
             if (IsSuccess) {
                 if (result.getData() != null && result.getData().size() > 0) {
                     deliveryTimesList = result.getData();
@@ -303,7 +342,7 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
 
                 }
 
-
+            }
             }
 
 

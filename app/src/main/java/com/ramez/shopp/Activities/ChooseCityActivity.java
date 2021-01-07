@@ -105,7 +105,15 @@ public class ChooseCityActivity extends ActivityBase implements CountriesAdapter
                     message = result.getMessage();
                 }
                 GlobalData.errorDialog(getActiviy(), R.string.fail_to_get_data, message);
-            } else {
+            }
+
+
+            else if (func.equals(Constants.NO_CONNECTION)) {
+                GlobalData.Toast(getActiviy(), R.string.no_internet_connection);
+            }
+
+
+            else {
                 if (IsSuccess) {
                     countries = result.getData();
                     initAdapter();

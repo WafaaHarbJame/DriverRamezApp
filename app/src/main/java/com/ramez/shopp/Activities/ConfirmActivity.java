@@ -31,34 +31,31 @@ public class ConfirmActivity extends ActivityBase {
         binding.toolBar.backBtn.setOnClickListener(view1 -> {
             onBackPressed();
         });
-        Bundle bundle=getIntent().getExtras();
-        if(bundle!=null){
-            mobileStr=getIntent().getStringExtra(Constants.KEY_MOBILE);
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            mobileStr = getIntent().getStringExtra(Constants.KEY_MOBILE);
 
         }
         binding.confirmBut.setOnClickListener(view1 -> {
             //String mobileStr=UtilityApp.getUserData().getMobileNumber();
-            String  codeStr= NumberHandler.arabicToDecimal(binding.codeTxt.getText().toString());
+            String codeStr = NumberHandler.arabicToDecimal(binding.codeTxt.getText().toString());
 
-            VerifyOtp(mobileStr,codeStr);
-
+            VerifyOtp(mobileStr, codeStr);
 
         });
 
-
     }
 
-    public void VerifyOtp(String mobile,String otp) {
-        GlobalData.progressDialog(
-                getActiviy(),
-                R.string.confirm_code,
-                R.string.please_wait_sending);
+    public void VerifyOtp(String mobile, String otp) {
+        GlobalData.progressDialog(getActiviy(), R.string.confirm_code, R.string.please_wait_sending);
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             GlobalData.hideProgressDialog();
             if (func.equals(Constants.ERROR)) {
                 Toast(R.string.error_in_data);
             } else if (func.equals(Constants.FAIL)) {
                 Toast(R.string.fail_to_sen_otp);
+            } else if (func.equals(Constants.NO_CONNECTION)) {
+                GlobalData.Toast(getActiviy(), R.string.no_internet_connection);
             } else {
                 if (IsSuccess) {
                     OtpModel otpModel = (OtpModel) obj;
@@ -74,7 +71,7 @@ public class ConfirmActivity extends ActivityBase {
                 }
             }
 
-        }).VerifyOtpHandle(mobile,otp);
+        }).VerifyOtpHandle(mobile, otp);
     }
 
 }

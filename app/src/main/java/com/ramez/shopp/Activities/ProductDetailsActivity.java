@@ -32,6 +32,7 @@ import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.MemberModel;
+import com.ramez.shopp.Models.ProductBarcode;
 import com.ramez.shopp.Models.ProductDetailsModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.Models.ResultAPIModel;
@@ -364,6 +365,12 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 binding.cartBut.setVisibility(View.GONE);
 
 
+            } else if (func.equals(Constants.NO_CONNECTION)) {
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                binding.dataLY.setVisibility(View.GONE);
+
             } else {
                 if (IsSuccess) {
                     if (result.getData() != null && result.getData().size() > 0) {
@@ -374,12 +381,15 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                         binding.cartBut.setVisibility(View.VISIBLE);
                         productModel = result.getData().get(0);
                         binding.productDescTv.setText(Html.fromHtml(productModel.getDescription().toString()));
-                        binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(productModel.getProductBarcodes().get(0).getPrice().toString()), UtilityApp.getLocalData().getFractional()) + " " + currency);
+
+                        ProductBarcode productBarcode = productModel.getProductBarcodes().get(0);
+                        binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(productBarcode.getPrice().toString()), UtilityApp.getLocalData().getFractional()) + " " + currency);
 
                         sliderList = productModel.getImages();
                         binding.ratingBar.setRating((float) productModel.getRate());
+                        String wightName = UtilityApp.getLanguage().equals(Constants.Arabic) ? productBarcode.getProductUnits().getHName() : productBarcode.getProductUnits().getName();
 
-                        // binding.weightUnitTv.setText(productModel.getProductBarcodes().get(0));
+                        binding.weightUnitTv.setText(productBarcode.getWeight() + " " + wightName);
 
                         isFavorite = productModel.getFavourite();
 
@@ -695,18 +705,44 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         GlobalData.progressDialog(getActiviy(), R.string.add_comm, R.string.please_wait_sending);
         new DataFeacher(false, (obj, func, IsSuccess) -> {
 
-            if (IsSuccess) {
 
-                addCommentDialog.dismiss();
-                GlobalData.hideProgressDialog();
-                getReviews(product_id, storeId);
-                GlobalData.successDialog(getActiviy(), getString(R.string.rate_product), getString(R.string.success_rate_product));
+            String message = getString(R.string.fail_add_comment);
 
+            ResultAPIModel<ReviewModel> result = (ResultAPIModel<ReviewModel>) obj;
+
+            if(result!=null){
+                message=result.message;
+            }
+
+
+            if (func.equals(Constants.ERROR)) {
+
+                GlobalData.errorDialog(getActiviy(), R.string.rate_app, message);
+
+
+            } else if (func.equals(Constants.FAIL)) {
+                GlobalData.errorDialog(getActiviy(), R.string.rate_app,message);
+
+
+            } else if (func.equals(Constants.NO_CONNECTION)) {
+                GlobalData.errorDialog(getActiviy(), R.string.rate_app, getString(R.string.no_internet_connection));
 
             } else {
-                addCommentDialog.dismiss();
-                GlobalData.hideProgressDialog();
-                GlobalData.errorDialog(getActiviy(), R.string.rate_product, getString(R.string.fail_add_comment));
+
+                if (IsSuccess) {
+
+                    addCommentDialog.dismiss();
+                    GlobalData.hideProgressDialog();
+                    getReviews(product_id, storeId);
+                    GlobalData.successDialog(getActiviy(), getString(R.string.rate_product), getString(R.string.success_rate_product));
+
+
+                } else {
+                    addCommentDialog.dismiss();
+                    GlobalData.hideProgressDialog();
+                    GlobalData.errorDialog(getActiviy(), R.string.rate_product, getString(R.string.fail_add_comment));
+
+                }
 
             }
 
