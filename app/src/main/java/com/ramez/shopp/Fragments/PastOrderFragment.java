@@ -16,21 +16,26 @@ import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.MemberModel;
+import com.ramez.shopp.Models.OrderNewModel;
 import com.ramez.shopp.Models.OrderProductModel;
 import com.ramez.shopp.Models.OrderProductsModel;
 import com.ramez.shopp.Models.OrderModel;
 import com.ramez.shopp.Models.OrdersResultModel;
+import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.FragmentPastOrderBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+
 import static android.content.ContentValues.TAG;
 
 
 public class PastOrderFragment extends FragmentBase {
     List<OrderProductModel> completedOrdersList;
+    List<OrderNewModel> completeOrdersList;
     LinearLayoutManager linearLayoutManager;
     private FragmentPastOrderBinding binding;
     private MyOrdersAdapter myOrdersAdapter;
@@ -43,6 +48,7 @@ public class PastOrderFragment extends FragmentBase {
         View view = binding.getRoot();
 
         completedOrdersList = new ArrayList<>();
+        completeOrdersList = new ArrayList<>();
 
         linearLayoutManager = new LinearLayoutManager(getActivity());
         binding.myOrderRecycler.setLayoutManager(linearLayoutManager);
@@ -50,6 +56,8 @@ public class PastOrderFragment extends FragmentBase {
         user_id = UtilityApp.getUserData().getId();
 
         getPastOrder(user_id);
+
+        //getOrders(user_id,Constants.user_type,Constants.past_order);
 
 
         binding.swipe.setOnRefreshListener(() -> {
@@ -70,6 +78,8 @@ public class PastOrderFragment extends FragmentBase {
             startActivity(intent);
 
         });
+
+
 
 
         return view;
@@ -155,6 +165,7 @@ public class PastOrderFragment extends FragmentBase {
     }
 
 
+
     private void initOrdersAdapters(List<OrderModel> list) {
 
         myOrdersAdapter = new MyOrdersAdapter(getActivity(), binding.myOrderRecycler, list, user_id);
@@ -203,5 +214,86 @@ public class PastOrderFragment extends FragmentBase {
         return orderList;
 
     }
+
+
+
+    public void getOrders(int user_id,String type,String filter) {
+
+        completedOrdersList.clear();
+
+        binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
+        binding.dataLY.setVisibility(View.GONE);
+        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+          ResultAPIModel<ArrayList<OrderNewModel>>result = (ResultAPIModel<ArrayList<OrderNewModel>>) obj;
+            String message = getString(R.string.fail_to_get_data);
+
+            binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
+
+            if (func.equals(Constants.ERROR)) {
+
+                if (result.message!= null) {
+                    message = result.message;
+                }
+                binding.dataLY.setVisibility(View.GONE);
+                binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(message);
+
+            } else if (func.equals(Constants.FAIL)) {
+
+                binding.dataLY.setVisibility(View.GONE);
+                binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(message);
+
+
+            } else if (func.equals(Constants.NO_CONNECTION)) {
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                binding.dataLY.setVisibility(View.GONE);
+
+            } else {
+                if (IsSuccess) {
+                    if (result.data!= null && result.data.size() > 0) {
+
+                        binding.dataLY.setVisibility(View.VISIBLE);
+                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+
+                        completeOrdersList = result.data;
+
+                        List<OrderModel> list = initOrderList();
+
+                        initOrdersAdapters(list);
+
+                        Log.i("TAG", "Log ordersDMS" + completedOrdersList.size());
+
+
+                    } else {
+
+                        binding.dataLY.setVisibility(View.GONE);
+                        binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
+
+                    }
+
+
+                } else {
+
+                    binding.dataLY.setVisibility(View.GONE);
+                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(message);
+
+
+                }
+            }
+
+        }).getOrders(user_id,type,filter);
+    }
+
 
 }

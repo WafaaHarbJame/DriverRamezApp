@@ -282,7 +282,6 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
 
         productList.clear();
         offerList.clear();
-
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -323,13 +322,15 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
 
             else {
                 if (IsSuccess) {
+                    Log.i(TAG, "Log productList Search " + result.getData());
+
                     if (result.getData() != null && result.getData().size() > 0) {
 
                         binding.dataLY.setVisibility(View.VISIBLE);
                         binding.noDataLY.noDataLY.setVisibility(View.GONE);
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
                         productList = result.getData();
-                        Log.i(TAG, "Log productList" + productList.size());
+                        Log.i(TAG, "Log productList Search " + productList.size());
                         binding.categoriesCountTv.setText(String.valueOf(productList.size()));
                         getOffersProducts(productList);
                         //initAdapter();
@@ -339,6 +340,7 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
 
                         binding.dataLY.setVisibility(View.GONE);
                         binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
+                        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
                     }
 

@@ -9,6 +9,7 @@ import com.google.gson.reflect.TypeToken;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Classes.orderListCall;
 import com.ramez.shopp.Models.AddressModel;
 import com.ramez.shopp.Models.LoginResultModel;
 import com.ramez.shopp.Models.MemberModel;
@@ -951,6 +952,41 @@ public class DataFeacher {
         Log.i(TAG, "Log app_build " + app_build);
 
         Call call = apiService.getValidate(headerMap, device_type,app_version,app_build);
+        call.enqueue(callbackApi);
+    }
+
+
+    public void getOrders(int user_id,String type,String filter) {
+
+        Log.i(TAG, "Log getOrders");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log type " + type);
+        Log.i(TAG, "Log filter " + filter);
+        orderListCall orderListCall=new orderListCall();
+        orderListCall.setUserId(user_id);
+        orderListCall.setType(type);
+        orderListCall.setFilter(filter);
+
+        Call call = apiService.GetOrdersList(headerMap, orderListCall);
+        call.enqueue(callbackApi);
+    }
+
+    public void getOrderDetails(int order_id,int user_id,int store_id,String type) {
+
+        Log.i(TAG, "Log getOrderDetails");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log type " + type);
+        Log.i(TAG, "Log store_id " + store_id);
+        Log.i(TAG, "Log store_id " + order_id);
+        Log.i(TAG, "Log user_id " + user_id);
+
+        orderListCall orderListCall=new orderListCall();
+        orderListCall.setOrderId(order_id);
+        orderListCall.setUserId(user_id);
+        orderListCall.setStoreId(store_id);
+        orderListCall.setType(type);
+
+        Call call = apiService.GetOrderDetails(headerMap, orderListCall);
         call.enqueue(callbackApi);
     }
 

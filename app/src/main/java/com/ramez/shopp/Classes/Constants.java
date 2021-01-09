@@ -254,5 +254,7 @@ public class Constants {
     public static final int twoRow =2;
     public static final int oneRow =1;
     public static final int OK_STATUS =200;
+    public static final String past_order ="p";
+    public static final String upcoming_order ="u";
 
 }
