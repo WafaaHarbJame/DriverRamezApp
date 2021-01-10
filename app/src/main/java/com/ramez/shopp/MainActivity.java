@@ -7,13 +7,18 @@ import android.view.View;
 import androidx.core.content.ContextCompat;
 
 import com.ramez.shopp.Activities.ActivityBase;
+import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.MessageEvent;
+import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Dialogs.ConfirmDialog;
 import com.ramez.shopp.Fragments.CartFragment;
 import com.ramez.shopp.Fragments.CategoryFragment;
 import com.ramez.shopp.Fragments.HomeFragment;
 import com.ramez.shopp.Fragments.MyAccountFragment;
 import com.ramez.shopp.Fragments.OfferFragment;
+import com.ramez.shopp.Models.GeneralModel;
+import com.ramez.shopp.Utils.ActivityHandler;
 import com.ramez.shopp.databinding.ActivityMainBinding;
 
 import org.greenrobot.eventbus.EventBus;
@@ -22,6 +27,8 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
+
+import static android.content.ContentValues.TAG;
 
 public class MainActivity extends ActivityBase {
     private ActivityMainBinding binding;
@@ -39,6 +46,7 @@ public class MainActivity extends ActivityBase {
 
         binding.homeButn.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.home_clicked));
 
+        getValidation();
 
         getIntentExtra();
 
@@ -202,6 +210,52 @@ public class MainActivity extends ActivityBase {
 
         }
     }
+
+
+    public void getValidation() {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+
+            if (IsSuccess) {
+
+                GeneralModel result = (GeneralModel) obj;
+
+                if (result.getMessage() != null) {
+                    if(result.getStatus().equals(Constants.OK_STATUS)){
+                        Log.i(TAG, "Log getValidation" + result.getMessage());
+
+                    }
+                    else {
+
+                        ConfirmDialog.Click click = new ConfirmDialog.Click() {
+                            @Override
+                            public void click() {
+                                ActivityHandler.OpenGooglePlay(getActiviy());
+                                //finish();
+
+
+                            }
+                        };
+
+                        ConfirmDialog.Click cancel = new ConfirmDialog.Click() {
+                            @Override
+                            public void click() {
+                               finish();
+
+
+                            }
+                        };
+
+                       new ConfirmDialog(getActiviy(), R.string.updateMessage, R.string.ok, R.string.cancel_label, click, cancel);
+
+                    }
+                    Log.i(TAG, "Log getValidation" + result.getMessage());
+
+                }
+            }
+
+        }).getValidate(Constants.deviceType, UtilityApp.getAppVersionStr(), BuildConfig.VERSION_CODE);
+    }
+
 
 
 

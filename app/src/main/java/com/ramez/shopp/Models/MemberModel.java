@@ -53,7 +53,9 @@ public class MemberModel implements Serializable {
     @SerializedName("profile_picture")
     @Expose
     private String profilePicture;
-    private String registerType;
+//    @SerializedName("registerType")
+//    @Expose
+//    private String registerType;
 
     public String getFacebook_key() {
         return facebook_key;
@@ -193,14 +195,14 @@ public class MemberModel implements Serializable {
     public void setNew_password(String new_password) {
         this.new_password = new_password;
     }
-
-    public String getRegisterType() {
-        return registerType;
-    }
-
-    public void setRegisterType(String registerType) {
-        this.registerType = registerType;
-    }
+//
+//    public String getRegisterType() {
+//        return registerType;
+//    }
+//
+//    public void setRegisterType(String registerType) {
+//        this.registerType = registerType;
+//    }
 }
 
 

@@ -27,7 +27,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,6 +34,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.OAuthProvider;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.ramez.shopp.Activities.ConfirmActivity;
 import com.ramez.shopp.Activities.ConfirmPhoneActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
@@ -199,20 +199,32 @@ public class LoginFragment extends FragmentBase {
             }
             else {
                 if (IsSuccess) {
-                    MemberModel user = result.data;
-                    user.setRegisterType(Constants.BY_PHONE);
-                    UtilityApp.setUserData(user);
 
-                    if (UtilityApp.getUserData() != null) {
-                        UpdateToken();
+                    if(result.getStatus()==106){
+                        Intent intent = new Intent(getActivityy(), ConfirmActivity.class);
+                        intent.putExtra(Constants.KEY_MOBILE, mobileStr);
+                        intent.putExtra(Constants.verify_account, true);
+                        intent.putExtra(Constants.KEY_PASSWORD, passwordStr);
+                        startActivity(intent);
+
                     }
+                    else {
+                        MemberModel user = result.data;
+                        UtilityApp.setUserData(user);
+                        // user.setRegisterType(Constants.BY_PHONE);
+
+                        if (UtilityApp.getUserData() != null) {
+                            UpdateToken();
+                        }
+                    }
+
 
 
                 } else {
                     Toast(getString(R.string.fail_signin));
 
                 }
-            }
+        }
 
 
         }).loginHandle(memberModel);
@@ -240,6 +252,8 @@ public class LoginFragment extends FragmentBase {
         FormValidator formValidator = FormValidator.Companion.getInstance();
 
         return formValidator.addField(binding.edtPhoneNumber, new NonEmptyRule(getString(R.string.enter_phone_number))).addField(binding.edtPassword, new NonEmptyRule(R.string.enter_password)).validate();
+
+
     }
 
     private void getDeviceToken() {
@@ -418,7 +432,7 @@ public class LoginFragment extends FragmentBase {
                 if (IsSuccess) {
                     Log.i("TAG", "Log otp " + result.getOtp());
                     MemberModel user = result.data;
-                    user.setRegisterType(Constants.BY_SOCIAL);
+                  //  user.setRegisterType(Constants.BY_SOCIAL);
                     UtilityApp.setUserData(user);
                     Intent intent = new Intent(getActivityy(), MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -14,6 +14,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.ramez.shopp.Adapter.SearchProductAdapter;
@@ -56,6 +57,7 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
     private Call searchCall;
     private Runnable runnable;
     private Handler handler;
+    private boolean toggleButton = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,20 +149,32 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
         });
 
 
-        binding.view1But.setOnClickListener(view1 -> {
 
-            numColumn = 1;
-            initAdapter();
-            adapter.notifyDataSetChanged();
-
-        });
 
         binding.view2But.setOnClickListener(view1 -> {
-            numColumn = 2;
-            initAdapter();
+
+
+            toggleButton = !toggleButton;
+
+            if (toggleButton) {
+                numColumn = 1;
+                initAdapter();
+                gridLayoutManager.setSpanCount(numColumn);
+                binding.view2But.setImageDrawable(ContextCompat.getDrawable(getActiviy(),R.drawable.filter_view1));
+
+            } else {
+                numColumn = 2;
+                gridLayoutManager.setSpanCount(numColumn);
+                initAdapter();
+                binding.view2But.setImageDrawable(ContextCompat.getDrawable(getActiviy(),R.drawable.filter_view2));
+
+            }
             adapter.notifyDataSetChanged();
 
+
         });
+
+
 
 
         binding.priceBut.setOnClickListener(view1 -> {

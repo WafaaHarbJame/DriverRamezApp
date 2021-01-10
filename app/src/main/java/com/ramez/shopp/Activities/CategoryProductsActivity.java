@@ -63,6 +63,7 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
     private LocalModel localModel;
     private ProductCategoryAdapter adapter;
     private CheckLoginDialog checkLoginDialog;
+    private boolean toggleButton = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,40 +118,29 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
         });
 
 
-        binding.view1But.setOnClickListener(view1 -> {
-            numColumn = 1;
-            initAdapter();
-            gridLayoutManager.setSpanCount(numColumn);
-            adapter.notifyDataSetChanged();
-
-
-        });
-
         binding.view2But.setOnClickListener(view1 -> {
-            numColumn = 2;
-            gridLayoutManager.setSpanCount(numColumn);
-            initAdapter();
+
+
+            toggleButton = !toggleButton;
+
+            if (toggleButton) {
+                numColumn = 1;
+                initAdapter();
+                gridLayoutManager.setSpanCount(numColumn);
+                binding.view2But.setImageDrawable(ContextCompat.getDrawable(getActiviy(),R.drawable.filter_view1));
+
+            } else {
+                numColumn = 2;
+                gridLayoutManager.setSpanCount(numColumn);
+                initAdapter();
+                binding.view2But.setImageDrawable(ContextCompat.getDrawable(getActiviy(),R.drawable.filter_view2));
+
+            }
             adapter.notifyDataSetChanged();
+
 
         });
 
-        binding.view1But.setOnClickListener(view1 -> {
-            numColumn = 1;
-            gridLayoutManager.setSpanCount(numColumn);
-            initAdapter();
-            adapter.notifyDataSetChanged();
-
-
-        });
-
-
-        binding.view2But.setOnClickListener(view1 -> {
-            numColumn = 2;
-            gridLayoutManager.setSpanCount(numColumn);
-            initAdapter();
-            adapter.notifyDataSetChanged();
-
-        });
 
 
         binding.priceBut.setOnClickListener(view1 -> {

@@ -41,7 +41,7 @@ public class WelcomeActivity extends ActivityBase {
             binding.viewPager.setCurrentItem(getItem(+1), true);
 
             if(binding.viewPager.getAdapter().getCount()==binding.viewPager.getCurrentItem()+1){
-                navigateChangeLanguage();
+                navigateChooseCityActivity();
 
             }
 
@@ -50,7 +50,7 @@ public class WelcomeActivity extends ActivityBase {
 
         });
 
-        binding.skipBtn.setOnClickListener(view1 -> navigateChangeLanguage());
+        binding.skipBtn.setOnClickListener(view1 -> navigateChooseCityActivity());
 
 
     }
@@ -64,8 +64,8 @@ public class WelcomeActivity extends ActivityBase {
 
 
 
-    public void navigateChangeLanguage() {
-        startActivity(new Intent(WelcomeActivity.this, ChangeLanguageActivity.class));
+    public void navigateChooseCityActivity() {
+        startActivity(new Intent(WelcomeActivity.this, ChooseCityActivity.class));
         finish();
     }
 

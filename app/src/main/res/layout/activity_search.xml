@@ -140,12 +140,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:text="@string/categories"
+                        android:visibility="gone"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12ssp" />
 
                     <com.ramez.shopp.SpichalViews.STextView
                         android:id="@+id/categoriesCountTv"
                         android:layout_width="wrap_content"
+                        android:visibility="gone"
                         android:layout_height="wrap_content"
                         android:drawableEnd="@drawable/bottom_arrow"
                         android:drawablePadding="@dimen/_8sdp"
@@ -188,14 +190,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1" />
-
-                    <ImageView
-                        android:id="@+id/view1But"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/_8sdp"
-                        android:src="@drawable/filter_view1"
-                        android:textColor="@color/black" />
 
                     <ImageView
                         android:id="@+id/view2But"

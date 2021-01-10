@@ -190,20 +190,20 @@
 
                     <ImageView
                         android:id="@+id/favBut"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:minHeight="@dimen/_20sdp"
-                        android:minWidth="@dimen/_20sdp"
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:minHeight="@dimen/_15sdp"
+                        android:minWidth="@dimen/_15sdp"
                         android:layout_marginEnd="@dimen/_2sdp"
                         android:src="@drawable/favorite_menu_icon"
                         app:tint="@color/colorAppRed" />
                     <ImageView
                         android:id="@+id/rateBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:minHeight="@dimen/_15sdp"
+                        android:minWidth="@dimen/_15sdp"
                         android:layout_marginStart="@dimen/_4sdp"
-                        android:minHeight="@dimen/_20sdp"
-                        android:minWidth="@dimen/_20sdp"
                         android:src="@drawable/ic_add_comment"
                         app:tint="@color/colorAppRed" />
                 </LinearLayout>

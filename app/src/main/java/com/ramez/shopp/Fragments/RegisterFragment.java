@@ -129,7 +129,7 @@ public class RegisterFragment extends FragmentBase {
                 if (IsSuccess) {
                     Log.i("TAG", "Log otp " + result.getOtp());
                     MemberModel user = result.data;
-                    user.setRegisterType(Constants.BY_PHONE);
+                   // user.setRegisterType(Constants.BY_PHONE);
                     UtilityApp.setUserData(user);
                     SendOtp(mobileStr);
                 } else {
@@ -154,9 +154,15 @@ public class RegisterFragment extends FragmentBase {
     }
 
     private final boolean isValidForm() {
+
         FormValidator formValidator = FormValidator.Companion.getInstance();
 
-        return formValidator.addField(binding.edtFirstName, new NonEmptyRule(R.string.enter_name)).addField(binding.edtEmail, new NonEmptyRule(getString(R.string.enter_email))).addField(binding.edtEmail, new EmailRule(R.string.enter_valid_email)).addField(binding.edtPhoneNumber, new NonEmptyRule(R.string.enter_phone_please)).addField(binding.edtPassword, new NonEmptyRule(R.string.enter_password)).addField(binding.edtConfirmPassword, new NonEmptyRule(R.string.enter_confirm_password)).addField(binding.edtConfirmPassword, new EqualRule(String.valueOf(binding.edtPassword.getText()), R.string.password_confirm_not_match)).validate();
+        return formValidator.addField(binding.edtFirstName, new NonEmptyRule(getString(R.string.enter_name)))
+                .addField(binding.edtPhoneNumber, new NonEmptyRule(getString(R.string.enter_phone_number)))
+                .addField(binding.edtPassword, new NonEmptyRule(getString(R.string.enter_password)))
+                .addField(binding.edtConfirmPassword, new NonEmptyRule(getString(R.string.enter_confirm_password))
+                        ,new EqualRule(String.valueOf(binding.edtPassword.getText()), R.string.password_confirm_not_match)).validate();
+
     }
 
     private void getDeviceToken() {
@@ -192,6 +198,7 @@ public class RegisterFragment extends FragmentBase {
                     OtpModel otpModel = (OtpModel) obj;
                     Log.i("TAG", "Log otp " + otpModel.getData());
                     Intent intent = new Intent(getActivityy(), ConfirmActivity.class);
+                    intent.putExtra(Constants.KEY_MOBILE, mobileStr);
                     intent.putExtra(Constants.KEY_MOBILE, mobileStr);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);

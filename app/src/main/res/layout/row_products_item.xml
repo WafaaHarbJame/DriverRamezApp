@@ -52,7 +52,7 @@
                 android:layout_gravity="top|start"
                 android:layout_marginStart="@dimen/_6sdp"
                 android:layout_marginTop="@dimen/_8sdp"
-                android:src="@drawable/favorite_icon" />
+                android:src="@drawable/empty_fav" />
 
         </FrameLayout>
     </androidx.cardview.widget.CardView>

@@ -193,6 +193,8 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
 
             } else {
                 if (IsSuccess) {
+                    binding.dataLY.setVisibility(View.VISIBLE);
+
                     if (result.getData() != null && result.getData().size() > 0) {
                         Log.i("TAG", "Log CityList size " + result.getData().size());
                         cityModelArrayList = result.getData();

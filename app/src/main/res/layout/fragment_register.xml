@@ -61,6 +61,7 @@
                     android:paddingEnd="@dimen/_8sdp"
                     android:paddingBottom="@dimen/_8sdp"
                     android:textAlignment="viewStart"
+                    android:text=""
                     android:textColor="@color/colorLoginText"
                     android:textColorHint="@color/colorTextHint"
                     android:textSize="@dimen/_12ssp" />

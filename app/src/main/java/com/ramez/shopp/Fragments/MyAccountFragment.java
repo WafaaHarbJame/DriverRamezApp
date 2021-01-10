@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.auth.FirebaseAuth;
 import com.ramez.shopp.Activities.AboutActivity;
 import com.ramez.shopp.Activities.AddressActivity;
 import com.ramez.shopp.Activities.ChangeCityBranchActivity;
@@ -59,9 +58,9 @@ public class MyAccountFragment extends FragmentBase {
 
                 memberModel = UtilityApp.getUserData();
                 initData(memberModel);
-                if(memberModel.getRegisterType().equals(Constants.BY_SOCIAL)){
-                    binding.changePassBtn.setVisibility(View.GONE);
-                }
+//                if(memberModel.getRegisterType().equals(Constants.BY_SOCIAL)){
+//                    binding.changePassBtn.setVisibility(View.GONE);
+//                }
 
 
             } else {
@@ -153,11 +152,8 @@ public class MyAccountFragment extends FragmentBase {
         });
         binding.changeCityBtn.setOnClickListener(view1 -> {
 
-            if (isLogin) {
-                startChangeBranch();
-            } else {
-                showDialog(R.string.to_change_city);
-            }
+            startChangeBranch();
+
 
 
         });
@@ -279,17 +275,15 @@ public class MyAccountFragment extends FragmentBase {
                         Toast(R.string.fail_to_sign_out);
                     } else if (func.equals(Constants.FAIL)) {
                         Toast(R.string.fail_to_sign_out);
-                    }
-
-                    else if (func.equals(Constants.NO_CONNECTION)) {
+                    } else if (func.equals(Constants.NO_CONNECTION)) {
                         GlobalData.Toast(getActivityy(), R.string.no_internet_connection);
-                    }
-                    else {
+                    } else {
 
                         if (IsSuccess) {
-                            if(memberModel.getRegisterType().equals(Constants.BY_SOCIAL)){
-                                FirebaseAuth.getInstance().signOut();
-                            }
+
+//                            if(memberModel.getRegisterType().equals(Constants.BY_SOCIAL)){
+//                                FirebaseAuth.getInstance().signOut();
+//                            }
                             UtilityApp.logOut();
                             GlobalData.Position = 0;
 
@@ -334,7 +328,7 @@ public class MyAccountFragment extends FragmentBase {
 
     @Override
     public void onResume() {
-        if(UtilityApp.isLogin()){
+        if (UtilityApp.isLogin()) {
             memberModel = UtilityApp.getUserData();
             initData(memberModel);
         }

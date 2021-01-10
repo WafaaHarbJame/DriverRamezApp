@@ -54,7 +54,7 @@ public class RootApplication extends Application {
 
         String appLanguage = UtilityApp.getLanguage();
         if (appLanguage == null) {
-            appLanguage = Constants.Arabic;
+            appLanguage = Constants.English;
             UtilityApp.setLanguage(appLanguage);
 
             LocaleUtils.setLocale(new Locale(appLanguage));

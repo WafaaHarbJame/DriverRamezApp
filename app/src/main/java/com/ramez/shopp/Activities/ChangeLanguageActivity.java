@@ -30,7 +30,7 @@ public class ChangeLanguageActivity extends ActivityBase {
             binding.imgArabicTick.setVisibility(View.VISIBLE);
             UtilityApp.setLanguage(Constants.Arabic);
             UtilityApp.setAppLanguage();
-            GoToChooseCity();
+            ChooseWelcomeActivity();
 
         });
 
@@ -39,7 +39,7 @@ public class ChangeLanguageActivity extends ActivityBase {
             binding.imgArabicTick.setVisibility(View.INVISIBLE);
             UtilityApp.setLanguage(Constants.English);
             UtilityApp.setAppLanguage();
-            GoToChooseCity();
+            ChooseWelcomeActivity();
 
         });
 
@@ -47,10 +47,10 @@ public class ChangeLanguageActivity extends ActivityBase {
 
     }
 
-    private void GoToChooseCity() {
-        Intent intent = new Intent(getActiviy(), ChooseCityActivity.class);
+    private void ChooseWelcomeActivity() {
+        Intent intent = new Intent(getActiviy(), WelcomeActivity.class);
         startActivity(intent);
-        finish();
+//        finish();
 
     }
 

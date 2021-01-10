@@ -136,7 +136,8 @@ public class Constants {
     public static final String KEY_STORY_ID = "key_story_id";
     public static final String KEY_NOTIFICATION_ID = "key_notification_id";
     public static final String KEY_MOBILE = "key_mobile";
-    public static final String KEY_PASSWORD = "key_password";
+    public static final String verify_account = "verify_account";
+    public static final String KEY_PASSWORD = "KEY_PASSWORD";
     public static final String KEY_WALKTHROUGH_IMG_RES = "key_walkthrough_img_res";
     public static final String KEY_WALKTHROUGH_TITLE = "key_walkthrough_title";
     public static final String KEY_WALKTHROUGH_DESC = "key_walkthrough_desc";

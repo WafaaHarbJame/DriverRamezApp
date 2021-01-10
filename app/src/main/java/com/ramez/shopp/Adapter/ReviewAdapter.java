@@ -1,16 +1,25 @@
 package com.ramez.shopp.Adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.ramez.shopp.Models.ReviewModel;
 import com.ramez.shopp.R;
+import com.ramez.shopp.databinding.RowCurrentMyOrderItemBinding;
 import com.ramez.shopp.databinding.RowItemReviewBinding;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -28,9 +37,9 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.Holder> {
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        RowItemReviewBinding itemView = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.row_item_review, parent, false);
-
+        RowItemReviewBinding itemView = RowItemReviewBinding.inflate(LayoutInflater.from(context), parent, false);
         return new Holder(itemView);
+
     }
 
 
@@ -39,11 +48,31 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.Holder> {
         ReviewModel reviewModel = list.get(position);
         holder.binding.reviewTv.setText(reviewModel.getComment());
 
-        if (position == getItemCount() - 1) {
-            holder.binding.divider.setVisibility(View.GONE);
-        } else {
-            holder.binding.divider.setVisibility(View.VISIBLE);
-        }
+        holder.binding.tvUserName.setText(reviewModel.getUserName());
+
+        holder.binding.ratingBar.setRating((float) reviewModel.getRate());
+
+        Glide.with(context).load(reviewModel.getUserImage()).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).placeholder(R.drawable.avatar).addListener(new RequestListener<Drawable>() {
+            @Override
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+
+                return false;
+            }
+        }).into(holder.binding.userImage);
+
+//
+//        if (position == getItemCount() - 1) {
+//            holder.binding.divider.setVisibility(View.GONE);
+//
+//        } else {
+//            holder.binding.divider.setVisibility(View.VISIBLE);
+//        }
     }
 
     public void setReviewList(List<ReviewModel> list) {

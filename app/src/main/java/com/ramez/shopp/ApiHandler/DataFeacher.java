@@ -179,17 +179,17 @@ public class DataFeacher {
         params.put("mobile_number", memberModel.getMobileNumber());
         params.put("password", memberModel.getPassword());
         params.put("user_type", memberModel.getUserType());
-        params.put("device_type", "android");
+        params.put("device_type", Constants.deviceType);
         params.put("device_token", memberModel.getDeviceToken());
         params.put("device_id", memberModel.getDeviceToken());
 
         Log.i(TAG, "Log loginHandle");
         Log.i(TAG, "Log headerMap " + headerMap);
-        Log.i(TAG, "Log username " + memberModel.getMobileNumber());
+        Log.i(TAG, "Log getMobileNumber " + memberModel.getMobileNumber());
         Log.i(TAG, "Log password " + memberModel.getPassword());
         Log.i(TAG, "Log device_type " + "android");
         Log.i(TAG, "Log device_token " + memberModel.getDeviceToken());
-        Log.i(TAG, "Log device_type " + memberModel.getDeviceId());
+        Log.i(TAG, "Log getDeviceId " + memberModel.getDeviceId());
 
         Call call = apiService.loginUserHandle(headerMap, params);
         call.enqueue(callbackApi);

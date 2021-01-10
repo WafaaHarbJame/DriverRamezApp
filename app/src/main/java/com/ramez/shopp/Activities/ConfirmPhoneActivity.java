@@ -18,6 +18,7 @@ import com.ramez.shopp.databinding.ActivityConformPhoneBinding;
 
 public class ConfirmPhoneActivity extends ActivityBase {
     private ActivityConformPhoneBinding binding;
+    String mobileStr;
 
 
     @Override
@@ -31,15 +32,27 @@ public class ConfirmPhoneActivity extends ActivityBase {
         binding.toolBar.backBtn.setOnClickListener(view1 -> {
             onBackPressed();
         });
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            mobileStr = getIntent().getStringExtra(Constants.KEY_MOBILE);
+
+        }
+
+
+
+
+
+
         binding.confirmBut.setOnClickListener(view1 -> {
             if (isValidForm()) {
                 String mobileStr = NumberHandler.arabicToDecimal(binding.edtPhoneNumber.getText().toString());
-                MemberModel memberModel=new MemberModel();
-                memberModel.setUserType(Constants.user_type);
-                memberModel.setMobileNumber(mobileStr);
-                ForgetPassword(memberModel);
 
-            }
+                    MemberModel memberModel=new MemberModel();
+                    memberModel.setUserType(Constants.user_type);
+                    memberModel.setMobileNumber(mobileStr);
+                    ForgetPassword(memberModel);
+                }
 
 
         });

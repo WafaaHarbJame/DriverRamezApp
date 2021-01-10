@@ -73,8 +73,8 @@ public class SplashScreenActivity extends ActivityBase {
     }
 
     private void startWelcomeActivity() {
-        startActivity(new Intent(getActiviy(), WelcomeActivity.class));
-        finish();
+        startActivity(new Intent(getActiviy(), ChangeLanguageActivity.class));
+//        finish();
     }
 
 

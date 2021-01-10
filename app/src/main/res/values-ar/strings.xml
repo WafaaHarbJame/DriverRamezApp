@@ -284,4 +284,5 @@
     <string name="to_show_address">لمشاهدة العناوين</string>
     <string name="to_contact_support">للتواصل مع الدعم الفني </string>
     <string name="updateMessage">يتوفر إصدار جديد من رامز .\nتحديث الان ؟</string>
+    <string name="user">مستخدم</string>
 </resources>

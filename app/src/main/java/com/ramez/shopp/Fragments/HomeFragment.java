@@ -125,7 +125,6 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         binding.bestSellerRecycler.setHasFixedSize(true);
 
         GetHomePage();
-        getValidation();
 
         binding.searchBut.setOnClickListener(view1 -> {
             Intent intent = new Intent(getActivityy(), SearchActivity.class);
@@ -384,38 +383,5 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
     }
 
-    public void getValidation() {
-        new DataFeacher(false, (obj, func, IsSuccess) -> {
-
-            if (IsSuccess) {
-
-                GeneralModel result = (GeneralModel) obj;
-
-                if (result.getMessage() != null) {
-                    if(result.getStatus().equals(Constants.OK_STATUS)){
-                        Log.i(TAG, "Log getValidation" + result.getMessage());
-
-                    }
-                    else {
-
-                        ConfirmDialog.Click click = new ConfirmDialog.Click() {
-                            @Override
-                            public void click() {
-                                ActivityHandler.OpenGooglePlay(getActivityy());
-
-
-                            }
-                        };
-
-                        new ConfirmDialog(getActivityy(), R.string.updateMessage, R.string.ok, R.string.cancel_label, click, null);
-
-                    }
-                    Log.i(TAG, "Log getValidation" + result.getMessage());
-
-                }
-            }
-
-        }).getValidate(Constants.deviceType, UtilityApp.getAppVersionStr(), BuildConfig.VERSION_CODE);
-    }
 
 }
