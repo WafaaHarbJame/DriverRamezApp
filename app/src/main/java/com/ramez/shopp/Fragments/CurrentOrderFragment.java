@@ -6,15 +6,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.ramez.shopp.Activities.MyOrderActivity;
 import com.ramez.shopp.Adapter.MyOrdersAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.OrderModel;
@@ -22,8 +19,6 @@ import com.ramez.shopp.Models.OrderProductModel;
 import com.ramez.shopp.Models.OrdersResultModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.FragmentCurrentOrderBinding;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -176,6 +171,8 @@ public class CurrentOrderFragment extends FragmentBase {
             orderModel.setOrderTotal(currentProduct.getOrderTotal());
             orderModel.setTotalWithoutTax(currentProduct.getTotalWithoutTax());
             orderModel.setTotalWithTax(currentProduct.getTotalWithTax());
+            orderModel.setCreatedAt(currentProduct.getCreatedAt());
+
             List<OrderProductModel> productsList = new ArrayList<>();
             for (int j = 0; j < currentOrdersList.size(); j++) {
 

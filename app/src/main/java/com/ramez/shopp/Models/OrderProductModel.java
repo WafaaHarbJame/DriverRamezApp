@@ -87,6 +87,18 @@ public class OrderProductModel implements Serializable {
     private Object mobileNumber;
     private ArrayList<OrderProductModel> orderProductsDMS;
 
+    @SerializedName("created_at")
+    @Expose
+    private String createdAt;
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public String gethUnitName() {
         return hUnitName;
     }

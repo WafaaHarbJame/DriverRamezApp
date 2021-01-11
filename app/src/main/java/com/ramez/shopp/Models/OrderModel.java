@@ -54,10 +54,31 @@ public class OrderModel implements Serializable {
     private String addressName;
     @SerializedName("mobile_number")
     @Expose
-    private Object mobileNumber;
+    private String mobileNumber;
     private List<OrderProductModel> orderProductsDMS;
+    @SerializedName("created_at")
+    @Expose
+    private String createdAt;
 
+    public String getCreatedAt() {
+        return createdAt;
+    }
 
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    @SerializedName("store_name")
+    @Expose
+    private String storeName;
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
+    }
 
     public List<OrderProductModel> getOrderProductsDMS() {
         return orderProductsDMS;
@@ -185,7 +206,7 @@ public class OrderModel implements Serializable {
         return mobileNumber;
     }
 
-    public void setMobileNumber(Object mobileNumber) {
+    public void setMobileNumber(String mobileNumber) {
         this.mobileNumber = mobileNumber;
     }
 

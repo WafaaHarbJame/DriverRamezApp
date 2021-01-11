@@ -194,6 +194,8 @@ public class PastOrderFragment extends FragmentBase {
             orderModel.setOrderTotal(currentProduct.getOrderTotal());
             orderModel.setTotalWithoutTax(currentProduct.getTotalWithoutTax());
             orderModel.setTotalWithTax(currentProduct.getTotalWithTax());
+            orderModel.setCreatedAt(currentProduct.getCreatedAt());
+
             List<OrderProductModel> productsList = new ArrayList<>();
 
             for (int j = 0; j < completedOrdersList.size(); j++) {

@@ -1,5 +1,6 @@
 package com.ramez.shopp.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -98,9 +99,16 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return vh;
     }
 
+    @SuppressLint("SimpleDateFormat")
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
-        lang = UtilityApp.getLanguage();
+
+        if (UtilityApp.getLanguage() == null) {
+            lang = Constants.English;
+        } else {
+            lang = UtilityApp.getLanguage();
+
+        }
         if (viewHolder instanceof ItemHolder) {
             ItemHolder holder = (ItemHolder) viewHolder;
             final OrderModel ordersDM = list.get(position);
@@ -112,15 +120,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             // PP:PendingPayment || OH:OnHold || OP:Open  || CM:Complete  || CL:Canceled  || DV:Delivered || Not Defined || CheckoutArea
 
 
-            if (ordersDM.getDeliveryStatus().equals("Processing") ||
-                    ordersDM.getDeliveryStatus().equals("Received") ||
-                    ordersDM.getDeliveryStatus().equals("Pending") ||
-                    ordersDM.getDeliveryStatus().equals("Open") ||
-                    ordersDM.getDeliveryStatus().equals("CheckoutArea") ||
-                    ordersDM.getDeliveryStatus().equals("Checkout Area") ||
-                    ordersDM.getDeliveryStatus().equals("PendingPayment") ||
-                    ordersDM.getDeliveryStatus().equals("OnHold") ||
-                    ordersDM.getDeliveryStatus().equals("Not Defined")) {
+            if (ordersDM.getDeliveryStatus().equals("Processing") || ordersDM.getDeliveryStatus().equals("Received") || ordersDM.getDeliveryStatus().equals("Pending") || ordersDM.getDeliveryStatus().equals("Open") || ordersDM.getDeliveryStatus().equals("CheckoutArea") || ordersDM.getDeliveryStatus().equals("Checkout Area") || ordersDM.getDeliveryStatus().equals("PendingPayment") || ordersDM.getDeliveryStatus().equals("OnHold") || ordersDM.getDeliveryStatus().equals("Not Defined")) {
 
                 holder.binding.completeOrderLy.setVisibility(View.GONE);
                 holder.binding.currentLY.setVisibility(View.VISIBLE);
@@ -135,46 +135,37 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             holder.binding.noteCTv.setText(ordersDM.getDeliveryStatus());
 
-            Date OrderDate = null;
-            try {
-                OrderDate = new SimpleDateFormat("yyyy-MM-dd").parse(ordersDM.getDeliveryDate());
-                String orderDayTime = NumberHandler.arabicToDecimal(DateHandler.GetTimeString(OrderDate, lang));
 
-                String OrderDayName = (DateHandler.FormatDate4(ordersDM.getDeliveryDate(), "yyyy-MM-dd", "EEEE", lang));
-                String deliveryDayName = (DateHandler.FormatDate4(ordersDM.getDeliveryDate(), "yyyy-MM-dd", "EEEE", lang));
+            String orderDayTime = (DateHandler.FormatDate4(ordersDM.getCreatedAt(), "yyyy-MM-dd'T'HH:mm:ss", "hh:mm aa", lang));
 
-                holder.binding.TvDeliveryDay.setText(deliveryDayName);
-                holder.binding.tvOrderDay.setText(OrderDayName);
+            holder.binding.tvOrderTime.setText(orderDayTime);
 
 
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            String OrderDayName = (DateHandler.FormatDate4(ordersDM.getCreatedAt(), "yyyy-MM-dd'T'HH:mm:ss", "EEEE", lang));
+
+            String deliveryDayName = (DateHandler.FormatDate4(ordersDM.getDeliveryDate(), "yyyy-MM-dd", "EEEE", lang));
+
+            holder.binding.TvDeliveryDay.setText(deliveryDayName);
+            holder.binding.tvOrderDay.setText(OrderDayName);
 
 
             holder.binding.TvDeliveryTime.setText(ordersDM.getDeliveryTime());
 
-            //This order status that reading from Api :  PN:PENDING , RC RECEIVED  ,
-            // CA CHECK OUT , PP PENDING PAYMENT , OH ON HOLD, OP:OPEN ,
-            // CM: COMPETE  CL CANCELED < DV DELIVERED done , cancelled
-            Log.i("tag","Log getOrderStatus"+ordersDM.getOrderStatus());
+            Log.i("tag", "Log getOrderStatus" + ordersDM.getOrderStatus());
 
 
-            if (ordersDM.getOrderStatus().equals("PN")||ordersDM.getOrderStatus().equals("RC")
-                    ||ordersDM.getOrderStatus().equals("IP")   ||ordersDM.getOrderStatus().equals("CA")) {
+            if (ordersDM.getOrderStatus().equals("PN") || ordersDM.getOrderStatus().equals("RC") || ordersDM.getOrderStatus().equals("IP") || ordersDM.getOrderStatus().equals("CA")) {
                 holder.binding.doneImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
                 holder.binding.processImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
 
 
-            } else if (ordersDM.getOrderStatus().equals("PP")  ||ordersDM.getOrderStatus().equals("OP")
-                    ||ordersDM.getOrderStatus().equals("OH")) {
+            } else if (ordersDM.getOrderStatus().equals("PP") || ordersDM.getOrderStatus().equals("OP") || ordersDM.getOrderStatus().equals("OH")) {
                 holder.binding.deliveryImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
                 holder.binding.processImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
                 holder.binding.doneImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
 
 
-            } else if (ordersDM.getOrderStatus().equals("CM")   ||ordersDM.getOrderStatus().equals("CL")
-                    ||ordersDM.getOrderStatus().equals("DV")) {
+            } else if (ordersDM.getOrderStatus().equals("CM") || ordersDM.getOrderStatus().equals("CL") || ordersDM.getOrderStatus().equals("DV")) {
                 holder.binding.doneDeliveryImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
                 holder.binding.deliveryImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
                 holder.binding.processImage.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.request_choose));
@@ -252,8 +243,8 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 
             binding.rateOrderBtn.setOnClickListener(view1 -> {
-                int position=getAdapterPosition();
-                OrderModel ordersDM=list.get(position);
+                int position = getAdapterPosition();
+                OrderModel ordersDM = list.get(position);
                 Intent intent = new Intent(context, RatingActivity.class);
                 intent.putExtra(Constants.inv_id, ordersDM.getOrderCode() + "");
                 Log.d(TAG, "inv_id" + ordersDM.getOrderCode() + "");
@@ -261,9 +252,9 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             });
 
             binding.container.setOnClickListener(view1 -> {
-                int position=getAdapterPosition();
+                int position = getAdapterPosition();
 
-                OrderModel ordersDM=list.get(position);
+                OrderModel ordersDM = list.get(position);
                 Intent intent = new Intent(context, InvoiceInfoActivity.class);
                 intent.putExtra(Constants.ORDER_MODEL, ordersDM);
                 context.startActivity(intent);
@@ -272,8 +263,8 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             });
 
             binding.orderDetailsBut.setOnClickListener(view1 -> {
-                int position=getAdapterPosition();
-                OrderModel ordersDM=list.get(position);
+                int position = getAdapterPosition();
+                OrderModel ordersDM = list.get(position);
                 Intent intent = new Intent(context, InvoiceInfoActivity.class);
                 intent.putExtra(Constants.ORDER_MODEL, ordersDM);
                 context.startActivity(intent);

@@ -27,6 +27,8 @@ public class OrderNewModel {
     @Expose
     private String storeName;
 
+
+
     public Integer getId() {
         return id;
     }
