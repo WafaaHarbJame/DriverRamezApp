@@ -148,7 +148,8 @@ public class MainActivity extends ActivityBase {
 
                 binding.toolBar.mainTitleTxt.setText(R.string.cart);
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CartFragment(), "MyAccountFragment").commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CartFragment(), "CartFragment").commit();
+                binding.toolBar.backBtn.setVisibility(View.GONE);
 
 
 

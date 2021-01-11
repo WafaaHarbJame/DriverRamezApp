@@ -315,5 +315,7 @@
     <string name="to_change_pass">To change password</string>
     <string name="updateMessage">A new version of Ramez is available.\n Update now ?</string>
     <string name="user">User</string>
+    <string name="fail_delete_address">Fail to delete address</string>
+    <string name="no_offers">No Offers</string>
 
 </resources>

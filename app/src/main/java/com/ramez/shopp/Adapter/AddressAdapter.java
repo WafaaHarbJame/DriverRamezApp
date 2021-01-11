@@ -74,9 +74,8 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Holder> 
 
         binding.deleteAddressBut.setOnClickListener(v -> {
 
-//            onDeleteClicked.onDeleteClicked(addressModel,
-//                    UtilityApp.getUserData().lastSelectedAddress == position);
-            deleteAddressId(addressModelList.get(position).getId(),position);
+            onDeleteClicked.onDeleteClicked(addressModel, UtilityApp.getUserData().lastSelectedAddress == position,position);
+//            deleteAddressId(addressModelList.get(position).getId(),position);
 
 
         });
@@ -116,7 +115,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Holder> 
 
 
     public interface OnDeleteClicked {
-        void onDeleteClicked(AddressModel addressModel, boolean isChecked);
+        void onDeleteClicked(AddressModel addressModel, boolean isChecked,int position);
 
     }
 
@@ -129,13 +128,20 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Holder> 
                     if (func.equals(Constants.ERROR)) {
                         Toast.makeText(context, ""+context.getString(R.string.error_in_data), Toast.LENGTH_SHORT).show();
                     } else if (func.equals(Constants.FAIL)) {
-                        Toast.makeText(context, ""+context.getString(R.string.fail_to_get_data), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, ""+context.getString(R.string.fail_delete_address), Toast.LENGTH_SHORT).show();
 
-                    } else {
+                    }
+
+                    else if (func.equals(Constants.NO_CONNECTION)) {
+                        Toast.makeText(context, ""+context.getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
+
+                    }
+                    else {
                         if (IsSuccess) {
                             addressModelList.remove(position);
                             notifyDataSetChanged();
                             notifyItemRemoved(position);
+
 
                         } else {
 

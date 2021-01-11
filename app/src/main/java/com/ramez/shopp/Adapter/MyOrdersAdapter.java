@@ -140,7 +140,6 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             holder.binding.tvOrderTime.setText(orderDayTime);
 
-
             String OrderDayName = (DateHandler.FormatDate4(ordersDM.getCreatedAt(), "yyyy-MM-dd'T'HH:mm:ss", "EEEE", lang));
 
             String deliveryDayName = (DateHandler.FormatDate4(ordersDM.getDeliveryDate(), "yyyy-MM-dd", "EEEE", lang));

@@ -265,7 +265,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:lines="2"
+                        android:maxLines="2"
                         android:textAlignment="viewStart"
                         android:textColor="@color/gray3" />
                     <com.ramez.shopp.SpichalViews.STextViewBold
@@ -298,7 +298,6 @@
                     android:paddingStart="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp"
                     android:visibility="gone" />
-
 
             </LinearLayout>
         </FrameLayout>

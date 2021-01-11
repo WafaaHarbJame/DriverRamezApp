@@ -204,6 +204,9 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         binding.offerRecycler.setAdapter(productOfferAdapter);
     }
 
+
+
+
     @Override
     public void onItemClicked(int position, ProductModel productModel) {
         Intent intent = new Intent(getActivityy(), ProductDetailsActivity.class);
@@ -261,10 +264,17 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                         productBestList = result.getFeatured();
                         productSellerList = result.getQuickProducts();
                         productOffersList = result.getOfferedProducts();
+
+                        if(productOffersList.size()==0){
+                            binding.moreOfferBut.setVisibility(View.GONE);
+                            binding.noOffers.setVisibility(View.VISIBLE);
+
+                        }
                         Log.i(TAG, "Log productBestList" + productOffersList.size());
                         Log.i(TAG, "Log productSellerList" + productSellerList.size());
                         Log.i(TAG, "Log productOffersList" + productOffersList.size());
                         initAdapter();
+
 
                     } else {
 

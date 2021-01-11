@@ -26,6 +26,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
+        android:textAlignment="viewStart"
         android:text=""
         android:textSize="12sp"
         android:paddingBottom="@dimen/_4sdp"

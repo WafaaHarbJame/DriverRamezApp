@@ -285,4 +285,6 @@
     <string name="to_contact_support">للتواصل مع الدعم الفني </string>
     <string name="updateMessage">يتوفر إصدار جديد من رامز .\nتحديث الان ؟</string>
     <string name="user">مستخدم</string>
+    <string name="fail_delete_address">فشل حذف العنوان</string>
+    <string name="no_offers">لا يوجد عروض </string>
 </resources>

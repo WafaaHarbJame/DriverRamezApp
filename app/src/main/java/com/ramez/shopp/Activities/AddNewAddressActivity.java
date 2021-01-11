@@ -173,14 +173,10 @@ public class AddNewAddressActivity extends ActivityBase {
             else {
                 if (IsSuccess) {
 
-//                    EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_ADDRESS));
                     Intent intent = new Intent(getActiviy(), AddressActivity.class);
                     intent.putExtra(Constants.KEY_ADD,true);
-                    Log.i("TAG", "Log KEY_ADD "+" true");
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-
-
+                    setResult(RESULT_OK, intent);
+                    finish();
 
 
                 } else {
@@ -296,6 +292,10 @@ public class AddNewAddressActivity extends ActivityBase {
                 }
 
             }
+
+
+
+
         }
     }
 

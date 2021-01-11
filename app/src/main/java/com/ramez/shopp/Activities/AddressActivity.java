@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 
@@ -14,12 +16,14 @@ import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Dialogs.ConfirmDialog;
 import com.ramez.shopp.Fragments.InvoiceFragment;
 import com.ramez.shopp.Models.AddressModel;
 import com.ramez.shopp.Models.AddressResultModel;
 import com.ramez.shopp.Models.GeneralModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.R;
+import com.ramez.shopp.Utils.MapHandler;
 import com.ramez.shopp.databinding.ActivityAddressBinding;
 
 import java.util.ArrayList;
@@ -32,6 +36,7 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
     private LinearLayoutManager linearLayoutManager;
     private int defaultAddressId;
     private MemberModel user;
+    private int add_newAddress = 4000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +47,7 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
 
         user = UtilityApp.getUserData();
 
-
         setTitle(R.string.address);
-
 
         addressList = new ArrayList<>();
         linearLayoutManager = new LinearLayoutManager(getActiviy());
@@ -52,14 +55,15 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
 
         getIntentExtra();
 
-        if (UtilityApp.isLogin() || addNewAddress) {
-            addressList.clear();
+
+        if (UtilityApp.isLogin()) {
             GetUserAddress(user.getId());
 
         }
 
 
         binding.addNewAddressBut.setOnClickListener(view1 -> {
+
             addNewAddress();
         });
 
@@ -99,17 +103,13 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
             intent.putExtra(Constants.ADDRESS_ID, addressesDM.getId());
             intent.putExtra(Constants.ADDRESS_TITLE, addressesDM.getFullAddress());
             setResult(Activity.RESULT_OK, intent);
-            finish();
+//            finish();
 
         }
 
 
     }
 
-    @Override
-    public void onDeleteClicked(AddressModel addressModel, boolean isChecked) {
-
-    }
 
     public void initAdapter() {
 
@@ -122,7 +122,7 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
 
     private void addNewAddress() {
         Intent intent = new Intent(getActiviy(), AddNewAddressActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, add_newAddress);
     }
 
     public void GetUserAddress(int user_id) {
@@ -186,8 +186,6 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
 
         if (bundle != null) {
             deliveryChoose = bundle.getBoolean(Constants.delivery_choose, false);
-            addNewAddress = bundle.getBoolean(Constants.KEY_ADD, false);
-            Log.i("TAG", "Log KEY_ADD from Add  " + addNewAddress);
 
         }
     }
@@ -243,4 +241,78 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
     }
 
 
+    public void deleteAddressId(int addressId,int position) {
+        ConfirmDialog.Click click = new ConfirmDialog.Click() {
+            @Override
+            public void click() {
+                new DataFeacher(false, (obj, func, IsSuccess) -> {
+                    if (func.equals(Constants.ERROR)) {
+                        Toast.makeText(getActiviy(), getString(R.string.error_in_data), Toast.LENGTH_SHORT).show();
+                    } else if (func.equals(Constants.FAIL)) {
+                        Toast.makeText(getActiviy(), getString(R.string.fail_delete_address), Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    else if (func.equals(Constants.NO_CONNECTION)) {
+                        Toast.makeText(getActiviy(),getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
+
+                    }
+                    else {
+                        if (IsSuccess) {
+                            addressList.remove(position);
+                           addressAdapter.notifyDataSetChanged();
+                            addressAdapter.notifyItemRemoved(position);
+
+                            if(addressList.size()==0){
+
+                                binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+                                binding.failGetDataLY.failTxt.setText(R.string.no_address);
+                                binding.dataLY.setVisibility(View.VISIBLE);
+                                binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
+                            }
+
+                        } else {
+
+                            Toast.makeText(getActiviy(),getString(R.string.fail_to_get_data), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                }).deleteAddressHandle(addressId);
+            }
+        };
+
+        new ConfirmDialog(getActiviy(), R.string.want_to_delete_address, R.string.ok, R.string.cancel_label, click, null);
+
+    }
+
+    @Override
+    public void onDeleteClicked(AddressModel addressModel, boolean isChecked, int position) {
+
+        deleteAddressId(addressModel.getId(),position);
+
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == add_newAddress) {
+                if (data != null) {
+
+                    addNewAddress = data.getBooleanExtra(Constants.KEY_ADD, false);
+
+                    if (addNewAddress) {
+                        GetUserAddress(user.getId());
+
+                    }
+
+                }
+
+            }
+
+
+
+        }
+    }
 }

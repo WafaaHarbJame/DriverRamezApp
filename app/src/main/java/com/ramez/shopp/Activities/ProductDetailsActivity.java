@@ -251,7 +251,8 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 updateCart(v, productId, product_barcode_id, count + 1, userId, storeId, cartId, "quantity");
 
             } else {
-                initSnackBar(getString(R.string.stock_empty), v);
+                Toast(getString(R.string.stock_empty));
+               // initSnackBar(getString(R.string.stock_empty), v);
             }
 
 
@@ -401,11 +402,14 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
                         }
 
+
+
                         int quantity = productModel.getProductBarcodes().get(0).getCartQuantity();
+
                         if (quantity > 0) {
                             binding.productCartQTY.setText(String.valueOf(quantity));
                             binding.CartLy.setVisibility(View.VISIBLE);
-                            binding.cartBut.setVisibility(View.GONE);
+                            binding.cartBut.setVisibility(View.INVISIBLE);
 
                             if (quantity == 1) {
                                 binding.deleteCartBtn.setVisibility(View.VISIBLE);
@@ -416,9 +420,10 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                             }
 
                         } else {
-                            binding.CartLy.setVisibility(View.GONE);
+                            binding.CartLy.setVisibility(View.INVISIBLE);
                             binding.cartBut.setVisibility(View.VISIBLE);
                         }
+
 
                         initAdapter();
 
@@ -566,11 +571,25 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
             if (IsSuccess) {
 
                 binding.productCartQTY.setText(String.valueOf(quantity));
-                initSnackBar(getString(R.string.success_added_to_cart), v);
+                Toast(getString(R.string.success_added_to_cart));
+                binding.CartLy.setVisibility(View.VISIBLE);
+                binding.cartBut.setVisibility(View.GONE);
+
+                if (quantity == 1) {
+                 binding.deleteCartBtn.setVisibility(View.VISIBLE);
+                  binding.minusCartBtn.setVisibility(View.GONE);
+                } else {
+                  binding.minusCartBtn.setVisibility(View.VISIBLE);
+                   binding.deleteCartBtn.setVisibility(View.GONE);
+                }
+
+                //initSnackBar(getString(R.string.success_added_to_cart), v);
 
             } else {
 
-                initSnackBar(getString(R.string.fail_to_add_cart), v);
+               // initSnackBar(getString(R.string.fail_to_add_cart), v);
+                Toast(getString(R.string.fail_to_add_cart));
+
             }
 
 
@@ -593,12 +612,16 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         new DataFeacher(false, (obj, func, IsSuccess) -> {
 
             if (IsSuccess) {
-                initSnackBar(getString(R.string.success_delete_from_cart), v);
+               // initSnackBar(getString(R.string.success_delete_from_cart), v);
+                Toast(getString(R.string.success_delete_from_cart));
+                binding.cartBut.setVisibility(View.VISIBLE);
+                binding.CartLy.setVisibility(View.GONE);
 
 
             } else {
+                Toast(getString(R.string.fail_to_delete_cart));
 
-                initSnackBar(getString(R.string.fail_to_delete_cart), v);
+               // initSnackBar(getString(R.string.fail_to_delete_cart), v);
             }
 
 
@@ -610,11 +633,33 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
             if (IsSuccess) {
 
                 binding.productCartQTY.setText(String.valueOf(quantity));
-                initSnackBar(getString(R.string.success_to_update_cart), v);
+                //initSnackBar(getString(R.string.success_to_update_cart), v);
+                Toast(getString(R.string.success_to_update_cart));
+
+                if (quantity > 0) {
+                    binding.productCartQTY.setText(String.valueOf(quantity));
+                    binding.CartLy.setVisibility(View.VISIBLE);
+                    binding.cartBut.setVisibility(View.INVISIBLE);
+
+                    if (quantity == 1) {
+                        binding.deleteCartBtn.setVisibility(View.VISIBLE);
+                        binding.minusCartBtn.setVisibility(View.GONE);
+                    } else {
+                        binding.minusCartBtn.setVisibility(View.VISIBLE);
+                        binding.deleteCartBtn.setVisibility(View.GONE);
+                    }
+
+                } else {
+                    binding.CartLy.setVisibility(View.INVISIBLE);
+                    binding.cartBut.setVisibility(View.VISIBLE);
+                }
+
+
 
             } else {
 
-                initSnackBar(getString(R.string.fail_to_update_cart), v);
+               // initSnackBar(getString(R.string.fail_to_update_cart), v);
+                Toast(getString(R.string.fail_to_update_cart));
 
             }
 
