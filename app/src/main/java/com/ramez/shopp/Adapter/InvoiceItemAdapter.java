@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +31,8 @@ import com.ramez.shopp.databinding.RowInvoiceProductItemBinding;
 
 import java.io.IOException;
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 
 
 public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.Holder> {
@@ -184,17 +187,9 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
     }
 
     private void initSnackBar(String message, View viewBar) {
-        Snackbar snackbar = Snackbar.make(viewBar, message, Snackbar.LENGTH_SHORT);
-        View view = snackbar.getView();
-        TextView snackBarMessage = view.findViewById(R.id.snackbar_text);
-        snackBarMessage.setTextColor(Color.WHITE);
-//        snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.green));
-//        snackbar.setAction(context.getResources().getString(R.string.show_cart), v -> {
-//
-//        });
-        snackbar.show();
-    }
+        Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
 
+    }
     public interface OnInvoiceItemClicked {
         void onInvoiceItemClicked(CartModel cartDM);
     }
@@ -225,7 +220,8 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
                     updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, cart_id, "quantity");
 
                 } else {
-                    initSnackBar(context.getString(R.string.stock_empty), v);
+                    Toasty.warning(context, context.getString(R.string.stock_empty), Toast.LENGTH_SHORT, true).show();
+
                 }
 
 
@@ -313,7 +309,8 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
 
                 } else {
 
-                    initSnackBar(context.getString(R.string.fail_to_update_cart), v);
+                    Toasty.error(context, context.getString(R.string.fail_to_update_cart), Toast.LENGTH_SHORT, true).show();
+
 
                 }
 
@@ -344,7 +341,8 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
 
                 } else {
 
-                    initSnackBar(context.getString(R.string.fail_to_delete_cart), v);
+                    Toasty.error(context, context.getString(R.string.fail_to_delete_cart), Toast.LENGTH_SHORT, true).show();
+
                 }
 
 

@@ -33,20 +33,24 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.single.PermissionListener;
 import com.ramez.shopp.Activities.AllListActivity;
+import com.ramez.shopp.Activities.CategoryProductsActivity;
 import com.ramez.shopp.Activities.FullScannerActivity;
 import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.Activities.SearchActivity;
 import com.ramez.shopp.Activities.SplashScreenActivity;
+import com.ramez.shopp.Adapter.CategoryAdapter;
 import com.ramez.shopp.Adapter.ProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.ApiHandler.DataFetcherCallBack;
 import com.ramez.shopp.BuildConfig;
+import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Dialogs.ConfirmDialog;
 import com.ramez.shopp.Dialogs.InfoDialog;
+import com.ramez.shopp.Models.CategoryResultModel;
 import com.ramez.shopp.Models.GeneralModel;
 import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.MemberModel;
@@ -62,7 +66,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import static android.content.ContentValues.TAG;
 
 
-public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemClick, ZXingScannerView.ResultHandler {
+public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemClick, ZXingScannerView.ResultHandler,CategoryAdapter.OnItemClick {
     private static final String FLASH_STATE = "FLASH_STATE";
     private static final String AUTO_FOCUS_STATE = "AUTO_FOCUS_STATE";
     private static final String SELECTED_FORMATS = "SELECTED_FORMATS";
@@ -88,12 +92,15 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     private boolean mAutoFocus;
     private ArrayList<Integer> mSelectedIndices;
     private int mCameraId = -1;
+    ArrayList<CategoryModel> categoryModelList;
+    private CategoryAdapter categoryAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
         productBestList = new ArrayList<>();
+        categoryModelList = new ArrayList<>();
         productSellerList = new ArrayList<>();
         productOffersList = new ArrayList<>();
         mScannerView = new ZXingScannerView(getActivity());
@@ -125,6 +132,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         binding.bestSellerRecycler.setHasFixedSize(true);
 
         GetHomePage();
+
 
         binding.searchBut.setOnClickListener(view1 -> {
             Intent intent = new Intent(getActivityy(), SearchActivity.class);
@@ -266,15 +274,14 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                         productOffersList = result.getOfferedProducts();
 
                         if(productOffersList.size()==0){
-                            binding.moreOfferBut.setVisibility(View.GONE);
-                            binding.noOffers.setVisibility(View.VISIBLE);
+                            binding.offerLy.setVisibility(View.GONE);
 
                         }
                         Log.i(TAG, "Log productBestList" + productOffersList.size());
                         Log.i(TAG, "Log productSellerList" + productSellerList.size());
                         Log.i(TAG, "Log productOffersList" + productOffersList.size());
                         initAdapter();
-
+                        getCategories(city_id);
 
                     } else {
 
@@ -394,4 +401,94 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     }
 
 
+    public void getCategories(int storeId) {
+        binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
+        binding.dataLY.setVisibility(View.GONE);
+        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            CategoryResultModel result = (CategoryResultModel) obj;
+            String message = getString(R.string.fail_to_get_data);
+
+            if (isVisible()) {
+                binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
+
+                if (func.equals(Constants.ERROR)) {
+
+                    if (result != null) {
+                        message = result.getMessage();
+                    }
+                    binding.dataLY.setVisibility(View.GONE);
+                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(message);
+
+                } else if (func.equals(Constants.FAIL)) {
+
+                    binding.dataLY.setVisibility(View.GONE);
+                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(message);
+
+
+                } else if (func.equals(Constants.NO_CONNECTION)) {
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                    binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                    binding.dataLY.setVisibility(View.GONE);
+
+                } else {
+                    if (IsSuccess) {
+                        if (result.getData() != null && result.getData().size() > 0) {
+
+                            binding.dataLY.setVisibility(View.VISIBLE);
+                            binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                            binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+                            categoryModelList = result.getData();
+
+                            Log.i(TAG, "Log productBestList" + categoryModelList.size());
+                            initCatAdapter();
+
+                        } else {
+
+                            binding.dataLY.setVisibility(View.GONE);
+                            binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
+
+                        }
+
+
+                    } else {
+
+                        binding.dataLY.setVisibility(View.GONE);
+                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                        binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                        binding.failGetDataLY.failTxt.setText(message);
+
+
+                    }
+                }
+            }
+
+        }).GetAllCategories(storeId);
+    }
+
+    private void initCatAdapter() {
+
+        categoryAdapter = new CategoryAdapter(getActivityy(), categoryModelList, this);
+        binding.catRecycler.setAdapter(categoryAdapter);
+
+    }
+
+    @Override
+    public void onItemClicked(int position, CategoryModel categoryModel) {
+
+        Intent intent = new Intent(getActivityy(), CategoryProductsActivity.class);
+        intent.putExtra(Constants.CAT_LIST, categoryModelList);
+        intent.putExtra(Constants.SELECTED_POSITION, categoryModelList.get(position).getId());
+        intent.putExtra(Constants.position, position);
+        intent.putExtra(Constants.CAT_MODEL, categoryModel);
+        startActivity(intent);
+
+    }
 }

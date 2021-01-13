@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.ramez.shopp.Adapter.CityAdapter;
 import com.ramez.shopp.Adapter.CountriesAdapter;
@@ -23,11 +24,13 @@ import com.ramez.shopp.databinding.ActivityChangeCityBranchBinding;
 
 import java.util.ArrayList;
 
+import es.dmoral.toasty.Toasty;
+
 public class ChangeCityBranchActivity extends ActivityBase implements CityAdapter.OnCityClick, CountriesAdapter.OnCountryClick {
     ActivityChangeCityBranchBinding binding;
     ArrayList<CityModel> cityModelArrayList;
     ArrayList<CountryModel> countries;
-
+    int user_id = 0;
     int city_id = 0;
     int countryId;
     LocalModel localModel;
@@ -52,6 +55,15 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
         city_id = Integer.parseInt(localModel.getCityId());
 
         Log.i("tag", "Log cityId" + localModel.getCityId());
+
+        if(UtilityApp.isLogin()){
+         binding.countryLY.setVisibility(View.GONE);
+
+        }
+        else {
+            binding.countryLY.setVisibility(View.VISIBLE);
+
+        }
 
 
         binding.chooseBranchTv.setOnClickListener(view1 -> {
@@ -103,14 +115,6 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
 
         getCityList(countryId);
 
-        binding.saveBut.setOnClickListener(view1 -> {
-            localModel.setCityId(String.valueOf(city_id));
-            UtilityApp.setLocalData(localModel);
-            Toast(R.string.change_success);
-            Intent intent = new Intent(getActiviy(), SplashScreenActivity.class);
-            startActivity(intent);
-
-        });
 
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
             getCityList(countryId);
@@ -121,7 +125,8 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
             localModel.setCountryId(countryId);
             localModel.setCityId(String.valueOf(city_id));
             UtilityApp.setLocalData(localModel);
-            Toast(R.string.change_success);
+            Toasty.success(getActiviy(), R.string.change_success, Toast.LENGTH_SHORT, true).show();
+
             Intent intent = new Intent(getActiviy(), SplashScreenActivity.class);
             startActivity(intent);
 
@@ -169,7 +174,7 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
             CityModelResult result = (CityModelResult) obj;
             if (func.equals(Constants.ERROR)) {
 
-                if (result.getMessage() != null) {
+                if (result != null && result.getMessage() != null) {
                     message = result.getMessage();
                 }
                 binding.dataLY.setVisibility(View.GONE);
@@ -219,6 +224,7 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
         Log.i("tag", "Log click countryId" + countryId);
         Log.i("tag", "Log click ShortName" + countryModel.getShortname());
         getCityList(countryId);
+
 
     }
 }

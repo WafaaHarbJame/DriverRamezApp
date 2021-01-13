@@ -7,17 +7,24 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-
-    <ImageView
+    <com.jsibbold.zoomage.ZoomageView
         android:id="@+id/iv_adImageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
+        android:src="@drawable/avatar"
+        app:zoomage_restrictBounds="false"
+        app:zoomage_animateOnReset="true"
+        app:zoomage_autoResetMode="UNDER"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:src="@drawable/avatar"
-        android:background="@color/white" />
+        app:zoomage_autoCenter="true"
+        android:scaleType="fitCenter"
+        app:zoomage_zoomable="true"
+        app:zoomage_translatable="true"
+        app:zoomage_minScale="0.6"
+        app:zoomage_maxScale="8"
+        />
 
     <ImageView
         android:id="@+id/closeBtn"
@@ -27,6 +34,6 @@
         android:layout_marginStart="@dimen/_10sdp"
         android:padding="@dimen/_6sdp"
         android:src="@drawable/ic_dialog_error"
-        app:tint="@color/white" />
+        app:tint="@color/colorPrimaryDark" />
 
 </RelativeLayout>

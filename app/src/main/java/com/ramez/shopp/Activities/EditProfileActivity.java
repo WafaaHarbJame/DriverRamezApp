@@ -4,14 +4,16 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
+import com.aminography.choosephotohelper.ChoosePhotoHelper;
+import com.aminography.choosephotohelper.callback.ChoosePhotoCallback;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
@@ -26,27 +28,33 @@ import com.ramez.shopp.Dialogs.PickImageDialog;
 import com.ramez.shopp.Models.LoginResultModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.R;
+import com.ramez.shopp.Utils.FileUtil;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.Utils.PathUtil;
 import com.ramez.shopp.databinding.ActivityEditProfileBinding;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.Objects;
+
+import id.zelory.compressor.Compressor;
 
 public class EditProfileActivity extends ActivityBase {
 
     MemberModel memberModel;
     PickImageDialog pickImageDialog;
     int REQUEST_PICK_IMAGE = 11;
-    int REQUEST_CAPTURE_IMAGE = 12;
     int userId;
     File selectedPhotoFil = null;
     private ActivityEditProfileBinding binding;
-    private Bitmap userImageBitmap;
     private String country;
+    private ChoosePhotoHelper choosePhotoHelper;
+    private Uri selectedPhotoUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +62,6 @@ public class EditProfileActivity extends ActivityBase {
         binding = ActivityEditProfileBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
 
         setTitle(R.string.text_title_edit_profile);
 
@@ -86,64 +93,84 @@ public class EditProfileActivity extends ActivityBase {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == REQUEST_PICK_IMAGE && resultCode == Activity.RESULT_OK) {
-            try {
-                userImageBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
-                Glide.with(getActiviy()).load(userImageBitmap).into(binding.userImg);
-                String imagePath = PathUtil.getPath(getActiviy(), data.getData());
-                selectedPhotoFil = new File(imagePath);
+        if (choosePhotoHelper != null)
+            choosePhotoHelper.onActivityResult(requestCode, resultCode, data);
 
-                uploadPhoto(userId, selectedPhotoFil);
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_PICK_IMAGE) {
+
+            try {
+
+                if (data.getData() != null) {
+                    selectedPhotoUri = data.getData();
+
+                    selectedPhotoFil = FileUtil.from(getActiviy(), selectedPhotoUri);
+
+                    Glide.with(getActiviy()).asBitmap().load(selectedPhotoUri).placeholder(R.drawable.avatar).into(binding.userImg);
+                    uploadPhoto(userId, selectedPhotoFil);
+
+                }
+
 
             } catch (Exception e) {
                 e.printStackTrace();
                 GlobalData.errorDialog(getActiviy(), R.string.upload_photo, getString(R.string.textTryAgain));
             }
         }
-
-        if (requestCode == REQUEST_CAPTURE_IMAGE && resultCode == Activity.RESULT_OK) {
-
-            try {
-                userImageBitmap = (Bitmap) data.getExtras().get("data");
-                Glide.with(getActiviy()).load(userImageBitmap).into(binding.userImg);
-                String imagePath = PathUtil.getPath(getActiviy(), data.getData());
-                selectedPhotoFil = new File(imagePath);
-                uploadPhoto(userId, selectedPhotoFil);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.d("TAG", "onActivityResult: Exception GALLERY_CONSTANT: " + e.getMessage());
-                GlobalData.errorDialog(getActiviy(), R.string.upload_photo, getString(R.string.textTryAgain));
-            }
-
-        }
-
-
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        choosePhotoHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
     }
 
     private void pickImage() {
         pickImageDialog = new PickImageDialog(getActiviy(), (obj, func, IsSuccess) -> {
 
             if (func.equals(Constants.CAPTURE)) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, REQUEST_CAPTURE_IMAGE);
+
+                choosePhotoHelper = ChoosePhotoHelper.with(getActiviy()).asUri().build(uri -> {
+
+                    selectedPhotoUri = uri;
+                    try {
+
+                        selectedPhotoFil = FileUtil.from(getActiviy(),uri);
+
+                        Glide.with(getActiviy()).asBitmap().load(selectedPhotoUri).placeholder(R.drawable.avatar).into(binding.userImg);
+
+                        selectedPhotoFil = new Compressor(getActiviy()).compressToFile(selectedPhotoFil);
+
+                        Log.i("tag","Log selectedPhotoFil  " + selectedPhotoFil);
+                        Log.i("tag","Log uri "+uri);
+
+                        uploadPhoto(userId,selectedPhotoFil);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        GlobalData.errorDialog(getActiviy(), R.string.upload_photo, getString(R.string.textTryAgain));
+
+                    }
+
+                });
+
+                choosePhotoHelper.takePhoto();
+
 
             } else if (func.equals(Constants.PICK)) {
 
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 startActivityForResult(Intent.createChooser(intent, getString(R.string.selectImage)), REQUEST_PICK_IMAGE);
 
             }
+
         });
         pickImageDialog.show();
 
@@ -182,7 +209,7 @@ public class EditProfileActivity extends ActivityBase {
         memberModel.setName(name);
         memberModel.setEmail(email);
 
-        GlobalData.progressDialog(getActiviy(), R.string.update_profile, R.string.please_wait_upload);
+        GlobalData.progressDialog(getActiviy(), R.string.update_profile, R.string.please_wait_sending);
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             GlobalData.hideProgressDialog();
 
@@ -194,14 +221,11 @@ public class EditProfileActivity extends ActivityBase {
                     message = result.getMessage();
                 }
                 GlobalData.errorDialog(getActiviy(), R.string.failtoupdate_profile, message);
-            }
-
-            else if (func.equals(Constants.NO_CONNECTION)) {
+            } else if (func.equals(Constants.NO_CONNECTION)) {
                 GlobalData.errorDialog(getActiviy(), R.string.failtoupdate_profile, getString(R.string.no_internet_connection));
 
 
-            }
-            else {
+            } else {
                 if (IsSuccess) {
 
                     MemberModel user = result.data;
@@ -221,42 +245,11 @@ public class EditProfileActivity extends ActivityBase {
         }).updateProfile(memberModel);
 
     }
-//
-//    private void uploadPhoto(int userId, File photo) {
-//
-//
-//        GlobalData.progressDialog(getActiviy(), R.string.upload_photo, R.string.please_wait_to_upload_photo);
-//
-//        new DataFeacher(true, (obj, func, IsSuccess) -> {
-//            GlobalData.hideProgressDialog();
-//
-//            ResultAPIModel<GeneralModel> result = (ResultAPIModel<GeneralModel>) obj;
-//            if (func.equals(Constants.ERROR)) {
-//                String message = getString(R.string.failtoupdate_profile);
-//                if (result != null && result.message != null) {
-//                    message = result.message;
-//                }
-//                GlobalData.errorDialog(getActiviy(), R.string.failtoupdate_profile, message);
-//            } else {
-//                if (IsSuccess) {
-//                    GlobalData.successDialog(getActiviy(), getString(R.string.upload_photo), getString(R.string.success_update));
-//
-//                } else {
-//                    Toast(getString(R.string.failtoupdate_profile));
-//
-//                }
-//            }
-//
-//
-//        }).uploadPhoto(userId, photo);
-//
-//    }
+
 
     private void uploadPhoto(int userId, File photo) {
 
         Log.i("tag", "Log  userId " + userId);
-        Log.i("tag", "Log  photo " + photo.getName());
-        Log.i("tag", "Log  uploadPhoto " + photo.getName());
 
         GlobalData.progressDialog(getActiviy(), R.string.upload_photo, R.string.please_wait_to_upload_photo);
 
@@ -286,16 +279,21 @@ public class EditProfileActivity extends ActivityBase {
                 } else {
 
                     String data = null;
+
                     try {
                         JSONObject jsonObject = response;
                         int status = jsonObject.getInt("status");
                         if (status == 200) {
                             data = jsonObject.getString("data");
-
-                            memberModel.setProfilePicture(data);
-                            UtilityApp.setUserData(memberModel);
                             Log.i("tag", "Log data result " + data);
-                            GlobalData.successDialog(getActiviy(), getString(R.string.upload_photo), getString(R.string.success_update));
+
+                            if(data!=null){
+                                memberModel.setProfilePicture(data);
+                                UtilityApp.setUserData(memberModel);
+                                GlobalData.successDialog(getActiviy(), getString(R.string.upload_photo), getString(R.string.success_update));
+
+                            }
+
 
                         } else {
                             message = jsonObject.getString("message");
@@ -320,4 +318,9 @@ public class EditProfileActivity extends ActivityBase {
     }
 
 
+//    @Override
+//    protected void onSaveInstanceState(@NonNull Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//        choosePhotoHelper.onSaveInstanceState(outState);
+//    }
 }

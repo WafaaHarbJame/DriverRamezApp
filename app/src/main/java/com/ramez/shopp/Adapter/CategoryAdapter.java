@@ -20,6 +20,7 @@ import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.R;
 import com.ramez.shopp.databinding.RowCategoryBinding;
+import com.ramez.shopp.databinding.RowProductsItemBinding;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        RowCategoryBinding itemView = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.row_category, parent, false);
+        RowCategoryBinding itemView = RowCategoryBinding.inflate(LayoutInflater.from(context), parent, false);
 
         return new Holder(itemView);
     }

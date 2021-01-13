@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +24,7 @@ import com.ramez.shopp.R;
 
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 
 
 public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdapter.Holder> {
@@ -111,29 +113,23 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
         new DataFeacher(false, (obj, func, IsSuccess) -> {
 
             if (IsSuccess) {
-
                 initSnackBar(context.getString(R.string.success_added_to_cart), v);
 
 
             } else {
+                Toasty.error(context, context.getString(R.string.fail_to_add_cart), Toast.LENGTH_SHORT, true).show();
 
-                initSnackBar(context.getString(R.string.fail_to_add_cart), v);
             }
 
 
         }).addCartHandle(productId, product_barcode_id, quantity, userId, storeId);
     }
 
-    private void initSnackBar(String message, View viewBar) {
-        Snackbar snackbar = Snackbar.make(viewBar, message, Snackbar.LENGTH_SHORT);
-        View view = snackbar.getView();
-        TextView snackBarMessage = view.findViewById(R.id.snackbar_text);
-        snackBarMessage.setTextColor(Color.WHITE);
-        snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.green));
-        snackbar.setAction(context.getResources().getString(R.string.show_cart), v -> {
 
-        });
-        snackbar.show();
+
+    private void initSnackBar(String message, View viewBar) {
+        Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
+
     }
 
 

@@ -32,6 +32,7 @@ import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Models.AutoCompleteModel;
+import com.ramez.shopp.Models.CategoryResultModel;
 import com.ramez.shopp.Models.ChildCat;
 import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.LocalModel;
@@ -101,7 +102,8 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
         getIntentExtra();
 
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
-            getProductList(category_id, country_id, city_id, user_id, filter, 0, 10);
+            getCategories(city_id,0);
+         //   getProductList(category_id, country_id, city_id, user_id, filter, 0, 10);
 
         });
 
@@ -197,13 +199,13 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
             childCat.setName(getString(R.string.all));
 
             subCategoryDMS = mainCategoryDMS.get(position).getChildCat();
+            category_id = categoryModel.getId();
 
             subCategoryDMS.add(0, childCat);
 
             initMainCategoryAdapter();
 
             initSubCategoryAdapter();
-            category_id = categoryModel.getId();
 
             getProductList(category_id, country_id, city_id, user_id, filter, 0, 10);
 
@@ -308,14 +310,9 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
     @Override
     public void OnMainCategoryItemClicked(CategoryModel mainCategoryDM, int position) {
 
-        category_id = mainCategoryDM.getId();
         subCategoryDMS.clear();
-
-        subCategoryDMS = mainCategoryDMS.get(position).getChildCat();
-        selectedSubCat = mainCategoryDMS.get(position).getChildCat().get(0).getId();
-
-        getProductList(category_id, country_id, city_id, user_id, "", 0, 10);
-        initSubCategoryAdapter();
+        category_id = mainCategoryDM.getId();
+        getCategories(city_id,position);
 
 
     }
@@ -360,5 +357,98 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
             startActivity(intent);
         }
 
+    }
+
+
+    public void getCategories(int storeId,int position) {
+
+        subCategoryDMS.clear();
+        mainCategoryDMS.clear();
+
+        binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
+        binding.dataLY.setVisibility(View.GONE);
+        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            CategoryResultModel result = (CategoryResultModel) obj;
+            String message = getString(R.string.fail_to_get_data);
+
+                binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
+
+                if (func.equals(Constants.ERROR)) {
+
+                    if (result != null) {
+                        message = result.getMessage();
+                    }
+                    binding.dataLY.setVisibility(View.GONE);
+                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(message);
+
+                } else if (func.equals(Constants.FAIL)) {
+
+                    binding.dataLY.setVisibility(View.GONE);
+                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(message);
+
+
+                } else if (func.equals(Constants.NO_CONNECTION)) {
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                    binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                    binding.dataLY.setVisibility(View.GONE);
+
+                } else {
+                    if (IsSuccess) {
+                        if (result.getData() != null && result.getData().size() > 0) {
+
+                            binding.dataLY.setVisibility(View.VISIBLE);
+                            binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                            binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+
+                            ChildCat childCat = new ChildCat();
+                            childCat.setId(0);
+                            childCat.setHName(getString(R.string.all));
+                            childCat.setName(getString(R.string.all));
+
+                            mainCategoryDMS=result.getData();
+
+                            subCategoryDMS = mainCategoryDMS.get(position).getChildCat();
+
+                            subCategoryDMS.add(0, childCat);
+
+                            if(subCategoryDMS.size()>0){
+                                selectedSubCat = mainCategoryDMS.get(position).getChildCat().get(0).getId();
+
+                            }
+
+                            initMainCategoryAdapter();
+                            initSubCategoryAdapter();
+                            getProductList(category_id, country_id, city_id, user_id, "", 0, 10);
+
+
+                        } else {
+
+                            binding.dataLY.setVisibility(View.GONE);
+                            binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
+
+                        }
+
+
+                    } else {
+
+                        binding.dataLY.setVisibility(View.GONE);
+                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                        binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                        binding.failGetDataLY.failTxt.setText(message);
+
+
+                    }
+                }
+
+
+        }).GetAllCategories(storeId);
     }
 }

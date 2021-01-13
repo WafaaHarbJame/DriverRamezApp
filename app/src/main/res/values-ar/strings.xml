@@ -156,11 +156,11 @@
     <string name="invoice_number">رقم الفاتورة </string>
     <string name="product_total">اجمالي المنتج</string>
     <string name="deliver_fees">رسوم التوصيل</string>
-    <string name="delivery_to">التوصيل الى </string>
+    <string name="delivery_to">التوصيل الى : </string>
     <string name="deliver_time">مواعيد التوصيل</string>
     <string name="choose_payment_type">اختر طريقة دفع</string>
     <string name="delivery_send">تسليم للتوصيل</string>
-    <string name="save_update">حفظ مع متابعة التعديل</string>
+    <string name="save_update">متابعة التعديل</string>
     <string name="textFromtime">9 A.m  9 P.M</string>
     <string name="item">الصنف</string>
     <string name="quantity">الكمية </string>
@@ -287,4 +287,9 @@
     <string name="user">مستخدم</string>
     <string name="fail_delete_address">فشل حذف العنوان</string>
     <string name="no_offers">لا يوجد عروض </string>
+    <string name="my_location">موقعي </string>
+    <string name="open_gps">فتح GPS </string>
+    <string name="enable">مفعل </string>
+    <string name="map_str">الخريطة </string>
+    <string name="bh_973">البحرين (973)</string>
 </resources>

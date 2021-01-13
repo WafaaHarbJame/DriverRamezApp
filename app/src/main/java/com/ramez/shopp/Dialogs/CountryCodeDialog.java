@@ -63,31 +63,40 @@ public class CountryCodeDialog extends Dialog {
 
         setContentView(R.layout.dialog_country_code);
         setCancelable(false);
+        countries=new ArrayList<>();
         rv = findViewById(R.id.rv);
         okBtn = findViewById(R.id.okBtn);
         closeBut = findViewById(R.id.closeBtn);
         searchTxt = findViewById(R.id.searchTxt);
         linearLayoutManager = new LinearLayoutManager(activity);
         rv.setLayoutManager(linearLayoutManager);
-
         rv.hasFixedSize();
 
-//        getCountryList();
-
-        if (UtilityApp.getCountriesData().size() > 0) {
-            countries = UtilityApp.getCountriesData();
-            initAdapter(countries);
 
 
-        } else {
-            countries.add(new CountryModel(4, context.getString(R.string.Oman), context.getString(R.string.oman_shotname), 968, "OMR", 3, R.drawable.ic_flag_oman));
-            countries.add(new CountryModel(17, context.getString(R.string.Bahrain), context.getString(R.string.bahrain_shotname), 973, "BHD", 3, R.drawable.ic_flag_behrain));
-            countries.add(new CountryModel(117, context.getString(R.string.Kuwait), context.getString(R.string.Kuwait_shotname), 965, "KWD", 2, R.drawable.ic_flag_kuwait));
-            countries.add(new CountryModel(178, context.getString(R.string.Qatar), context.getString(R.string.Qatar_shotname), 974, "QAR", 2, R.drawable.ic_flag_qatar));
-            countries.add(new CountryModel(191, context.getString(R.string.Saudi_Arabia), context.getString(R.string.Saudi_Arabia_shortname), 191, "SAR", 2, R.drawable.ic_flag_saudi_arabia));
-            countries.add(new CountryModel(229, context.getString(R.string.United_Arab_Emirates), context.getString(R.string.United_Arab_Emirates_shotname), 971, "AED", 2, R.drawable.ic_flag_uae));
-            initAdapter(countries);
-        }
+//        if (UtilityApp.getCountriesData().size() > 0) {
+//            countries = UtilityApp.getCountriesData();
+//
+//
+//        } else {
+//
+//            countries.add(new CountryModel(4, context.getString(R.string.Oman), context.getString(R.string.oman_shotname), 968, "OMR", 3, R.drawable.ic_flag_oman));
+//            countries.add(new CountryModel(17, context.getString(R.string.Bahrain), context.getString(R.string.bahrain_shotname), 973, "BHD", 3, R.drawable.ic_flag_behrain));
+//            countries.add(new CountryModel(117, context.getString(R.string.Kuwait), context.getString(R.string.Kuwait_shotname), 965, "KWD", 2, R.drawable.ic_flag_kuwait));
+//            countries.add(new CountryModel(178, context.getString(R.string.Qatar), context.getString(R.string.Qatar_shotname), 974, "QAR", 2, R.drawable.ic_flag_qatar));
+//            countries.add(new CountryModel(191, context.getString(R.string.Saudi_Arabia), context.getString(R.string.Saudi_Arabia_shortname), 191, "SAR", 2, R.drawable.ic_flag_saudi_arabia));
+//            countries.add(new CountryModel(229, context.getString(R.string.United_Arab_Emirates), context.getString(R.string.United_Arab_Emirates_shotname), 971, "AED", 2, R.drawable.ic_flag_uae));
+//
+//        }
+
+        countries.add(new CountryModel(4, context.getString(R.string.Oman), context.getString(R.string.oman_shotname), 968, "OMR", 3, R.drawable.ic_flag_oman));
+        countries.add(new CountryModel(17, context.getString(R.string.Bahrain), context.getString(R.string.bahrain_shotname), 973, "BHD", 3, R.drawable.ic_flag_behrain));
+        countries.add(new CountryModel(117, context.getString(R.string.Kuwait), context.getString(R.string.Kuwait_shotname), 965, "KWD", 2, R.drawable.ic_flag_kuwait));
+        countries.add(new CountryModel(178, context.getString(R.string.Qatar), context.getString(R.string.Qatar_shotname), 974, "QAR", 2, R.drawable.ic_flag_qatar));
+        countries.add(new CountryModel(191, context.getString(R.string.Saudi_Arabia), context.getString(R.string.Saudi_Arabia_shortname), 191, "SAR", 2, R.drawable.ic_flag_saudi_arabia));
+        countries.add(new CountryModel(229, context.getString(R.string.United_Arab_Emirates), context.getString(R.string.United_Arab_Emirates_shotname), 971, "AED", 2, R.drawable.ic_flag_uae));
+
+        initAdapter(countries);
 
 
         try {

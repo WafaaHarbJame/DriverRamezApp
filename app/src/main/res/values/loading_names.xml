@@ -1,5 +1,6 @@
 <resources>
 
     <string name="L_6x4_LineSpinFadeLoaderIndicator" translatable="false">LineSpinFadeLoaderIndicator</string>
+    <string name="L_2x2" translatable="false">BallClipRotateMultipleIndicator</string>
 
 </resources>

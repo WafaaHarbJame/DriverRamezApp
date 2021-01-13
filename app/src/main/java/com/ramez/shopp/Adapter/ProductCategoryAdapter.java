@@ -44,6 +44,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
+
 public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
@@ -305,15 +307,8 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     private void initSnackBar(String message, View viewBar) {
-        Snackbar snackbar = Snackbar.make(viewBar, message, Snackbar.LENGTH_SHORT);
-        View view = snackbar.getView();
-        TextView snackBarMessage = view.findViewById(R.id.snackbar_text);
-        snackBarMessage.setTextColor(Color.WHITE);
-        //   snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.green));
-//        snackbar.setAction(context.getResources().getString(R.string.show_cart), v -> {
-//
-//        });
-        snackbar.show();
+        Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
+
     }
 
     private ProductCategoryAdapter getAdapter() {
@@ -468,7 +463,8 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             binding.plusCartBtn.setOnClickListener(view1 -> {
 
                 ProductModel productModel = productModels.get(getAdapterPosition());
-                int count = productModel.getProductBarcodes().get(0).getCartQuantity();
+               // int count = productModel.getProductBarcodes().get(0).getCartQuantity();
+                int count = Integer.parseInt(binding.productCartQTY.getText().toString());
 
                 int position = getAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
@@ -492,7 +488,8 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             binding.minusCartBtn.setOnClickListener(view1 -> {
 
                 ProductModel productModel = productModels.get(getAdapterPosition());
-                int count = productModel.getProductBarcodes().get(0).getCartQuantity();
+             //   int count = productModel.getProductBarcodes().get(0).getCartQuantity();
+                int count = Integer.parseInt(binding.productCartQTY.getText().toString());
                 int position = getAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
@@ -540,7 +537,8 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 } else {
 
-                    initSnackBar(context.getString(R.string.fail_to_add_cart), v);
+                    Toasty.error(context, context.getString(R.string.fail_to_add_cart), Toast.LENGTH_SHORT, true).show();
+
                 }
 
 
@@ -557,7 +555,8 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 } else {
 
-                    initSnackBar(context.getString(R.string.fail_to_update_cart), view);
+                    Toasty.error(context, context.getString(R.string.fail_to_update_cart), Toast.LENGTH_SHORT, true).show();
+
 
                 }
 
@@ -575,7 +574,8 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 } else {
 
-                    initSnackBar(context.getString(R.string.fail_to_delete_cart), v);
+                    Toasty.error(context, context.getString(R.string.fail_to_delete_cart), Toast.LENGTH_SHORT, true).show();
+
                 }
 
 

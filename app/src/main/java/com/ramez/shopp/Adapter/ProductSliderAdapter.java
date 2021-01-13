@@ -1,5 +1,6 @@
 package com.ramez.shopp.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.bumptech.glide.Glide;
+import com.ramez.shopp.Dialogs.ShowImageDialog;
 import com.ramez.shopp.Models.SliderModel;
 import com.ramez.shopp.R;
 
@@ -45,6 +47,13 @@ public class ProductSliderAdapter extends PagerAdapter {
             ImageView productImg =  view.findViewById(R.id.productImg);
             Glide.with(context).asBitmap().load(sliderList.get(position)).placeholder(R.drawable.holder_image).into(productImg);
             container.addView(view);
+
+            productImg.setOnClickListener(view1 -> {
+                ShowImageDialog showImageDialog = new ShowImageDialog((Activity) context,sliderList.get(position));
+                showImageDialog.show();
+
+            });
+
         } catch (Exception e) {
             e.printStackTrace();
         }

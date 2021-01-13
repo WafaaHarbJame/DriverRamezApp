@@ -2,14 +2,12 @@ package com.ramez.shopp.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RatingBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
@@ -18,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.google.android.material.snackbar.Snackbar;
 import com.ramez.shopp.Adapter.ProductSliderAdapter;
 import com.ramez.shopp.Adapter.ReviewAdapter;
 import com.ramez.shopp.Adapter.SuggestedProductAdapter;
@@ -46,6 +43,8 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+
+import es.dmoral.toasty.Toasty;
 
 public class ProductDetailsActivity extends ActivityBase implements SuggestedProductAdapter.OnItemClick {
     ActivityProductDeatilsBinding binding;
@@ -154,7 +153,8 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                             reviewModel.setRate((int) ratingBar.getRating());
 
                             if (ratingBar.getRating() == 0) {
-                                Toast(R.string.please_fill_rate);
+
+                                Toasty.error(getActiviy(), R.string.please_fill_rate, Toast.LENGTH_SHORT, true).show();
                                 YoYo.with(Techniques.Shake).playOn(ratingBar);
                                 ratingBar.requestFocus();
 
@@ -251,8 +251,10 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 updateCart(v, productId, product_barcode_id, count + 1, userId, storeId, cartId, "quantity");
 
             } else {
-                Toast(getString(R.string.stock_empty));
-               // initSnackBar(getString(R.string.stock_empty), v);
+
+                Toasty.warning(getActiviy(), R.string.stock_empty, Toast.LENGTH_SHORT, true).show();
+
+
             }
 
 
@@ -454,18 +456,26 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
     private void addToFavorite(View v, int productId, int userId, int storeId) {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
-                Toast.makeText(getActiviy(), "" + getString(R.string.fail_to_add_favorite), Toast.LENGTH_SHORT).show();
+
+                Toasty.error(getActiviy(), R.string.fail_to_add_favorite, Toast.LENGTH_SHORT, true).show();
+
             } else if (func.equals(Constants.FAIL)) {
-                Toast.makeText(getActiviy(), "" + getString(R.string.fail_to_add_favorite), Toast.LENGTH_SHORT).show();
+
+                Toasty.error(getActiviy(), R.string.fail_to_add_favorite, Toast.LENGTH_SHORT, true).show();
+
 
             } else {
                 if (IsSuccess) {
                     binding.favBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.favorite_icon));
-                    Toast.makeText(getActiviy(), "" + getString(R.string.success_add), Toast.LENGTH_SHORT).show();
+
+                    Toasty.success(getActiviy(), R.string.success_add, Toast.LENGTH_SHORT, true).show();
+
                     isFavorite = true;
 
                 } else {
-                    Toast.makeText(getActiviy(), "" + getString(R.string.fail_to_add_favorite), Toast.LENGTH_SHORT).show();
+
+                    Toasty.error(getActiviy(), R.string.fail_to_add_favorite, Toast.LENGTH_SHORT, true).show();
+
                 }
             }
 
@@ -476,19 +486,23 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
     private void removeFromFavorite(View view, int productId, int userId, int storeId) {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
-                Toast.makeText(getActiviy(), "" + getString(R.string.fail_to_remove_favorite), Toast.LENGTH_SHORT).show();
+                Toasty.error(getActiviy(), R.string.fail_to_remove_favorite, Toast.LENGTH_SHORT, true).show();
+
             } else if (func.equals(Constants.FAIL)) {
-                Toast.makeText(getActiviy(), "" + getString(R.string.fail_to_remove_favorite), Toast.LENGTH_SHORT).show();
+
+                Toasty.error(getActiviy(), R.string.fail_to_remove_favorite, Toast.LENGTH_SHORT, true).show();
+
 
             } else {
                 if (IsSuccess) {
                     binding.favBut.setImageDrawable(ContextCompat.getDrawable(getActiviy(), R.drawable.empty_fav));
                     isFavorite = false;
-                    Toast.makeText(getActiviy(), "" + getString(R.string.success_delete), Toast.LENGTH_SHORT).show();
+                    Toasty.success(getActiviy(), R.string.success_delete, Toast.LENGTH_SHORT, true).show();
+
 
                 } else {
+                    Toasty.error(getActiviy(), R.string.fail_to_remove_favorite, Toast.LENGTH_SHORT, true).show();
 
-                    Toast.makeText(getActiviy(), "" + getString(R.string.fail_to_remove_favorite), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -571,7 +585,6 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
             if (IsSuccess) {
 
                 binding.productCartQTY.setText(String.valueOf(quantity));
-                Toast(getString(R.string.success_added_to_cart));
                 binding.CartLy.setVisibility(View.VISIBLE);
                 binding.cartBut.setVisibility(View.GONE);
 
@@ -583,12 +596,11 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                    binding.deleteCartBtn.setVisibility(View.GONE);
                 }
 
-                //initSnackBar(getString(R.string.success_added_to_cart), v);
+                initSnackBar(getString(R.string.success_added_to_cart), v);
 
             } else {
 
-               // initSnackBar(getString(R.string.fail_to_add_cart), v);
-                Toast(getString(R.string.fail_to_add_cart));
+                Toasty.error(getActiviy(), getString(R.string.fail_to_add_cart), Toast.LENGTH_SHORT, true).show();
 
             }
 
@@ -597,31 +609,22 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
     }
 
     private void initSnackBar(String message, View viewBar) {
-        Snackbar snackbar = Snackbar.make(viewBar, message, Snackbar.LENGTH_SHORT);
-        View view = snackbar.getView();
-        TextView snackBarMessage = view.findViewById(R.id.snackbar_text);
-        snackBarMessage.setTextColor(Color.WHITE);
-//        snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.green));
-//        snackbar.setAction(context.getResources().getString(R.string.show_cart), v -> {
-//
-//        });
-        snackbar.show();
+        Toasty.success(getActiviy(), message, Toast.LENGTH_SHORT, true).show();
+
     }
 
     private void deleteCart(View v, int productId, int product_barcode_id, int cart_id, int userId, int storeId) {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
 
             if (IsSuccess) {
-               // initSnackBar(getString(R.string.success_delete_from_cart), v);
-                Toast(getString(R.string.success_delete_from_cart));
+                initSnackBar(getString(R.string.success_delete_from_cart), v);
                 binding.cartBut.setVisibility(View.VISIBLE);
                 binding.CartLy.setVisibility(View.GONE);
 
 
             } else {
-                Toast(getString(R.string.fail_to_delete_cart));
+                Toasty.error(getActiviy(), getString(R.string.fail_to_delete_cart), Toast.LENGTH_SHORT, true).show();
 
-               // initSnackBar(getString(R.string.fail_to_delete_cart), v);
             }
 
 
@@ -633,8 +636,9 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
             if (IsSuccess) {
 
                 binding.productCartQTY.setText(String.valueOf(quantity));
-                //initSnackBar(getString(R.string.success_to_update_cart), v);
-                Toast(getString(R.string.success_to_update_cart));
+
+                initSnackBar(getString(R.string.success_to_update_cart), v);
+
 
                 if (quantity > 0) {
                     binding.productCartQTY.setText(String.valueOf(quantity));
@@ -658,8 +662,8 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
             } else {
 
-               // initSnackBar(getString(R.string.fail_to_update_cart), v);
-                Toast(getString(R.string.fail_to_update_cart));
+                Toasty.error(getActiviy(), getString(R.string.fail_to_update_cart), Toast.LENGTH_SHORT, true).show();
+
 
             }
 

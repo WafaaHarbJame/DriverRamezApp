@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="6dp"
+    android:gravity="center"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/container"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="6dp"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_80sdp">
+        android:layout_height="@dimen/_80sdp">
 
         <com.wang.avi.AVLoadingIndicatorView
             android:id="@+id/loadingLY"
@@ -25,35 +22,35 @@
             android:visibility="gone"
             app:indicatorColor="@color/colorPrimary"
             app:indicatorName="BallClipRotateMultipleIndicator" />
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardUseCompatPadding="true"
-                app:cardBackgroundColor="@color/white"
-                android:elevation="@dimen/_4sdp"
-                app:cardCornerRadius="10dp">
 
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/ivCatImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_80sdp"
-                    android:scaleType="fitXY"
-                    app:riv_corner_radius="@dimen/_10sdp"
-                    android:background="@drawable/round_corner_white"
-                    android:src="@drawable/holder_image" />
-            </androidx.cardview.widget.CardView>
-
-        </FrameLayout>
-
-
-        <TextView
-            android:id="@+id/tvCatTitle"
-            android:layout_width="wrap_content"
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:lines="3"
-            android:gravity="center"
-            android:textColor="@color/black" />
+            android:elevation="@dimen/_4sdp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="10dp"
+            app:cardUseCompatPadding="true">
 
-    </LinearLayout>
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/ivCatImage"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_80sdp"
+                android:background="@drawable/round_corner_white"
+                android:scaleType="fitXY"
+                android:src="@drawable/holder_image"
+                app:riv_corner_radius="@dimen/_10sdp" />
+        </androidx.cardview.widget.CardView>
 
-</layout>
+    </FrameLayout>
+
+
+    <com.ramez.shopp.SpichalViews.STextView
+        android:id="@+id/tvCatTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:lines="3"
+        android:textColor="@color/black" />
+
+</LinearLayout>
+

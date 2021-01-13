@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:gravity="center"
     android:orientation="vertical"
-      android:visibility="gone">
+      android:visibility="visible">
 
 
         <LinearLayout
@@ -20,10 +20,10 @@
             android:padding="16dp">
 
             <ImageView
-                android:layout_width="@dimen/_50sdp"
-                android:layout_height="@dimen/_50sdp"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_70sdp"
                 android:layout_margin="8dp"
-                app:srcCompat="@drawable/addnew_address"
+                app:srcCompat="@drawable/ic_no_address"
                 />
 
             <TextView

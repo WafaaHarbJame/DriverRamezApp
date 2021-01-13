@@ -36,7 +36,8 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
     private LinearLayoutManager linearLayoutManager;
     private int defaultAddressId;
     private MemberModel user;
-    private int add_newAddress = 4000;
+    private int ADD_ADDRESS = 4000;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,7 +123,7 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
 
     private void addNewAddress() {
         Intent intent = new Intent(getActiviy(), AddNewAddressActivity.class);
-        startActivityForResult(intent, add_newAddress);
+        startActivityForResult(intent, ADD_ADDRESS);
     }
 
     public void GetUserAddress(int user_id) {
@@ -130,6 +131,8 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
         addressList.clear();
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
+        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
@@ -159,7 +162,6 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
                     if (result.getData() != null && result.getData().size() > 0) {
                         addressList = result.getData();
                         initAdapter();
-                        addressAdapter.notifyDataSetChanged();
 
                     } else {
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
@@ -297,15 +299,18 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == add_newAddress) {
+            if (requestCode == ADD_ADDRESS) {
                 if (data != null) {
+                    Bundle bundle=data.getExtras();
 
-                    addNewAddress = data.getBooleanExtra(Constants.KEY_ADD, false);
+                    addNewAddress = data.getBooleanExtra(Constants.KEY_ADD_NEW, false);
+                    Log.i("TAG","Log addNewAddress onActivityResult  "+addNewAddress);
 
                     if (addNewAddress) {
                         GetUserAddress(user.getId());
 
                     }
+
 
                 }
 

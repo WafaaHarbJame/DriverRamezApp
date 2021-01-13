@@ -222,7 +222,7 @@ public class Constants {
 
     public static String KEY_FILE = "KEY_FILE";
     public static String KEY_EDIT = "KEY_EDIT";
-    public static String KEY_ADD = "KEY_ADD";
+    public static String KEY_ADD_NEW = "KEY_ADD_NEW";
     public static String KEY_ADDRESS_ID = "KEY_ADDRESS_ID";
     public static String KEY_LAT = "KEY_LAT";
     public static String KEY_LNG = "KEY_LNG";

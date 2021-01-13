@@ -37,6 +37,8 @@ import com.ramez.shopp.databinding.RowSuggestedProductItemBinding;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import es.dmoral.toasty.Toasty;
+
 public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProductAdapter.Holder> {
     //    public int count = 1;
     private Context context;
@@ -152,19 +154,25 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
-                Toast.makeText(context, "" + context.getString(R.string.fail_to_add_favorite), Toast.LENGTH_SHORT).show();
+
+                Toasty.error(context, context.getString(R.string.fail_to_add_favorite), Toast.LENGTH_SHORT, true).show();
+
             } else if (func.equals(Constants.FAIL)) {
-                Toast.makeText(context, "" + context.getString(R.string.fail_to_add_favorite), Toast.LENGTH_SHORT).show();
+
+                Toasty.error(context, context.getString(R.string.fail_to_add_favorite), Toast.LENGTH_SHORT, true).show();
 
             } else {
                 if (IsSuccess) {
-                    Toast.makeText(context, "" + context.getString(R.string.success_add), Toast.LENGTH_SHORT).show();
+
+                    Toasty.success(context, context.getString(R.string.success_add), Toast.LENGTH_SHORT, true).show();
+
                     productModels.get(position).setFavourite(true);
                     notifyItemChanged(position);
                     notifyDataSetChanged();
 
                 } else {
-                    Toast.makeText(context, "" + context.getString(R.string.fail_to_add_favorite), Toast.LENGTH_SHORT).show();
+
+                    Toasty.error(context, context.getString(R.string.fail_to_add_favorite), Toast.LENGTH_SHORT, true).show();
                 }
             }
 
@@ -174,21 +182,25 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
     private void removeFromFavorite(View view, int position, int productId, int userId, int storeId) {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
-                Toast.makeText(context, "" + context.getString(R.string.fail_to_remove_favorite), Toast.LENGTH_SHORT).show();
+
+                Toasty.error(context, context.getString(R.string.fail_to_remove_favorite), Toast.LENGTH_SHORT, true).show();
+
             } else if (func.equals(Constants.FAIL)) {
-                Toast.makeText(context, "" + context.getString(R.string.fail_to_remove_favorite), Toast.LENGTH_SHORT).show();
+                Toasty.error(context, context.getString(R.string.fail_to_remove_favorite), Toast.LENGTH_SHORT, true).show();
 
             } else {
                 if (IsSuccess) {
+
                     productModels.get(position).setFavourite(false);
-                    Toast.makeText(context, "" + context.getString(R.string.success_delete), Toast.LENGTH_SHORT).show();
+                    initSnackBar(context.getString(R.string.success_delete),view);
                     notifyItemChanged(position);
                     notifyDataSetChanged();
 
 
                 } else {
 
-                    Toast.makeText(context, "" + context.getString(R.string.fail_to_remove_favorite), Toast.LENGTH_SHORT).show();
+                    Toasty.error(context, context.getString(R.string.fail_to_remove_favorite), Toast.LENGTH_SHORT, true).show();
+
                 }
             }
 
@@ -204,15 +216,8 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
     }
 
     private void initSnackBar(String message, View viewBar) {
-        Snackbar snackbar = Snackbar.make(viewBar, message, Snackbar.LENGTH_SHORT);
-        View view = snackbar.getView();
-        TextView snackBarMessage = view.findViewById(R.id.snackbar_text);
-        snackBarMessage.setTextColor(Color.WHITE);
-//        snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.green));
-//        snackbar.setAction(context.getResources().getString(R.string.show_cart), v -> {
-//
-//        });
-        snackbar.show();
+        Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
+
     }
 
     public interface OnItemClick {
@@ -232,7 +237,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
 
                 if (!UtilityApp.isLogin()) {
 
-                    CheckLoginDialog checkLoginDialog = new CheckLoginDialog(context, R.string.LoginFirst, R.string.to_add_favorite, R.string.ok, R.string.cancel,null,null);
+                    CheckLoginDialog checkLoginDialog = new CheckLoginDialog(context, R.string.LoginFirst, R.string.to_add_favorite, R.string.ok, R.string.cancel, null, null);
                     checkLoginDialog.show();
 
                 } else {
@@ -288,7 +293,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
                 int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
-                int cart_id=productModel.getProductBarcodes().get(0).getCartId();
+                int cart_id = productModel.getProductBarcodes().get(0).getCartId();
 
                 int stock = productModel.getProductBarcodes().get(0).getStockQty();
 
@@ -296,7 +301,9 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
                     updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, cart_id, "quantity");
 
                 } else {
-                    initSnackBar(context.getString(R.string.stock_empty), v);
+
+                    Toasty.warning(context, context.getString(R.string.stock_empty), Toast.LENGTH_SHORT, true).show();
+
                 }
 
             });
@@ -324,7 +331,7 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId = productModel.getId();
                 int product_barcode_id = productModel.getProductBarcodes().get(0).getId();
-                int cart_id=productModel.getProductBarcodes().get(0).getCartId();
+                int cart_id = productModel.getProductBarcodes().get(0).getCartId();
 
                 deleteCart(v, position, productId, product_barcode_id, cart_id, userId, storeId);
 
@@ -361,7 +368,8 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
 
                 } else {
 
-                    initSnackBar(context.getString(R.string.fail_to_add_cart), v);
+                    Toasty.error(context, context.getString(R.string.fail_to_add_cart), Toast.LENGTH_SHORT, true).show();
+
                 }
 
 
@@ -377,8 +385,8 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
                     notifyItemChanged(position);
 
                 } else {
+                    Toasty.error(context, context.getString(R.string.fail_to_update_cart), Toast.LENGTH_SHORT, true).show();
 
-                    initSnackBar(context.getString(R.string.fail_to_update_cart), v);
 
                 }
 
@@ -396,7 +404,8 @@ public class SuggestedProductAdapter extends RecyclerView.Adapter<SuggestedProdu
 
                 } else {
 
-                    initSnackBar(context.getString(R.string.fail_to_delete_cart), v);
+                    Toasty.error(context, context.getString(R.string.fail_to_delete_cart), Toast.LENGTH_SHORT, true).show();
+
                 }
 
 

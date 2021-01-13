@@ -68,7 +68,7 @@ public class AddNewAddressActivity extends ActivityBase {
 
         binding.locationBut.setOnClickListener(view1 -> {
 
-            Intent intent = new Intent(getActiviy(), MapsActivity.class);
+            Intent intent = new Intent(getActiviy(), MapActivity.class);
             startActivityForResult(intent, CHOOSE_LOCATION);
 
         });
@@ -124,7 +124,7 @@ public class AddNewAddressActivity extends ActivityBase {
 
         binding.addNewTv.setOnClickListener(view1 -> {
 
-            Intent intent = new Intent(getActiviy(), MapsActivity.class);
+            Intent intent = new Intent(getActiviy(), MapActivity.class);
             startActivityForResult(intent, CHOOSE_LOCATION);
         });
 
@@ -174,7 +174,8 @@ public class AddNewAddressActivity extends ActivityBase {
                 if (IsSuccess) {
 
                     Intent intent = new Intent(getActiviy(), AddressActivity.class);
-                    intent.putExtra(Constants.KEY_ADD,true);
+                    intent.putExtra(Constants.KEY_ADD_NEW,true);
+                    Log.i("TAG","Log addNewAddress intent  "+true);
                     setResult(RESULT_OK, intent);
                     finish();
 

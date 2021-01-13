@@ -115,9 +115,13 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
 
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 
+
                 String text = v.getText().toString();
                 searchTxt(country_id, city_id, user_id, text, 0, 10);
+                hideKeyboard(getActiviy());
+
                 return true;
+
             }
             return false;
 
@@ -134,7 +138,7 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
                 binding.closeBtn.setText(R.string.fal_times);
                 searchQuery = s.toString();
                 handler.postDelayed(runnable, 500);
-               // hideKeyboard(getActiviy());
+
 
             }
 
@@ -416,6 +420,7 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
 
         });
         searchCall = dataFeacher.autocomplete(country_id, city_id, user_id, text, page_number, page_size);
+
     }
 
     private void getAutoNames() {

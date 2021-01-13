@@ -33,7 +33,7 @@
     <string name="dummy2" translatable="false">A tour of the application </string>
     <string name="by_app">by_app</string>
     <string name="share_with">share with</string>
-    <string name="no_address">no_address</string>
+    <string name="no_address">no Address</string>
     <string name="choose_country">please Choose Country </string>
     <string name="choose_nearest">please Choose Nearest  Branch </string>
     <string name="create_account">Create Account</string>
@@ -109,7 +109,7 @@
     <string name="lng_line">Latitude line</string>
     <string name="address_in_map">Address In Map</string>
     <string name="region">Region</string>
-    <string name="block">مجمع</string>
+    <string name="block">block Number </string>
     <string name="street_num">Street Number</string>
     <string name="building">Building Number</string>
     <string name="flat">Flat</string>
@@ -168,11 +168,11 @@
     <string name="invoice_number">Invoice Number</string>
     <string name="product_total">Total product</string>
     <string name="deliver_fees">Delivery Fees</string>
-    <string name="delivery_to">Delivery to</string>
+    <string name="delivery_to">Delivery to : </string>
     <string name="deliver_time">Delivery times</string>
     <string name="choose_payment_type">Choose a payment Type</string>
-    <string name="delivery_send">Send for delivery</string>
-    <string name="save_update">Save and continue editing</string>
+    <string name="delivery_send">Send for Delivery</string>
+    <string name="save_update">Continue Editing</string>
     <string name="textFromtime">9 A.m  9 P.M </string>
     <string name="item">Item</string>
     <string name="quantity">Quantity</string>
@@ -206,7 +206,7 @@
     <string name="oman_shotname" translatable="false">OM</string>
     <string name="bahrain_shotname" translatable="false">AA</string>
     <string name="Kuwait_shotname" translatable="false">KW</string>
-    <string name="United_Arab_Emirates_shotname" translatable="false">AE</string>
+    <string name="United_Arab_Emirates_shotname" translatable="false">BB</string>
     <string name="Qatar_shotname" translatable="false">QA</string>
     <string name="Saudi_Arabia_shortname" translatable="false">SA</string>
 
@@ -317,5 +317,10 @@
     <string name="user">User</string>
     <string name="fail_delete_address">Fail to delete address</string>
     <string name="no_offers">No Offers</string>
+    <string name="my_location">my_location</string>
+    <string name="open_gps">open gps</string>
+    <string name="enable">enable</string>
+    <string name="map_str">Map</string>
+    <string name="bh_973">Bahrain (973)</string>
 
 </resources>

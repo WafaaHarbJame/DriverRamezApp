@@ -56,7 +56,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
 
 
         else {
-            holder.buttonCategory.setTextColor(context.getResources().getColor(R.color.black));
+            holder.buttonCategory.setTextColor(context.getResources().getColor(R.color.blue1));
             holder.buttonCategory.setBackgroundResource(R.drawable.shape_unselected_category);
         }
 

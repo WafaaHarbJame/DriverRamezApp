@@ -247,7 +247,7 @@
                         android:paddingStart="@dimen/_8sdp"
                         android:paddingTop="@dimen/_8sdp"
                         android:paddingEnd="@dimen/_8sdp"
-                        android:text="البحرين (973)"
+                        android:text="@string/bh_973"
                         android:background="@drawable/textlines"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:paddingBottom="@dimen/_8sdp" />
