@@ -50,7 +50,9 @@ public class OfferFragment extends FragmentBase implements ProductAdapter.OnItem
 
         gridLayoutManager =new GridLayoutManager(getActivityy(),2);
         binding.offerRecycler.setLayoutManager(gridLayoutManager);
+
         binding.offerRecycler.setHasFixedSize(true);
+        binding.offerRecycler.setItemAnimator(null);
 
         getOfferList(0,country_id,city_id,user_id);
 

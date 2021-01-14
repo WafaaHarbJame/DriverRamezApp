@@ -52,7 +52,7 @@
                 android:layout_gravity="top|start"
                 android:layout_marginStart="@dimen/_6sdp"
                 android:layout_marginTop="@dimen/_8sdp"
-                android:src="@drawable/favorite_icon" />
+                android:src="@drawable/empty_fav" />
 
         </FrameLayout>
     </androidx.cardview.widget.CardView>
@@ -94,20 +94,22 @@
 
     <LinearLayout
         android:id="@+id/productPriceLy"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+        android:layout_marginTop="@dimen/_3sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/discountTv">
 
-        <com.ramez.shopp.SpichalViews.STextView
+        <TextView
             android:id="@+id/productPriceTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_8sdp"
+
             android:gravity="center"
             android:text="@string/_10220_aed"
             android:textColor="@color/green"
@@ -130,12 +132,42 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/cartBut"
+        android:layout_width="0dp"
+        android:layout_marginStart="@dimen/_4sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_selected_cart"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingStart="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:paddingEnd="@dimen/_4sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/productPriceLy"
+        android:visibility="visible">
+
         <ImageView
-            android:id="@+id/cartBut"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:src="@drawable/cart_icon"
-            android:visibility="visible" />
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_margin="@dimen/_4sdp"
+            android:gravity="center"
+            app:srcCompat="@drawable/cart_icons" />
+
+        <com.ramez.shopp.SpichalViews.STextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_10ssp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="@string/add_cart"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 
@@ -151,7 +183,7 @@
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/productPriceLy">
+        app:layout_constraintTop_toBottomOf="@id/cartBut">
 
 
         <ImageView
@@ -209,4 +241,3 @@
             app:srcCompat="@drawable/delete_icon" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
-

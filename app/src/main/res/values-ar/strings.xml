@@ -247,6 +247,8 @@
     <string name="choose_day">اختر يوم  التوصيل </string>
     <string name="make_order">ارسال الطلب </string>
     <string name="fail_to_send_order">فشل ارسال الطلب </string>
+    <string name="fail_to_send_order_no_times">فشل ارسال الطلب لا يوجد مواعيد للتوصيل </string>
+    <string name="no_delivery_times"> لا يوجد مواعيد للتوصيل </string>
     <string name="sending_order">تم  ارسال الطلب بنجاح </string>
     <string name="textEmptyOrders">لا يوجد طلبات</string>
     <string name="textNoXadoxOrder">لم تقم بطلب منتجات من رامز  حتي الان</string>
@@ -292,4 +294,5 @@
     <string name="enable">مفعل </string>
     <string name="map_str">الخريطة </string>
     <string name="bh_973">البحرين (973)</string>
+    <string name="add_cart">اضف للسلة</string>
 </resources>

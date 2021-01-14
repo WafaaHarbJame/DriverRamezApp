@@ -88,6 +88,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         binding.offerRecycler.setLayoutManager(productLayoutManager);
         binding.offerRecycler.setHasFixedSize(true);
 
+        binding.offerRecycler.setItemAnimator(null);
 
         reviewManger = new LinearLayoutManager(getActiviy(), RecyclerView.VERTICAL, false);
         binding.reviewRecycler.setLayoutManager(reviewManger);

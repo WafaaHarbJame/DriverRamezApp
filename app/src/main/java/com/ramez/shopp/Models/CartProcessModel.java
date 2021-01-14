@@ -9,7 +9,7 @@ public class CartProcessModel {
     private Integer productCartQty;
     @SerializedName("cart_count")
     @Expose
-    private Integer cartCount;
+    private int cartCount;
     @SerializedName("status")
     @Expose
     private Integer status;
@@ -34,7 +34,7 @@ public class CartProcessModel {
         this.productCartQty = productCartQty;
     }
 
-    public Integer getCartCount() {
+    public int getCartCount() {
         return cartCount;
     }
 

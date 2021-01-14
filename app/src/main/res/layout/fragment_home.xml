@@ -240,6 +240,18 @@
                 android:layout_marginTop="@dimen/_8sdp"
                 android:background="@color/gray_view" />
 
+            <com.ramez.shopp.SpichalViews.STextViewBold
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/_8sdp"
+                android:gravity="start|center_vertical"
+                android:maxLines="1"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:text="@string/categories"
+                android:textAlignment="viewStart"
+                android:textSize="@dimen/_12ssp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/catRecycler"

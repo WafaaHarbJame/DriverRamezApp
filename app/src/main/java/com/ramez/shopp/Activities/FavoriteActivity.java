@@ -58,6 +58,8 @@ public class FavoriteActivity extends ActivityBase implements FavoriteAdapter.On
         country_id = localModel.getCountryId();
         city_id = Integer.parseInt(localModel.getCityId());
 
+        binding.favoriteRecycler.setHasFixedSize(true);
+        binding.favoriteRecycler.setItemAnimator(null);
         getFavoriteProducts(category_id, country_id, city_id, user_id, filter, 0, 10);
 
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {

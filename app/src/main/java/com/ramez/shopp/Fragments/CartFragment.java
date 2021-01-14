@@ -25,6 +25,7 @@ import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Dialogs.EmptyCartDialog;
 import com.ramez.shopp.MainActivity;
+import com.ramez.shopp.Models.CartProcessModel;
 import com.ramez.shopp.Models.CartResultModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MemberModel;
@@ -51,12 +52,13 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
     boolean isLogin = false;
     int productsSize;
     String total;
+    int  productSize;
     private FragmentCartBinding binding;
     private CartAdapter cartAdapter;
     private EmptyCartDialog emptyCartDialog;
     private CheckLoginDialog checkLoginDialog;
     private int minimum_order_amount;
-    private int delivery_charges=0;
+    private int delivery_charges = 0;
     private CartResultModel cartResultModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -82,16 +84,18 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
             linearLayoutManager = new LinearLayoutManager(getActivityy());
             binding.cartRecycler.setLayoutManager(linearLayoutManager);
-            binding.cartRecycler.setHasFixedSize(true);
+
+
+            binding.cartRecycler.setHasFixedSize(false);
+            binding.cartRecycler.setAnimation(null);
 
             binding.contBut.setOnClickListener(view1 -> {
 
-                if(cartAdapter.calculateSubTotalPrice()<minimum_order_amount){
+                if (cartAdapter.calculateSubTotalPrice() < minimum_order_amount) {
                     Snackbar snackbar = Snackbar.make(view1, getString(R.string.minimum_order_amount) + minimum_order_amount, Snackbar.LENGTH_LONG);
                     snackbar.show();
 
-                }
-                else {
+                } else {
                     EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_invoice));
                     FragmentManager fragmentManager = getParentFragmentManager();
                     InvoiceFragment invoiceFragment = new InvoiceFragment();
@@ -103,7 +107,6 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
                     fragmentManager.beginTransaction().replace(R.id.mainContainer, invoiceFragment, "InvoiceFragment").commit();
 
                 }
-
 
 
             });
@@ -121,7 +124,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
 
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
-            getCarts(storeId,userId);
+            getCarts(storeId, userId);
         });
 
         return view;
@@ -129,29 +132,28 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
     }
 
     private void initAdapter() {
-        cartAdapter = new CartAdapter(getActivityy(), cartList, this, new DataCallback() {
-            @Override
-            public void dataResult(Object obj, String func, boolean IsSuccess) {
+        cartAdapter = new CartAdapter(getActivityy(), cartList, this, (obj, func, IsSuccess) -> {
+            CartProcessModel cartProcessModel = (CartProcessModel) obj;
+            productSize = cartProcessModel.getCartCount();
 
-                double numProducts= (double) obj;
-
-                if(numProducts == 0.0){
-                   getCarts(storeId,userId);
-
-                }
-                else {
-
-                    total = NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction);
-                    binding.totalTv.setText(total.concat(" " + currency));
-                    binding.productCostTv.setText(NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction).concat(" " + currency));
-                }
-
+            if(cartProcessModel.getCartCount()==0){
+                getCarts(storeId,userId);
 
             }
+            else {
+                total = NumberHandler.formatDouble(cartProcessModel.getTotal(), fraction);
+                binding.totalTv.setText(total.concat(" " + currency));
+                binding.productsSizeTv.setText(String.valueOf(productSize));
+                binding.productCostTv.setText(NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction).concat(" " + currency));
+
+            }
+
+
+
         });
         binding.cartRecycler.setAdapter(cartAdapter);
         productsSize = cartList.size();
-        binding.productsSizeTv.setText(String.valueOf(cartAdapter.getItemCount()));
+        binding.productsSizeTv.setText(String.valueOf(productsSize));
         total = NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction);
         binding.totalTv.setText(total.concat(" " + currency));
         binding.productCostTv.setText(NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction).concat(" " + currency));
@@ -210,17 +212,13 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(message);
 
-            }
-
-            else if (func.equals(Constants.NO_CONNECTION)) {
+            } else if (func.equals(Constants.NO_CONNECTION)) {
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
                 binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
                 binding.dataLY.setVisibility(View.GONE);
 
-            }
-
-            else {
+            } else {
                 if (IsSuccess) {
                     if (cartResultModel.getData().getCartData() != null && cartResultModel.getData().getCartData().size() > 0) {
 
@@ -229,11 +227,11 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
                         cartList = cartResultModel.getData().getCartData();
                         binding.contBut.setVisibility(View.VISIBLE);
-                        minimum_order_amount=cartResultModel.getMinimumOrderAmount();
+                        minimum_order_amount = cartResultModel.getMinimumOrderAmount();
                         localModel.setMinimum_order_amount(minimum_order_amount);
                         UtilityApp.setLocalData(localModel);
 
-                        delivery_charges=cartResultModel.getDeliveryCharges();
+                        delivery_charges = cartResultModel.getDeliveryCharges();
                         Log.i(TAG, "Log cart" + cartResultModel.getData().getCartData().size());
                         initAdapter();
                         cartAdapter.notifyDataSetChanged();
@@ -283,7 +281,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
     }
 
     private void showLoginDialog() {
-        CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActivityy(), R.string.please_login, R.string.account_data, R.string.ok, R.string.cancel,null,null);
+        CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActivityy(), R.string.please_login, R.string.account_data, R.string.ok, R.string.cancel, null, null);
         checkLoginDialog.show();
     }
 

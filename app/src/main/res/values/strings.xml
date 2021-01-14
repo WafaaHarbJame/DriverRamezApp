@@ -266,6 +266,8 @@
     <string name="choose_day">Choose Day</string>
     <string name="make_order">Make Order</string>
     <string name="fail_to_send_order">Fail To send Order</string>
+    <string name="fail_to_send_order_no_times">Fail To send Order No Delivery Times</string>
+    <string name="no_delivery_times">No Delivery Times</string>
     <string name="sending_order">Sending Order Success</string>
     <string name="textEmptyOrders">No orders found</string>
     <string name="textNoXadoxOrder">You have not ordered products from Ramez yet</string>
@@ -322,5 +324,6 @@
     <string name="enable">enable</string>
     <string name="map_str">Map</string>
     <string name="bh_973">Bahrain (973)</string>
+    <string name="add_cart">Add to Cart</string>
 
 </resources>

@@ -62,7 +62,7 @@
                 android:padding="@dimen/_4sdp"
                 android:text="@string/orderDetails"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12ssp" />
+                android:textSize="@dimen/_11ssp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -79,7 +79,7 @@
                     android:lines="1"
                     android:text="@string/product_count"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_11ssp" />
 
                 <com.ramez.shopp.SpichalViews.STextViewBold
                     android:id="@+id/productsSizeTv"
@@ -92,7 +92,7 @@
                     android:lines="1"
                     android:text="10"
                     android:textColor="@color/green"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_11ssp" />
 
             </LinearLayout>
 
@@ -116,7 +116,7 @@
                     android:lines="1"
                     android:text="@string/product_cost"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_11ssp" />
 
                 <com.ramez.shopp.SpichalViews.STextViewBold
                     android:id="@+id/productCostTv"
@@ -127,7 +127,7 @@
                     android:lines="1"
                     android:text=""
                     android:textColor="@color/green"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_11ssp" />
 
             </LinearLayout>
 
@@ -151,7 +151,7 @@
                     android:lines="1"
                     android:text="@string/total"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/_14ssp" />
+                    android:textSize="@dimen/_11ssp" />
 
                 <com.ramez.shopp.SpichalViews.STextViewBold
                     android:id="@+id/totalTv"
@@ -164,7 +164,7 @@
                     android:lines="1"
                     android:text=""
                     android:textColor="@color/green"
-                    android:textSize="@dimen/_14ssp" />
+                    android:textSize="@dimen/_11ssp" />
 
             </LinearLayout>
 
@@ -179,7 +179,7 @@
                 android:layout_marginBottom="@dimen/_8sdp"
                 android:background="@drawable/round_corner_next"
                 android:gravity="center"
-                android:padding="@dimen/_12sdp"
+                android:padding="@dimen/_11ssp"
                 android:text="@string/textContinuePurchaseBtn"
                 android:textColor="@android:color/white" />
         </LinearLayout>

@@ -84,6 +84,8 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
         gridLayoutManager = new GridLayoutManager(getActiviy(), numColumn);
         binding.recycler.setLayoutManager(gridLayoutManager);
 
+        binding.recycler.setHasFixedSize(true);
+        binding.recycler.setItemAnimator(null);
 
         if (UtilityApp.isLogin()) {
 
@@ -114,7 +116,6 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
         binding.searchEt.setOnEditorActionListener((v, actionId, event) -> {
 
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-
 
                 String text = v.getText().toString();
                 searchTxt(country_id, city_id, user_id, text, 0, 10);
@@ -156,7 +157,6 @@ public class SearchActivity extends ActivityBase implements SearchProductAdapter
 
 
         binding.view2But.setOnClickListener(view1 -> {
-
 
             toggleButton = !toggleButton;
 

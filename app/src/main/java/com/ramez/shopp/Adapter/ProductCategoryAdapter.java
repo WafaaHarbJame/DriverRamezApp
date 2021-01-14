@@ -176,7 +176,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             if (quantity > 0) {
                 holder.binding.productCartQTY.setText(String.valueOf(quantity));
                 holder.binding.CartLy.setVisibility(View.VISIBLE);
-                holder.binding.cartBut.setVisibility(View.INVISIBLE);
+                holder.binding.cartBut.setVisibility(View.GONE);
 
                 if (quantity == 1) {
                     holder.binding.deleteCartBtn.setVisibility(View.VISIBLE);
@@ -187,7 +187,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 }
 
             } else {
-                holder.binding.CartLy.setVisibility(View.INVISIBLE);
+                holder.binding.CartLy.setVisibility(View.GONE);
                 holder.binding.cartBut.setVisibility(View.VISIBLE);
             }
 
@@ -207,8 +207,8 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             } else {
                 if (productModel.getProductBarcodes().get(0).getPrice() != null) {
                     holder.binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency + "");
-                    holder.binding.productPriceBeforeTv.setVisibility(View.INVISIBLE);
-                    holder.binding.discountTv.setVisibility(View.INVISIBLE);
+                    holder.binding.productPriceBeforeTv.setVisibility(View.GONE);
+                    holder.binding.discountTv.setVisibility(View.GONE);
 
                 }
             }

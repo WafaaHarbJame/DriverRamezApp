@@ -85,11 +85,16 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
 
         binding.listSubCategory.setLayoutManager(new LinearLayoutManager(getActiviy(), LinearLayoutManager.HORIZONTAL, false));
 
+
+        binding.recycler.setHasFixedSize(true);
+        binding.recycler.setItemAnimator(null);
+
         data = new ArrayList<>();
         autoCompleteList = new ArrayList<>();
 
         localModel = UtilityApp.getLocalData();
         country_id = localModel.getCountryId();
+
 
         if (UtilityApp.isLogin()) {
 

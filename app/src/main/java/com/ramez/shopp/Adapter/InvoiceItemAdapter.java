@@ -93,7 +93,6 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
         });
 
 
-
         holder.binding.productImage.setOnClickListener(v -> {
             Log.d(TAG, "name p" + cartDM.getProductName());
 
@@ -190,6 +189,7 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
         Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
 
     }
+
     public interface OnInvoiceItemClicked {
         void onInvoiceItemClicked(CartModel cartDM);
     }
@@ -296,16 +296,19 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
                     CartProcessModel cartProcessModel = (CartProcessModel) obj;
 
                     calculateSubTotalPrice();
+                    initSnackBar(context.getString(R.string.success_to_update_cart), v);
+                    cartDMS.get(position).setQuantity(quantity);
+                    cartProcessModel.setTotal(calculateSubTotalPrice());
 
+
+                    notifyItemChanged(position);
                     if (dataCallback != null) {
                         if (calculateSubTotalPrice() > 0)
                             cartProcessModel.setTotal(calculateSubTotalPrice());
                         dataCallback.dataResult(cartProcessModel, "success", true);
                     }
 
-                    initSnackBar(context.getString(R.string.success_to_update_cart), v);
-                    cartDMS.get(position).setQuantity(quantity);
-                    notifyItemChanged(position);
+
 
                 } else {
 
@@ -324,19 +327,20 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
 
                     calculateSubTotalPrice();
                     getItemCount();
-                    Log.i("tag", "Log Cart num" + getItemCount());
-                    CartProcessModel cartProcessModel = (CartProcessModel) obj;
-                    cartProcessModel.setTotal(calculateSubTotalPrice());
 
-                    if (dataCallback != null) {
-                        if (calculateSubTotalPrice() > 0)
-                        dataCallback.dataResult(cartProcessModel, "success", true);
-                    }
                     cartDMS.remove(position);
                     notifyItemRemoved(position);
                     notifyDataSetChanged();
 
                     initSnackBar(context.getString(R.string.success_delete_from_cart), v);
+
+                    CartProcessModel cartProcessModel = (CartProcessModel) obj;
+                    cartProcessModel.setTotal(calculateSubTotalPrice());
+
+                    if (dataCallback != null) {
+                        if (calculateSubTotalPrice() > 0)
+                            dataCallback.dataResult(cartProcessModel, "success", true);
+                    }
 
 
                 } else {

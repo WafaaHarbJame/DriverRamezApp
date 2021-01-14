@@ -52,6 +52,8 @@ public class AllListActivity extends ActivityBase implements ProductCategoryAdap
         localModel = UtilityApp.getLocalData();
         user = UtilityApp.getUserData();
 
+        binding.recycler.setHasFixedSize(true);
+        binding.recycler.setItemAnimator(null);
         country_id = localModel.getCountryId();
         city_id = Integer.parseInt(localModel.getCityId());
 

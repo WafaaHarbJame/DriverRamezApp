@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -122,6 +123,12 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         bestProductGridLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
         bestOfferGridLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
         bestSellerLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
+
+
+        binding.offerRecycler.setItemAnimator(null);
+        binding.bestProductRecycler.setItemAnimator(null);
+        binding.bestSellerRecycler.setItemAnimator(null);
+
 
         binding.bestSellerRecycler.setLayoutManager(bestSellerLayoutManager);
         binding.bestProductRecycler.setLayoutManager(bestProductGridLayoutManager);

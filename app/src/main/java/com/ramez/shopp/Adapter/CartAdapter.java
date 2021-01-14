@@ -263,7 +263,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                     }
                 };
 
-                addCommentDialog = new AddCommentDialog(context,cartModel.getRemark() , R.string.add_comment, R.string.add_comment, okBut, cancelBut);
+                addCommentDialog = new AddCommentDialog(context, cartModel.getRemark(), R.string.add_comment, R.string.add_comment, okBut, cancelBut);
 
                 addCommentDialog.show();
 
@@ -358,14 +358,21 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                 if (IsSuccess) {
 
                     calculateSubTotalPrice();
+                    getItemCount();
 
-                    if (dataCallback != null) {
-                        if (calculateSubTotalPrice() > 0)
-                            dataCallback.dataResult(calculateSubTotalPrice(), "success", true);
-                    }
                     initSnackBar(context.getString(R.string.success_to_update_cart), v);
                     cartDMS.get(position).setQuantity(quantity);
                     notifyItemChanged(position);
+
+                    CartProcessModel cartProcessModel = (CartProcessModel) obj;
+                    cartProcessModel.setTotal(calculateSubTotalPrice());
+                    cartProcessModel.setCartCount(cartDMS.size());
+
+
+                    if (dataCallback != null) {
+                        if (calculateSubTotalPrice() > 0)
+                            dataCallback.dataResult(cartProcessModel, "success", true);
+                    }
 
 
                 } else {
@@ -381,28 +388,22 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
             new DataFeacher(false, (obj, func, IsSuccess) -> {
 
                 if (IsSuccess) {
-                    CartProcessModel cartProcessModel= (CartProcessModel) obj;
 
-                    if(cartProcessModel.getCartCount()==0){
-                        dataCallback.dataResult(0.0, Constants.success, true);
+                    calculateSubTotalPrice();
+                    getItemCount();
+
+                    cartDMS.remove(position);
+                    notifyItemRemoved(position);
+                    initSnackBar(context.getString(R.string.success_delete_from_cart), v);
+
+                    CartProcessModel cartProcessModel = (CartProcessModel) obj;
+                    cartProcessModel.setTotal(calculateSubTotalPrice());
+                    cartProcessModel.setCartCount(cartDMS.size());
+
+
+                    if (dataCallback != null) {
+                        dataCallback.dataResult(cartProcessModel, Constants.success, true);
                     }
-                    else {
-                        calculateSubTotalPrice();
-
-                        if (dataCallback != null) {
-                                dataCallback.dataResult(calculateSubTotalPrice(), Constants.success, true);
-                        }
-                        cartDMS.remove(position);
-                        notifyItemRemoved(position);
-
-                        initSnackBar(context.getString(R.string.success_delete_from_cart), v);
-
-                    }
-
-
-
-
-
 
 
                 } else {

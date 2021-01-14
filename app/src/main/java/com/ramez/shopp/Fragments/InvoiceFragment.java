@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -44,6 +45,8 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
@@ -104,7 +107,8 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
 
         linearLayoutManager = new LinearLayoutManager(getActivityy());
         binding.productsRecycler.setLayoutManager(linearLayoutManager);
-        binding.productsRecycler.setHasFixedSize(true);
+        binding.productsRecycler.setHasFixedSize(false);
+        binding.productsRecycler.setAnimation(null);
 
         getExtraIntent();
 
@@ -140,9 +144,8 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
 
             if(NumberHandler.getDouble(total)<minimum_order_amount){
 
-                Snackbar snackbar = Snackbar
-                        .make(view1, getString(R.string.minimum_order_amount)+minimum_order_amount, Snackbar.LENGTH_LONG);
-                snackbar.show();
+                Toasty.warning(getActivityy(), getString(R.string.minimum_order_amount)+minimum_order_amount, Toast.LENGTH_SHORT, true).show();
+
             }
             else {
                 OrderCall orderCall = new OrderCall();
@@ -169,14 +172,23 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
                         binding.DeliverLY.setVisibility(View.GONE);
                     }
                     else {
-                        Toast(R.string.choose_address);
+                        Toasty.error(getActivityy(), R.string.choose_address, Toast.LENGTH_SHORT, true).show();
+
                         binding.deliveryAddressTv.setError(getString(R.string.choose_address));
                         binding.deliveryAddressTv.requestFocus();
                     }
 
 
 
-                } else {
+                }
+                else if(deliveryTimesList.size()==0){
+
+                    GlobalData.errorDialog(getActivityy(), R.string.make_order, getString(R.string.fail_to_send_order_no_times));
+
+                }
+
+
+                else {
                     sendOrder(orderCall);
                 }
 
@@ -341,6 +353,9 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
 
 
                 }
+                else {
+                    binding.noDeliveryTv.setVisibility(View.VISIBLE);
+                }
 
             }
             }
@@ -415,7 +430,7 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
                 if (result != null && result.getMessage() != null) {
                     message = result.getMessage();
                 }
-                GlobalData.errorDialog(getActivityy(), R.string.fail_to_send_order, message);
+                GlobalData.errorDialog(getActivityy(), R.string.make_order, message);
             } else {
                 if (IsSuccess) {
 
