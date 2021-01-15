@@ -115,6 +115,7 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
 
             if (IsSuccess) {
                 initSnackBar(context.getString(R.string.success_added_to_cart), v);
+
                 UtilityApp.updateCart(1,orderProductsDMS.size());
 
 

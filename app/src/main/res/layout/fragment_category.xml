@@ -111,7 +111,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_4sdp"
-                            android:layout_marginTop="@dimen/_16sdp"
+                            android:layout_marginTop="@dimen/_8sdp"
                             android:layout_marginEnd="@dimen/_4sdp"
                             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                             app:spanCount="3"

@@ -70,7 +70,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textColor="@color/black" />
 
-        <Button
+        <com.ramez.shopp.SpichalViews.SButton
             android:id="@+id/pickLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

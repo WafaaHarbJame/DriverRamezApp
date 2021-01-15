@@ -1,9 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/white"
-    android:clickable="true"
-    android:focusable="true"
     android:orientation="vertical">
 
     <include
@@ -48,11 +48,10 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clipToPadding="false"
-                    android:paddingStart="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:paddingEnd="@dimen/_10sdp" />
+                    app:spanCount="2"
+                    tools:listitem="@layout/row_search_product_item"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    android:layout_height="match_parent" />
 
             </LinearLayout>
 

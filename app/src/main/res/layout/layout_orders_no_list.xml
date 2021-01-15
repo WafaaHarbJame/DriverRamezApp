@@ -45,7 +45,7 @@
                 android:orientation="vertical"
                 android:text="@string/textNoXadoxOrder" />
 
-            <Button
+            <com.ramez.shopp.SpichalViews.SButton
                 android:id="@+id/btnBrowseProducts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -103,11 +103,6 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
         getSingleProduct(country_id, city_id, product_id, String.valueOf(user_id));
 
-
-        getSuggestedProduct();
-
-        getReviews(product_id, storeId);
-
         initListener();
 
 
@@ -428,6 +423,13 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                         }
 
 
+
+                        getSuggestedProduct();
+
+                        getReviews(product_id, storeId);
+
+
+
                         initAdapter();
 
                     } else {
@@ -598,6 +600,8 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 }
 
                 initSnackBar(getString(R.string.success_added_to_cart), v);
+                UtilityApp.updateCart(1,productList.size());
+
 
             } else {
 
@@ -621,6 +625,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 initSnackBar(getString(R.string.success_delete_from_cart), v);
                 binding.cartBut.setVisibility(View.VISIBLE);
                 binding.CartLy.setVisibility(View.GONE);
+                UtilityApp.updateCart(1,productList.size());
 
 
             } else {

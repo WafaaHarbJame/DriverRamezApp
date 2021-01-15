@@ -223,6 +223,7 @@ public class UtilityApp {
           setCartCount(cartNumber);
 
             if(cartListSize==0){
+                Log.i("tag","Log cartListSize"+cartListSize);
                 setCartCount(0);
             }
 
