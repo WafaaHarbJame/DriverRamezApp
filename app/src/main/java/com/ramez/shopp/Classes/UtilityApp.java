@@ -209,7 +209,7 @@ public class UtilityApp {
         RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_CART_SIZE, cartNumber);
     }
 
-    public static void updateCart(int type) {
+    public static void updateCart(int type,int cartListSize) {
         int cartNumber = getCartCount();
 
         if (type == 1) {
@@ -221,6 +221,11 @@ public class UtilityApp {
             // delete
             cartNumber = cartNumber - 1;
           setCartCount(cartNumber);
+
+            if(cartListSize==0){
+                setCartCount(0);
+            }
+
         }
 
         EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_UPDATE_CART));

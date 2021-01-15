@@ -545,7 +545,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
                     initSnackBar(context.getString(R.string.success_added_to_cart), v);
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
                     notifyItemChanged(position);
-                    UtilityApp.updateCart(1);
+                    UtilityApp.updateCart(1,productModels.size());
 
 
                 } else {
@@ -583,7 +583,7 @@ public class SearchProductAdapter extends RecyclerView.Adapter<RecyclerView.View
                     notifyItemChanged(position);
 
                     initSnackBar(context.getString(R.string.success_delete_from_cart), v);
-                    UtilityApp.updateCart(2);
+                    UtilityApp.updateCart(2,productModels.size());
 
 
 

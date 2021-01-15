@@ -389,12 +389,13 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
                 if (IsSuccess) {
 
-                    calculateSubTotalPrice();
-                    getItemCount();
 
                     cartDMS.remove(position);
                     notifyItemRemoved(position);
                     initSnackBar(context.getString(R.string.success_delete_from_cart), v);
+
+                    calculateSubTotalPrice();
+                    getItemCount();
 
                     CartProcessModel cartProcessModel = (CartProcessModel) obj;
                     cartProcessModel.setTotal(calculateSubTotalPrice());
@@ -405,7 +406,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                         dataCallback.dataResult(cartProcessModel, Constants.success, true);
                     }
 
-                    UtilityApp.updateCart(2);
+                    UtilityApp.updateCart(2,cartDMS.size());
 
 
                 } else {

@@ -326,8 +326,6 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
 
                 if (IsSuccess) {
 
-                    calculateSubTotalPrice();
-                    getItemCount();
 
                     cartDMS.remove(position);
                     notifyItemRemoved(position);
@@ -335,15 +333,19 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
 
                     initSnackBar(context.getString(R.string.success_delete_from_cart), v);
 
+                    calculateSubTotalPrice();
+                    getItemCount();
+
                     CartProcessModel cartProcessModel = (CartProcessModel) obj;
                     cartProcessModel.setTotal(calculateSubTotalPrice());
+                    cartProcessModel.setCartCount(cartDMS.size());
 
                     if (dataCallback != null) {
-                        if (calculateSubTotalPrice() > 0)
                             dataCallback.dataResult(cartProcessModel, "success", true);
                     }
 
-                    UtilityApp.updateCart(2);
+                    UtilityApp.updateCart(2,cartDMS.size());
+
 
 
 

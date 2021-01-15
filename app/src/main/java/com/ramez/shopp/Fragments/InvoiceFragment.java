@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -409,6 +410,13 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
                 total = NumberHandler.formatDouble(cartProcessModel.getTotal(), fraction);
                 binding.totalTv.setText(total.concat(" " + currency));
                 binding.productsSizeTv.setText(String.valueOf(cartProcessModel.getCartCount()));
+                if(cartProcessModel.getCartCount()==0){
+                    FragmentManager fragmentManager = getParentFragmentManager();
+                    CartFragment cartFragment = new CartFragment();
+                    fragmentManager.beginTransaction().replace(R.id.mainContainer, cartFragment, "cartFragment").commit();
+
+                }
+
 
             }
         });

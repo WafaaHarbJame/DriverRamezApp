@@ -89,7 +89,7 @@ public class InvoiceInfoActivity extends ActivityBase {
 
             if (IsSuccess) {
 
-                UtilityApp.updateCart(1);
+                UtilityApp.updateCart(1,list.size());
 
 
                 if (i == list.size() - 1) {
