@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/cardView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,7 +17,7 @@
             android:src="@drawable/avatar"
             app:siBorderWidth="1dp" />
 
-        <TextView
+        <com.ramez.shopp.SpichalViews.STextView
             android:id="@+id/btnCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,4 +31,3 @@
             android:background="@color/colorPrimaryDark"
             android:visibility="gone" />
     </LinearLayout>
-</layout>

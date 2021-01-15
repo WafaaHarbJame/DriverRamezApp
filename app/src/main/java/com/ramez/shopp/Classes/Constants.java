@@ -90,6 +90,7 @@ public class Constants {
     public static final String KEY_COUNTRIES= "key_countries";
     public static final String KEY_Local = "KEY_Local";
     public static String KEY_FIREBASE_TOKEN = "firebase_token";
+    public static String KEY_CART_SIZE = "KEY_CART_SIZE";
     public static final String KEY_MEMBER_LOCATION = "key_member_location";
     public static final String KEY_MEMBER_LANGUAGE = "key_member_language";
     public static final String KEY_FIRST_RUN = "key_first_run";

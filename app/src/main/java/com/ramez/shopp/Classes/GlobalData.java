@@ -31,6 +31,7 @@ public class GlobalData {
 
     public static boolean EDIT_PROFILE = false;
     public static boolean REFRESH_ADV = false;
+    public static boolean REFRESH_CART = false;
     public static int CHAT_ID_OPEN = 0;
     public static AwesomeErrorDialog errorDialog;
     public static AwesomeInfoDialog infoDialog;

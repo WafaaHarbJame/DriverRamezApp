@@ -33,7 +33,7 @@
             android:layout_weight="1">
 
 
-            <TextView
+            <com.ramez.shopp.SpichalViews.STextView
                 android:id="@+id/messageTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -61,7 +61,8 @@
                 android:paddingBottom="@dimen/_8sdp"
                 android:paddingEnd="@dimen/_50sdp">
 
-                <TextView
+               <com.ramez.shopp.SpichalViews.STextView
+
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"

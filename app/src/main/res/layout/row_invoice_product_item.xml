@@ -5,8 +5,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,7 +28,7 @@
                 android:orientation="horizontal"
                 android:background="@color/white">
 
-                <TextView
+                <com.ramez.shopp.SpichalViews.STextView
                     android:id="@+id/deleteBut"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -112,7 +110,7 @@
                                 app:srcCompat="@drawable/plus"
                                 app:tint="@color/white" />
 
-                            <TextView
+                            <com.ramez.shopp.SpichalViews.STextView
                                 android:id="@+id/productCartQTY"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -171,10 +169,6 @@
 
 
                 </LinearLayout>
-
-
-
-
 
             </LinearLayout>
         </com.daimajia.swipe.SwipeLayout>

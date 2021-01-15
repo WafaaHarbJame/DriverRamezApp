@@ -405,6 +405,8 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                         dataCallback.dataResult(cartProcessModel, Constants.success, true);
                     }
 
+                    UtilityApp.updateCart(2);
+
 
                 } else {
 

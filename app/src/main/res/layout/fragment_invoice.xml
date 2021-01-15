@@ -296,7 +296,7 @@
                         app:cardCornerRadius="@dimen/_8sdp"
                         app:cardUseCompatPadding="true">
 
-                        <TextView
+                       <com.ramez.shopp.SpichalViews.STextView
                             android:id="@+id/DeliveryDateTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -322,7 +322,7 @@
                         app:cardUseCompatPadding="true">
 
 
-                        <TextView
+                       <com.ramez.shopp.SpichalViews.STextView
                             android:id="@+id/TvDeliveryTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

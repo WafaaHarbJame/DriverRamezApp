@@ -310,16 +310,19 @@ public class MyAccountFragment extends FragmentBase {
             ResultAPIModel<ProfileData> result = (ResultAPIModel<ProfileData>) obj;
             String message = getString(R.string.fail_to_get_data);
 
-            if (IsSuccess) {
+            if (isVisible()) {
 
-                MemberModel memberModel = UtilityApp.getUserData();
-                memberModel.setName(result.data.getName());
-                memberModel.setEmail(result.data.getEmail());
-                memberModel.setProfilePicture(result.data.getProfilePicture());
-                initData(memberModel);
-                UtilityApp.setUserData(memberModel);
+                if (IsSuccess) {
+
+                    MemberModel memberModel = UtilityApp.getUserData();
+                    memberModel.setName(result.data.getName());
+                    memberModel.setEmail(result.data.getEmail());
+                    memberModel.setProfilePicture(result.data.getProfilePicture());
+                    initData(memberModel);
+                    UtilityApp.setUserData(memberModel);
 
 
+                }
             }
 
 

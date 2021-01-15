@@ -45,7 +45,7 @@
                 android:orientation="vertical"
                 android:padding="4dp">
 
-                <TextView
+                <com.ramez.shopp.SpichalViews.STextView
                     android:id="@+id/tvPhysicalAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

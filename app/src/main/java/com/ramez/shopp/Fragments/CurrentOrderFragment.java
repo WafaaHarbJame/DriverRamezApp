@@ -1,5 +1,6 @@
 package com.ramez.shopp.Fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +31,7 @@ public class CurrentOrderFragment extends FragmentBase {
     private FragmentCurrentOrderBinding binding;
     private MyOrdersAdapter myOrdersAdapter;
     private int user_id;
+    private Activity activity;
 
 
     @Override
@@ -40,7 +42,7 @@ public class CurrentOrderFragment extends FragmentBase {
         currentOrdersList = new ArrayList<>();
 
         user_id = UtilityApp.getUserData().getId();
-
+        activity=getActivity();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         binding.myOrderRecycler.setLayoutManager(linearLayoutManager);
@@ -79,65 +81,23 @@ public class CurrentOrderFragment extends FragmentBase {
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            OrdersResultModel result = (OrdersResultModel) obj;
-            String message = getString(R.string.fail_to_get_data);
+            if (isVisible()){
+                OrdersResultModel result = (OrdersResultModel) obj;
+                String message = activity.getString(R.string.fail_to_get_data);
 
-            binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
+                binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
 
-            if (func.equals(Constants.ERROR)) {
+                if (func.equals(Constants.ERROR)) {
 
-                if (result.getMessage() != null) {
-                    message = result.getMessage();
-                }
-                binding.dataLY.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(message);
-
-            } else if (func.equals(Constants.FAIL)) {
-
-                binding.dataLY.setVisibility(View.GONE);
-                binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(message);
-
-
-            }
-
-            else if (func.equals(Constants.NO_CONNECTION)) {
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
-                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
-                binding.dataLY.setVisibility(View.GONE);
-
-            }
-
-            else {
-                if (IsSuccess) {
-                    if (result.getData() != null && result.getData().size() > 0) {
-
-                        binding.dataLY.setVisibility(View.VISIBLE);
-                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-
-                        currentOrdersList = result.getData();
-
-                        List<OrderModel> list= initOrderList();
-
-                        initOrdersAdapters(list);
-
-                        Log.i("TAG", "Log ordersDMS" + currentOrdersList.size());
-
-
-                    } else {
-
-                        binding.dataLY.setVisibility(View.GONE);
-                        binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
-
+                    if (result.getMessage() != null) {
+                        message = result.getMessage();
                     }
+                    binding.dataLY.setVisibility(View.GONE);
+                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(message);
 
-
-                } else {
+                } else if (func.equals(Constants.FAIL)) {
 
                     binding.dataLY.setVisibility(View.GONE);
                     binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -146,7 +106,53 @@ public class CurrentOrderFragment extends FragmentBase {
 
 
                 }
+
+                else if (func.equals(Constants.NO_CONNECTION)) {
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                    binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                    binding.dataLY.setVisibility(View.GONE);
+
+                }
+
+                else {
+                    if (IsSuccess) {
+                        if (result.getData() != null && result.getData().size() > 0) {
+
+                            binding.dataLY.setVisibility(View.VISIBLE);
+                            binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                            binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+
+                            currentOrdersList = result.getData();
+
+                            List<OrderModel> list= initOrderList();
+
+                            initOrdersAdapters(list);
+
+                            Log.i("TAG", "Log ordersDMS" + currentOrdersList.size());
+
+
+                        } else {
+
+                            binding.dataLY.setVisibility(View.GONE);
+                            binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
+
+                        }
+
+
+                    } else {
+
+                        binding.dataLY.setVisibility(View.GONE);
+                        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+                        binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                        binding.failGetDataLY.failTxt.setText(message);
+
+
+                    }
+                }
             }
+
+
 
         }).getUpcomingOrders(user_id);
     }

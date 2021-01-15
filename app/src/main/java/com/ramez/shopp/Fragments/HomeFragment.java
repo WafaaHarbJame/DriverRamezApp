@@ -1,6 +1,7 @@
 package com.ramez.shopp.Fragments;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.Ringtone;
@@ -18,12 +19,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.vision.barcode.Barcode;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.zxing.Result;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
@@ -38,26 +37,17 @@ import com.ramez.shopp.Activities.CategoryProductsActivity;
 import com.ramez.shopp.Activities.FullScannerActivity;
 import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.Activities.SearchActivity;
-import com.ramez.shopp.Activities.SplashScreenActivity;
 import com.ramez.shopp.Adapter.CategoryAdapter;
 import com.ramez.shopp.Adapter.ProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
-import com.ramez.shopp.ApiHandler.DataFetcherCallBack;
-import com.ramez.shopp.BuildConfig;
 import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
-import com.ramez.shopp.Dialogs.CheckLoginDialog;
-import com.ramez.shopp.Dialogs.ConfirmDialog;
-import com.ramez.shopp.Dialogs.InfoDialog;
 import com.ramez.shopp.Models.CategoryResultModel;
-import com.ramez.shopp.Models.GeneralModel;
 import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
-import com.ramez.shopp.Utils.ActivityHandler;
 import com.ramez.shopp.databinding.FragmentHomeBinding;
 
 import java.util.ArrayList;
@@ -67,7 +57,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import static android.content.ContentValues.TAG;
 
 
-public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemClick, ZXingScannerView.ResultHandler,CategoryAdapter.OnItemClick {
+public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemClick, ZXingScannerView.ResultHandler, CategoryAdapter.OnItemClick {
     private static final String FLASH_STATE = "FLASH_STATE";
     private static final String AUTO_FOCUS_STATE = "AUTO_FOCUS_STATE";
     private static final String SELECTED_FORMATS = "SELECTED_FORMATS";
@@ -80,6 +70,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     LinearLayoutManager bestSellerLayoutManager;
     LinearLayoutManager bestOfferGridLayoutManager;
     String user_id = "0";
+    ArrayList<CategoryModel> categoryModelList;
     private FragmentHomeBinding binding;
     private ProductAdapter productBestAdapter;
     private ProductAdapter productSellerAdapter;
@@ -93,8 +84,8 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     private boolean mAutoFocus;
     private ArrayList<Integer> mSelectedIndices;
     private int mCameraId = -1;
-    ArrayList<CategoryModel> categoryModelList;
     private CategoryAdapter categoryAdapter;
+    private Activity activity;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
@@ -106,7 +97,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         productOffersList = new ArrayList<>();
         mScannerView = new ZXingScannerView(getActivity());
 
-
+        activity = getActivity();
         if (UtilityApp.isLogin()) {
 
             if (UtilityApp.getUserData() != null) {
@@ -165,7 +156,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         binding.moreBestBut.setOnClickListener(view1 -> {
 
             Intent intent = new Intent(getActivityy(), AllListActivity.class);
-            intent.putExtra(Constants.LIST_MODEL_NAME, getString(R.string.best_products));
+            intent.putExtra(Constants.LIST_MODEL_NAME, activity.getString(R.string.best_products));
             intent.putExtra(Constants.FILTER_NAME, Constants.featured_filter);
             startActivity(intent);
 
@@ -175,7 +166,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         binding.moreBoughtBut.setOnClickListener(view1 -> {
 
             Intent intent = new Intent(getActivityy(), AllListActivity.class);
-            intent.putExtra(Constants.LIST_MODEL_NAME, getString(R.string.best_sell));
+            intent.putExtra(Constants.LIST_MODEL_NAME, activity.getString(R.string.best_sell));
             intent.putExtra(Constants.FILTER_NAME, Constants.quick_filter);
             startActivity(intent);
 
@@ -184,7 +175,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         binding.moreOfferBut.setOnClickListener(view1 -> {
 
             Intent intent = new Intent(getActivityy(), AllListActivity.class);
-            intent.putExtra(Constants.LIST_MODEL_NAME, getString(R.string.offers));
+            intent.putExtra(Constants.LIST_MODEL_NAME, activity.getString(R.string.offers));
             intent.putExtra(Constants.FILTER_NAME, Constants.offered_filter);
             startActivity(intent);
 
@@ -220,8 +211,6 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
     }
 
 
-
-
     @Override
     public void onItemClicked(int position, ProductModel productModel) {
         Intent intent = new Intent(getActivityy(), ProductDetailsActivity.class);
@@ -238,6 +227,9 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
+
+            if (isVisible()){
+
             MainModel result = (MainModel) obj;
             String message = getString(R.string.fail_to_get_data);
 
@@ -260,16 +252,13 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(message);
 
-            }
-            else if (func.equals(Constants.NO_CONNECTION)) {
+            } else if (func.equals(Constants.NO_CONNECTION)) {
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
                 binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
                 binding.dataLY.setVisibility(View.GONE);
 
-            }
-
-            else {
+            } else {
                 if (IsSuccess) {
                     if (result.getFeatured() != null && result.getFeatured().size() > 0) {
 
@@ -280,7 +269,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
                         productSellerList = result.getQuickProducts();
                         productOffersList = result.getOfferedProducts();
 
-                        if(productOffersList.size()==0){
+                        if (productOffersList.size() == 0) {
                             binding.offerLy.setVisibility(View.GONE);
 
                         }
@@ -308,7 +297,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
                 }
             }
-
+        }
         }).GetMainPage(0, country_id, city_id, user_id);
     }
 
@@ -324,7 +313,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
 
             @Override
             public void onPermissionDenied(PermissionDeniedResponse response) {
-                Toast.makeText(getActivityy(), "" + getString(R.string.permission_camera_rationale), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivityy(), "" + getActivity().getString(R.string.permission_camera_rationale), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -335,7 +324,7 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         }).withErrorListener(new PermissionRequestErrorListener() {
             @Override
             public void onError(DexterError error) {
-                Toast.makeText(getActivityy(), "" + getString(R.string.error_in_data), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivityy(), "" + getActivity().getString(R.string.error_in_data), Toast.LENGTH_SHORT).show();
 
             }
         }).onSameThread().check();
@@ -415,10 +404,12 @@ public class HomeFragment extends FragmentBase implements ProductAdapter.OnItemC
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            CategoryResultModel result = (CategoryResultModel) obj;
-            String message = getString(R.string.fail_to_get_data);
 
             if (isVisible()) {
+
+                CategoryResultModel result = (CategoryResultModel) obj;
+                String message = getString(R.string.fail_to_get_data);
+
                 binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
 
                 if (func.equals(Constants.ERROR)) {

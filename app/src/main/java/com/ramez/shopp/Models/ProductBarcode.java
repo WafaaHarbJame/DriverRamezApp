@@ -21,7 +21,7 @@ public class ProductBarcode implements Serializable {
     private String fromOffer;
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private int id;
     @SerializedName("limit_qty")
     @Expose
     private Integer limitQty;
@@ -48,7 +48,7 @@ public class ProductBarcode implements Serializable {
     private ProductUnits productUnits;
     @SerializedName("weight")
     @Expose
-    private Integer weight;
+    private Double weight;
 
     public Boolean getSpecial() {
         return isSpecial;
@@ -66,11 +66,11 @@ public class ProductBarcode implements Serializable {
         this.productUnits = productUnits;
     }
 
-    public Integer getWeight() {
+    public Double getWeight() {
         return weight;
     }
 
-    public void setWeight(Integer weight) {
+    public void setWeight(Double weight) {
         this.weight = weight;
     }
 

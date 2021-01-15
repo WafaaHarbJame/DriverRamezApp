@@ -1,6 +1,7 @@
 package com.ramez.shopp.Fragments;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -49,6 +50,7 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
     LocalModel localModel;
     private FragmentCategoryBinding binding;
     private CategoryAdapter categoryAdapter;
+    private Activity activity;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCategoryBinding.inflate(inflater, container, false);
@@ -58,7 +60,7 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
         binding.catRecycler.setHasFixedSize(true);
         binding.catRecycler.setLayoutManager(gridLayoutManager);
         localModel = UtilityApp.getLocalData();
-
+        activity=getActivity();
         getCategories(Integer.parseInt(localModel.getCityId()));
 
         binding.swipeDataContainer.setOnRefreshListener(() -> {
@@ -93,7 +95,7 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
 
     private void initAdapter() {
 
-        categoryAdapter = new CategoryAdapter(getActivityy(), categoryModelList, this);
+        categoryAdapter = new CategoryAdapter(activity, categoryModelList, this);
         binding.catRecycler.setAdapter(categoryAdapter);
 
     }
@@ -118,10 +120,11 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            CategoryResultModel result = (CategoryResultModel) obj;
-            String message = getString(R.string.fail_to_get_data);
 
             if (isVisible()) {
+                CategoryResultModel result = (CategoryResultModel) obj;
+                String message = activity.getString(R.string.fail_to_get_data);
+
                 binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
 
                 if (func.equals(Constants.ERROR)) {

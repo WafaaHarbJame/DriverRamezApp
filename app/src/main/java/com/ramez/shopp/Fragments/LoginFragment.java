@@ -41,6 +41,7 @@ import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.MainActivity;
+import com.ramez.shopp.Models.CartResultModel;
 import com.ramez.shopp.Models.GeneralModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.LoginResultModel;
@@ -73,7 +74,9 @@ public class LoginFragment extends FragmentBase {
     private CallbackManager callbackManager;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth firebaseAuth;
-
+    int cartNumber;
+    int storeId, userId;
+    MemberModel user;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -279,6 +282,7 @@ public class LoginFragment extends FragmentBase {
 
     private void UpdateToken() {
 
+        GlobalData.progressDialog(getActivityy(), R.string.text_login_login, R.string.please_wait_login);
         MemberModel memberModel = UtilityApp.getUserData();
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             GlobalData.hideProgressDialog();
@@ -292,7 +296,12 @@ public class LoginFragment extends FragmentBase {
 
             } else {
                 if (IsSuccess) {
-                    startMain();
+                    localModel = UtilityApp.getLocalData();
+                    storeId = Integer.parseInt(localModel.getCityId());
+                    user=UtilityApp.getUserData();
+                    userId = user.getId();
+
+                 getCarts(storeId,userId);
 
                 } else {
                     Toast(getString(R.string.fail_signin));
@@ -527,6 +536,35 @@ public class LoginFragment extends FragmentBase {
     }
 
 
+
+    public void getCarts(int storeId, int userId) {
+
+        GlobalData.progressDialog(getActivityy(), R.string.text_login_login, R.string.please_wait_login);
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            CartResultModel cartResultModel = (CartResultModel) obj;
+            String message = getString(R.string.fail_to_get_data);
+
+            if (IsSuccess) {
+                if (cartResultModel.getData().getCartData() != null && cartResultModel.getData().getCartData().size() > 0) {
+                    cartNumber = cartResultModel.getCartCount();
+                    UtilityApp.setCartCount(cartNumber);
+                    Intent intent = new Intent(getActivityy(), MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+                else {
+                    UtilityApp.setCartCount(0);
+                    Intent intent = new Intent(getActivityy(), MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+                getActivity().finish();
+
+
+            }
+
+        }).GetCarts(storeId, userId);
+    }
 
 
 }

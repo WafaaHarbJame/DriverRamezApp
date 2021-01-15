@@ -37,7 +37,7 @@
                     android:textSize="@dimen/_30ssp"
                     android:visibility="visible" />
 
-                <TextView
+               <com.ramez.shopp.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/_3sdp"
@@ -68,7 +68,7 @@
                     android:textSize="@dimen/_30ssp"
                     android:visibility="visible" />
 
-                <TextView
+               <com.ramez.shopp.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/_3sdp"

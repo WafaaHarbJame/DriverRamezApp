@@ -412,7 +412,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                         if (quantity > 0) {
                             binding.productCartQTY.setText(String.valueOf(quantity));
                             binding.CartLy.setVisibility(View.VISIBLE);
-                            binding.cartBut.setVisibility(View.INVISIBLE);
+                            binding.cartBut.setVisibility(View.GONE);
 
                             if (quantity == 1) {
                                 binding.deleteCartBtn.setVisibility(View.VISIBLE);
@@ -423,7 +423,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                             }
 
                         } else {
-                            binding.CartLy.setVisibility(View.INVISIBLE);
+                            binding.CartLy.setVisibility(View.GONE);
                             binding.cartBut.setVisibility(View.VISIBLE);
                         }
 
@@ -644,7 +644,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                 if (quantity > 0) {
                     binding.productCartQTY.setText(String.valueOf(quantity));
                     binding.CartLy.setVisibility(View.VISIBLE);
-                    binding.cartBut.setVisibility(View.INVISIBLE);
+                    binding.cartBut.setVisibility(View.GONE);
 
                     if (quantity == 1) {
                         binding.deleteCartBtn.setVisibility(View.VISIBLE);
@@ -655,7 +655,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                     }
 
                 } else {
-                    binding.CartLy.setVisibility(View.INVISIBLE);
+                    binding.CartLy.setVisibility(View.GONE);
                     binding.cartBut.setVisibility(View.VISIBLE);
                 }
 

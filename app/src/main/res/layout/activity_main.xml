@@ -56,7 +56,7 @@
             android:layout_weight="1"
             android:src="@drawable/category_icon"/>
 
-        <ImageView
+        <ru.nikartm.support.ImageBadgeView
             android:id="@+id/cartBut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
 import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.OrderProductModel;
 import com.ramez.shopp.Models.ProductModel;
@@ -114,6 +115,8 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
 
             if (IsSuccess) {
                 initSnackBar(context.getString(R.string.success_added_to_cart), v);
+                UtilityApp.updateCart(1);
+
 
 
             } else {

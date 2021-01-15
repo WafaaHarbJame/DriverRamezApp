@@ -24,7 +24,7 @@
         app:cardCornerRadius="@dimen/_8sdp">
 
 
-        <TextView
+        <com.ramez.shopp.SpichalViews.STextView
             android:id="@+id/delivery_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
         app:cardCornerRadius="@dimen/_8sdp">
 
 
-        <TextView
+        <com.ramez.shopp.SpichalViews.STextView
             android:id="@+id/delivery_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

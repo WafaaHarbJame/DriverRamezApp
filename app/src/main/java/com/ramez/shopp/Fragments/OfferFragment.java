@@ -88,7 +88,9 @@ public class OfferFragment extends FragmentBase implements ProductAdapter.OnItem
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
-            MainModel result = (MainModel) obj;
+            if (isVisible()){
+
+                MainModel result = (MainModel) obj;
             String message = getString(R.string.fail_to_get_data);
 
             binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
@@ -110,16 +112,13 @@ public class OfferFragment extends FragmentBase implements ProductAdapter.OnItem
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(message);
 
-            }
-
-            else if (func.equals(Constants.NO_CONNECTION)) {
+            } else if (func.equals(Constants.NO_CONNECTION)) {
                 binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
                 binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
                 binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
                 binding.dataLY.setVisibility(View.GONE);
 
-            }
-            else {
+            } else {
                 if (IsSuccess) {
                     if (result.getOfferedProducts() != null && result.getOfferedProducts().size() > 0) {
 
@@ -148,6 +147,8 @@ public class OfferFragment extends FragmentBase implements ProductAdapter.OnItem
 
                 }
             }
+        }
+
 
         }).GetMainPage(category_id, country_id, city_id, user_id);
     }

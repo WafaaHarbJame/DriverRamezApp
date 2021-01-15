@@ -219,7 +219,7 @@
                                 android:visibility="visible"
                                 app:srcCompat="@drawable/plus" />
 
-                            <TextView
+                            <com.ramez.shopp.SpichalViews.STextView
                                 android:id="@+id/productCartQTY"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"

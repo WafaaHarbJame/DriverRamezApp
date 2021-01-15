@@ -10,7 +10,7 @@
     android:padding="8dp">
 
 
-    <TextView
+    <com.ramez.shopp.SpichalViews.STextView
         android:id="@+id/tv_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <TextView
+    <com.ramez.shopp.SpichalViews.STextView
         android:id="@+id/reviewTv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

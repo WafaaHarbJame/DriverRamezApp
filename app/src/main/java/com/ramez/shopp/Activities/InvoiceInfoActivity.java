@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +22,8 @@ import com.ramez.shopp.databinding.ActivityInvoiceInfoBinding;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 
 public class InvoiceInfoActivity extends ActivityBase {
     public String currency = "BHD";
@@ -52,7 +55,6 @@ public class InvoiceInfoActivity extends ActivityBase {
                 int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
                 int productId =orderProductsDM.getProductId();
                 int product_barcode_id = orderProductsDM.getProductVariationId();
-
                 addToCart(view1, i, productId, product_barcode_id, count , userId, storeId);
 
 
@@ -87,6 +89,9 @@ public class InvoiceInfoActivity extends ActivityBase {
 
             if (IsSuccess) {
 
+                UtilityApp.updateCart(1);
+
+
                 if (i == list.size() - 1) {
                     initSnackBar(" " +getResources().getString(R.string.success_to_update_cart), v);
 
@@ -104,14 +109,7 @@ public class InvoiceInfoActivity extends ActivityBase {
 
 
     private void initSnackBar(String message, View viewBar) {
-        Snackbar snackbar = Snackbar.make(viewBar, message, Snackbar.LENGTH_SHORT);
-        View view = snackbar.getView();
-        TextView snackBarMessage = view.findViewById(R.id.snackbar_text);
-        snackBarMessage.setTextColor(Color.WHITE);
-        snackbar.setActionTextColor(ContextCompat.getColor(getActiviy(), R.color.green));
-        snackbar.setAction(getString(R.string.show_cart), v -> {
+        Toasty.success(getActiviy(), message, Toast.LENGTH_SHORT, true).show();
 
-        });
-        snackbar.show();
     }
 }

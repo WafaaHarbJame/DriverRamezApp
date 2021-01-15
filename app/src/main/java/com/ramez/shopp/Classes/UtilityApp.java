@@ -15,6 +15,8 @@ import com.ramez.shopp.RootApplication;
 import com.ramez.shopp.Utils.LocaleUtils;
 
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -117,27 +119,26 @@ public class UtilityApp {
     public static void setToShPref(String key, boolean data) {
         RootApplication.getInstance().getSharedPManger().SetData(key, data);
     }
+
     public static String getFromShPref(String key) {
         return RootApplication.getInstance().getSharedPManger().getDataString(key);
-    }
-
-    public static void setFCMToken(String fcmToken) {
-        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_FIREBASE_TOKEN, fcmToken);
     }
 
     public static String getFCMToken() {
         return RootApplication.getInstance().getSharedPManger().getDataString(Constants.KEY_FIREBASE_TOKEN);
     }
 
-    public static void setLanguage(String language) {
-        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_MEMBER_LANGUAGE, language);
+    public static void setFCMToken(String fcmToken) {
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_FIREBASE_TOKEN, fcmToken);
     }
-
 
     public static String getLanguage() {
         return RootApplication.getInstance().getSharedPManger().getDataString(Constants.KEY_MEMBER_LANGUAGE);
     }
 
+    public static void setLanguage(String language) {
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_MEMBER_LANGUAGE, language);
+    }
 
     public static void setAppLanguage() {
         String lang = getLanguage();
@@ -147,17 +148,16 @@ public class UtilityApp {
 
     }
 
-    public static void setUserData(MemberModel user) {
-        String userData = new Gson().toJson(user);
-        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_MEMBER, userData);
-    }
-
     public static MemberModel getUserData() {
         String userJsonData = RootApplication.getInstance().getSharedPManger().getDataString(Constants.KEY_MEMBER);
         MemberModel user = new Gson().fromJson(userJsonData, MemberModel.class);
         return user;
     }
 
+    public static void setUserData(MemberModel user) {
+        String userData = new Gson().toJson(user);
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_MEMBER, userData);
+    }
 
     public static void setSetting(SettingModel user) {
         String settingData = new Gson().toJson(user);
@@ -171,14 +171,6 @@ public class UtilityApp {
         return settingModel;
     }
 
-
-
-
-    public static void setCountriesData(ArrayList<CountryModel> countryModelList) {
-        String userData = new Gson().toJson(countryModelList);
-        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_COUNTRIES, userData);
-    }
-
     public static ArrayList<CountryModel> getCountriesData() {
         String dataString = RootApplication.getInstance().getSharedPManger().getDataString(Constants.KEY_COUNTRIES);
         return new Gson().fromJson(dataString, new TypeToken<List<CountryModel>>() {
@@ -186,9 +178,9 @@ public class UtilityApp {
 
     }
 
-    public static void setLocalData(LocalModel model) {
-        String localData = new Gson().toJson(model);
-        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_Local, localData);
+    public static void setCountriesData(ArrayList<CountryModel> countryModelList) {
+        String userData = new Gson().toJson(countryModelList);
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_COUNTRIES, userData);
     }
 
     public static LocalModel getLocalData() {
@@ -197,18 +189,44 @@ public class UtilityApp {
         return model;
     }
 
-
+    public static void setLocalData(LocalModel model) {
+        String localData = new Gson().toJson(model);
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_Local, localData);
+    }
 
     public static Boolean isEnglish() {
         Boolean isEnglish = false;
-        if (UtilityApp.getLanguage().equals(Constants.English))  isEnglish = true;
+        if (UtilityApp.getLanguage().equals(Constants.English)) isEnglish = true;
         return isEnglish;
 
     }
 
+    public static int getCartCount() {
+        return RootApplication.getInstance().getSharedPManger().getDataInt(Constants.KEY_CART_SIZE, 0);
+    }
+
+    public static void setCartCount(int cartNumber) {
+        RootApplication.getInstance().getSharedPManger().SetData(Constants.KEY_CART_SIZE, cartNumber);
+    }
+
+    public static void updateCart(int type) {
+        int cartNumber = getCartCount();
+
+        if (type == 1) {
+            // add
+            cartNumber = cartNumber + 1;
+           setCartCount(cartNumber);
+
+        } else if (type == 2) {
+            // delete
+            cartNumber = cartNumber - 1;
+          setCartCount(cartNumber);
+        }
+
+        EventBus.getDefault().post(new MessageEvent(MessageEvent.TYPE_UPDATE_CART));
 
 
-
+    }
 
 
 }

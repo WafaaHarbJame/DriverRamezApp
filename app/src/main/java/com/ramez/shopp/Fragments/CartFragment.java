@@ -1,7 +1,9 @@
 package com.ramez.shopp.Fragments;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -39,6 +42,8 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
+import ru.nikartm.support.BadgePosition;
+
 import static android.content.ContentValues.TAG;
 
 public class CartFragment extends FragmentBase implements CartAdapter.OnCartItemClicked {
@@ -60,6 +65,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
     private int minimum_order_amount;
     private int delivery_charges = 0;
     private CartResultModel cartResultModel;
+    private Activity activity;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCartBinding.inflate(inflater, container, false);
@@ -67,6 +73,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
         cartList = new ArrayList<>();
         isLogin = UtilityApp.isLogin();
+        activity = getActivity();
 
         localModel = UtilityApp.getLocalData();
         currency = localModel.getCurrencyCode();
@@ -74,6 +81,8 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
 
         user = UtilityApp.getUserData();
+
+
         if (!isLogin) {
             binding.dataLY.setVisibility(View.GONE);
             binding.contBut.setVisibility(View.GONE);
@@ -190,10 +199,12 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
+
             cartResultModel = (CartResultModel) obj;
             String message = getString(R.string.fail_to_get_data);
 
-            binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
+            if (isVisible()){
+                binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
 
             if (func.equals(Constants.ERROR)) {
 
@@ -254,6 +265,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
                 }
             }
+        }
 
         }).GetCarts(storeId, userId);
     }
@@ -284,6 +296,9 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
         CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActivityy(), R.string.please_login, R.string.account_data, R.string.ok, R.string.cancel, null, null);
         checkLoginDialog.show();
     }
+
+
+
 
 
 }

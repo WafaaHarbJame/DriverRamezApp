@@ -26,6 +26,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Models.ProductModel;
@@ -346,6 +347,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.Holder> {
                     initSnackBar(context.getString(R.string.success_added_to_cart), v);
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
                     notifyItemChanged(position);
+                    UtilityApp.updateCart(1);
+
 
                 } else {
 
@@ -380,6 +383,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.Holder> {
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(0);
                     notifyItemChanged(position);
                     initSnackBar(context.getString(R.string.success_delete_from_cart), v);
+                    UtilityApp.updateCart(2);
+
 
 
                 } else {

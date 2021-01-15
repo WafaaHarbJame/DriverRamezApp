@@ -23,6 +23,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.CallBack.DataCallback;
 import com.ramez.shopp.Classes.CartModel;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.CartProcessModel;
 import com.ramez.shopp.R;
@@ -341,6 +342,10 @@ public class InvoiceItemAdapter extends RecyclerSwipeAdapter<InvoiceItemAdapter.
                         if (calculateSubTotalPrice() > 0)
                             dataCallback.dataResult(cartProcessModel, "success", true);
                     }
+
+                    UtilityApp.updateCart(2);
+
+
 
 
                 } else {

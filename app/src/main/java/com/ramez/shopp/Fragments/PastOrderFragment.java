@@ -96,6 +96,10 @@ public class PastOrderFragment extends FragmentBase {
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
+
+
+             if (isVisible()){
+
             OrdersResultModel result = (OrdersResultModel) obj;
             String message = getString(R.string.fail_to_get_data);
 
@@ -161,8 +165,11 @@ public class PastOrderFragment extends FragmentBase {
                 }
             }
 
+        }
+
         }).getPastOrders(user_id);
     }
+
 
 
 

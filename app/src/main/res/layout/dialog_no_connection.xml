@@ -20,7 +20,8 @@
             android:layout_marginBottom="@dimen/_10sdp"
             app:srcCompat="@drawable/no_connection" />
 
-        <TextView
+       <com.ramez.shopp.SpichalViews.STextView
+
             android:id="@+id/messageTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -38,7 +39,8 @@
             android:background="@drawable/round_corner_primary_small"
             android:visibility="visible">
 
-            <TextView
+            <com.ramez.shopp.SpichalViews.STextView
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"

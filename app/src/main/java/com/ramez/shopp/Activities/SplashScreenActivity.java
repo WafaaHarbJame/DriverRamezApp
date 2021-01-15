@@ -10,26 +10,35 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.Classes.CartModel;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.SettingModel;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.MainActivity;
+import com.ramez.shopp.Models.CartResultModel;
 import com.ramez.shopp.Models.FavouriteResultModel;
+import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProfileData;
 import com.ramez.shopp.Models.ResultAPIModel;
 import com.ramez.shopp.R;
 
+import java.util.ArrayList;
+
 import static android.content.ContentValues.TAG;
 
 public class SplashScreenActivity extends ActivityBase {
     private static final int SPLASH_TIMER = 3000;
-
+    int storeId, userId;
+    MemberModel user;
+    LocalModel localModel;
+    int cartNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         startSplash();
 
     }
@@ -51,7 +60,12 @@ public class SplashScreenActivity extends ActivityBase {
 
             if (UtilityApp.isLogin()) {
                 if (UtilityApp.getUserData() != null) {
-                    getUserData(UtilityApp.getUserData().getId());
+                    localModel = UtilityApp.getLocalData();
+                    storeId = Integer.parseInt(localModel.getCityId());
+                    user=UtilityApp.getUserData();
+                    userId = user.getId();
+                    getUserData(userId);
+
 
                 }
 
@@ -90,10 +104,7 @@ public class SplashScreenActivity extends ActivityBase {
                 memberModel.setEmail(result.data.getEmail());
                 memberModel.setProfilePicture(result.data.getProfilePicture());
                 UtilityApp.setUserData(memberModel);
-                Intent intent = new Intent(getActiviy(), MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
+                getCarts(storeId,userId);
 
             } else {
                 Intent intent = new Intent(getActiviy(), MainActivity.class);
@@ -119,6 +130,38 @@ public class SplashScreenActivity extends ActivityBase {
             }
 
         }).getSetting();
+    }
+
+
+
+    public void getCarts(int storeId, int userId) {
+
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            CartResultModel cartResultModel = (CartResultModel) obj;
+            String message = getString(R.string.fail_to_get_data);
+
+            if (IsSuccess) {
+                if (cartResultModel.getData().getCartData() != null && cartResultModel.getData().getCartData().size() > 0) {
+                    cartNumber = cartResultModel.getCartCount();
+                    UtilityApp.setCartCount(cartNumber);
+                    Intent intent = new Intent(getActiviy(), MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+
+                }
+                else {
+                    UtilityApp.setCartCount(0);
+                    Intent intent = new Intent(getActiviy(), MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+                finish();
+
+
+            }
+
+        }).GetCarts(storeId, userId);
     }
 
 }

@@ -59,7 +59,6 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -216,9 +215,6 @@
                     android:id="@+id/offerRecycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_4sdp"
-                    android:layout_marginEnd="@dimen/_4sdp"
-                    android:layout_marginBottom="@dimen/_16sdp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:itemCount="2"
@@ -227,6 +223,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:background="@color/gray_view" />
 
                 <com.ramez.shopp.SpichalViews.STextViewBold
@@ -242,7 +239,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingStart="@dimen/_8sdp"
@@ -275,7 +271,6 @@
                     android:paddingStart="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp"
                     android:id="@+id/productReviewTv"
-                    android:paddingBottom="@dimen/_6sdp"
                     android:text="@string/product_review"
                     android:textColor="@color/gray3"
                     android:visibility="gone" />
@@ -299,12 +294,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="@dimen/_50sdp"
-        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_4sdp"
         android:layout_marginEnd="@dimen/_50sdp"
-        android:layout_marginBottom="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_4sdp"
         android:background="@drawable/round_corner_next"
         android:gravity="center"
-        android:padding="@dimen/_12sdp"
+        android:padding="@dimen/_8sdp"
         android:text="@string/add_to_cart"
         android:textColor="@android:color/white" />
 
@@ -319,11 +314,7 @@
         android:paddingTop="@dimen/_6sdp"
         android:paddingEnd="@dimen/_6sdp"
         android:paddingBottom="@dimen/_6sdp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/productPriceLy">
+        android:visibility="gone">
 
 
         <ImageView
@@ -339,7 +330,7 @@
             app:srcCompat="@drawable/plus"
             app:tint="@color/white" />
 
-        <TextView
+        <com.ramez.shopp.SpichalViews.STextView
             android:id="@+id/productCartQTY"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

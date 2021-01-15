@@ -27,7 +27,8 @@
             android:orientation="horizontal">
 
 
-            <TextView
+           <com.ramez.shopp.SpichalViews.STextView
+
                 android:id="@+id/okBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -43,7 +44,8 @@
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 
-            <TextView
+           <com.ramez.shopp.SpichalViews.STextView
+
                 android:id="@+id/cancelBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -23,6 +23,7 @@ import com.bumptech.glide.request.target.Target;
 import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
+import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Dialogs.CheckLoginDialog;
 import com.ramez.shopp.Models.ProductModel;
@@ -348,6 +349,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                     initSnackBar(context.getString(R.string.success_added_to_cart));
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
                     notifyItemChanged(position);
+                    UtilityApp.updateCart(1);
+
 
                 } else {
 
@@ -384,6 +387,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(0);
                     notifyItemChanged(position);
                     initSnackBar(context.getString(R.string.success_delete_from_cart));
+                    UtilityApp.updateCart(2);
 
 
                 } else {

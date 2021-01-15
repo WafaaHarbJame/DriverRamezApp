@@ -92,7 +92,7 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             RowCurrentMyOrderItemBinding itemView = RowCurrentMyOrderItemBinding.inflate(LayoutInflater.from(context), parent, false);
             vh = new ItemHolder(itemView);
         } else if (viewType == VIEW_TYPE_LOADING) {
-            RowLoadingBinding itemView = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.row_loading, parent, false);
+            RowLoadingBinding itemView = RowLoadingBinding.inflate(LayoutInflater.from(context), parent, false);
             vh = new LoadingViewHolder(itemView);
 
         }
