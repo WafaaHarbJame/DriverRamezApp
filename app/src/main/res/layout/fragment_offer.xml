@@ -51,7 +51,7 @@
             tools:listitem="@layout/row_products_item"
             app:spanCount="2"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            android:layout_marginTop="@dimen/_10sdp" />
+         />
     </LinearLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

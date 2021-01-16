@@ -239,7 +239,7 @@
                                         android:background="@drawable/round_corner_grey_fill"
                                         android:minWidth="@dimen/_30sdp"
                                         android:minHeight="@dimen/_30sdp"
-                                        android:padding="@dimen/_8sdp"
+                                        android:padding="@dimen/_10sdp"
                                         android:visibility="visible"
                                         app:srcCompat="@drawable/plus_cart" />
 
@@ -267,7 +267,7 @@
                                         android:background="@drawable/round_corner_grey_fill"
                                         android:minWidth="@dimen/_30sdp"
                                         android:minHeight="@dimen/_30sdp"
-                                        android:padding="@dimen/_8sdp"
+                                        android:padding="@dimen/_10sdp"
                                         android:visibility="visible"
                                         app:srcCompat="@drawable/minues_cart" />
 

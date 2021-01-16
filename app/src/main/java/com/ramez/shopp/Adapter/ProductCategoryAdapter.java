@@ -464,7 +464,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             binding.plusCartBtn.setOnClickListener(view1 -> {
 
                 ProductModel productModel = productModels.get(getAdapterPosition());
-               // int count = productModel.getProductBarcodes().get(0).getCartQuantity();
+                // int count = productModel.getProductBarcodes().get(0).getCartQuantity();
                 int count = Integer.parseInt(binding.productCartQTY.getText().toString());
 
                 int position = getAdapterPosition();
@@ -489,7 +489,7 @@ public class ProductCategoryAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             binding.minusCartBtn.setOnClickListener(view1 -> {
 
                 ProductModel productModel = productModels.get(getAdapterPosition());
-             //   int count = productModel.getProductBarcodes().get(0).getCartQuantity();
+                //   int count = productModel.getProductBarcodes().get(0).getCartQuantity();
                 int count = Integer.parseInt(binding.productCartQTY.getText().toString());
                 int position = getAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
