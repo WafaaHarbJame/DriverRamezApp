@@ -56,8 +56,8 @@ public class OfferFragment extends FragmentBase implements ProductAdapter.OnItem
 
         getOfferList(0,country_id,city_id,user_id);
 
-        binding.swipeDataContainer.setOnRefreshListener(() -> {
-          binding.swipeDataContainer.setRefreshing(false);
+        binding.dataLY.setOnRefreshListener(() -> {
+          binding.dataLY.setRefreshing(false);
           getOfferList(0,country_id,city_id,user_id);
 
 

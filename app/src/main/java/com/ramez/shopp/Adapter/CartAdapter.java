@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -92,7 +93,8 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
         if (cartDM.getSpecialPrice() > 0) {
 
-            holder.binding.productPriceBeforeTv.setPaintFlags(holder.binding.productPriceBeforeTv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+          //  holder.binding.productPriceBeforeTv.setPaintFlags(holder.binding.productPriceBeforeTv.getPaintFlags() | Paint.START_HYPHEN_EDIT_NO_EDIT);
+            holder.binding.productPriceBeforeTv.setBackground(ContextCompat.getDrawable(context,R.drawable.itlatic_line));
                 holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(cartDM.getProductPrice())), UtilityApp.getLocalData().getFractional()));
                 holder.binding.priceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(cartDM.getSpecialPrice())), UtilityApp.getLocalData().getFractional()));
 
@@ -206,8 +208,8 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
             } else {
                 addCommentDialog.dismiss();
+                Toasty.error(context, context.getString(R.string.fail_to_update_cart), Toast.LENGTH_SHORT, true).show();
 
-                initSnackBar(context.getString(R.string.fail_to_update_cart), v);
             }
 
 
@@ -342,7 +344,8 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                     updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, 0, "quantity");
 
                 } else {
-                    initSnackBar(context.getString(R.string.stock_empty), v);
+                    Toasty.warning(context, context.getString(R.string.stock_empty), Toast.LENGTH_SHORT, true).show();
+
                 }
 
 
@@ -422,7 +425,8 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
                 } else {
 
-                    initSnackBar(context.getString(R.string.fail_to_update_cart), v);
+                    Toasty.error(context, context.getString(R.string.fail_to_update_cart), Toast.LENGTH_SHORT, true).show();
+
 
                 }
 
@@ -456,7 +460,8 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
                 } else {
 
-                    initSnackBar(context.getString(R.string.fail_to_delete_cart), v);
+                    Toasty.error(context, context.getString(R.string.fail_to_delete_cart), Toast.LENGTH_SHORT, true).show();
+
                 }
 
 
