@@ -152,8 +152,6 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
             else {
                 total = NumberHandler.formatDouble(cartProcessModel.getTotal(), fraction);
                 binding.totalTv.setText(total.concat(" " + currency));
-                binding.productsSizeTv.setText(String.valueOf(productSize));
-                binding.productCostTv.setText(NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction).concat(" " + currency));
 
             }
 
@@ -162,10 +160,8 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
         });
         binding.cartRecycler.setAdapter(cartAdapter);
         productsSize = cartList.size();
-        binding.productsSizeTv.setText(String.valueOf(productsSize));
         total = NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction);
         binding.totalTv.setText(total.concat(" " + currency));
-        binding.productCostTv.setText(NumberHandler.formatDouble(cartAdapter.calculateSubTotalPrice(), fraction).concat(" " + currency));
         cartAdapter.notifyDataSetChanged();
 
 

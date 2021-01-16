@@ -325,5 +325,6 @@
     <string name="map_str">Map</string>
     <string name="bh_973">Bahrain (973)</string>
     <string name="add_cart">Add to Cart</string>
+    <string name="info">Remark</string>
 
 </resources>

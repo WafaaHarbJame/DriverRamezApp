@@ -9,6 +9,7 @@
     <color name="text_color">#6D727B</color>
     <color name="white">#FFFFFF</color>
     <color name="gray">#EDECEC</color>
+    <color name="gray10">#F8F8F8</color>
     <color name="gray1">#C6C6C6</color>
     <color name="gray3">#787878</color>
     <color name="header3">@color/gray13</color>
@@ -26,6 +27,7 @@
     <color name="status_color">#EE1D23</color>
     <color name="gray_view">#d8d8d8</color>
     <color name="gray2">#F3F3F3</color>
+    <color name="gray8">#EFEFEF</color>
     <color name="very_dark_gray">#636363</color>
     <color name="blue1">#303473</color>
 

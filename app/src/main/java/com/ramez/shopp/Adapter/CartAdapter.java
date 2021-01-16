@@ -4,12 +4,14 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,7 +33,10 @@ import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.RowCartItemBinding;
 
+import java.text.DecimalFormat;
 import java.util.List;
+
+import es.dmoral.toasty.Toasty;
 
 
 public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
@@ -82,36 +87,28 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
         }
 
 
-        holder.binding.productMarkTv.setText(cartDM.getRemark());
-
         holder.binding.tvName.setText(cartDM.getName());
 
 
-        if (cartDM.getProductPrice() > 0) {
-            double subTotal = 0;
-            if (cartDM.getSpecialPrice() == 0) {
-                holder.binding.priceTv.setText(cartDM.getProductPrice().toString());
-                subTotal = cartDM.getProductPrice() * cartDM.getQuantity();
+        if (cartDM.getSpecialPrice() > 0) {
 
+            holder.binding.productPriceBeforeTv.setPaintFlags(holder.binding.productPriceBeforeTv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                holder.binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(cartDM.getProductPrice())), UtilityApp.getLocalData().getFractional()));
+                holder.binding.priceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(cartDM.getSpecialPrice())), UtilityApp.getLocalData().getFractional()));
 
-            } else {
-                holder.binding.priceTv.setText(cartDM.getSpecialPrice().toString());
-                subTotal = cartDM.getSpecialPrice() * cartDM.getQuantity();
-
-            }
-
-            holder.binding.totalTv.setVisibility(View.VISIBLE);
-            holder.binding.priceTv.setVisibility(View.VISIBLE);
-            holder.binding.totalTv.setText(NumberHandler.formatDouble(subTotal, UtilityApp.getLocalData().getFractional()) + " " + currency);
-            Glide.with(context).load(cartDM.getImage()).placeholder(R.drawable.holder_image).into(holder.binding.imageView1);
 
 
         } else {
-            double subTotal = cartDM.getProductPrice() * cartDM.getQuantity();
-            holder.binding.totalTv.setText(NumberHandler.formatDouble(subTotal, UtilityApp.getLocalData().getFractional()) + " " + currency);
-            Glide.with(context).load(cartDM.getImage()).placeholder(R.drawable.holder_image).into(holder.binding.imageView1);
+
+            holder.binding.priceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(cartDM.getProductPrice())), UtilityApp.getLocalData().getFractional()));
+            holder.binding.productPriceBeforeTv.setVisibility(View.GONE);
+            holder.binding.currencyPriceTv.setText(currency);
+
 
         }
+
+        Glide.with(context).load(cartDM.getImage()).placeholder(R.drawable.holder_image).into(holder.binding.imageView1);
+
 
         calculateSubTotalPrice();
 
@@ -161,6 +158,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
         });
 
 
+
     }
 
     public double calculateSubTotalPrice() {
@@ -189,11 +187,9 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
 
     private void initSnackBar(String message, View viewBar) {
-        Snackbar snackbar = Snackbar.make(viewBar, message, Snackbar.LENGTH_SHORT);
-        View view = snackbar.getView();
-        TextView snackBarMessage = view.findViewById(R.id.snackbar_text);
-        snackBarMessage.setTextColor(Color.WHITE);
-        snackbar.show();
+        Toasty.success(context, message, Toast.LENGTH_SHORT, true).show();
+
+
     }
 
     private void updateMark(View v, int position, int cart_id, String remark) {
@@ -269,6 +265,39 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
 
             });
+
+            binding.markTv.setOnClickListener(view1 -> {
+
+                int position = getAdapterPosition();
+                CartModel cartModel = cartDMS.get(position);
+
+                AddCommentDialog.Click okBut = new AddCommentDialog.Click() {
+                    @Override
+                    public void click() {
+                        String remark = ((EditText) addCommentDialog.findViewById(R.id.remarkET)).getText().toString();
+
+                        updateMark(view1, position, cartModel.getId(), remark);
+
+
+                    }
+                };
+
+                AddCommentDialog.Click cancelBut = new AddCommentDialog.Click() {
+                    @Override
+                    public void click() {
+                        addCommentDialog.dismiss();
+
+
+                    }
+                };
+
+                addCommentDialog = new AddCommentDialog(context, cartModel.getRemark(), R.string.add_comment, R.string.add_comment, okBut, cancelBut);
+
+                addCommentDialog.show();
+
+
+            });
+
             binding.deleteBut.setOnClickListener(view1 -> {
 
                 CartModel productModel = cartDMS.get(getAdapterPosition());
@@ -350,6 +379,22 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
             });
 
+
+            binding.deleteItemBut.setOnClickListener(view1 -> {
+                CartModel productModel = cartDMS.get(getAdapterPosition());
+                int count = productModel.getQuantity();
+                int product_barcode_id = productModel.getProductBarcodeId();
+                int position = getAdapterPosition();
+                int userId = UtilityApp.getUserData().getId();
+                int storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
+                int productId = productModel.getProductId();
+                int cart_id = 0;
+
+                deleteCart(view1, position, productId, product_barcode_id, cart_id, userId, storeId);
+
+            });
+
+
         }
 
 
@@ -406,7 +451,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
                         dataCallback.dataResult(cartProcessModel, Constants.success, true);
                     }
 
-                    UtilityApp.updateCart(2,cartDMS.size());
+                    UtilityApp.updateCart(2, cartDMS.size());
 
 
                 } else {
@@ -419,6 +464,59 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
         }
 
 
+    }
+
+
+    private void addToFavorite(View v, int position, int productId, int userId, int storeId) {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            if (func.equals(Constants.ERROR)) {
+
+                Toasty.error(context, context.getString(R.string.fail_to_add_favorite), Toast.LENGTH_SHORT, true).show();
+
+            } else if (func.equals(Constants.FAIL)) {
+
+                Toasty.error(context, context.getString(R.string.fail_to_add_favorite), Toast.LENGTH_SHORT, true).show();
+
+            } else {
+                if (IsSuccess) {
+
+                    Toasty.success(context, context.getString(R.string.success_add), Toast.LENGTH_SHORT, true).show();
+                   // cartDMS.get(position).setFavourite(true);
+                    notifyItemChanged(position);
+                    notifyDataSetChanged();
+
+                } else {
+                    Toasty.error(context, context.getString(R.string.fail_to_add_favorite), Toast.LENGTH_SHORT, true).show();
+
+                }
+            }
+
+        }).addToFavoriteHandle(userId, storeId, productId);
+    }
+
+    private void removeFromFavorite(View view, int position, int productId, int userId, int storeId) {
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            if (func.equals(Constants.ERROR)) {
+
+                Toasty.error(context, context.getString(R.string.fail_to_remove_favorite), Toast.LENGTH_SHORT, true).show();
+            } else if (func.equals(Constants.FAIL)) {
+                Toasty.error(context, context.getString(R.string.fail_to_remove_favorite), Toast.LENGTH_SHORT, true).show();
+
+            } else {
+                if (IsSuccess) {
+                   // cartDMS.get(position).setFavourite(false);
+                    Toasty.success(context, context.getString(R.string.success_delete), Toast.LENGTH_SHORT, true).show();
+                    notifyItemChanged(position);
+                    notifyDataSetChanged();
+
+
+                } else {
+
+                    Toasty.error(context, context.getString(R.string.fail_to_remove_favorite), Toast.LENGTH_SHORT, true).show();
+                }
+            }
+
+        }).deleteFromFavoriteHandle(userId, storeId, productId);
     }
 
 

@@ -43,146 +43,51 @@
             tools:itemCount="3"
             tools:listitem="@layout/row_cart_item" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
-
-            <com.ramez.shopp.SpichalViews.STextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="end|center"
-                android:lines="1"
-                android:padding="@dimen/_4sdp"
-                android:text="@string/orderDetails"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_11ssp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="@dimen/_4sdp">
-
-                <com.ramez.shopp.SpichalViews.STextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="end|center"
-                    android:lines="1"
-                    android:text="@string/product_count"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_11ssp" />
-
-                <com.ramez.shopp.SpichalViews.STextViewBold
-                    android:id="@+id/productsSizeTv"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:layout_weight="1"
-                    android:gravity="end|center"
-                    android:lines="1"
-                    android:text="10"
-                    android:textColor="@color/green"
-                    android:textSize="@dimen/_11ssp" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray_view" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="@dimen/_4sdp">
-
-                <com.ramez.shopp.SpichalViews.STextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="end|center"
-                    android:lines="1"
-                    android:text="@string/product_cost"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_11ssp" />
-
-                <com.ramez.shopp.SpichalViews.STextViewBold
-                    android:id="@+id/productCostTv"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:layout_weight="1"
-                    android:lines="1"
-                    android:text=""
-                    android:textColor="@color/green"
-                    android:textSize="@dimen/_11ssp" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray_view" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:layout_margin="@dimen/_4sdp"
-                android:gravity="center"
+                android:id="@+id/contBut"
+                android:background="@drawable/round_corner_next"
                 android:orientation="horizontal"
-                android:padding="@dimen/_4sdp">
+                android:layout_marginStart="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/_50sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_6sdp"
+                android:paddingTop="@dimen/_6sdp">
 
                 <com.ramez.shopp.SpichalViews.STextViewBold
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:lines="1"
-                    android:text="@string/total"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/_11ssp" />
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:text="@string/textContinuePurchaseBtn"
+                    android:textSize="@dimen/_14ssp"
+                    android:textColor="@color/white" />
+
 
                 <com.ramez.shopp.SpichalViews.STextViewBold
                     android:id="@+id/totalTv"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/_8sdp"
-                    android:layout_weight="1"
-                    android:gravity="end|center"
+                    android:padding="@dimen/_6sdp"
+                    android:gravity="start"
                     android:lines="1"
+                    android:background="@drawable/round_corner_total"
                     android:text=""
-                    android:textColor="@color/green"
-                    android:textSize="@dimen/_11ssp" />
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_14ssp" />
 
             </LinearLayout>
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
-                android:id="@+id/contBut"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center"
-                android:layout_marginStart="@dimen/_50sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:layout_marginEnd="@dimen/_50sdp"
-                android:layout_marginBottom="@dimen/_8sdp"
-                android:background="@drawable/round_corner_next"
-                android:gravity="center"
-                android:padding="@dimen/_11ssp"
-                android:text="@string/textContinuePurchaseBtn"
-                android:textColor="@android:color/white" />
-        </LinearLayout>
+
 
     </LinearLayout>
 
