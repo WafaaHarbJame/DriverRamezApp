@@ -69,6 +69,7 @@
     <string name="myaccount">My Account</string>
     <string name="offer_text">Offers </string>
     <string name="fail_to_get_data">Fail to get data</string>
+    <string name="fail_to_verify_account">Fail to verify  account</string>
     <string name="reload">Reload</string>
     <string name="suggested_product">Suggested Products</string>
     <string name="product_desc">Product Features</string>
@@ -326,5 +327,8 @@
     <string name="bh_973">Bahrain (973)</string>
     <string name="add_cart">Add to Cart</string>
     <string name="info">Remark</string>
+    <string name="msg_subscribe_failed">Log subscribe failed</string>
+    <string name="msg_subscribed">Log subscribed</string>
+    <string name="resend_again">Resend Code  Again</string>
 
 </resources>

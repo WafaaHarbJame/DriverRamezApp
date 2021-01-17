@@ -120,14 +120,7 @@
                                     android:text="اسم المنتج"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/_10ssp" />
-                                <ImageView
-                                    android:id="@+id/favBut"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="top|start"
-                                    android:layout_marginEnd="@dimen/_4sdp"
-                                    android:layout_marginTop="@dimen/_8sdp"
-                                    android:src="@drawable/empty_fav_grey" />
+
                             </LinearLayout>
 
                             <com.ramez.shopp.SpichalViews.STextView

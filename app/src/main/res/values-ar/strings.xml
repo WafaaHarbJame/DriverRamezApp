@@ -47,6 +47,7 @@
     <string name="terms3">وتوافق على</string>
     <string name="terms4">شروط تطبيق رامز</string>
     <string name="confirm">تأكيد</string>
+    <string name="resend_again">اعادة ارسال الكود </string>
     <string name="reset_pass">إعادة تعين كلمة المرور</string>
     <string name="forget_pass">نسيت كلمة المرور</string>
     <string name="enter_phone">الرجاء ادخال رقم الجوال المسجل  لاسترجاع كلمة المرور</string>
@@ -66,6 +67,7 @@
     <string name="myaccount">حسابي </string>
     <string name="offer_text">العروض </string>
     <string name="fail_to_get_data">خطأ في البيانات</string>
+    <string name="fail_to_verify_account">فشل التحقق من الحساب </string>
     <string name="reload">إعادة</string>
     <string name="suggested_product">المنتجات المقترحة</string>
     <string name="product_desc">مواصفات المنتج</string>
@@ -134,7 +136,7 @@
     <string name="pieces">الكمية : </string>
     <string name="product_count">عدد المنتجات </string>
     <string name="product_cost">تكلفة  المنتجات </string>
-    <string name="textContinuePurchaseBtn">تابع عملية الشراء </string>
+    <string name="textContinuePurchaseBtn">أكمل عملية الشراء </string>
     <string name="add_card">اضافة بطاقة </string>
     <string name="text_card_name">اسم حامل البطاقة</string>
     <string name="text_card_num">رقم البطاقة</string>
@@ -296,4 +298,6 @@
     <string name="bh_973">البحرين (973)</string>
     <string name="add_cart">اضف للسلة</string>
     <string name="info">تعليمات</string>
+    <string name="msg_subscribe_failed">Log subscribe failed</string>
+    <string name="msg_subscribed">Log subscribed</string>
 </resources>

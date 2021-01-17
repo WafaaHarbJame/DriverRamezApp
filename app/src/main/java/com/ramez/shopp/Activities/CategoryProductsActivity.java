@@ -56,7 +56,7 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
     ArrayList<String> autoCompleteList;
     ArrayList<CategoryModel> mainCategoryDMS;
     ArrayList<ChildCat> subCategoryDMS = new ArrayList<>();
-    StaggeredGridLayoutManager gridLayoutManager;
+    GridLayoutManager gridLayoutManager;
     int numColumn = 2;
     int selectedSubCat = 0;
     int category_id = 0, country_id, city_id;
@@ -79,13 +79,8 @@ public class CategoryProductsActivity extends ActivityBase implements ProductCat
         mainCategoryDMS = new ArrayList<>();
 
 
-      //  gridLayoutManager = new GridLayoutManager(getActiviy(), numColumn);
-       // binding.recycler.setLayoutManager(gridLayoutManager);
-
-
-        gridLayoutManager = new StaggeredGridLayoutManager(numColumn, LinearLayoutManager.VERTICAL);
+        gridLayoutManager = new GridLayoutManager(getActiviy(), numColumn);
         binding.recycler.setLayoutManager(gridLayoutManager);
-
 
 
         binding.listShopCategories.setLayoutManager(new LinearLayoutManager(getActiviy(), LinearLayoutManager.HORIZONTAL, false));

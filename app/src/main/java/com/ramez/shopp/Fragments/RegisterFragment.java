@@ -10,23 +10,20 @@ import android.view.ViewGroup;
 
 import androidx.viewpager.widget.ViewPager;
 
-import com.github.dhaval2404.form_validation.rule.EmailRule;
 import com.github.dhaval2404.form_validation.rule.EqualRule;
 import com.github.dhaval2404.form_validation.rule.NonEmptyRule;
 import com.github.dhaval2404.form_validation.validation.FormValidator;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.FirebaseInstanceIdReceiver;
 import com.ramez.shopp.Activities.ChooseCityActivity;
 import com.ramez.shopp.Activities.ConditionActivity;
 import com.ramez.shopp.Activities.ConfirmActivity;
-import com.ramez.shopp.Activities.RegisterLoginActivity;
-import com.ramez.shopp.Activities.SplashScreenActivity;
 import com.ramez.shopp.Activities.TermsActivity;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.OtpModel;
 import com.ramez.shopp.Classes.UtilityApp;
-import com.ramez.shopp.Dialogs.ConfirmDialog;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.LoginResultModel;
 import com.ramez.shopp.Models.MemberModel;
@@ -120,18 +117,16 @@ public class RegisterFragment extends FragmentBase {
                     message = result.getMessage();
                 }
                 GlobalData.errorDialog(getActivityy(), R.string.fail_register, message);
-            }
-
-            else if (func.equals(Constants.NO_CONNECTION)) {
+            } else if (func.equals(Constants.NO_CONNECTION)) {
                 GlobalData.Toast(getActivityy(), R.string.no_internet_connection);
-            }
-            else {
+            } else {
                 if (IsSuccess) {
-                    Log.i("TAG", "Log otp " + result.getOtp());
+                    if (result != null) {
+                        Log.i("TAG", "Log otp " + result.getOtp());
+                    }
                     MemberModel user = result.data;
-                   // user.setRegisterType(Constants.BY_PHONE);
                     UtilityApp.setUserData(user);
-                    SendOtp(mobileStr);
+                    SendOtp(mobileStr, passwordStr);
                 } else {
                     Toast(getString(R.string.fail_register));
 
@@ -157,11 +152,7 @@ public class RegisterFragment extends FragmentBase {
 
         FormValidator formValidator = FormValidator.Companion.getInstance();
 
-        return formValidator.addField(binding.edtFirstName, new NonEmptyRule(getString(R.string.enter_name)))
-                .addField(binding.edtPhoneNumber, new NonEmptyRule(getString(R.string.enter_phone_number)))
-                .addField(binding.edtPassword, new NonEmptyRule(getString(R.string.enter_password)))
-                .addField(binding.edtConfirmPassword, new NonEmptyRule(getString(R.string.enter_confirm_password))
-                        ,new EqualRule(String.valueOf(binding.edtPassword.getText()), R.string.password_confirm_not_match)).validate();
+        return formValidator.addField(binding.edtFirstName, new NonEmptyRule(getString(R.string.enter_name))).addField(binding.edtPhoneNumber, new NonEmptyRule(getString(R.string.enter_phone_number))).addField(binding.edtPassword, new NonEmptyRule(getString(R.string.enter_password))).addField(binding.edtConfirmPassword, new NonEmptyRule(getString(R.string.enter_confirm_password)), new EqualRule(String.valueOf(binding.edtPassword.getText()), R.string.password_confirm_not_match)).validate();
 
     }
 
@@ -186,7 +177,7 @@ public class RegisterFragment extends FragmentBase {
     }
 
 
-    public void SendOtp(String mobile) {
+    public void SendOtp(String mobile, String password) {
         final String mobileStr = NumberHandler.arabicToDecimal(binding.edtPhoneNumber.getText().toString());
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (func.equals(Constants.ERROR)) {
@@ -196,9 +187,11 @@ public class RegisterFragment extends FragmentBase {
             } else {
                 if (IsSuccess) {
                     OtpModel otpModel = (OtpModel) obj;
-                    Log.i("TAG", "Log otp " + otpModel.getData());
+                    if (otpModel.getData() != null) {
+                        Log.i("TAG", "Log otp " + otpModel.getData());
+
+                    }
                     Intent intent = new Intent(getActivityy(), ConfirmActivity.class);
-                    intent.putExtra(Constants.KEY_MOBILE, mobileStr);
                     intent.putExtra(Constants.KEY_MOBILE, mobileStr);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);

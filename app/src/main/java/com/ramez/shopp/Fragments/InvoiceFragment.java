@@ -55,7 +55,7 @@ import static android.content.ContentValues.TAG;
 public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.OnInvoiceItemClicked {
     private static final int ADDRESS_CODE = 100;
     public Integer userId;
-    public String paymentMethod="COD";
+    public String paymentMethod = "COD";
     public String couponCodeId = "0";
     public Integer deliveryDateId = 0;
     public Boolean expressDelivery = false;
@@ -69,7 +69,7 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
     String total, currency;
     List<SearchListItem> deliverTimeList;
     List<SearchListItem> deliverDayList;
-   SearchableDialog deliverTimeDialog, deliverDayDialog;
+    SearchableDialog deliverTimeDialog, deliverDayDialog;
     int fraction = 2;
     private FragmentInvoiceBinding binding;
     private PaymentAdapter paymentAdapter;
@@ -78,7 +78,7 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
     private String addressTitle;
     private double deliveryFees = 0.0;
     private CartResultModel cartResultModel;
-    private int minimum_order_amount=0;
+    private int minimum_order_amount = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentInvoiceBinding.inflate(inflater, container, false);
@@ -95,7 +95,7 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
         localModel = UtilityApp.getLocalData();
         currency = localModel.getCurrencyCode();
         fraction = localModel.getFractional();
-        minimum_order_amount=localModel.getMinimum_order_amount();
+        minimum_order_amount = localModel.getMinimum_order_amount();
 
 
         storeId = Integer.parseInt(UtilityApp.getLocalData().getCityId());
@@ -123,8 +123,6 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
         });
 
 
-
-
         binding.DeliveryDateTv.setOnClickListener(view1 -> {
             deliverDayDialog.show();
         });
@@ -143,12 +141,11 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
 
         binding.sendOrder.setOnClickListener(view1 -> {
 
-            if(NumberHandler.getDouble(total)<minimum_order_amount){
+            if (NumberHandler.getDouble(total) < minimum_order_amount) {
 
-                Toasty.warning(getActivityy(), getString(R.string.minimum_order_amount)+minimum_order_amount, Toast.LENGTH_SHORT, true).show();
+                Toasty.warning(getActivityy(), getString(R.string.minimum_order_amount) + minimum_order_amount, Toast.LENGTH_SHORT, true).show();
 
-            }
-            else {
+            } else {
                 OrderCall orderCall = new OrderCall();
                 orderCall.user_id = userId;
                 orderCall.store_ID = storeId;
@@ -168,30 +165,33 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
                 Log.i(TAG, "Log expressDelivery " + expressDelivery);
 
 
-                if (addressId == 0) {
-                    if(paymentMethod.equals("CC")){
-                        binding.DeliverLY.setVisibility(View.GONE);
-                    }
-                    else {
-                        Toasty.error(getActivityy(), R.string.choose_address, Toast.LENGTH_SHORT, true).show();
-
-                        binding.deliveryAddressTv.setError(getString(R.string.choose_address));
-                        binding.deliveryAddressTv.requestFocus();
-                    }
-
-
-
-                }
-                else if(deliveryTimesList.size()==0){
+                if (deliveryTimesList.size() == 0) {
 
                     GlobalData.errorDialog(getActivityy(), R.string.make_order, getString(R.string.fail_to_send_order_no_times));
 
-                }
+                } else {
+
+                    if (paymentMethod.equals("CC")) {
+                        binding.DeliverLY.setVisibility(View.GONE);
+
+                        sendOrder(orderCall);
 
 
-                else {
-                    sendOrder(orderCall);
+                    } else {
+                        if (addressId == 0) {
+
+                            Toasty.error(getActivityy(), R.string.choose_address, Toast.LENGTH_SHORT, true).show();
+                            binding.deliveryAddressTv.setError(getString(R.string.choose_address));
+                            binding.deliveryAddressTv.requestFocus();
+                        } else {
+
+                            sendOrder(orderCall);
+                        }
+
+                    }
+
                 }
+
 
             }
 
@@ -212,14 +212,13 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
             if (paymentMethod != null) {
                 paymentMethod = paymentModel.getShortname();
 
-                if(paymentMethod.equals("CC")){
+                if (paymentMethod.equals("CC")) {
                     binding.DeliverLY.setVisibility(View.GONE);
-                    expressDelivery=true;
+                    expressDelivery = true;
 
-                }
-                else {
+                } else {
                     binding.DeliverLY.setVisibility(View.VISIBLE);
-                    expressDelivery=false;
+                    expressDelivery = false;
 
                 }
 
@@ -229,7 +228,6 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
 
 
     }
-
 
 
     @Override
@@ -252,19 +250,15 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
                 if (result != null && result.getMessage() != null) {
                     message = result.getMessage();
                 }
-                GlobalData.Toast(getActivityy(),message);
+                GlobalData.Toast(getActivityy(), message);
 
 
-            }
-            else if (func.equals(Constants.FAIL)) {
-                GlobalData.Toast(getActivityy(),message);
+            } else if (func.equals(Constants.FAIL)) {
+                GlobalData.Toast(getActivityy(), message);
 
-            }
-            else if (func.equals(Constants.NO_CONNECTION)) {
-                GlobalData.Toast(getActivityy(),R.string.no_internet_connection);
-            }
-
-            else {
+            } else if (func.equals(Constants.NO_CONNECTION)) {
+                GlobalData.Toast(getActivityy(), R.string.no_internet_connection);
+            } else {
                 if (IsSuccess) {
                     if (result.getData() != null && result.getData().size() > 0) {
                         paymentList = result.getData();
@@ -301,64 +295,59 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
                 if (result != null && result.getMessage() != null) {
                     message = result.getMessage();
                 }
-                GlobalData.Toast(getActivityy(),message);
+                GlobalData.Toast(getActivityy(), message);
 
 
-            }
-            else if (func.equals(Constants.FAIL)) {
-                GlobalData.Toast(getActivityy(),message);
+            } else if (func.equals(Constants.FAIL)) {
+                GlobalData.Toast(getActivityy(), message);
 
-            }
-            else if (func.equals(Constants.NO_CONNECTION)) {
-             GlobalData.Toast(getActivityy(),R.string.no_internet_connection);
-            }
+            } else if (func.equals(Constants.NO_CONNECTION)) {
+                GlobalData.Toast(getActivityy(), R.string.no_internet_connection);
+            } else {
+                if (IsSuccess) {
+                    if (result.getData() != null && result.getData().size() > 0) {
+                        deliveryTimesList = result.getData();
+                        binding.deliveryLy.setVisibility(View.VISIBLE);
+                        binding.DeliveryDateTv.setText(deliveryTimesList.get(0).getDate());
+                        binding.TvDeliveryTime.setText(deliveryTimesList.get(0).getTime());
+                        deliveryDateId = deliveryTimesList.get(0).getId();
 
-            else {
-            if (IsSuccess) {
-                if (result.getData() != null && result.getData().size() > 0) {
-                    deliveryTimesList = result.getData();
-                    binding.deliveryLy.setVisibility(View.VISIBLE);
-                    binding.DeliveryDateTv.setText(deliveryTimesList.get(0).getDate());
-                    binding.TvDeliveryTime.setText(deliveryTimesList.get(0).getTime());
-                    deliveryDateId = deliveryTimesList.get(0).getId();
-
-                    Log.i(TAG, "Log deliveryTimesList" + result.getData().size());
+                        Log.i(TAG, "Log deliveryTimesList" + result.getData().size());
 
 
-                    for (int i = 0; i < deliveryTimesList.size(); i++) {
-                        SearchListItem searchListItem = new SearchListItem(i, deliveryTimesList.get(i).getDate());
-                        SearchListItem searchListItem1 = new SearchListItem(i, deliveryTimesList.get(i).getTime());
-                        deliverDayList.add(searchListItem);
-                        deliverTimeList.add(searchListItem1);
+                        for (int i = 0; i < deliveryTimesList.size(); i++) {
+                            SearchListItem searchListItem = new SearchListItem(i, deliveryTimesList.get(i).getDate());
+                            SearchListItem searchListItem1 = new SearchListItem(i, deliveryTimesList.get(i).getTime());
+                            deliverDayList.add(searchListItem);
+                            deliverTimeList.add(searchListItem1);
+                        }
+
+
+                        deliverTimeDialog = new com.ramez.shopp.searchdialog.SearchableDialog(getActivity(), deliverTimeList, getString(R.string.choose_time));
+
+                        deliverDayDialog = new SearchableDialog(getActivity(), deliverDayList, getString(R.string.choose_day));
+
+                        deliverTimeDialog.setOnItemSelected((i, deliverTimeList) -> {
+                            binding.TvDeliveryTime.setText(deliverTimeList.getTitle());
+                            deliveryDateId = deliveryTimesList.get(i).getId();
+
+
+                        });
+
+
+                        deliverDayDialog.setOnItemSelected((i, deliverDayList) -> {
+                            binding.DeliveryDateTv.setText(deliverDayList.getTitle());
+                            deliveryDateId = deliveryTimesList.get(i).getId();
+
+
+                        });
+
+
+                    } else {
+                        binding.noDeliveryTv.setVisibility(View.VISIBLE);
                     }
 
-
-                    deliverTimeDialog = new com.ramez.shopp.searchdialog.SearchableDialog(getActivity(), deliverTimeList, getString(R.string.choose_time));
-
-                    deliverDayDialog = new SearchableDialog(getActivity(), deliverDayList, getString(R.string.choose_day));
-
-                    deliverTimeDialog.setOnItemSelected((i, deliverTimeList) -> {
-                        binding.TvDeliveryTime.setText(deliverTimeList.getTitle());
-                        deliveryDateId = deliveryTimesList.get(i).getId();
-
-
-                    });
-
-
-                    deliverDayDialog.setOnItemSelected((i, deliverDayList) -> {
-                        binding.DeliveryDateTv.setText(deliverDayList.getTitle());
-                        deliveryDateId = deliveryTimesList.get(i).getId();
-
-
-                    });
-
-
                 }
-                else {
-                    binding.noDeliveryTv.setVisibility(View.VISIBLE);
-                }
-
-            }
             }
 
 
@@ -390,7 +379,7 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
             total = bundle.getString(Constants.CART_SUM);
             productsSize = bundle.getInt(Constants.CART_PRODUCT_COUNT, 0);
             cartResultModel = (CartResultModel) bundle.getSerializable(Constants.CART_MODEL);
-            deliveryFees=cartResultModel.getDeliveryCharges();
+            deliveryFees = cartResultModel.getDeliveryCharges();
             productList = cartResultModel.getData().getCartData();
             binding.productsSizeTv.setText(String.valueOf(productsSize));
             binding.totalTv.setText(total.concat(" " + currency));
@@ -406,11 +395,11 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
             @Override
             public void dataResult(Object obj, String func, boolean IsSuccess) {
 
-                CartProcessModel cartProcessModel= (CartProcessModel) obj;
+                CartProcessModel cartProcessModel = (CartProcessModel) obj;
                 total = NumberHandler.formatDouble(cartProcessModel.getTotal(), fraction);
                 binding.totalTv.setText(total.concat(" " + currency));
                 binding.productsSizeTv.setText(String.valueOf(cartProcessModel.getCartCount()));
-                if(cartProcessModel.getCartCount()==0){
+                if (cartProcessModel.getCartCount() == 0) {
                     FragmentManager fragmentManager = getParentFragmentManager();
                     CartFragment cartFragment = new CartFragment();
                     fragmentManager.beginTransaction().replace(R.id.mainContainer, cartFragment, "cartFragment").commit();
@@ -442,7 +431,7 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
             } else {
                 if (IsSuccess) {
 
-
+                    UtilityApp.setCartCount(0);
                     AwesomeSuccessDialog successDialog = new AwesomeSuccessDialog(getActivityy());
                     successDialog.setTitle(R.string.make_order).setMessage(R.string.sending_order).setColoredCircle(R.color.dialogSuccessBackgroundColor).setDialogIconAndColor(R.drawable.ic_check, R.color.white).show().setOnDismissListener(dialogInterface -> {
                         startMain();

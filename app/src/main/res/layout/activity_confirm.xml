@@ -164,6 +164,18 @@
                 android:text="@string/confirm"
                 android:textColor="@android:color/white"
                 />
+
+
+            <com.ramez.shopp.SpichalViews.STextView
+                android:id="@+id/resendCodeTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:text="@string/resend_again"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_12ssp" />
         </LinearLayout>
 
 

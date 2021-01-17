@@ -1,5 +1,6 @@
 package com.ramez.shopp.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -9,6 +10,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.ramez.shopp.Adapter.CityAdapter;
 import com.ramez.shopp.Adapter.CountriesAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
@@ -16,6 +20,7 @@ import com.ramez.shopp.Classes.CityModelResult;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.CityModel;
 import com.ramez.shopp.Models.CountryModel;
 import com.ramez.shopp.Models.LocalModel;
@@ -34,6 +39,8 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
     int city_id = 0;
     int countryId;
     LocalModel localModel;
+    String  oldCountryName;
+    String  newCountryName;
     private LinearLayoutManager linearLayoutManager;
     private CityAdapter cityAdapter;
     private CountriesAdapter countriesAdapter;
@@ -125,8 +132,30 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
             localModel.setCountryId(countryId);
             localModel.setCityId(String.valueOf(city_id));
             UtilityApp.setLocalData(localModel);
-            Toasty.success(getActiviy(), R.string.change_success, Toast.LENGTH_SHORT, true).show();
+            FirebaseMessaging.getInstance().subscribeToTopic(newCountryName)
 
+                    .addOnCompleteListener(task -> {
+                        String msg = getString(R.string.msg_subscribed);
+                        if (!task.isSuccessful()) {
+                            msg = getString(R.string.msg_subscribe_failed);
+                        }
+                        Log.d("TAG", msg);
+                    });
+
+
+            FirebaseMessaging.getInstance().unsubscribeFromTopic(oldCountryName)
+
+                    .addOnCompleteListener(task -> {
+                        String msg = getString(R.string.msg_subscribed);
+                        if (!task.isSuccessful()) {
+                            msg = getString(R.string.msg_subscribe_failed);
+                        }
+                        Log.d("TAG", msg);
+                    });
+
+
+
+            Toasty.success(getActiviy(), R.string.change_success, Toast.LENGTH_SHORT, true).show();
             Intent intent = new Intent(getActiviy(), SplashScreenActivity.class);
             startActivity(intent);
 
@@ -219,9 +248,13 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
     @Override
     public void onCountryClicked(int position, CountryModel countryModel) {
         countryId = countryModel.getId();
+        oldCountryName=UtilityApp.getLocalData().getShortname();
+        newCountryName=countryModel.getShortname();
         localModel.setShortname(countryModel.getShortname());
         UtilityApp.setLocalData(localModel);
         Log.i("tag", "Log click countryId" + countryId);
+        Log.i("tag", "Log click oldCountry" + oldCountryName);
+        Log.i("tag", "Log click newCountryName" + newCountryName);
         Log.i("tag", "Log click ShortName" + countryModel.getShortname());
         getCityList(countryId);
 

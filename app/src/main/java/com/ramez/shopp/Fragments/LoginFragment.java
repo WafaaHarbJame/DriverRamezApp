@@ -69,14 +69,14 @@ public class LoginFragment extends FragmentBase {
     String country_name = "BH";
     String city_id = "7263";
     LocalModel localModel;
+    int cartNumber;
+    int storeId, userId;
+    MemberModel user;
     private FragmentLoginBinding binding;
     private ViewPager viewPager;
     private CallbackManager callbackManager;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth firebaseAuth;
-    int cartNumber;
-    int storeId, userId;
-    MemberModel user;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -149,12 +149,11 @@ public class LoginFragment extends FragmentBase {
 
         binding.showPassBut.setOnClickListener(view1 -> {
 
-            if(binding.edtPassword.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
-                ((ImageView)(view1)).setImageResource(R.drawable.ic_visibility_off);
+            if (binding.edtPassword.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
+                ((ImageView) (view1)).setImageResource(R.drawable.ic_visibility_off);
                 binding.edtPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-            }
-            else{
-                ((ImageView)(view1)).setImageResource(R.drawable.ic_visibility);
+            } else {
+                ((ImageView) (view1)).setImageResource(R.drawable.ic_visibility);
                 binding.edtPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
             }
         });
@@ -195,23 +194,19 @@ public class LoginFragment extends FragmentBase {
                     message = result.getMessage();
                 }
                 GlobalData.errorDialog(getActivityy(), R.string.fail_signin, message);
-            }
-
-            else if (func.equals(Constants.NO_CONNECTION)) {
+            } else if (func.equals(Constants.NO_CONNECTION)) {
                 GlobalData.Toast(getActivityy(), R.string.no_internet_connection);
-            }
-            else {
+            } else {
                 if (IsSuccess) {
 
-                    if(result.getStatus()==106){
+                    if (result.getStatus() == 106) {
                         Intent intent = new Intent(getActivityy(), ConfirmActivity.class);
                         intent.putExtra(Constants.KEY_MOBILE, mobileStr);
                         intent.putExtra(Constants.verify_account, true);
                         intent.putExtra(Constants.KEY_PASSWORD, passwordStr);
                         startActivity(intent);
 
-                    }
-                    else {
+                    } else {
                         MemberModel user = result.data;
                         UtilityApp.setUserData(user);
                         // user.setRegisterType(Constants.BY_PHONE);
@@ -222,12 +217,11 @@ public class LoginFragment extends FragmentBase {
                     }
 
 
-
                 } else {
                     Toast(getString(R.string.fail_signin));
 
                 }
-        }
+            }
 
 
         }).loginHandle(memberModel);
@@ -298,10 +292,10 @@ public class LoginFragment extends FragmentBase {
                 if (IsSuccess) {
                     localModel = UtilityApp.getLocalData();
                     storeId = Integer.parseInt(localModel.getCityId());
-                    user=UtilityApp.getUserData();
+                    user = UtilityApp.getUserData();
                     userId = user.getId();
 
-                 getCarts(storeId,userId);
+                    getCarts(storeId, userId);
 
                 } else {
                     Toast(getString(R.string.fail_signin));
@@ -317,7 +311,7 @@ public class LoginFragment extends FragmentBase {
     private void facebookSignIn() {
 
         if (AccessToken.getCurrentAccessToken() != null) {
-          signOut();
+            signOut();
         }
 
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends", "email"));
@@ -441,7 +435,7 @@ public class LoginFragment extends FragmentBase {
                 if (IsSuccess) {
                     Log.i("TAG", "Log otp " + result.getOtp());
                     MemberModel user = result.data;
-                  //  user.setRegisterType(Constants.BY_SOCIAL);
+                    //  user.setRegisterType(Constants.BY_SOCIAL);
                     UtilityApp.setUserData(user);
                     Intent intent = new Intent(getActivityy(), MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -520,11 +514,10 @@ public class LoginFragment extends FragmentBase {
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        if(currentUser!=null){
-            RegisterUser(currentUser.getDisplayName(),currentUser.getEmail());
+        if (currentUser != null) {
+            RegisterUser(currentUser.getDisplayName(), currentUser.getEmail());
 
         }
-
 
 
     }
@@ -534,7 +527,6 @@ public class LoginFragment extends FragmentBase {
         firebaseAuth.signOut();
         LoginManager.getInstance().logOut();
     }
-
 
 
     public void getCarts(int storeId, int userId) {
@@ -551,8 +543,7 @@ public class LoginFragment extends FragmentBase {
                     Intent intent = new Intent(getActivityy(), MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
-                }
-                else {
+                } else {
                     UtilityApp.setCartCount(0);
                     Intent intent = new Intent(getActivityy(), MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

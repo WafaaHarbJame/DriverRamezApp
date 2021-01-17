@@ -25,6 +25,8 @@ import com.ramez.shopp.R;
 
 import java.util.ArrayList;
 
+import es.dmoral.toasty.Toasty;
+
 import static android.content.ContentValues.TAG;
 
 public class SplashScreenActivity extends ActivityBase {
@@ -64,6 +66,8 @@ public class SplashScreenActivity extends ActivityBase {
                     storeId = Integer.parseInt(localModel.getCityId());
                     user=UtilityApp.getUserData();
                     userId = user.getId();
+                    Log.i(TAG, "Log user_id " + userId);
+                    Log.i(TAG, "Log storeId " + storeId);
                     getUserData(userId);
 
 
@@ -88,7 +92,7 @@ public class SplashScreenActivity extends ActivityBase {
 
     private void startWelcomeActivity() {
         startActivity(new Intent(getActiviy(), ChangeLanguageActivity.class));
-//        finish();
+
     }
 
 
@@ -98,7 +102,30 @@ public class SplashScreenActivity extends ActivityBase {
             ResultAPIModel<ProfileData> result = (ResultAPIModel<ProfileData>) obj;
             String message = getString(R.string.fail_to_get_data);
 
-            if (IsSuccess) {
+            if (func.equals(Constants.ERROR)) {
+
+                Intent intent = new Intent(getActiviy(), RegisterLoginActivity.class);
+                intent.putExtra(Constants.LOGIN, true);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
+            } else if (func.equals(Constants.FAIL)) {
+
+                Intent intent = new Intent(getActiviy(), RegisterLoginActivity.class);
+                intent.putExtra(Constants.LOGIN, true);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
+
+            }
+
+            else if (func.equals(Constants.NO_CONNECTION)) {
+                Toasty.error(getActiviy(),R.string.no_internet_connection, Toast.LENGTH_SHORT, true).show();
+
+            }
+
+
+           else if (IsSuccess) {
                 MemberModel memberModel = UtilityApp.getUserData();
                 memberModel.setName(result.data.getName());
                 memberModel.setEmail(result.data.getEmail());
@@ -113,6 +140,9 @@ public class SplashScreenActivity extends ActivityBase {
                 finish();
             }
 
+
+
+
         }).getUserDetails(user_id);
     }
 
@@ -121,6 +151,23 @@ public class SplashScreenActivity extends ActivityBase {
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             ResultAPIModel<SettingModel> result = (ResultAPIModel<SettingModel>) obj;
 
+            if (func.equals(Constants.ERROR)) {
+
+                Toasty.error(getActiviy(),R.string.error_in_data, Toast.LENGTH_SHORT, true).show();
+
+            } else if (func.equals(Constants.FAIL)) {
+
+                Toasty.error(getActiviy(),R.string.fail_to_get_data, Toast.LENGTH_SHORT, true).show();
+
+
+            }
+
+            else if (func.equals(Constants.NO_CONNECTION)) {
+                Toasty.error(getActiviy(),R.string.no_internet_connection, Toast.LENGTH_SHORT, true).show();
+
+
+            }
+
             if (IsSuccess) {
                 SettingModel settingModel = new SettingModel();
                 settingModel.setAbout(result.data.getAbout());
@@ -128,6 +175,13 @@ public class SplashScreenActivity extends ActivityBase {
                 settingModel.setPrivacy(result.data.getPrivacy());
                 UtilityApp.setSetting(settingModel);
             }
+            else {
+                Toasty.error(getActiviy(),R.string.no_internet_connection, Toast.LENGTH_SHORT, true).show();
+
+            }
+
+
+
 
         }).getSetting();
     }

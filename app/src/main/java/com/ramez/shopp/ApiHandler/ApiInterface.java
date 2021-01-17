@@ -78,7 +78,7 @@ ApiInterface {
 
 
     @POST("v3/Account/otpVerify")
-    Call<OtpModel> otpVerifyUserHandle(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
+    Call<GeneralModel> otpVerifyUserHandle(@HeaderMap() Map<String, Object> headerParams, @Body OtpModel param );
 
     /* ------------------------- Address Handle ------------------------- */
     @POST("v3/Locations/countryList")

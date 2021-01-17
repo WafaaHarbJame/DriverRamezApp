@@ -9,6 +9,7 @@ import androidx.multidex.MultiDex;
 
 
 import com.androidnetworking.AndroidNetworking;
+import com.onesignal.OneSignal;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Utils.LocaleUtils;
@@ -22,6 +23,7 @@ import java.util.Map;
 public class RootApplication extends Application {
 
     private static RootApplication rootApplication;
+    private static final String ONESIGNAL_APP_ID = "06c038db-2891-4e93-b03f-ac3a308efc8e";
 
     SharedPManger sharedPManger;
 
@@ -51,6 +53,10 @@ public class RootApplication extends Application {
         rootApplication = this;
         sharedPManger = new SharedPManger(this);
 
+        OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE);
+
+        // OneSignal Initialization
+        OneSignal.init(this,"",ONESIGNAL_APP_ID);
 
         String appLanguage = UtilityApp.getLanguage();
         if (appLanguage == null) {

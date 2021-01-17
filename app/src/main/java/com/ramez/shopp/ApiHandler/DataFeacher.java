@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
+import com.ramez.shopp.Classes.OtpModel;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Classes.orderListCall;
 import com.ramez.shopp.Models.AddressModel;
@@ -190,6 +191,7 @@ public class DataFeacher {
         Log.i(TAG, "Log device_type " + "android");
         Log.i(TAG, "Log device_token " + memberModel.getDeviceToken());
         Log.i(TAG, "Log getDeviceId " + memberModel.getDeviceId());
+        Log.i(TAG, "Log user_type " + memberModel.getUserType());
 
         Call call = apiService.loginUserHandle(headerMap, params);
         call.enqueue(callbackApi);
@@ -356,11 +358,12 @@ public class DataFeacher {
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log mobile_number " + mobile_number);
         Log.i(TAG, "Log otp " + otp);
-        Map<String, Object> params = new HashMap<>();
-        params.put("mobile_number", mobile_number);
-        params.put("otp", otp);
 
-        Call call = apiService.otpVerifyUserHandle(headerMap, params);
+        OtpModel otpModel=new OtpModel();
+        otpModel.setMobileNumber(mobile_number);
+        otpModel.setOtp(otp);
+
+        Call call = apiService.otpVerifyUserHandle(headerMap, otpModel);
         call.enqueue(callbackApi);
     }
 

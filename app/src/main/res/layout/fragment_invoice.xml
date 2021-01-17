@@ -15,12 +15,11 @@
         android:orientation="vertical" />
 
 
-
     <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
         android:id="@+id/dataLY"
-        android:visibility="visible"
-        android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
 
 
         <FrameLayout
@@ -33,20 +32,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <com.ramez.shopp.SpichalViews.STextView
-                    android:id="@+id/messageTxt"
-                    style="@style/editTextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:layout_marginEnd="@dimen/_8sdp"
-                    android:inputType="textMultiLine"
-                    android:paddingTop="@dimen/_4sdp"
-                    android:paddingBottom="@dimen/_4sdp"
-                    android:text="@string/invoice_number"
-                    android:textColor="@color/black" />
-
-                <include layout="@layout/row_header_invoice_item" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/productsRecycler"
@@ -55,14 +40,10 @@
                     android:paddingStart="@dimen/_10sdp"
                     android:paddingTop="@dimen/_4sdp"
                     android:paddingEnd="@dimen/_10sdp"
+                    android:visibility="gone"
                     tools:itemCount="2"
                     tools:listitem="@layout/row_invoice_product_item" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:background="@color/gray_view" />
 
                 <com.ramez.shopp.SpichalViews.STextViewBold
                     android:layout_width="wrap_content"
@@ -77,9 +58,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_margin="@dimen/_4sdp"
-                    android:gravity="center_vertical"
-                    android:layout_gravity="center">
+                    android:gravity="center_vertical">
 
                     <com.ramez.shopp.SpichalViews.STextView
                         android:layout_width="wrap_content"
@@ -107,9 +88,10 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_margin="@dimen/_4sdp"
                     android:gravity="center_vertical"
-                    android:layout_gravity="center"                    android:orientation="horizontal">
+                    android:orientation="horizontal">
 
                     <com.ramez.shopp.SpichalViews.STextView
                         android:layout_width="wrap_content"
@@ -137,9 +119,10 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_margin="@dimen/_4sdp"
                     android:gravity="center_vertical"
-                    android:layout_gravity="center"                    android:orientation="horizontal">
+                    android:orientation="horizontal">
 
                     <com.ramez.shopp.SpichalViews.STextViewBold
                         android:layout_width="wrap_content"
@@ -199,6 +182,7 @@
                     android:paddingTop="@dimen/_2sdp"
                     android:paddingEnd="@dimen/_8sdp"
                     android:paddingBottom="@dimen/_8sdp" />
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -296,7 +280,7 @@
                         app:cardCornerRadius="@dimen/_8sdp"
                         app:cardUseCompatPadding="true">
 
-                       <com.ramez.shopp.SpichalViews.STextView
+                        <com.ramez.shopp.SpichalViews.STextView
                             android:id="@+id/DeliveryDateTv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -322,7 +306,7 @@
                         app:cardUseCompatPadding="true">
 
 
-                       <com.ramez.shopp.SpichalViews.STextView
+                        <com.ramez.shopp.SpichalViews.STextView
                             android:id="@+id/TvDeliveryTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -338,22 +322,22 @@
                 </LinearLayout>
 
 
-
                 <com.ramez.shopp.SpichalViews.STextView
+                    android:id="@+id/noDeliveryTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_16sdp"
                     android:gravity="center"
-                    android:id="@+id/noDeliveryTv"
                     android:lines="1"
-                    android:visibility="gone"
                     android:paddingStart="@dimen/_8sdp"
                     android:paddingTop="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp"
-                    android:layout_marginBottom="@dimen/_16sdp"
                     android:paddingBottom="@dimen/_2sdp"
                     android:text="@string/no_delivery_times"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_10ssp" />
+                    android:textSize="@dimen/_10ssp"
+                    android:visibility="gone" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -364,9 +348,9 @@
                     android:orientation="horizontal">
 
                     <com.ramez.shopp.SpichalViews.STextViewBold
+                        android:id="@+id/saveBut"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/saveBut"
                         android:layout_marginEnd="@dimen/_16sdp"
                         android:layout_weight="1"
                         android:background="@drawable/round_corner_next"
