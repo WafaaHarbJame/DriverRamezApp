@@ -330,5 +330,7 @@
     <string name="msg_subscribe_failed">Log subscribe failed</string>
     <string name="msg_subscribed">Log subscribed</string>
     <string name="resend_again">Resend Code  Again</string>
+    <string name="set_default_address">Set Default</string>
+    <string name="free">Free</string>
 
 </resources>

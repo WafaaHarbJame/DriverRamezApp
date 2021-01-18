@@ -1,6 +1,7 @@
 package com.ramez.shopp.Activities;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 
@@ -58,6 +59,10 @@ public class RegisterLoginActivity extends ActivityBase {
         binding.tabs.setSelectedTabIndicatorColor(Color.WHITE);
         binding.tabs.setupWithViewPager(binding.viewPager);
         binding.tabs.setSelectedTabIndicatorColor(ContextCompat.getColor(getActiviy(),R.color.colorAccent));
+
+
+
+
 
         if(login){
             binding.viewPager.setCurrentItem(1);

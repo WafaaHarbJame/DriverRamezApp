@@ -300,4 +300,6 @@
     <string name="info">تعليمات</string>
     <string name="msg_subscribe_failed">Log subscribe failed</string>
     <string name="msg_subscribed">Log subscribed</string>
+    <string name="set_default_address">تعين العنوان الافتراضي </string>
+    <string name="free">مجاناً</string>
 </resources>

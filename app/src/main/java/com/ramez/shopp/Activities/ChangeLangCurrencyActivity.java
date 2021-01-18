@@ -115,16 +115,16 @@ public class ChangeLangCurrencyActivity extends ActivityBase implements Currency
 
 
 
-        if(UtilityApp.getCountriesData().size()>0)
-        {
-            countries=UtilityApp.getCountriesData();
-            for (int i = 0; i <countries.size() ; i++) {
-                CountryModel countryModel=countries.get(i);
-                currencyList.add(new CurrencyModel(countryModel.getId(),countryModel.getCurrencyCode(),countryModel.getCurrencyCode()));
-            }
-
-        }
-        else {
+//        if(UtilityApp.getCountriesData().size()>0)
+//        {
+//            countries=UtilityApp.getCountriesData();
+//            for (int i = 0; i <countries.size() ; i++) {
+//                CountryModel countryModel=countries.get(i);
+//                currencyList.add(new CurrencyModel(countryModel.getId(),countryModel.getCurrencyCode(),countryModel.getCurrencyCode()));
+//            }
+//
+//        }
+//        else {
             countries.add(new CountryModel(4,getString(R.string.Oman),getString(R.string.oman_shotname),968,"OMR",3,R.drawable.ic_flag_oman));
             countries.add(new CountryModel(17,getString(R.string.Bahrain),getString(R.string.bahrain_shotname),973,"BHD",3,R.drawable.ic_flag_behrain));
             countries.add(new CountryModel(117,getString(R.string.Kuwait),getString(R.string.Kuwait_shotname),965,"KWD",2,R.drawable.ic_flag_kuwait));
@@ -136,7 +136,7 @@ public class ChangeLangCurrencyActivity extends ActivityBase implements Currency
                 CountryModel countryModel=countries.get(i);
                 currencyList.add(new CurrencyModel(countryModel.getId(),countryModel.getCurrencyCode(),countryModel.getCurrencyCode()));
             }
-        }
+       // }
 
 
         initAdapter();

@@ -199,7 +199,15 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
         });
 
 
-        binding.deliveryFees.setText(NumberHandler.formatDouble(deliveryFees, localModel.getFractional()).concat("" + currency));
+
+        if(deliveryFees==0){
+            binding.deliveryFees.setText(getString(R.string.free));
+
+        }
+        else {
+            binding.deliveryFees.setText(NumberHandler.formatDouble(deliveryFees, localModel.getFractional()).concat("" + currency));
+
+        }
 
 
         return view;

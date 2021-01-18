@@ -18,18 +18,15 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/dataLY"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:visibility="visible">
 
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
 
@@ -58,9 +55,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_margin="@dimen/_4sdp"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center">
 
                     <com.ramez.shopp.SpichalViews.STextView
                         android:layout_width="wrap_content"
@@ -107,6 +104,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:gravity="end|center"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_weight="1"
                         android:lines="1"
@@ -338,46 +336,43 @@
                     android:textSize="@dimen/_10ssp"
                     android:visibility="gone" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:layout_marginEnd="@dimen/_8sdp"
-                    android:layout_marginBottom="@dimen/_8sdp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <com.ramez.shopp.SpichalViews.STextViewBold
-                        android:id="@+id/saveBut"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/_16sdp"
-                        android:layout_weight="1"
-                        android:background="@drawable/round_corner_next"
-                        android:gravity="center"
-                        android:padding="@dimen/_8sdp"
-                        android:text="@string/save_update"
-                        android:textColor="@color/white" />
-
-                    <com.ramez.shopp.SpichalViews.STextViewBold
-                        android:id="@+id/sendOrder"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/_16sdp"
-                        android:layout_weight="1"
-                        android:background="@drawable/round_corner_next"
-                        android:gravity="center"
-                        android:padding="@dimen/_8sdp"
-                        android:text="@string/delivery_send"
-                        android:textColor="@color/white" />
-
-                </LinearLayout>
-
-
             </LinearLayout>
-        </FrameLayout>
 
     </androidx.core.widget.NestedScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.ramez.shopp.SpichalViews.STextViewBold
+            android:id="@+id/saveBut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_weight="1"
+            android:background="@drawable/round_corner_next"
+            android:gravity="center"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/save_update"
+            android:textColor="@color/white" />
+
+        <com.ramez.shopp.SpichalViews.STextViewBold
+            android:id="@+id/sendOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_weight="1"
+            android:background="@drawable/round_corner_next"
+            android:gravity="center"
+            android:padding="@dimen/_8sdp"
+            android:text="@string/delivery_send"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
 
 
 </LinearLayout>
