@@ -131,6 +131,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/mapKey" />
 
+        <meta-data android:name="com.onesignal.NotificationAccentColor.DEFAULT" android:value="@color/colorPrimaryDark" />
+
+
         <activity
             android:name=".Activities.AddNewAddressActivity"
             android:launchMode="singleTask"
