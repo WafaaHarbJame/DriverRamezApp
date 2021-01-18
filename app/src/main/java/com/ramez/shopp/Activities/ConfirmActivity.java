@@ -14,6 +14,7 @@ import com.ramez.shopp.Classes.OtpModel;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.GeneralModel;
+import com.ramez.shopp.Models.LoginResultModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
@@ -46,6 +47,7 @@ public class ConfirmActivity extends ActivityBase {
         if (bundle != null) {
             mobileStr = getIntent().getStringExtra(Constants.KEY_MOBILE);
             verify_account = getIntent().getBooleanExtra(Constants.verify_account, false);
+            passwordStr = bundle.getString(Constants.KEY_PASSWORD);
 
         }
 
@@ -66,7 +68,7 @@ public class ConfirmActivity extends ActivityBase {
             public void onTick(long l) {
                 if (!isStart)
 
-                binding.resendCodeTxt.setEnabled(false);
+                    binding.resendCodeTxt.setEnabled(false);
                 int time = (int) (l / 1000);
                 String str = getString(R.string.resend_again) + " (" + time + ")";
                 binding.resendCodeTxt.setText(str);
@@ -78,7 +80,7 @@ public class ConfirmActivity extends ActivityBase {
 
                 binding.resendCodeTxt.setText(getString(R.string.resend_again));
                 binding.resendCodeTxt.setEnabled(true);
-                isStart =false;
+                isStart = false;
             }
         };
 
@@ -120,17 +122,23 @@ public class ConfirmActivity extends ActivityBase {
 
             } else {
                 if (IsSuccess) {
-                    GeneralModel otpModel = (GeneralModel) obj;
-                    Log.i("TAG", "Log otp verify " + otpModel.getMessage());
 
-                    if (otpModel.getStatus() == 200) {
-                        if (UtilityApp.getUserData() != null) {
-                            UpdateToken();
-                        }
+                    if (verify_account) {
+                        loginUser();
+
                     } else {
-                        message = otpModel.getMessage();
-                        GlobalData.errorDialog(getActiviy(), R.string.confirm_code, message);
+                        GeneralModel otpModel = (GeneralModel) obj;
+                        Log.i("TAG", "Log otp verify " + otpModel.getMessage());
 
+                        if (otpModel.getStatus() == 200) {
+                            if (UtilityApp.getUserData() != null) {
+                                UpdateToken();
+                            }
+                        } else {
+                            message = otpModel.getMessage();
+                            GlobalData.errorDialog(getActiviy(), R.string.confirm_code, message);
+
+                        }
                     }
 
 
@@ -225,6 +233,59 @@ public class ConfirmActivity extends ActivityBase {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         getActiviy().finish();
+
+    }
+
+
+    private void loginUser() {
+
+        final MemberModel memberModel = new MemberModel();
+        memberModel.setMobileNumber(mobileStr);
+        memberModel.setPassword(passwordStr);
+        memberModel.setDeviceType(Constants.deviceType);
+        memberModel.setDeviceToken(FCMToken);
+        memberModel.setDeviceId(UtilityApp.getUnique());
+        memberModel.setUserType(Constants.user_type);
+
+        GlobalData.progressDialog(getActiviy(), R.string.confirm_code, R.string.please_wait_sending);
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            GlobalData.hideProgressDialog();
+            LoginResultModel result = (LoginResultModel) obj;
+
+            if (func.equals(Constants.ERROR)) {
+                String message = getString(R.string.fail_signin);
+                if (result != null && result.getMessage() != null) {
+                    message = result.getMessage();
+                }
+
+                GlobalData.errorDialog(getActiviy(), R.string.fail_signin, message);
+            } else if (func.equals(Constants.FAIL)) {
+                String message = getString(R.string.fail_signin);
+                if (result != null && result.getMessage() != null) {
+                    message = result.getMessage();
+                }
+                GlobalData.errorDialog(getActiviy(), R.string.fail_signin, message);
+            } else if (func.equals(Constants.NO_CONNECTION)) {
+                GlobalData.Toast(getActiviy(), R.string.no_internet_connection);
+            } else {
+                if (IsSuccess) {
+
+                    MemberModel user = result.data;
+                    UtilityApp.setUserData(user);
+                    if (UtilityApp.getUserData() != null) {
+                        UpdateToken();
+                    }
+
+
+                } else {
+                    Toast(getString(R.string.fail_signin));
+
+                }
+            }
+
+
+        }).loginHandle(memberModel);
 
     }
 
