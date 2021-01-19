@@ -240,6 +240,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
                         delivery_charges = cartResultModel.getDeliveryCharges();
                         Log.i(TAG, "Log cart" + cartResultModel.getData().getCartData().size());
+                        UtilityApp.setCartCount(cartResultModel.getCartCount());
                         initAdapter();
                         cartAdapter.notifyDataSetChanged();
 

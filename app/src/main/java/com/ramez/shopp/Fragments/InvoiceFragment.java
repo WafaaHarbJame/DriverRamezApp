@@ -45,7 +45,12 @@ import com.ramez.shopp.searchdialog.SearchableDialog;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import es.dmoral.toasty.Toasty;
 
@@ -60,15 +65,16 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
     public Integer deliveryDateId = 0;
     public Boolean expressDelivery = false;
     ArrayList<PaymentModel> paymentList;
-    ArrayList<DeliveryTime> deliveryTimesList;
+    List<DeliveryTime> deliveryTimesList;
+    //    ArrayList<DeliveryTime> noRepeat;
     ArrayList<CartModel> productList;
     LinearLayoutManager payLinearLayoutManager;
     LinearLayoutManager linearLayoutManager;
     LocalModel localModel;
     int storeId, productsSize;
     String total, currency;
-    List<SearchListItem> deliverTimeList;
-    List<SearchListItem> deliverDayList;
+    List<SearchListItem> searchDayList;
+    List<SearchListItem> searchTimeList;
     SearchableDialog deliverTimeDialog, deliverDayDialog;
     int fraction = 2;
     private FragmentInvoiceBinding binding;
@@ -80,6 +86,8 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
     private CartResultModel cartResultModel;
     private int minimum_order_amount = 0;
 
+    private LinkedHashMap<String, List<DeliveryTime>> datesMap = new LinkedHashMap<>();
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentInvoiceBinding.inflate(inflater, container, false);
 
@@ -87,10 +95,11 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
 
         paymentList = new ArrayList<>();
         productList = new ArrayList<>();
-        deliveryTimesList = new ArrayList<>();
+//        deliveryTimesList = new ArrayList<>();
+//        noRepeat = new ArrayList<>();
 
-        deliverDayList = new ArrayList<>();
-        deliverTimeList = new ArrayList<>();
+        searchDayList = new ArrayList<>();
+        searchTimeList = new ArrayList<>();
 
         localModel = UtilityApp.getLocalData();
         currency = localModel.getCurrencyCode();
@@ -117,15 +126,38 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
 
         getPaymentMethod(storeId);
 
-
-        binding.TvDeliveryTime.setOnClickListener(view1 -> {
-            deliverTimeDialog.show();
-        });
-
-
         binding.DeliveryDateTv.setOnClickListener(view1 -> {
+
+            int dateId = 0;
+            searchDayList = new ArrayList<>();
+            for (String s : datesMap.keySet()) {
+                SearchListItem searchListItem = new SearchListItem(dateId, s);
+                searchDayList.add(searchListItem);
+                dateId++;
+            }
+
+            deliverDayDialog = new SearchableDialog(getActivity(), searchDayList, getString(R.string.choose_day));
+            deliverDayDialog.setOnItemSelected((i, deliverDayList) -> {
+                binding.DeliveryDateTv.setText(deliverDayList.getTitle());
+                deliveryTimesList = datesMap.get(deliverDayList.getTitle());
+
+                initSearchTimesList();
+
+            });
             deliverDayDialog.show();
         });
+
+        binding.TvDeliveryTime.setOnClickListener(view1 -> {
+
+            deliverTimeDialog = new SearchableDialog(getActivity(), searchTimeList, getString(R.string.choose_time));
+            deliverTimeDialog.setOnItemSelected((i, deliverTimeList) -> {
+                binding.TvDeliveryTime.setText(deliverTimeList.getTitle());
+                deliveryDateId = deliveryTimesList.get(i).getId();
+            });
+            deliverTimeDialog.show();
+
+        });
+
 
         binding.DeliverLY.setOnClickListener(v -> {
             Intent intent = new Intent(getActivityy(), AddressActivity.class);
@@ -199,18 +231,27 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
         });
 
 
-
-        if(deliveryFees==0){
+        if (deliveryFees == 0) {
             binding.deliveryFees.setText(getString(R.string.free));
 
-        }
-        else {
+        } else {
             binding.deliveryFees.setText(NumberHandler.formatDouble(deliveryFees, localModel.getFractional()).concat("" + currency));
 
         }
 
 
         return view;
+    }
+
+    private void initSearchTimesList() {
+
+        int timeId = 0;
+        searchTimeList = new ArrayList<>();
+        for (DeliveryTime timeModel : deliveryTimesList) {
+            SearchListItem searchListItem = new SearchListItem(timeId, timeModel.getTime());
+            searchTimeList.add(searchListItem);
+            timeId++;
+        }
     }
 
     public void initAdapter() {
@@ -288,7 +329,9 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
 
     public void getDeliveryTimeList(int user_id) {
 
-        deliveryTimesList.clear();
+        datesMap.clear();
+//        deliveryTimesList.clear();
+
         binding.loadingDelivery.setVisibility(View.VISIBLE);
         binding.deliveryLy.setVisibility(View.GONE);
 
@@ -314,41 +357,42 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
             } else {
                 if (IsSuccess) {
                     if (result.getData() != null && result.getData().size() > 0) {
-                        deliveryTimesList = result.getData();
                         binding.deliveryLy.setVisibility(View.VISIBLE);
-                        binding.DeliveryDateTv.setText(deliveryTimesList.get(0).getDate());
-                        binding.TvDeliveryTime.setText(deliveryTimesList.get(0).getTime());
-                        deliveryDateId = deliveryTimesList.get(0).getId();
+                        List<DeliveryTime> datesList = result.getData();
+
+                        DeliveryTime firstTime = datesList.get(0);
+                        binding.DeliveryDateTv.setText(firstTime.getDate());
+                        binding.TvDeliveryTime.setText(firstTime.getTime());
+                        deliveryDateId = firstTime.getId();
 
                         Log.i(TAG, "Log deliveryTimesList" + result.getData().size());
 
+                        String currentDate = firstTime.getDate();
+                        List<DeliveryTime> timesList = new ArrayList<>();
+                        for (int i = 0; i < datesList.size(); i++) {
+                            DeliveryTime deliveryTime = datesList.get(i);
 
-                        for (int i = 0; i < deliveryTimesList.size(); i++) {
-                            SearchListItem searchListItem = new SearchListItem(i, deliveryTimesList.get(i).getDate());
-                            SearchListItem searchListItem1 = new SearchListItem(i, deliveryTimesList.get(i).getTime());
-                            deliverDayList.add(searchListItem);
-                            deliverTimeList.add(searchListItem1);
+                            if (deliveryTime.getDate().equals(currentDate)) {
+                                timesList.add(deliveryTime);
+                            } else if (!deliveryTime.getDate().equals(currentDate) || i == datesList.size() - 1) {
+                                datesMap.put(currentDate, timesList);
+                                currentDate = deliveryTime.getDate();
+                                timesList= new ArrayList<>();
+                                timesList.add(deliveryTime);
+                            }
+
                         }
 
+                        deliveryTimesList = datesMap.get(firstTime.getDate());
+                        initSearchTimesList();
 
-                        deliverTimeDialog = new com.ramez.shopp.searchdialog.SearchableDialog(getActivity(), deliverTimeList, getString(R.string.choose_time));
-
-                        deliverDayDialog = new SearchableDialog(getActivity(), deliverDayList, getString(R.string.choose_day));
-
-                        deliverTimeDialog.setOnItemSelected((i, deliverTimeList) -> {
-                            binding.TvDeliveryTime.setText(deliverTimeList.getTitle());
-                            deliveryDateId = deliveryTimesList.get(i).getId();
-
-
-                        });
-
-
-                        deliverDayDialog.setOnItemSelected((i, deliverDayList) -> {
-                            binding.DeliveryDateTv.setText(deliverDayList.getTitle());
-                            deliveryDateId = deliveryTimesList.get(i).getId();
-
-
-                        });
+//                        for (int i = 0; i < noRepeat.size(); i++) {
+//                            SearchListItem searchListItem = new SearchListItem(i, noRepeat.get(i).getDate());
+//                            SearchListItem searchListItem1 = new SearchListItem(i, noRepeat.get(i).getTime());
+//
+//                            deliverDayList.add(searchListItem);
+//                            deliverTimeList.add(searchListItem1);
+//                        }
 
 
                     } else {

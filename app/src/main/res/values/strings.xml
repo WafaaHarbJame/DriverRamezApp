@@ -172,7 +172,7 @@
     <string name="delivery_to">Delivery to : </string>
     <string name="deliver_time">Delivery times</string>
     <string name="choose_payment_type">Choose a payment Type</string>
-    <string name="delivery_send">Send for Delivery</string>
+    <string name="delivery_send">Place Order</string>
     <string name="save_update">Continue Editing</string>
     <string name="textFromtime">9 A.m  9 P.M </string>
     <string name="item">Item</string>

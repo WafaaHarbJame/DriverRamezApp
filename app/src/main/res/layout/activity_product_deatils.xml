@@ -127,7 +127,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:gravity="center_vertical"
-                    android:layout_gravity="center"
                     android:orientation="horizontal"
                     android:paddingStart="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp"
@@ -149,6 +148,18 @@
                         android:text="@string/_10220_aed"
                         android:textColor="@color/green"
                         android:textSize="@dimen/_12ssp" />
+
+                    <com.ramez.shopp.SpichalViews.STextView
+                        android:id="@+id/productPriceBeforeTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/_10220_aed"
+                        android:layout_marginStart="@dimen/_3sdp"
+                        android:textColor="@color/gray3"
+                        android:textSize="@dimen/_10ssp" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -313,6 +324,9 @@
         android:paddingStart="@dimen/_6sdp"
         android:paddingTop="@dimen/_6sdp"
         android:paddingEnd="@dimen/_6sdp"
+        android:background="@drawable/round_corner_gray_fill2"
+        android:layout_marginStart="@dimen/_4sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
         android:paddingBottom="@dimen/_6sdp"
         android:visibility="gone">
 

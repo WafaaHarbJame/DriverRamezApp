@@ -161,7 +161,7 @@
     <string name="delivery_to">التوصيل الى : </string>
     <string name="deliver_time">مواعيد التوصيل</string>
     <string name="choose_payment_type">اختر طريقة دفع</string>
-    <string name="delivery_send">تسليم للتوصيل</string>
+    <string name="delivery_send"> ارسال الطلب </string>
     <string name="save_update">متابعة التعديل</string>
     <string name="textFromtime">9 A.m  9 P.M</string>
     <string name="item">الصنف</string>

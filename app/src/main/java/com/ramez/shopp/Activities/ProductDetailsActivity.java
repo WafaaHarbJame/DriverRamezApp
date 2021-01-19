@@ -2,6 +2,7 @@ package com.ramez.shopp.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -42,6 +43,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import es.dmoral.toasty.Toasty;
@@ -382,7 +384,27 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                         binding.productDescTv.setText(Html.fromHtml(productModel.getDescription().toString()));
 
                         ProductBarcode productBarcode = productModel.getProductBarcodes().get(0);
-                        binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(productBarcode.getPrice().toString()), UtilityApp.getLocalData().getFractional()) + " " + currency);
+
+                        if (productBarcode.getIsSpecial()) {
+                            binding.productPriceBeforeTv.setPaintFlags(binding.productPriceBeforeTv.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                            if (productModel.getProductBarcodes().get(0).getSpecialPrice() != null) {
+                                binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productBarcode.getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
+                               binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productBarcode.getSpecialPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
+                                //discount = (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())) - Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice()))) / (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice()))) * 100;
+                               // DecimalFormat df = new DecimalFormat("#");
+                               // String newDiscount_str = df.format(discount);
+                               //binding.discountTv.setText(NumberHandler.arabicToDecimal(newDiscount_str) + " % " + "OFF");
+                            }
+
+
+                        } else {
+                               binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productBarcode.getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency + "");
+                              binding.productPriceBeforeTv.setVisibility(View.GONE);
+//                               binding.discountTv.setVisibility(View.GONE);
+
+                            }
+
+
 
                         sliderList = productModel.getImages();
                         binding.ratingBar.setRating((float) productModel.getRate());

@@ -64,7 +64,10 @@ public class MyAccountFragment extends FragmentBase {
 
 
             } else {
+                if(memberModel.getId()!=null){
                 getUserData(memberModel.getId());
+
+                }
             }
 
         } else {
