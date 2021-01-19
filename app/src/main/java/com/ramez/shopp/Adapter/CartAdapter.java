@@ -166,8 +166,20 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
     public double calculateSubTotalPrice() {
         double subTotal = 0;
         for (int i = 0; i < cartDMS.size(); i++) {
+            double price=0;
             if (cartDMS.get(i).getProductPrice() > 0) {
-                subTotal += cartDMS.get(i).getProductPrice() * cartDMS.get(i).getQuantity();
+
+
+                if(cartDMS.get(i).getSpecialPrice() >0){
+                    price=cartDMS.get(i).getSpecialPrice();
+
+                }
+                else {
+                    price=cartDMS.get(i).getProductPrice();
+
+                }
+
+                subTotal += price * cartDMS.get(i).getQuantity();
             }
         }
         Log.i(TAG, "Log subTotal result" + subTotal);

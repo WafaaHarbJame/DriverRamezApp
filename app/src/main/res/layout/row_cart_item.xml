@@ -176,6 +176,7 @@
                                 android:layout_gravity="center"
                                 android:gravity="center_vertical"
                                 android:orientation="horizontal"
+
                                 android:paddingBottom="@dimen/_8sdp">
 
                                 <com.ramez.shopp.SpichalViews.STextViewBold
@@ -268,7 +269,6 @@
                                         android:id="@+id/deleteCartBtn"
                                         android:layout_width="@dimen/_30sdp"
                                         android:layout_height="@dimen/_30sdp"
-                                        android:layout_marginStart="@dimen/_8ssp"
                                         android:minWidth="@dimen/_30sdp"
                                         android:minHeight="@dimen/_30sdp"
                                         android:padding="@dimen/_8sdp"
