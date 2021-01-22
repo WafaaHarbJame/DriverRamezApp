@@ -2,10 +2,12 @@ package com.ramez.shopp.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ramez.shopp.ApiHandler.DataFeacher;
@@ -29,14 +31,12 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Holder> 
     private OnContainerSelect onContainerSelect;
 
 
-
-    public AddressAdapter(Context context, List<AddressModel> addressModelList,
-                          OnRadioAddressSelect onRadioAddressSelect, OnDeleteClicked onDeleteClicked,OnContainerSelect OnContainerSelect) {
+    public AddressAdapter(Context context, List<AddressModel> addressModelList, OnRadioAddressSelect onRadioAddressSelect, OnDeleteClicked onDeleteClicked, OnContainerSelect OnContainerSelect) {
         this.context = context;
         this.addressModelList = addressModelList;
         this.onRadioAddressSelect = onRadioAddressSelect;
         this.onDeleteClicked = onDeleteClicked;
-        this.onContainerSelect=OnContainerSelect;
+        this.onContainerSelect = OnContainerSelect;
     }
 
     @NonNull
@@ -49,36 +49,41 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Holder> 
     @Override
     public void onBindViewHolder(Holder holder, int position) {
         RowAddressItemBinding binding = holder.binding;
-        AddressModel addressModel=addressModelList.get(position);
+        AddressModel addressModel = addressModelList.get(position);
 
-        if (UtilityApp.getUserData().lastSelectedAddress ==addressModel.getId()) {
+        if (UtilityApp.getUserData().lastSelectedAddress == addressModel.getId()) {
             holder.binding.rbSelectAddress.setChecked(true);
+
         } else {
             holder.binding.rbSelectAddress.setChecked(false);
         }
 
-        binding.tvAddressMark.setText(context.getString(R.string.ph).concat(" "+addressModel.getMobileNumber()));
+        binding.tvAddressMark.setText(context.getString(R.string.ph).concat(" " + addressModel.getMobileNumber()));
         binding.tvAddressNote.setText(addressModel.getFullAddress());
         binding.tvaAddressTitle.setText(addressModel.getName());
 
         binding.rbSelectAddress.setOnClickListener(v -> {
             onRadioAddressSelect.onAddressSelected(addressModel);
-            MemberModel memberModel=UtilityApp.getUserData();
+            MemberModel memberModel = UtilityApp.getUserData();
             memberModel.setLastSelectedAddress(addressModel.getId());
             UtilityApp.setUserData(memberModel);
             notifyDataSetChanged();
         });
 
 
-
-
         binding.deleteAddressBut.setOnClickListener(v -> {
 
-            onDeleteClicked.onDeleteClicked(addressModel, UtilityApp.getUserData().lastSelectedAddress == position,position);
+            onDeleteClicked.onDeleteClicked(addressModel, UtilityApp.getUserData().lastSelectedAddress == position, position);
 //            deleteAddressId(addressModelList.get(position).getId(),position);
 
 
         });
+
+        if (position == getItemCount() - 1) {
+            holder.binding.divider.setVisibility(View.GONE);
+        } else {
+            holder.binding.divider.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -86,21 +91,37 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Holder> 
         return addressModelList.size();
     }
 
+    public void deleteAddressId(int addressId, int position) {
+        ConfirmDialog.Click click = new ConfirmDialog.Click() {
+            @Override
+            public void click() {
+                new DataFeacher(false, (obj, func, IsSuccess) -> {
+                    if (func.equals(Constants.ERROR)) {
+                        Toast.makeText(context, "" + context.getString(R.string.error_in_data), Toast.LENGTH_SHORT).show();
+                    } else if (func.equals(Constants.FAIL)) {
+                        Toast.makeText(context, "" + context.getString(R.string.fail_delete_address), Toast.LENGTH_SHORT).show();
 
-    public class Holder extends RecyclerView.ViewHolder {
-        RowAddressItemBinding binding;
-        public Holder(RowAddressItemBinding view) {
-            super(view.getRoot());
-            binding = view;
+                    } else if (func.equals(Constants.NO_CONNECTION)) {
+                        Toast.makeText(context, "" + context.getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
 
-            binding.container.setOnClickListener(view1 -> {
-                AddressModel addressModel=addressModelList.get(getAdapterPosition());
-              onContainerSelect.onContainerSelectSelected(addressModel);
+                    } else {
+                        if (IsSuccess) {
+                            addressModelList.remove(position);
+                            notifyDataSetChanged();
+                            notifyItemRemoved(position);
 
-            });
 
-        }
+                        } else {
 
+                            Toast.makeText(context, "" + context.getString(R.string.fail_to_get_data), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                }).deleteAddressHandle(addressId);
+            }
+        };
+
+        new ConfirmDialog(context, R.string.want_to_delete_address, R.string.ok, R.string.cancel_label, click, null);
 
     }
 
@@ -115,45 +136,25 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Holder> 
 
 
     public interface OnDeleteClicked {
-        void onDeleteClicked(AddressModel addressModel, boolean isChecked,int position);
+        void onDeleteClicked(AddressModel addressModel, boolean isChecked, int position);
 
     }
 
+    public class Holder extends RecyclerView.ViewHolder {
+        RowAddressItemBinding binding;
 
-    public void deleteAddressId(int addressId,int position) {
-        ConfirmDialog.Click click = new ConfirmDialog.Click() {
-            @Override
-            public void click() {
-                new DataFeacher(false, (obj, func, IsSuccess) -> {
-                    if (func.equals(Constants.ERROR)) {
-                        Toast.makeText(context, ""+context.getString(R.string.error_in_data), Toast.LENGTH_SHORT).show();
-                    } else if (func.equals(Constants.FAIL)) {
-                        Toast.makeText(context, ""+context.getString(R.string.fail_delete_address), Toast.LENGTH_SHORT).show();
+        public Holder(RowAddressItemBinding view) {
+            super(view.getRoot());
+            binding = view;
 
-                    }
+            binding.container.setOnClickListener(view1 -> {
+                AddressModel addressModel = addressModelList.get(getAdapterPosition());
+                onContainerSelect.onContainerSelectSelected(addressModel);
 
-                    else if (func.equals(Constants.NO_CONNECTION)) {
-                        Toast.makeText(context, ""+context.getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
+            });
 
-                    }
-                    else {
-                        if (IsSuccess) {
-                            addressModelList.remove(position);
-                            notifyDataSetChanged();
-                            notifyItemRemoved(position);
+        }
 
-
-                        } else {
-
-                            Toast.makeText(context, ""+context.getString(R.string.fail_to_get_data), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                }).deleteAddressHandle(addressId);
-            }
-        };
-
-        new ConfirmDialog(context, R.string.want_to_delete_address, R.string.ok, R.string.cancel_label, click, null);
 
     }
 }

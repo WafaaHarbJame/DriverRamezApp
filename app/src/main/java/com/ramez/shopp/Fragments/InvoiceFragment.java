@@ -10,25 +10,24 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.ajithvgiri.searchdialog.SearchListItem;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeSuccessDialog;
-import com.google.android.material.snackbar.Snackbar;
-import com.ramez.shopp.Activities.AddressActivity;
-import com.ramez.shopp.Adapter.InvoiceItemAdapter;
+import com.ramez.shopp.Activities.AddNewAddressActivity;
+import com.ramez.shopp.Adapter.AddressCheckAdapter;
+import com.ramez.shopp.Adapter.DeliveryDayAdapter;
+import com.ramez.shopp.Adapter.DeliveryTimeAdapter;
 import com.ramez.shopp.Adapter.PaymentAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
-import com.ramez.shopp.CallBack.DataCallback;
 import com.ramez.shopp.Classes.CartModel;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.MessageEvent;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.MainActivity;
-import com.ramez.shopp.Models.CartProcessModel;
+import com.ramez.shopp.Models.AddressModel;
+import com.ramez.shopp.Models.AddressResultModel;
 import com.ramez.shopp.Models.CartResultModel;
 import com.ramez.shopp.Models.DeliveryResultModel;
 import com.ramez.shopp.Models.DeliveryTime;
@@ -40,53 +39,49 @@ import com.ramez.shopp.Models.PaymentResultModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.FragmentInvoiceBinding;
-import com.ramez.shopp.searchdialog.SearchableDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import es.dmoral.toasty.Toasty;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
 
-public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.OnInvoiceItemClicked {
+public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter.OnRadioAddressSelect, AddressCheckAdapter.OnContainerSelect, AddressCheckAdapter.OnEditClick {
     private static final int ADDRESS_CODE = 100;
     public Integer userId;
     public String paymentMethod = "COD";
     public String couponCodeId = "0";
     public Integer deliveryDateId = 0;
     public Boolean expressDelivery = false;
+    public DeliveryDayAdapter deliveryDayAdapter;
+    public DeliveryTimeAdapter deliveryTimeAdapter;
     ArrayList<PaymentModel> paymentList;
     List<DeliveryTime> deliveryTimesList;
-    //    ArrayList<DeliveryTime> noRepeat;
     ArrayList<CartModel> productList;
-    LinearLayoutManager payLinearLayoutManager;
+    GridLayoutManager payLinearLayoutManager;
     LinearLayoutManager linearLayoutManager;
     LocalModel localModel;
     int storeId, productsSize;
     String total, currency;
-    List<SearchListItem> searchDayList;
-    List<SearchListItem> searchTimeList;
-    SearchableDialog deliverTimeDialog, deliverDayDialog;
+    List<DeliveryTime> searchDayList;
+    List<DeliveryTime> searchTimeList;
     int fraction = 2;
+    ArrayList<AddressModel> addressList;
     private FragmentInvoiceBinding binding;
     private PaymentAdapter paymentAdapter;
-    private InvoiceItemAdapter invoiceProductAdapter;
     private int addressId = 0;
-    private String addressTitle;
     private double deliveryFees = 0.0;
     private CartResultModel cartResultModel;
     private int minimum_order_amount = 0;
-
     private LinkedHashMap<String, List<DeliveryTime>> datesMap = new LinkedHashMap<>();
+    private AddressCheckAdapter addressAdapter;
+    private int ADD_ADDRESS = 4000;
+    boolean addNewAddress;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentInvoiceBinding.inflate(inflater, container, false);
@@ -94,9 +89,7 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
         View view = binding.getRoot();
 
         paymentList = new ArrayList<>();
-        productList = new ArrayList<>();
-//        deliveryTimesList = new ArrayList<>();
-//        noRepeat = new ArrayList<>();
+        addressList = new ArrayList<>();
 
         searchDayList = new ArrayList<>();
         searchTimeList = new ArrayList<>();
@@ -112,59 +105,56 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
 
         userId = UtilityApp.getUserData().getId();
 
-        payLinearLayoutManager = new LinearLayoutManager(getActivityy(), RecyclerView.HORIZONTAL, false);
+        payLinearLayoutManager = new GridLayoutManager(getActivityy(), 2, RecyclerView.VERTICAL, false);
         binding.paymentRv.setLayoutManager(payLinearLayoutManager);
+        binding.paymentRv.setHasFixedSize(true);
+        binding.paymentRv.setAnimation(null);
+
 
         linearLayoutManager = new LinearLayoutManager(getActivityy());
-        binding.productsRecycler.setLayoutManager(linearLayoutManager);
-        binding.productsRecycler.setHasFixedSize(false);
-        binding.productsRecycler.setAnimation(null);
+        binding.addressRecycler.setLayoutManager(linearLayoutManager);
+        binding.addressRecycler.setHasFixedSize(false);
+        binding.addressRecycler.setAnimation(null);
+
+
+        binding.DeliverDayRecycler.setHasFixedSize(true);
+        LinearLayoutManager deliverDayLlm = new LinearLayoutManager(getActivityy());
+        deliverDayLlm.setOrientation(LinearLayoutManager.HORIZONTAL);
+        binding.DeliverDayRecycler.setLayoutManager(deliverDayLlm);
+
+
+        binding.DeliverTimeRecycler.setHasFixedSize(true);
+        LinearLayoutManager deliverTimeLlm = new LinearLayoutManager(getActivityy());
+        deliverTimeLlm.setOrientation(LinearLayoutManager.VERTICAL);
+        binding.DeliverTimeRecycler.setLayoutManager(deliverTimeLlm);
+
 
         getExtraIntent();
+
+        GetUserAddress(userId);
 
         getDeliveryTimeList(storeId);
 
         getPaymentMethod(storeId);
 
-        binding.DeliveryDateTv.setOnClickListener(view1 -> {
-
-            int dateId = 0;
-            searchDayList = new ArrayList<>();
-            for (String s : datesMap.keySet()) {
-                SearchListItem searchListItem = new SearchListItem(dateId, s);
-                searchDayList.add(searchListItem);
-                dateId++;
-            }
-
-            deliverDayDialog = new SearchableDialog(getActivity(), searchDayList, getString(R.string.choose_day));
-            deliverDayDialog.setOnItemSelected((i, deliverDayList) -> {
-                binding.DeliveryDateTv.setText(deliverDayList.getTitle());
-                deliveryTimesList = datesMap.get(deliverDayList.getTitle());
-
-                initSearchTimesList();
-
-            });
-            deliverDayDialog.show();
-        });
-
-        binding.TvDeliveryTime.setOnClickListener(view1 -> {
-
-            deliverTimeDialog = new SearchableDialog(getActivity(), searchTimeList, getString(R.string.choose_time));
-            deliverTimeDialog.setOnItemSelected((i, deliverTimeList) -> {
-                binding.TvDeliveryTime.setText(deliverTimeList.getTitle());
-                deliveryDateId = deliveryTimesList.get(i).getId();
-            });
-            deliverTimeDialog.show();
-
-        });
+        initListener();
 
 
-        binding.DeliverLY.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivityy(), AddressActivity.class);
-            intent.putExtra(Constants.delivery_choose, true);
-            startActivityForResult(intent, ADDRESS_CODE);
+        if (deliveryFees == 0) {
+            binding.deliveryFees.setText(getString(R.string.free));
 
-        });
+
+        } else {
+
+            binding.deliveryFees.setText(NumberHandler.formatDouble(deliveryFees, localModel.getFractional()).concat("" + currency));
+
+        }
+
+
+        return view;
+    }
+
+    private void initListener() {
 
 
         binding.saveBut.setOnClickListener(view1 -> {
@@ -204,7 +194,7 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
                 } else {
 
                     if (paymentMethod.equals("CC")) {
-                        binding.DeliverLY.setVisibility(View.GONE);
+                        binding.chooseDelivery.setVisibility(View.GONE);
 
                         sendOrder(orderCall);
 
@@ -213,8 +203,8 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
                         if (addressId == 0) {
 
                             Toasty.error(getActivityy(), R.string.choose_address, Toast.LENGTH_SHORT, true).show();
-                            binding.deliveryAddressTv.setError(getString(R.string.choose_address));
-                            binding.deliveryAddressTv.requestFocus();
+                            binding.delivery.setFocusable(true);
+                            binding.delivery.setError(getString( R.string.choose_address));
                         } else {
 
                             sendOrder(orderCall);
@@ -231,27 +221,33 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
         });
 
 
-        if (deliveryFees == 0) {
-            binding.deliveryFees.setText(getString(R.string.free));
+        binding.noDataLY.addAddressBut.setOnClickListener(view1 -> {
+            addNewAddress();
 
-        } else {
-            binding.deliveryFees.setText(NumberHandler.formatDouble(deliveryFees, localModel.getFractional()).concat("" + currency));
+        });
 
-        }
+        binding.acceptBtu.setOnClickListener(view12 -> {
+            Toasty.success(getActivityy(), getString(R.string.you_confirm), Toast.LENGTH_SHORT, true).show();
 
 
-        return view;
+        });
     }
 
     private void initSearchTimesList() {
+        searchTimeList.clear();
 
         int timeId = 0;
         searchTimeList = new ArrayList<>();
+
         for (DeliveryTime timeModel : deliveryTimesList) {
-            SearchListItem searchListItem = new SearchListItem(timeId, timeModel.getTime());
+            DeliveryTime searchListItem = new DeliveryTime(timeId, timeModel.getTime(), timeModel.getTime());
             searchTimeList.add(searchListItem);
             timeId++;
         }
+
+        initTimeAdapter();
+
+
     }
 
     public void initAdapter() {
@@ -262,11 +258,11 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
                 paymentMethod = paymentModel.getShortname();
 
                 if (paymentMethod.equals("CC")) {
-                    binding.DeliverLY.setVisibility(View.GONE);
+                    binding.chooseDelivery.setVisibility(View.GONE);
                     expressDelivery = true;
 
                 } else {
-                    binding.DeliverLY.setVisibility(View.VISIBLE);
+                    binding.chooseDelivery.setVisibility(View.VISIBLE);
                     expressDelivery = false;
 
                 }
@@ -277,13 +273,6 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
 
 
     }
-
-
-    @Override
-    public void onInvoiceItemClicked(CartModel cartDM) {
-
-    }
-
 
     public void getPaymentMethod(int user_id) {
 
@@ -333,7 +322,6 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
 //        deliveryTimesList.clear();
 
         binding.loadingDelivery.setVisibility(View.VISIBLE);
-        binding.deliveryLy.setVisibility(View.GONE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             binding.loadingDelivery.setVisibility(View.GONE);
@@ -357,12 +345,9 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
             } else {
                 if (IsSuccess) {
                     if (result.getData() != null && result.getData().size() > 0) {
-                        binding.deliveryLy.setVisibility(View.VISIBLE);
                         List<DeliveryTime> datesList = result.getData();
 
                         DeliveryTime firstTime = datesList.get(0);
-                        binding.DeliveryDateTv.setText(firstTime.getDate());
-                        binding.TvDeliveryTime.setText(firstTime.getTime());
                         deliveryDateId = firstTime.getId();
 
                         Log.i(TAG, "Log deliveryTimesList" + result.getData().size());
@@ -377,22 +362,16 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
                             } else if (!deliveryTime.getDate().equals(currentDate) || i == datesList.size() - 1) {
                                 datesMap.put(currentDate, timesList);
                                 currentDate = deliveryTime.getDate();
-                                timesList= new ArrayList<>();
+                                timesList = new ArrayList<>();
                                 timesList.add(deliveryTime);
                             }
 
                         }
 
                         deliveryTimesList = datesMap.get(firstTime.getDate());
-                        initSearchTimesList();
 
-//                        for (int i = 0; i < noRepeat.size(); i++) {
-//                            SearchListItem searchListItem = new SearchListItem(i, noRepeat.get(i).getDate());
-//                            SearchListItem searchListItem1 = new SearchListItem(i, noRepeat.get(i).getTime());
-//
-//                            deliverDayList.add(searchListItem);
-//                            deliverTimeList.add(searchListItem1);
-//                        }
+
+                        initDaysAdapter();
 
 
                     } else {
@@ -406,24 +385,6 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
         }).getDeliveryTimeList(user_id);
     }
 
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-
-            if (requestCode == ADDRESS_CODE) {
-                Bundle bundle = data.getExtras();
-                addressId = bundle.getInt(Constants.ADDRESS_ID);
-                addressTitle = bundle.getString(Constants.ADDRESS_TITLE);
-                binding.deliveryAddressTv.setText(addressTitle);
-            }
-
-
-        }
-
-    }
-
     private void getExtraIntent() {
 
         Bundle bundle = getArguments();
@@ -433,36 +394,23 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
             cartResultModel = (CartResultModel) bundle.getSerializable(Constants.CART_MODEL);
             deliveryFees = cartResultModel.getDeliveryCharges();
             productList = cartResultModel.getData().getCartData();
-            binding.productsSizeTv.setText(String.valueOf(productsSize));
+            binding.productsSizeTv.setText(total.concat(" " + currency));
             binding.totalTv.setText(total.concat(" " + currency));
-            initProductAdapter();
         }
 
 
     }
 
-    private void initProductAdapter() {
+    private void initAddressAdapter() {
 
-        invoiceProductAdapter = new InvoiceItemAdapter(getActivityy(), productList, this, new DataCallback() {
-            @Override
-            public void dataResult(Object obj, String func, boolean IsSuccess) {
-
-                CartProcessModel cartProcessModel = (CartProcessModel) obj;
-                total = NumberHandler.formatDouble(cartProcessModel.getTotal(), fraction);
-                binding.totalTv.setText(total.concat(" " + currency));
-                binding.productsSizeTv.setText(String.valueOf(cartProcessModel.getCartCount()));
-                if (cartProcessModel.getCartCount() == 0) {
-                    FragmentManager fragmentManager = getParentFragmentManager();
-                    CartFragment cartFragment = new CartFragment();
-                    fragmentManager.beginTransaction().replace(R.id.mainContainer, cartFragment, "cartFragment").commit();
-
-                }
+        addressAdapter = new AddressCheckAdapter(getActivityy(), addressList, this, this, this);
+        if (UtilityApp.getUserData().lastSelectedAddress > 0) {
+            addressId = UtilityApp.getUserData().lastSelectedAddress;
+        }
 
 
-            }
-        });
-        binding.productsRecycler.setAdapter(invoiceProductAdapter);
-
+        binding.addressRecycler.setAdapter(addressAdapter);
+        addressAdapter.notifyDataSetChanged();
 
     }
 
@@ -509,6 +457,172 @@ public class InvoiceFragment extends FragmentBase implements InvoiceItemAdapter.
 
     }
 
+
+    public void GetUserAddress(int user_id) {
+
+        addressList.clear();
+        binding.addressRecycler.setVisibility(View.GONE);
+        binding.loadingAddress.setVisibility(View.VISIBLE);
+        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+        binding.addressRecycler.setVisibility(View.GONE);
+        binding.noDataLY.noDataLY.setVisibility(View.GONE);
+
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+
+            binding.dataLY.setVisibility(View.VISIBLE);
+            binding.loadingAddress.setVisibility(View.GONE);
+
+            AddressResultModel result = (AddressResultModel) obj;
+
+            if (func.equals(Constants.ERROR) || func.equals(Constants.FAIL)) {
+
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(R.string.error_in_data);
+                binding.dataLY.setVisibility(View.GONE);
+
+
+            } else if (func.equals(Constants.NO_CONNECTION)) {
+                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
+                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
+                binding.dataLY.setVisibility(View.GONE);
+
+            } else {
+
+                if (IsSuccess) {
+                    binding.dataLY.setVisibility(View.VISIBLE);
+                    binding.loadingAddress.setVisibility(View.GONE);
+                    binding.addressRecycler.setVisibility(View.VISIBLE);
+
+                    if (result.getData() != null && result.getData().size() > 0) {
+                        addressList = result.getData();
+                        initAddressAdapter();
+
+                    } else {
+                        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
+                        binding.failGetDataLY.failTxt.setText(R.string.no_address);
+                        binding.dataLY.setVisibility(View.VISIBLE);
+                        binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
+
+                    }
+
+
+                } else {
+                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
+                    binding.failGetDataLY.failTxt.setText(R.string.no_address);
+                    binding.dataLY.setVisibility(View.VISIBLE);
+
+                }
+            }
+
+        }).GetAddressHandle(user_id);
+    }
+
+
+    @Override
+    public void onContainerSelectSelected(AddressModel addressesDM) {
+
+        addressId = addressesDM.getId();
+
+    }
+
+
+    @Override
+    public void onAddressSelected(AddressModel addressesDM) {
+        addressId = addressesDM.getId();
+
+    }
+
+
+
+    private void initDaysAdapter() {
+
+        int dateId = 0;
+        searchDayList = new ArrayList<>();
+        for (String s : datesMap.keySet()) {
+            DeliveryTime searchListItem = new DeliveryTime(dateId, s, s);
+            searchDayList.add(searchListItem);
+            dateId++;
+        }
+
+
+        deliveryDayAdapter = new DeliveryDayAdapter(getActivityy(), searchDayList, (obj, func, IsSuccess) -> {
+            DeliveryTime deliveryTime = (DeliveryTime) obj;
+            deliveryTimesList = datesMap.get(deliveryTime.getTime());
+
+            initSearchTimesList();
+            deliveryTimeAdapter.notifyDataSetChanged();
+
+
+        });
+
+
+        binding.DeliverDayRecycler.setAdapter(deliveryDayAdapter);
+
+        initSearchTimesList();
+
+
+    }
+
+
+    private void initTimeAdapter() {
+        deliveryTimeAdapter = new DeliveryTimeAdapter(getActivityy(), searchTimeList, (obj, func, IsSuccess) -> {
+
+            DeliveryTime searchListItem = (DeliveryTime) obj;
+            deliveryDateId = searchListItem.getId();
+
+
+        });
+
+        binding.DeliverTimeRecycler.setAdapter(deliveryTimeAdapter);
+        deliveryTimeAdapter.notifyDataSetChanged();
+
+
+    }
+
+
+    private void addNewAddress() {
+        Intent intent = new Intent(getActivityy(), AddNewAddressActivity.class);
+        startActivityForResult(intent, ADD_ADDRESS);
+    }
+
+
+    @Override
+    public void OnEditClicked(AddressModel addressModel, boolean isChecked, int position) {
+        Intent intent = new Intent(getActivityy(), AddNewAddressActivity.class);
+        intent.putExtra(Constants.KEY_EDIT, true);
+        intent.putExtra(Constants.KEY_ADDRESS_ID, addressModel.getId());
+        startActivity(intent);
+    }
+
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == ADD_ADDRESS) {
+                if (data != null) {
+                    Bundle bundle=data.getExtras();
+
+                    addNewAddress = bundle.getBoolean(Constants.KEY_ADD_NEW, false);
+                    Log.i("TAG","Log addNewAddress onActivityResult  "+addNewAddress);
+
+                    if (addNewAddress) {
+                        GetUserAddress(userId);
+
+                    }
+
+
+                }
+
+            }
+
+
+
+        }
+    }
 
 }
 

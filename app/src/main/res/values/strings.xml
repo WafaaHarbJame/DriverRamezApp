@@ -98,7 +98,7 @@
     <string name="request_no">Order Number:</string>
     <string name="ordered">ordered</string>
     <string name="order_send">Order Send </string>
-    <string name="orderDetails">Product Details</string>
+    <string name="orderDetails">Bill Details</string>
     <string name="current_orders">Current Orders</string>
     <string name="krof">كارفور</string>
     <string name="old_pass">Old Password</string>
@@ -167,11 +167,11 @@
     <string name="add">Add</string>
     <string name="add_comm">Add Comment</string>
     <string name="invoice_number">Invoice Number</string>
-    <string name="product_total">Total product</string>
+    <string name="product_total">Item Total</string>
     <string name="deliver_fees">Delivery Fees</string>
     <string name="delivery_to">Delivery to : </string>
     <string name="deliver_time">Delivery times</string>
-    <string name="choose_payment_type">Choose a payment Type</string>
+    <string name="choose_payment_type">Choose a payment Method </string>
     <string name="delivery_send">Place Order</string>
     <string name="save_update">Continue Editing</string>
     <string name="textFromtime">9 A.m  9 P.M </string>
@@ -332,5 +332,15 @@
     <string name="resend_again">Resend Code  Again</string>
     <string name="set_default_address">Set Default</string>
     <string name="free">Free</string>
+    <string name="choose_delivery_address">Choose Delivery Address</string>
+    <string name="confirm_address">Confirm Address</string>
+    <string name="choose_delivery_time">Choose Delivery Time </string>
+    <string name="Get_FREE_delivery">Get Free Delivery</string>
+    <string name="over">Free delivery on orders over $25.</string>
+    <string name="Get_FREE_Delivery">Get Free Delivery</string>
+    <string name="now">Now</string>
+    <string name="today">Today</string>
+    <string name="checkout">Checkout</string>
+    <string name="you_confirm">Confirm address Success</string>
 
 </resources>

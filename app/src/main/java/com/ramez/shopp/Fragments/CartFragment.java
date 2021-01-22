@@ -150,7 +150,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
             }
             else {
-                total = NumberHandler.formatDouble(cartProcessModel.getTotal(), fraction);
+                total = NumberHandler.formatDouble(cartProcessModel.getTotal()+delivery_charges, fraction);
                 binding.totalTv.setText(total.concat(" " + currency));
 
             }

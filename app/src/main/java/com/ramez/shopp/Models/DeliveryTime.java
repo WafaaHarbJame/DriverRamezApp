@@ -40,4 +40,9 @@ public class DeliveryTime implements Serializable {
         this.time = time;
     }
 
+    public DeliveryTime(Integer id, String date, String time) {
+        this.id = id;
+        this.date = date;
+        this.time = time;
+    }
 }

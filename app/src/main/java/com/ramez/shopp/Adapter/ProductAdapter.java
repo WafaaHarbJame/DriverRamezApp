@@ -287,7 +287,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                     updateCart(v, position, productId, product_barcode_id, count + 1, userId, storeId, cart_id, "quantity");
 
                 } else {
-                    Toasty.warning(context,context.getString(R.string.stock_empty), Toast.LENGTH_SHORT, true).show();
+                    Toasty.warning(context, context.getString(R.string.stock_empty), Toast.LENGTH_SHORT, true).show();
 
                 }
 
@@ -297,7 +297,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
             binding.minusCartBtn.setOnClickListener(v -> {
 
                 ProductModel productModel = productModels.get(getAdapterPosition());
-               // int count = productModel.getProductBarcodes().get(0).getCartQuantity();
+                // int count = productModel.getProductBarcodes().get(0).getCartQuantity();
                 int count = Integer.parseInt(binding.productCartQTY.getText().toString());
                 int position = getAdapterPosition();
                 int userId = UtilityApp.getUserData().getId();
@@ -349,7 +349,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                     initSnackBar(context.getString(R.string.success_added_to_cart));
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(quantity);
                     notifyItemChanged(position);
-                    UtilityApp.updateCart(1,productModels.size());
+                    UtilityApp.updateCart(1, productModels.size());
 
 
                 } else {
@@ -387,7 +387,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Holder> 
                     productModels.get(position).getProductBarcodes().get(0).setCartQuantity(0);
                     notifyItemChanged(position);
                     initSnackBar(context.getString(R.string.success_delete_from_cart));
-                    UtilityApp.updateCart(2,productModels.size());
+                    UtilityApp.updateCart(2, productModels.size());
 
 
                 } else {

@@ -179,7 +179,7 @@ public class MainActivity extends ActivityBase {
 
         if (event.type.equals(MessageEvent.TYPE_invoice)) {
 
-            binding.toolBar.mainTitleTxt.setText(R.string.invoice_details);
+            binding.toolBar.mainTitleTxt.setText(R.string.checkout);
 
             binding.toolBar.backBtn.setVisibility(View.VISIBLE);
 

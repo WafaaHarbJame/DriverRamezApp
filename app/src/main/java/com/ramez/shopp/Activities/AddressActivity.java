@@ -92,6 +92,7 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
         });
 
 
+
     }
 
 
@@ -303,7 +304,7 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
                 if (data != null) {
                     Bundle bundle=data.getExtras();
 
-                    addNewAddress = data.getBooleanExtra(Constants.KEY_ADD_NEW, false);
+                    addNewAddress = bundle.getBoolean(Constants.KEY_ADD_NEW, false);
                     Log.i("TAG","Log addNewAddress onActivityResult  "+addNewAddress);
 
                     if (addNewAddress) {

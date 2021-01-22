@@ -302,4 +302,15 @@
     <string name="msg_subscribed">Log subscribed</string>
     <string name="set_default_address">تعين العنوان الافتراضي </string>
     <string name="free">مجاناً</string>
+    <string name="confirm_address">تأكيد العنوان </string>
+    <string name="choose_delivery_time">اختر وقت التوصيل </string>
+    <string name="choose_delivery_address">اختر عنوان التوصيل </string>
+    <string name="Get_FREE_delivery">احصل على توصيل مجاني </string>
+    <string name="over">توصيل مجاني للطلبات التي تزيد عن 25 دولارًا. </string>
+    <string name="Get_FREE_Delivery">احصل على توصيل مجاني </string>
+    <string name="now">Now</string>
+    <string name="today">اليوم</string>
+    <string name="checkout">ارسال الطلب </string>
+    <string name="you_confirm">تم تاكيد العنوان بنجاح </string>
+
 </resources>

@@ -276,6 +276,18 @@ public class DateHandler {
     }
 
 
+    public static String GetDateNowString1() {
+        DateFormat parser = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        try {
+            // Date s = parser.parse("");
+            return parser.format(date);
+        } catch (Exception e) {
+        }
+        return "";
+    }
+
+
     /**
      * format string date as yyyy-MM-dd
      *
@@ -813,4 +825,30 @@ public class DateHandler {
         }
         return "";
     }
+
+
+    public  static String FormatDate4(Object o, String inPattern, String outPattern) {
+        Locale locale;
+        if (UtilityApp.getLanguage().equals("ar")) {
+            locale = new Locale("ar");
+
+        } else {
+            locale = new Locale("en");
+
+        }
+
+        SimpleDateFormat parser = new SimpleDateFormat(inPattern);
+
+        SimpleDateFormat parser2 = new SimpleDateFormat(outPattern, locale);
+
+        try {
+            Date date = parser.parse(o.toString());
+
+            return parser2.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
 }

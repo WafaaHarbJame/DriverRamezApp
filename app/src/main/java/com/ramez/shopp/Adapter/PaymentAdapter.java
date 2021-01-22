@@ -1,6 +1,7 @@
 package com.ramez.shopp.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -48,18 +49,25 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.MyHolder
 
 
         if (lastIndex == position) {
-            holder.binding.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.green));
+
+            holder.binding.cardView.setBackground(ContextCompat.getDrawable(context, R.drawable.round_medium_corner_red));
             holder.binding.paymentTv.setTextColor(ContextCompat.getColor(context, R.color.white));
+            holder.binding.paymentIv.setColorFilter(ContextCompat.getColor(context, R.color.white));
+
 
         } else {
-            holder.binding.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.white));
+            holder.binding.cardView.setBackground(ContextCompat.getDrawable(context, R.drawable.round_medium_corner_unselected));
             holder.binding.paymentTv.setTextColor(ContextCompat.getColor(context, R.color.black));
+            holder.binding.paymentIv.setColorFilter(ContextCompat.getColor(context, R.color.black));
+
 
         }
+
 
         holder.binding.cardView.setOnClickListener(v -> {
             selectedIndex = position;
             lastIndex = position;
+            Log.i("tag", "Log 1" + paymentMethod.getId());
             notifyDataSetChanged();
             if (dataCallback != null) {
                 dataCallback.dataResult(paymentMethod, "success", true);

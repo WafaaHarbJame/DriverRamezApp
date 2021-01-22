@@ -40,10 +40,12 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"/>
             <ImageView
-                android:layout_width="@dimen/_20sdp"
-                android:id="@+id/deleteAddressBut"
-                android:src="@drawable/delete_icon"
-                android:layout_height="@dimen/_20sdp"/>
+                android:layout_width="wrap_content"
+                android:id="@+id/editBut"
+                android:src="@drawable/edit_icon"
+                android:minWidth="@dimen/_10sdp"
+                android:minHeight="@dimen/_10sdp"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
 
         <com.ramez.shopp.SpichalViews.STextView
