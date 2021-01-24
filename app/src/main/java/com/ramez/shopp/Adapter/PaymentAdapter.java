@@ -46,6 +46,7 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.MyHolder
 
         PaymentModel paymentMethod = paymentMethods.get(position);
         holder.binding.paymentTv.setText(paymentMethod.getName());
+        holder.binding.paymentIv.setImageResource(paymentMethod.getImage());
 
 
         if (lastIndex == position) {

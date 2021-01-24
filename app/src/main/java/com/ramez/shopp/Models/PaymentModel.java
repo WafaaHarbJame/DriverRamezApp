@@ -18,6 +18,10 @@ public class PaymentModel {
     @Expose
     private String methodAr;
 
+    @SerializedName("image")
+    @Expose
+    private int image;
+
     public Integer getId() {
         return id;
     }
@@ -53,5 +57,13 @@ public class PaymentModel {
     public String getName() {
 
         return UtilityApp.isEnglish()? methodEn : methodAr;
+    }
+
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
     }
 }

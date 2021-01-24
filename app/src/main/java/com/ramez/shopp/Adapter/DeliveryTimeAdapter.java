@@ -13,7 +13,7 @@ import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.DeliveryTime;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
-import com.ramez.shopp.databinding.RowDeliveyTimeBinding;
+import com.ramez.shopp.databinding.RowDeliveryTimesBinding;
 
 import java.util.List;
 
@@ -26,12 +26,14 @@ public class DeliveryTimeAdapter extends RecyclerView.Adapter<DeliveryTimeAdapte
     Context context;
     DataCallback dataCallback;
     private List<DeliveryTime> deliveryTimesList;
+    private  Double deliveryFees;
 
 
-    public DeliveryTimeAdapter(Context context, List<DeliveryTime> deliveryTimesList, DataCallback dataCallback) {
+    public DeliveryTimeAdapter(Context context, List<DeliveryTime> deliveryTimesList,Double deliveryFees, DataCallback dataCallback) {
         this.deliveryTimesList = deliveryTimesList;
         this.context = context;
         this.dataCallback = dataCallback;
+        this.deliveryFees=deliveryFees;
 
     }
 
@@ -40,7 +42,7 @@ public class DeliveryTimeAdapter extends RecyclerView.Adapter<DeliveryTimeAdapte
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, final int i) {
 
-        RowDeliveyTimeBinding itemView = RowDeliveyTimeBinding.inflate(LayoutInflater.from(context), viewGroup, false);
+        RowDeliveryTimesBinding itemView = RowDeliveryTimesBinding.inflate(LayoutInflater.from(context), viewGroup, false);
         return new ViewHolder(itemView);
 
     }
@@ -51,7 +53,15 @@ public class DeliveryTimeAdapter extends RecyclerView.Adapter<DeliveryTimeAdapte
         viewHolder.binding.deliveryTime.setText(deliveryTimes.getTime());
         viewHolder.binding.deliveryPrice.setText("1".concat(UtilityApp.getLocalData().getCurrencyCode()));
 
-        viewHolder.binding.deliveryPrice.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(1.0)), UtilityApp.getLocalData().getFractional()) + " " + currency);
+        if(deliveryFees==0){
+            viewHolder.binding.deliveryPrice.setText(context.getString(R.string.free));
+
+        }
+        else {
+            viewHolder.binding.deliveryPrice.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(1.0)), UtilityApp.getLocalData().getFractional()) + " " + currency);
+
+        }
+
 
 
         if (lastIndex == position) {
@@ -78,9 +88,9 @@ public class DeliveryTimeAdapter extends RecyclerView.Adapter<DeliveryTimeAdapte
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        RowDeliveyTimeBinding binding;
+        RowDeliveryTimesBinding binding;
 
-        ViewHolder(RowDeliveyTimeBinding view) {
+        ViewHolder(RowDeliveryTimesBinding view) {
             super(view.getRoot());
             binding = view;
             itemView.setOnClickListener(view1 -> {

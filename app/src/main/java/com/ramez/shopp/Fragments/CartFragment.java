@@ -62,7 +62,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
     private CartAdapter cartAdapter;
     private EmptyCartDialog emptyCartDialog;
     private CheckLoginDialog checkLoginDialog;
-    private int minimum_order_amount;
+    private int minimum_order_amount=0;
     private int delivery_charges = 0;
     private CartResultModel cartResultModel;
     private Activity activity;

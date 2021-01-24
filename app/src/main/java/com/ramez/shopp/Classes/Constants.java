@@ -242,6 +242,7 @@ public class Constants {
     public static final String delivery_choose = "delivery_choose";
     public static final String ADDRESS_ID = "ADDRESS_ID";
     public static final String ADDRESS_TITLE = "ADDRESS_TITLE";
+    public static final String ADDRESS_FULL= "ADDRESS_FULL";
     public static final String CART_PRODUCT_COUNT = "CART_PRODUCT_COUNT";
     public static final String CART_SUM = "CAT_LIST";
     public static final String CART_LIST = "CART_LIST";

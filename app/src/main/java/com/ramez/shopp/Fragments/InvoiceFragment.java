@@ -13,8 +13,10 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeSuccessDialog;
 import com.ramez.shopp.Activities.AddNewAddressActivity;
+import com.ramez.shopp.Activities.AddressActivity;
 import com.ramez.shopp.Adapter.AddressCheckAdapter;
 import com.ramez.shopp.Adapter.DeliveryDayAdapter;
 import com.ramez.shopp.Adapter.DeliveryTimeAdapter;
@@ -72,16 +74,18 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
     List<DeliveryTime> searchTimeList;
     int fraction = 2;
     ArrayList<AddressModel> addressList;
+    boolean addNewAddress;
     private FragmentInvoiceBinding binding;
     private PaymentAdapter paymentAdapter;
     private int addressId = 0;
+    private String addressTitle;
+    private String addressFullAddress;
     private double deliveryFees = 0.0;
     private CartResultModel cartResultModel;
     private int minimum_order_amount = 0;
     private LinkedHashMap<String, List<DeliveryTime>> datesMap = new LinkedHashMap<>();
     private AddressCheckAdapter addressAdapter;
     private int ADD_ADDRESS = 4000;
-    boolean addNewAddress;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentInvoiceBinding.inflate(inflater, container, false);
@@ -111,12 +115,6 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
         binding.paymentRv.setAnimation(null);
 
 
-        linearLayoutManager = new LinearLayoutManager(getActivityy());
-        binding.addressRecycler.setLayoutManager(linearLayoutManager);
-        binding.addressRecycler.setHasFixedSize(false);
-        binding.addressRecycler.setAnimation(null);
-
-
         binding.DeliverDayRecycler.setHasFixedSize(true);
         LinearLayoutManager deliverDayLlm = new LinearLayoutManager(getActivityy());
         deliverDayLlm.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -131,7 +129,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
         getExtraIntent();
 
-        GetUserAddress(userId);
+        getDefaultAddress();
 
         getDeliveryTimeList(storeId);
 
@@ -150,8 +148,25 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
         }
 
+        binding.freeDelivery.setText(getString(R.string.over).concat(" " + minimum_order_amount + " " + currency+"."));
+      //  binding.freeDelivery.setText(getString(R.string.over).concat(" " +NumberHandler.formatDouble(minimum_order_amount, localModel.getFractional()).concat("" + currency)));
+
+
 
         return view;
+    }
+
+    private void getDefaultAddress() {
+        if (UtilityApp.getUserData().lastSelectedAddress > 0) {
+            addressId = UtilityApp.getUserData().lastSelectedAddress;
+            GetUserAddress(addressId);
+
+        }
+        else {
+            binding.acceptBtu.setText(R.string.select_address);
+        }
+
+
     }
 
     private void initListener() {
@@ -203,8 +218,8 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                         if (addressId == 0) {
 
                             Toasty.error(getActivityy(), R.string.choose_address, Toast.LENGTH_SHORT, true).show();
-                            binding.delivery.setFocusable(true);
-                            binding.delivery.setError(getString( R.string.choose_address));
+                            binding.tvFullAddress.setFocusable(true);
+                            binding.tvFullAddress.setError(getString(R.string.choose_address));
                         } else {
 
                             sendOrder(orderCall);
@@ -221,16 +236,17 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
         });
 
 
-        binding.noDataLY.addAddressBut.setOnClickListener(view1 -> {
-            addNewAddress();
 
-        });
 
         binding.acceptBtu.setOnClickListener(view12 -> {
-            Toasty.success(getActivityy(), getString(R.string.you_confirm), Toast.LENGTH_SHORT, true).show();
+            Intent intent = new Intent(getActivityy(), AddressActivity.class);
+            intent.putExtra(Constants.delivery_choose, true);
+            startActivityForResult(intent, ADDRESS_CODE);
 
 
         });
+
+        binding.freeBut.setOnClickListener(view -> Toasty.success(getActivityy(), getString(R.string.getFreeDelivery), Toast.LENGTH_SHORT, true).show());
     }
 
     private void initSearchTimesList() {
@@ -251,6 +267,24 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
     }
 
     public void initAdapter() {
+
+        for (int i = 0; i < paymentList.size(); i++) {
+            PaymentModel paymentModel = paymentList.get(i);
+            if (paymentModel.getId() == 1) {
+                paymentModel.setImage(R.drawable.cash);
+            }
+
+            if (paymentModel.getId() == 2) {
+                paymentModel.setImage(R.drawable.card);
+            }
+            if (paymentModel.getId() == 3) {
+                paymentModel.setImage(R.drawable.benefit);
+            }
+            if (paymentModel.getId() == 4) {
+                paymentModel.setImage(R.drawable.collect);
+            }
+
+        }
 
         paymentAdapter = new PaymentAdapter(getActivityy(), paymentList, (obj, func, IsSuccess) -> {
             PaymentModel paymentModel = (PaymentModel) obj;
@@ -396,21 +430,9 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             productList = cartResultModel.getData().getCartData();
             binding.productsSizeTv.setText(total.concat(" " + currency));
             binding.totalTv.setText(total.concat(" " + currency));
+            minimum_order_amount = cartResultModel.getMinimumOrderAmount();
         }
 
-
-    }
-
-    private void initAddressAdapter() {
-
-        addressAdapter = new AddressCheckAdapter(getActivityy(), addressList, this, this, this);
-        if (UtilityApp.getUserData().lastSelectedAddress > 0) {
-            addressId = UtilityApp.getUserData().lastSelectedAddress;
-        }
-
-
-        binding.addressRecycler.setAdapter(addressAdapter);
-        addressAdapter.notifyDataSetChanged();
 
     }
 
@@ -458,68 +480,6 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
     }
 
 
-    public void GetUserAddress(int user_id) {
-
-        addressList.clear();
-        binding.addressRecycler.setVisibility(View.GONE);
-        binding.loadingAddress.setVisibility(View.VISIBLE);
-        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-        binding.addressRecycler.setVisibility(View.GONE);
-        binding.noDataLY.noDataLY.setVisibility(View.GONE);
-
-
-        new DataFeacher(false, (obj, func, IsSuccess) -> {
-
-            binding.dataLY.setVisibility(View.VISIBLE);
-            binding.loadingAddress.setVisibility(View.GONE);
-
-            AddressResultModel result = (AddressResultModel) obj;
-
-            if (func.equals(Constants.ERROR) || func.equals(Constants.FAIL)) {
-
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(R.string.error_in_data);
-                binding.dataLY.setVisibility(View.GONE);
-
-
-            } else if (func.equals(Constants.NO_CONNECTION)) {
-                binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                binding.failGetDataLY.failTxt.setText(R.string.no_internet_connection);
-                binding.failGetDataLY.noInternetIv.setVisibility(View.VISIBLE);
-                binding.dataLY.setVisibility(View.GONE);
-
-            } else {
-
-                if (IsSuccess) {
-                    binding.dataLY.setVisibility(View.VISIBLE);
-                    binding.loadingAddress.setVisibility(View.GONE);
-                    binding.addressRecycler.setVisibility(View.VISIBLE);
-
-                    if (result.getData() != null && result.getData().size() > 0) {
-                        addressList = result.getData();
-                        initAddressAdapter();
-
-                    } else {
-                        binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-                        binding.failGetDataLY.failTxt.setText(R.string.no_address);
-                        binding.dataLY.setVisibility(View.VISIBLE);
-                        binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
-
-                    }
-
-
-                } else {
-                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                    binding.failGetDataLY.failTxt.setText(R.string.no_address);
-                    binding.dataLY.setVisibility(View.VISIBLE);
-
-                }
-            }
-
-        }).GetAddressHandle(user_id);
-    }
-
-
     @Override
     public void onContainerSelectSelected(AddressModel addressesDM) {
 
@@ -533,7 +493,6 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
         addressId = addressesDM.getId();
 
     }
-
 
 
     private void initDaysAdapter() {
@@ -567,7 +526,7 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
 
 
     private void initTimeAdapter() {
-        deliveryTimeAdapter = new DeliveryTimeAdapter(getActivityy(), searchTimeList, (obj, func, IsSuccess) -> {
+        deliveryTimeAdapter = new DeliveryTimeAdapter(getActivityy(), searchTimeList, deliveryFees, (obj, func, IsSuccess) -> {
 
             DeliveryTime searchListItem = (DeliveryTime) obj;
             deliveryDateId = searchListItem.getId();
@@ -597,32 +556,54 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
     }
 
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == ADD_ADDRESS) {
-                if (data != null) {
-                    Bundle bundle=data.getExtras();
 
-                    addNewAddress = bundle.getBoolean(Constants.KEY_ADD_NEW, false);
-                    Log.i("TAG","Log addNewAddress onActivityResult  "+addNewAddress);
+            if (requestCode == ADDRESS_CODE) {
+                assert data != null;
+                Bundle bundle = data.getExtras();
+                addressId = bundle.getInt(Constants.ADDRESS_ID);
+                addressTitle = bundle.getString(Constants.ADDRESS_TITLE);
+                addressFullAddress = bundle.getString(Constants.ADDRESS_FULL);
 
-                    if (addNewAddress) {
-                        GetUserAddress(userId);
-
-                    }
-
-
-                }
+                Log.i("tag", "Log  addressTitle" + addressTitle);
+                Log.i("tag", "Log  addressFullAddress" + addressFullAddress);
+                binding.delivery.setText(addressTitle);
+                binding.tvFullAddress.setText(addressFullAddress);
+                binding.acceptBtu.setText(R.string.change_address);
 
             }
 
 
-
         }
     }
+
+
+    public void GetUserAddress(int addressId) {
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+            AddressResultModel result = (AddressResultModel) obj;
+            if (IsSuccess) {
+                binding.dataLY.setVisibility(View.VISIBLE);
+                if (result.getData() != null && result.getData().size() > 0) {
+                    AddressModel addressModel = result.getData().get(0);
+                    addressTitle = addressModel.getName();
+                    addressFullAddress = addressModel.getFullAddress();
+                    binding.delivery.setText(addressTitle);
+                    binding.tvFullAddress.setText(addressFullAddress);
+
+
+                }
+
+
+            }
+
+
+        }).GetAddressByIdHandle(addressId);
+    }
+
 
 }
 

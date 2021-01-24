@@ -336,11 +336,15 @@
     <string name="confirm_address">Confirm Address</string>
     <string name="choose_delivery_time">Choose Delivery Time </string>
     <string name="Get_FREE_delivery">Get Free Delivery</string>
-    <string name="over">Free delivery on orders over $25.</string>
+    <string name="over">Free delivery on orders over</string>
     <string name="Get_FREE_Delivery">Get Free Delivery</string>
     <string name="now">Now</string>
     <string name="today">Today</string>
     <string name="checkout">Checkout</string>
     <string name="you_confirm">Confirm address Success</string>
+    <string name="change_address">Change Address</string>
+    <string name="select_address">Select Address</string>
+    <string name="getFreeDelivery">Congratulations you got free delivery</string>
+    <string name="no_default_address">No default Address</string>
 
 </resources>

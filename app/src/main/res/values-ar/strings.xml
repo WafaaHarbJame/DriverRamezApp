@@ -306,11 +306,15 @@
     <string name="choose_delivery_time">اختر وقت التوصيل </string>
     <string name="choose_delivery_address">اختر عنوان التوصيل </string>
     <string name="Get_FREE_delivery">احصل على توصيل مجاني </string>
-    <string name="over">توصيل مجاني للطلبات التي تزيد عن 25 دولارًا. </string>
+    <string name="over">توصيل مجاني للطلبات التي تزيد عن  </string>
     <string name="Get_FREE_Delivery">احصل على توصيل مجاني </string>
     <string name="now">Now</string>
     <string name="today">اليوم</string>
     <string name="checkout">ارسال الطلب </string>
     <string name="you_confirm">تم تاكيد العنوان بنجاح </string>
+    <string name="change_address">تغير العنوان </string>
+    <string name="select_address">اختر العنوان </string>
+    <string name="getFreeDelivery">مبروك لقد حصلت على التوصيل المجاني</string>
+    <string name="no_default_address">لا يوجد عنوان افتراضي</string>
 
 </resources>

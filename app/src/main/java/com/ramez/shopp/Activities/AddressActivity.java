@@ -103,7 +103,8 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
         if (deliveryChoose) {
             Intent intent = new Intent(AddressActivity.this, InvoiceFragment.class);
             intent.putExtra(Constants.ADDRESS_ID, addressesDM.getId());
-            intent.putExtra(Constants.ADDRESS_TITLE, addressesDM.getFullAddress());
+            intent.putExtra(Constants.ADDRESS_TITLE, addressesDM.getName());
+            intent.putExtra(Constants.ADDRESS_FULL, addressesDM.getFullAddress());
             setResult(Activity.RESULT_OK, intent);
 //            finish();
 
@@ -198,7 +199,8 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
         if (deliveryChoose) {
             Intent intent = new Intent(AddressActivity.this, InvoiceFragment.class);
             intent.putExtra(Constants.ADDRESS_ID, addressesDM.getId());
-            intent.putExtra(Constants.ADDRESS_TITLE, addressesDM.getFullAddress());
+            intent.putExtra(Constants.ADDRESS_TITLE, addressesDM.getName());
+            intent.putExtra(Constants.ADDRESS_FULL, addressesDM.getFullAddress());
             setResult(Activity.RESULT_OK, intent);
             finish();
 
@@ -262,6 +264,12 @@ public class AddressActivity extends ActivityBase implements AddressAdapter.OnRa
                     }
                     else {
                         if (IsSuccess) {
+
+                            if(UtilityApp.getUserData().lastSelectedAddress==addressId){
+                                MemberModel memberModel=UtilityApp.getUserData();
+                                memberModel.setLastSelectedAddress(0);
+                                UtilityApp.setUserData(memberModel);
+                            }
                             addressList.remove(position);
                            addressAdapter.notifyDataSetChanged();
                             addressAdapter.notifyItemRemoved(position);

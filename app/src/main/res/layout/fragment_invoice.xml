@@ -28,11 +28,61 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
             <LinearLayout
+                android:id="@+id/choosePaymentType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/_8sdp">
+
+                <com.ramez.shopp.SpichalViews.STextViewBold
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:drawableStart="@drawable/ic_payment"
+                    android:drawablePadding="10dp"
+                    android:gravity="start|center_vertical"
+                    android:text="@string/choose_payment_type"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12ssp" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/arrow_down" />
+
+            </LinearLayout>
+
+
+            <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/loadingLYPay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                app:indicatorColor="@color/colorPrimaryDark"
+                app:indicatorName="LineSpinFadeLoaderIndicator" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/paymentRv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingTop="@dimen/_2sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp" />
+
+
+            <LinearLayout
                 android:id="@+id/chooseDelivery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical">
 
@@ -40,16 +90,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginTop="8dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:padding="@dimen/_8sdp">
 
 
                     <com.ramez.shopp.SpichalViews.STextViewBold
+                        android:id="@+id/delivery"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:id="@+id/delivery"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:drawableStart="@drawable/ic_location"
@@ -77,31 +126,22 @@
                     app:indicatorName="LineSpinFadeLoaderIndicator" />
 
 
-                <include
-                    android:id="@+id/noDataLY"
-                    layout="@layout/layout_no_address_list" />
-
-                <include
-                    android:id="@+id/failGetDataLY"
-                    layout="@layout/layout_fail_get_data" />
-
                 <LinearLayout
+                    android:id="@+id/DeliverLY"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/gray10"
-                    android:id="@+id/DeliverLY"
                     android:orientation="vertical">
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/addressRecycler"
+                    <com.ramez.shopp.SpichalViews.STextView
+                        android:id="@+id/tvFullAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="@dimen/_10sdp"
-                        android:paddingTop="@dimen/_4sdp"
-                        android:paddingEnd="@dimen/_10sdp"
-                        android:visibility="visible"
-                        tools:itemCount="2"
-                        tools:listitem="@layout/row_address_check_item" />
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:text="@string/no_default_address"
+                        android:layout_marginEnd="@dimen/_8ssp"
+                        android:paddingEnd="@dimen/_8ssp"
+                        android:paddingStart="@dimen/_8ssp"
+                        android:textAlignment="viewStart" />
 
                     <com.ramez.shopp.SpichalViews.STextViewBold
                         android:id="@+id/acceptBtu"
@@ -113,12 +153,11 @@
                         android:layout_marginEnd="@dimen/_16ssp"
                         android:background="@drawable/round_corner_next"
                         android:gravity="center"
-                        android:layout_marginBottom="@dimen/_16sdp"
                         android:paddingStart="@dimen/_8sdp"
                         android:paddingTop="@dimen/_8sdp"
                         android:paddingEnd="@dimen/_8sdp"
                         android:paddingBottom="@dimen/_8sdp"
-                        android:text="@string/confirm_address"
+                        android:text="@string/change_address"
                         android:textColor="@android:color/white" />
 
                 </LinearLayout>
@@ -131,7 +170,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/_4sdp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="@dimen/_8sdp">
@@ -183,6 +222,7 @@
 
                     <com.ramez.shopp.SpichalViews.STextView
                         android:layout_width="wrap_content"
+                        android:id="@+id/freeDelivery"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_4sdp"
                         android:background="@android:color/transparent"
@@ -198,25 +238,25 @@
                         android:layout_marginBottom="@dimen/_8sdp"
                         android:background="@drawable/round_corner_next"
                         android:gravity="center"
-                        android:textSize="@dimen/_10ssp"
-                        android:textAlignment="center"
                         android:paddingStart="@dimen/_16sdp"
                         android:paddingTop="@dimen/_8sdp"
                         android:paddingEnd="@dimen/_16sdp"
                         android:paddingBottom="@dimen/_8sdp"
-                        android:textStyle="bold"
                         android:text="@string/Get_FREE_Delivery"
-                        android:textColor="@android:color/white" />
+                        android:textAlignment="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/_10ssp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/_4sdp"
-                    android:src="@drawable/free_delivery"
-                    android:layout_height="wrap_content" />
+                    android:src="@drawable/free_delivery" />
 
             </RelativeLayout>
 
@@ -224,13 +264,13 @@
                 android:id="@+id/DeliverDayRecycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:orientation="horizontal"
                 android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
+                android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                tools:itemCount="4"
                 app:spanCount="2"
+                tools:itemCount="4"
                 tools:listitem="@layout/row_day_item" />
 
 
@@ -242,59 +282,7 @@
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="3"
-                tools:listitem="@layout/row_delivey_time" />
-
-
-            <LinearLayout
-                android:id="@+id/choosePaymentType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="8dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="@dimen/_8sdp">
-
-                <com.ramez.shopp.SpichalViews.STextViewBold
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:drawableStart="@drawable/ic_payment"
-                    android:drawablePadding="10dp"
-                    android:gravity="start|center_vertical"
-                    android:text="@string/choose_payment_type"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_12ssp" />
-
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/arrow_down" />
-
-            </LinearLayout>
-
-
-
-            <com.wang.avi.AVLoadingIndicatorView
-                android:id="@+id/loadingLYPay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone"
-                app:indicatorColor="@color/colorPrimaryDark"
-                app:indicatorName="LineSpinFadeLoaderIndicator" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/paymentRv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:paddingStart="@dimen/_8sdp"
-                android:paddingTop="@dimen/_2sdp"
-                android:paddingEnd="@dimen/_8sdp"
-                android:paddingBottom="@dimen/_8sdp" />
+                tools:listitem="@layout/row_delivery_times" />
 
             <com.ramez.shopp.SpichalViews.STextViewBold
                 android:layout_width="wrap_content"
@@ -310,6 +298,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:paddingStart="@dimen/_8sdp"
                 android:layout_margin="@dimen/_4sdp"
                 android:gravity="center_vertical">
 
@@ -326,12 +316,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_weight="1"
+                    android:gravity="end|center"
                     android:lines="1"
                     android:text=""
-                    android:layout_weight="1"
                     android:textAlignment="viewEnd"
-                    android:gravity="end|center"
                     android:textColor="@color/green"
                     android:textSize="@dimen/_10ssp" />
 
@@ -342,6 +331,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/_4sdp"
+                android:paddingStart="@dimen/_8sdp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -373,11 +363,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colorPrimary" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/_4sdp"
+                android:paddingStart="@dimen/_8sdp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -413,8 +405,6 @@
                 android:visibility="gone"
                 app:indicatorColor="@color/colorPrimaryDark"
                 app:indicatorName="LineSpinFadeLoaderIndicator" />
-
-
 
 
             <com.ramez.shopp.SpichalViews.STextView
