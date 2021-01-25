@@ -33,6 +33,7 @@ import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.RowCartItemBinding;
+import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -73,6 +74,7 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
         currency = UtilityApp.getLocalData().getCurrencyCode();
 
         int quantity = cartDM.getQuantity();
+
         holder.binding.weightUnitTv.setText(cartDM.getWeightUnit());
         if (quantity > 0) {
             holder.binding.productCartQTY.setText(String.valueOf(quantity));
@@ -109,7 +111,13 @@ public class CartAdapter extends RecyclerSwipeAdapter<CartAdapter.Holder> {
 
         }
 
-        Glide.with(context).load(cartDM.getImage()).placeholder(R.drawable.holder_image).into(holder.binding.imageView1);
+       // Glide.with(context).load(cartDM.getImage()).placeholder(R.drawable.holder_image).into(holder.binding.imageView1);
+
+        Picasso.get()
+                .load(cartDM.getImage())
+                .placeholder(R.drawable.holder_image)
+                .error(R.drawable.holder_image)
+                .into(holder.binding.imageView1);
 
 
         calculateSubTotalPrice();

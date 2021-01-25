@@ -33,6 +33,7 @@ import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.NumberHandler;
 import com.ramez.shopp.databinding.RowSearchProductItemBinding;
+import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -123,23 +124,29 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.Holder> {
         }
 
 
-        Log.i("tag", "Log Image Url " + productModel.getImages().get(0));
 
-        Glide.with(context).load(productModel.getImages().get(0)).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).placeholder(R.drawable.holder_image).addListener(new RequestListener<Drawable>() {
-            @Override
-            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                holder.binding.loadingLY.setVisibility(View.GONE);
+//        Glide.with(context).load(productModel.getImages().get(0)).override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).placeholder(R.drawable.holder_image).addListener(new RequestListener<Drawable>() {
+//            @Override
+//            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+//                holder.binding.loadingLY.setVisibility(View.GONE);
+//
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+//                holder.binding.loadingLY.setVisibility(View.GONE);
+//
+//                return false;
+//            }
+//        }).into(holder.binding.productImg);
 
-                return false;
-            }
 
-            @Override
-            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                holder.binding.loadingLY.setVisibility(View.GONE);
-
-                return false;
-            }
-        }).into(holder.binding.productImg);
+        Picasso.get()
+                .load(productModel.getImages().get(0))
+                .placeholder(R.drawable.holder_image)
+                .error(R.drawable.holder_image)
+                .into(holder.binding.productImg);
 
 
     }

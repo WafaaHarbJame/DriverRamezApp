@@ -53,8 +53,12 @@ public class ApiClient {
 
         if (UtilityApp.getLocalData() != null && UtilityApp.getLocalData().getShortname() != null) {
             country = UtilityApp.getLocalData().getShortname();
+            Log.i("TAG", "Log country Local  " + country);
+
         } else {
             country = GlobalData.COUNTRY;
+            Log.i("TAG", "Log country " + country);
+
 
         }
         BASE_URL = GlobalData.BetaBaseURL + country + GlobalData.grocery + GlobalData.Api;

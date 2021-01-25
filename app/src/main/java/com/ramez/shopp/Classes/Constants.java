@@ -218,8 +218,8 @@ public class Constants {
     public  static String inputType="Image";
     public  static String deviceType="android";
     public  static String user_type="User";
-//    public  static String api_key="^~>h2q=m[h=>3?bU/!M'X!m~?4GjKJP{Q@y;~fa3Vjs/M#`8FuB;x[LKwJ&>gNrxBt8!5PZ:9QLuHBUtu{TPc2s]k74]Br?PGe6+NcFUT-8";
-    public  static String api_key="1";
+    public  static String api_key="^~>h2q=m[h=>3?bU/!M'X!m~?4GjKJP{Q@y;~fa3Vjs/M#`8FuB;x[LKwJ&>gNrxBt8!5PZ:9QLuHBUtu{TPc2s]k74]Br?PGe6+NcFUT-8";
+//    public  static String api_key="1";
 
     public static String KEY_FILE = "KEY_FILE";
     public static String KEY_EDIT = "KEY_EDIT";

@@ -23,7 +23,7 @@ public class GlobalData {
     public static final String BaseURL = BetaBaseURL;
     //public static final String ApiURL = BaseURL + "api/";
     public static final String Api = "api/";
-    public static final String COUNTRY = "AA";
+    public static final String COUNTRY = "BH";
 
 
 

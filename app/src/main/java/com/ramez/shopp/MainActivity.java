@@ -1,15 +1,25 @@
 package com.ramez.shopp;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 
 import androidx.core.content.ContextCompat;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.AnalyticsListener;
+import com.androidnetworking.interfaces.DownloadListener;
+import com.androidnetworking.interfaces.DownloadProgressListener;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.badge.BadgeUtils;
+import com.kcode.permissionslib.main.OnRequestPermissionsCallBack;
+import com.kcode.permissionslib.main.PermissionCompat;
 import com.ramez.shopp.Activities.ActivityBase;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.CartModel;
@@ -36,6 +46,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -75,6 +86,8 @@ public class MainActivity extends ActivityBase {
         if(UtilityApp.isLogin()){
             getCartsCount();
         }
+
+        //openPicker();
 
         binding.homeButn.setOnClickListener(view1 -> {
             binding.toolBar.backBtn.setVisibility(View.GONE);
@@ -319,4 +332,65 @@ public class MainActivity extends ActivityBase {
         }
 
     }
+
+
+    private final void openPicker() {
+        try {
+            PermissionCompat.Builder builder = new PermissionCompat.Builder((getActiviy()));
+            builder.addPermissions(new String[]{
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE});
+            builder.addPermissionRationale(getString(R.string.should_allow_permission));
+
+            builder.addRequestPermissionsCallBack(new OnRequestPermissionsCallBack() {
+                public void onGrant() {
+
+                    File folder = new File(Environment.getExternalStorageDirectory().toString()+"/PSI/Images");
+                    folder.mkdirs();
+
+
+                    AndroidNetworking.download("https://saudipsi.com/files/level/level-705771019210.jpg",folder.getPath(),"PSI1")
+                            .setTag("downloadTest")
+                            .setPriority(Priority.MEDIUM)
+                            .build()
+                            .setAnalyticsListener(new AnalyticsListener() {
+                                @Override
+                                public void onReceived(long timeTakenInMillis, long bytesSent, long bytesReceived, boolean isFromCache) {
+                                    Log.d(TAG, " timeTakenInMillis : " + timeTakenInMillis);
+                                    Log.d(TAG, " bytesSent : " + bytesSent);
+                                    Log.d(TAG, " bytesReceived : " + bytesReceived);
+                                    Log.d(TAG, " isFromCache : " + isFromCache);
+                                }
+                            })
+                            .setDownloadProgressListener(new DownloadProgressListener() {
+                                @Override
+                                public void onProgress(long bytesDownloaded, long totalBytes) {
+                                    // do anything with progress
+                                }
+                            })
+                            .startDownload(new DownloadListener() {
+                                @Override
+                                public void onDownloadComplete() {
+                                    // do anything after completion
+                                    Log.d(TAG, "Log onDownloadComplete : " );
+
+                                }
+                                @Override
+                                public void onError(ANError error) {
+                                    Log.d(TAG, "Log error : " );
+                                }
+                            });
+                }
+
+                public void onDenied(@NotNull String permission) {
+                    Toast(R.string.some_permission_denied);
+
+                }
+            });
+            builder.build().request();
+        } catch (Exception var2) {
+            var2.printStackTrace();
+        }
+
+    }
+
 }

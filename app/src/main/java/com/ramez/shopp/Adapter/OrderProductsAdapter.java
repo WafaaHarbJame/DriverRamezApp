@@ -22,6 +22,7 @@ import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.Models.OrderProductModel;
 import com.ramez.shopp.Models.ProductModel;
 import com.ramez.shopp.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -57,7 +58,14 @@ public class OrderProductsAdapter extends RecyclerView.Adapter<OrderProductsAdap
         holder.textQTY.setText(orderProductsDM.getQuantity() + " * " + orderProductsDM.getTotalWithTax() + " " + currency);
         holder.textItemPrice.setText(orderProductsDM.getTotalWithTax() + " " + currency);
 
-        Glide.with(context).load(orderProductsDM.getImage()).placeholder(R.drawable.holder_image).thumbnail(0.05f).into(holder.productImage);
+//        Glide.with(context).load(orderProductsDM.getImage()).placeholder(R.drawable.holder_image)
+//                .thumbnail(0.05f).into(holder.productImage);
+
+        Picasso.get()
+                .load(orderProductsDM.getImage())
+                .placeholder(R.drawable.holder_image)
+                .error(R.drawable.holder_image)
+                .into(holder.productImage);
 
 
     }

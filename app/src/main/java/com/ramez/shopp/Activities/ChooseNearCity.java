@@ -103,8 +103,9 @@ public class ChooseNearCity extends ActivityBase implements CityAdapter.OnCityCl
                 if (IsSuccess ) {
                     if (result != null){
                         list = result.getData();
-                        Log.i("TAG", "Log country size " + list.size());
                         if (list != null && list.size() > 0) {
+                            Log.i("TAG", "Log country size " + list.size());
+
                             initAdapter();
                         }
                     }else{

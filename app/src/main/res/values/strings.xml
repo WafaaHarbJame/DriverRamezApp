@@ -205,9 +205,9 @@
     <string name="please_wait_sending">Please wait sending ...</string>
     <string name="send_code">"Send Code "</string>
     <string name="oman_shotname" translatable="false">OM</string>
-    <string name="bahrain_shotname" translatable="false">AA</string>
+    <string name="bahrain_shotname" translatable="false">BH</string>
     <string name="Kuwait_shotname" translatable="false">KW</string>
-    <string name="United_Arab_Emirates_shotname" translatable="false">BB</string>
+    <string name="United_Arab_Emirates_shotname" translatable="false">AE</string>
     <string name="Qatar_shotname" translatable="false">QA</string>
     <string name="Saudi_Arabia_shortname" translatable="false">SA</string>
 

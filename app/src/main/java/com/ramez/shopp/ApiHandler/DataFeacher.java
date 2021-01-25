@@ -218,8 +218,8 @@ public class DataFeacher {
         params.put("device_type", memberModel.getDeviceType());
         params.put("device_token", memberModel.getDeviceToken());
         params.put("name", memberModel.getName());
-       // params.put("country", memberModel.getCountry());
-        params.put("country", "BH");
+        params.put("country", memberModel.getCountry());
+//        params.put("country", "BH");
         params.put("city", memberModel.getCity());
         params.put("email", memberModel.getEmail());
         params.put("device_id", memberModel.getDeviceId());
@@ -663,8 +663,7 @@ public class DataFeacher {
         params.put("user_id", memberModel.getId());
         params.put("name", memberModel.getName());
         params.put("email", memberModel.getEmail());
-      //  params.put("country", memberModel.getCountry());
-        params.put("country", "BH");
+        params.put("country", memberModel.getCountry());
         params.put("state", "1");
         params.put("city", Integer.parseInt(memberModel.getCity()));
 
@@ -939,6 +938,7 @@ public class DataFeacher {
 
     public void getSetting() {
 
+        Log.i(TAG, "Log getSetting");
         Log.i(TAG, "Log getSetting");
 
         Call call = apiService.getSetting(headerMap);
