@@ -122,7 +122,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
             if (!UtilityApp.isLogin()) {
 
-                CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActiviy(), R.string.LoginFirst, R.string.to_add_comment, R.string.ok, R.string.cancel, null, null);
+                CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActiviy(), R.string.LoginFirst, R.string.to_add_comment, R.string.ok, R.string.cancel_label, null, null);
                 checkLoginDialog.show();
 
             } else {
@@ -136,7 +136,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
                         if (!UtilityApp.isLogin()) {
 
-                            CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActiviy(), R.string.LoginFirst, R.string.to_add_comment, R.string.ok, R.string.cancel, null, null);
+                            CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActiviy(), R.string.LoginFirst, R.string.to_add_comment, R.string.ok, R.string.cancel_label, null, null);
                             checkLoginDialog.show();
 
                         } else {
@@ -183,7 +183,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                     }
                 };
 
-                addCommentDialog = new AddRateDialog(getActiviy(), getString(R.string.add_comment), R.string.ok, R.string.cancel, okClick, cancelClick);
+                addCommentDialog = new AddRateDialog(getActiviy(), getString(R.string.add_comment), R.string.ok, R.string.cancel_label, okClick, cancelClick);
                 addCommentDialog.show();
 
             }
@@ -195,7 +195,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
             if (!UtilityApp.isLogin()) {
 
-                CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActiviy(), R.string.LoginFirst, R.string.to_add_favorite, R.string.ok, R.string.cancel, null, null);
+                CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActiviy(), R.string.LoginFirst, R.string.to_add_favorite, R.string.ok, R.string.cancel_label, null, null);
                 checkLoginDialog.show();
 
             } else {
@@ -218,7 +218,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
             if (!UtilityApp.isLogin()) {
 
-                CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActiviy(), R.string.LoginFirst, R.string.to_add_cart, R.string.ok, R.string.cancel, null, null);
+                CheckLoginDialog checkLoginDialog = new CheckLoginDialog(getActiviy(), R.string.LoginFirst, R.string.to_add_cart, R.string.ok, R.string.cancel_label, null, null);
                 checkLoginDialog.show();
 
             } else {

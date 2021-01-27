@@ -40,6 +40,7 @@
                 android:justificationMode="inter_word"
                 android:textAlignment="viewStart"
                 android:lineSpacingExtra="@dimen/_4sdp"
+                android:scrollbars="vertical"
                 android:text="@string/dummy_text"
                 android:textColor="@color/colorLoginText" />
             <com.ramez.shopp.SpichalViews.STextView

@@ -10,10 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.ramez.shopp.Adapter.FavoriteAdapter;
 import com.ramez.shopp.Adapter.ProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
+import com.ramez.shopp.CallBack.DataCallback;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
+import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.MainModel;
 import com.ramez.shopp.Models.MemberModel;
 import com.ramez.shopp.Models.ProductModel;
@@ -24,9 +27,9 @@ import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
 
-public class OfferFragment extends FragmentBase implements ProductAdapter.OnItemClick {
+public class OfferFragment extends FragmentBase implements FavoriteAdapter.OnItemClick {
     private FragmentOfferBinding binding;
-    private ProductAdapter productOfferAdapter;
+    private FavoriteAdapter productOfferAdapter;
     ArrayList<ProductModel> productOffersList;
     GridLayoutManager gridLayoutManager;
     private int category_id = 0, country_id, city_id;
@@ -54,17 +57,17 @@ public class OfferFragment extends FragmentBase implements ProductAdapter.OnItem
         binding.offerRecycler.setHasFixedSize(true);
         binding.offerRecycler.setItemAnimator(null);
 
-        getOfferList(0,country_id,city_id,user_id);
+        getOfferList(0,country_id,city_id,user_id,Constants.offered_filter,0, 10);
 
         binding.dataLY.setOnRefreshListener(() -> {
           binding.dataLY.setRefreshing(false);
-          getOfferList(0,country_id,city_id,user_id);
+          getOfferList(0,country_id,city_id,user_id,Constants.offered_filter,0, 10);
 
 
       });
 
         binding.failGetDataLY.refreshBtn.setOnClickListener(view1 -> {
-            getOfferList(0,country_id,city_id,user_id);
+            getOfferList(0,country_id,city_id,user_id,Constants.offered_filter,0, 10);
         });
 
 
@@ -73,7 +76,14 @@ public class OfferFragment extends FragmentBase implements ProductAdapter.OnItem
 
     public void initAdapter(){
 
-        productOfferAdapter = new ProductAdapter(getActivityy(), productOffersList,this,productOffersList.size());
+//        productOfferAdapter = new FavoriteAdapter(getActivityy(), productOffersList,this,productOffersList.size());
+        productOfferAdapter = new FavoriteAdapter(getActivityy(), productOffersList, 0, 0, country_id, city_id, user_id,
+                productOffersList.size(), binding.offerRecycler, Constants.offered_filter, this, new DataCallback() {
+            @Override
+            public void dataResult(Object obj, String func, boolean IsSuccess) {
+
+            }
+        });
         binding.offerRecycler.setAdapter(productOfferAdapter);
     }
 
@@ -81,7 +91,7 @@ public class OfferFragment extends FragmentBase implements ProductAdapter.OnItem
     public void onItemClicked(int position, ProductModel productModel) {
 
     }
-    public void getOfferList(int category_id,int country_id,int city_id,String user_id) {
+    public void getOfferList(int category_id,int country_id,int city_id,String user_id,String filter, int page_number, int page_size) {
         binding.loadingProgressLY.loadingProgressLY.setVisibility(View.VISIBLE);
         binding.dataLY.setVisibility(View.GONE);
         binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -90,7 +100,7 @@ public class OfferFragment extends FragmentBase implements ProductAdapter.OnItem
         new DataFeacher(false, (obj, func, IsSuccess) -> {
             if (isVisible()){
 
-                MainModel result = (MainModel) obj;
+                FavouriteResultModel result = (FavouriteResultModel) obj;
             String message = getString(R.string.fail_to_get_data);
 
             binding.loadingProgressLY.loadingProgressLY.setVisibility(View.GONE);
@@ -119,14 +129,14 @@ public class OfferFragment extends FragmentBase implements ProductAdapter.OnItem
                 binding.dataLY.setVisibility(View.GONE);
 
             } else {
+
                 if (IsSuccess) {
-                    if (result.getOfferedProducts() != null && result.getOfferedProducts().size() > 0) {
+                    if (result.getData() != null && result.getData().size() > 0) {
 
                         binding.dataLY.setVisibility(View.VISIBLE);
                         binding.noDataLY.noDataLY.setVisibility(View.GONE);
                         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
-                        productOffersList = result.getOfferedProducts();
-
+                        productOffersList = result.getData();
                         initAdapter();
 
                     } else {
@@ -150,6 +160,10 @@ public class OfferFragment extends FragmentBase implements ProductAdapter.OnItem
         }
 
 
-        }).GetMainPage(category_id, country_id, city_id, user_id);
+        }).getFavorite(category_id, country_id, city_id, user_id, filter, page_number, page_size);
     }
+
+
+
+
 }
