@@ -404,9 +404,11 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
                         sliderList = productModel.getImages();
                         binding.ratingBar.setRating((float) productModel.getRate());
+
+
                         String wightName = UtilityApp.getLanguage().equals(Constants.Arabic) ? productBarcode.getProductUnits().getHName() : productBarcode.getProductUnits().getName();
 
-                        binding.weightUnitTv.setText(productBarcode.getWeight() + " " + wightName);
+                        binding.weightUnitTv.setText(NumberHandler.formatDouble(productBarcode.getWeight(), 0) + " " + wightName);
 
                         isFavorite = productModel.getFavourite();
 

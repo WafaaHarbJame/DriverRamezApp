@@ -1,26 +1,21 @@
 package com.ramez.shopp.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.ramez.shopp.Adapter.CityAdapter;
 import com.ramez.shopp.Adapter.CountriesAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.CityModelResult;
 import com.ramez.shopp.Classes.Constants;
-import com.ramez.shopp.Classes.GlobalData;
 import com.ramez.shopp.Classes.UtilityApp;
-import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.CityModel;
 import com.ramez.shopp.Models.CountryModel;
 import com.ramez.shopp.Models.LocalModel;
@@ -249,6 +244,7 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
         newCountryName=countryModel.getShortname();
         localModel.setShortname(countryModel.getShortname());
         localModel.setCurrencyCode(countryModel.getCurrencyCode());
+        localModel.setFractional(countryModel.getFractional());
         UtilityApp.setLocalData(localModel);
         Log.i("tag", "Log click countryId" + countryId);
         Log.i("tag", "Log click oldCountry" + oldCountryName);
