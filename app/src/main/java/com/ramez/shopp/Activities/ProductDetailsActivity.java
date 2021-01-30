@@ -390,17 +390,13 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                             if (productModel.getProductBarcodes().get(0).getSpecialPrice() != null) {
                                 binding.productPriceBeforeTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productBarcode.getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
                                binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productBarcode.getSpecialPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency);
-                                //discount = (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice())) - Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getSpecialPrice()))) / (Double.parseDouble(String.valueOf(productModel.getProductBarcodes().get(0).getPrice()))) * 100;
-                               // DecimalFormat df = new DecimalFormat("#");
-                               // String newDiscount_str = df.format(discount);
-                               //binding.discountTv.setText(NumberHandler.arabicToDecimal(newDiscount_str) + " % " + "OFF");
+
                             }
 
 
                         } else {
                                binding.productPriceTv.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(productBarcode.getPrice())), UtilityApp.getLocalData().getFractional()) + " " + currency + "");
                               binding.productPriceBeforeTv.setVisibility(View.GONE);
-//                               binding.discountTv.setVisibility(View.GONE);
 
                             }
 
@@ -543,6 +539,8 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
         binding.failGetDataLY.failGetDataLY.setVisibility(View.GONE);
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
+            binding.dataLY.setVisibility(View.VISIBLE);
+
             MainModel result = (MainModel) obj;
             String message = getString(R.string.fail_to_get_data);
 
@@ -568,7 +566,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
             } else {
                 if (IsSuccess) {
-                    if (result.getFeatured() != null && result.getFeatured().size() > 0) {
+                    if (result.getQuickProducts() != null && result.getQuickProducts().size() > 0) {
 
                         binding.dataLY.setVisibility(View.VISIBLE);
                         binding.noDataLY.noDataLY.setVisibility(View.GONE);
@@ -577,19 +575,10 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
                         initProductsAdapter();
 
                     } else {
-
-                        binding.dataLY.setVisibility(View.GONE);
-                        binding.noDataLY.noDataLY.setVisibility(View.VISIBLE);
+                        binding.noOffers.setText(getString(R.string.no_products));
+                        binding.noOffers.setVisibility(View.VISIBLE);
 
                     }
-
-
-                } else {
-
-                    binding.dataLY.setVisibility(View.GONE);
-                    binding.noDataLY.noDataLY.setVisibility(View.GONE);
-                    binding.failGetDataLY.failGetDataLY.setVisibility(View.VISIBLE);
-                    binding.failGetDataLY.failTxt.setText(message);
 
 
                 }
@@ -723,6 +712,7 @@ public class ProductDetailsActivity extends ActivityBase implements SuggestedPro
 
             if (IsSuccess) {
                 if (result.data != null && result.data.size() > 0) {
+
 
                     reviewList = result.data;
                     binding.productReviewTv.setVisibility(View.VISIBLE);

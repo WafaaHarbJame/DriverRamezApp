@@ -222,6 +222,22 @@
                     android:text="@string/suggested_product"
                     android:textColor="@color/gray3" />
 
+
+
+                <com.ramez.shopp.SpichalViews.STextViewBold
+                    android:layout_width="match_parent"
+                    android:id="@+id/no_offers"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/_8sdp"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:visibility="gone"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:text="@string/no_offers"
+                    android:textSize="@dimen/_12ssp" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/offerRecycler"
                     android:layout_width="match_parent"

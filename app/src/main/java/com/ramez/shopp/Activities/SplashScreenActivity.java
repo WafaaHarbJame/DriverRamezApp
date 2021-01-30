@@ -11,11 +11,13 @@ import android.widget.Toast;
 
 import com.ramez.shopp.ApiHandler.DataFeacher;
 import com.ramez.shopp.Classes.CartModel;
+import com.ramez.shopp.Classes.CategoryModel;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.SettingModel;
 import com.ramez.shopp.Classes.UtilityApp;
 import com.ramez.shopp.MainActivity;
 import com.ramez.shopp.Models.CartResultModel;
+import com.ramez.shopp.Models.CategoryResultModel;
 import com.ramez.shopp.Models.FavouriteResultModel;
 import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.Models.MemberModel;
@@ -49,9 +51,14 @@ public class SplashScreenActivity extends ActivityBase {
     private void startSplash() {
 
         setContentView(R.layout.activity_splash_screen);
-
         getSetting();
 
+        localModel = UtilityApp.getLocalData();
+
+        if(UtilityApp.getLocalData()!=null){
+            getCategories(Integer.parseInt(localModel.getCityId()));
+
+        }
         initData();
 
     }
@@ -188,6 +195,24 @@ public class SplashScreenActivity extends ActivityBase {
 
         }).getSetting();
     }
+
+    public void getCategories(int storeId) {
+
+        new DataFeacher(false, (obj, func, IsSuccess) -> {
+
+                CategoryResultModel result = (CategoryResultModel) obj;
+
+                    if (IsSuccess) {
+                        if (result.getData() != null && result.getData().size() > 0) {
+                            ArrayList<CategoryModel> categoryModelList= result.getData();
+                            UtilityApp.setCategoriesData(categoryModelList);
+                        }
+
+            }
+
+        }).GetAllCategories(storeId);
+    }
+
 
 
 

@@ -346,5 +346,6 @@
     <string name="select_address">Select Address</string>
     <string name="getFreeDelivery">Congratulations you got free delivery</string>
     <string name="no_default_address">No default Address</string>
+    <string name="no_products">No Suggested products </string>
 
 </resources>

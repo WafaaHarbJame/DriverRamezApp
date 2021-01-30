@@ -45,6 +45,8 @@ public class Constants {
     public static final String FEMALE = "female";
 
     public static final int MALE_ID = 1;
+    public static final int three = 3;
+    public static final int two = 2;
     public static final int FEMALE_ID = 2;
 
     public final static double MIN_WEIGHT = 40, MAX_WEIGHT = 120, MIN_HEIGHT = 100, MAX_HEIGHT = 230;
@@ -88,6 +90,7 @@ public class Constants {
     public static final String KEY_MEMBER = "key_member";
     public static final String KEY_SETTING = "KEY_SETTING";
     public static final String KEY_COUNTRIES= "key_countries";
+    public static final String KEY_CATEGORIES= "KEY_CATEGORIES";
     public static final String KEY_Local = "KEY_Local";
     public static String KEY_FIREBASE_TOKEN = "firebase_token";
     public static String KEY_CART_SIZE = "KEY_CART_SIZE";

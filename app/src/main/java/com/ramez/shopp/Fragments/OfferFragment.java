@@ -1,5 +1,6 @@
 package com.ramez.shopp.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.ramez.shopp.Activities.ProductDetailsActivity;
 import com.ramez.shopp.Adapter.FavoriteAdapter;
 import com.ramez.shopp.Adapter.ProductAdapter;
 import com.ramez.shopp.ApiHandler.DataFeacher;
@@ -89,6 +91,11 @@ public class OfferFragment extends FragmentBase implements FavoriteAdapter.OnIte
 
     @Override
     public void onItemClicked(int position, ProductModel productModel) {
+        Intent intent = new Intent(getActivityy(), ProductDetailsActivity.class);
+        intent.putExtra(Constants.DB_productModel, productModel);
+        startActivity(intent);
+
+
 
     }
     public void getOfferList(int category_id,int country_id,int city_id,String user_id,String filter, int page_number, int page_size) {

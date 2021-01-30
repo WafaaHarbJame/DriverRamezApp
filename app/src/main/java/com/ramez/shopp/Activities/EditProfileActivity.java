@@ -179,7 +179,8 @@ public class EditProfileActivity extends ActivityBase {
     private final void openPicker() {
         try {
             PermissionCompat.Builder builder = new PermissionCompat.Builder((getActiviy()));
-            builder.addPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE});
+            builder.addPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE});
             builder.addPermissionRationale(getString(R.string.should_allow_permission));
 
             builder.addRequestPermissionsCallBack(new OnRequestPermissionsCallBack() {

@@ -66,7 +66,8 @@ public class ApiClient {
 
         Gson gson = new GsonBuilder().setLenient().create();
 //        if (retrofit == null) {
-        retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create(gson)).client(getOkClient()).build();
+        retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson)).client(getOkClient()).build();
 //        }
 
         return retrofit;
@@ -86,7 +87,8 @@ public class ApiClient {
 
 
         if (retrofitLong == null) {
-            retrofitLong = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create(gson)).client(getLongOkClient()).build();
+            retrofitLong = new Retrofit.Builder()
+                    .baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create(gson)).client(getLongOkClient()).build();
         }
         return retrofitLong;
     }
@@ -100,7 +102,8 @@ public class ApiClient {
 
         OkHttpClient.Builder client = new OkHttpClient.Builder()
 //                .addInterceptor(interceptor)
-                .connectionSpecs(specs).connectTimeout(20, TimeUnit.SECONDS).readTimeout(20, TimeUnit.SECONDS).writeTimeout(20, TimeUnit.SECONDS);
+                .connectionSpecs(specs).connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS).writeTimeout(30, TimeUnit.SECONDS);
 
 
         try {
@@ -148,7 +151,9 @@ public class ApiClient {
 
         OkHttpClient.Builder client = new OkHttpClient.Builder()
 //                .addInterceptor(interceptor)
-                .connectionSpecs(specs).connectTimeout(5, TimeUnit.MINUTES).readTimeout(5, TimeUnit.MINUTES).writeTimeout(5, TimeUnit.MINUTES);
+                .connectionSpecs(specs).connectTimeout(10,
+                        TimeUnit.MINUTES).readTimeout(10,
+                        TimeUnit.MINUTES).writeTimeout(10, TimeUnit.MINUTES);
 
         try {
 //            ProviderInstaller.installIfNeeded(RootApplication.getInstance());

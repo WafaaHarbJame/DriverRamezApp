@@ -1,5 +1,6 @@
 package com.ramez.shopp.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -72,6 +73,11 @@ public class FavoriteActivity extends ActivityBase implements FavoriteAdapter.On
 
     @Override
     public void onItemClicked(int position, ProductModel productModel) {
+            Intent intent = new Intent(getActiviy(), ProductDetailsActivity.class);
+            intent.putExtra(Constants.DB_productModel, productModel);
+            startActivity(intent);
+
+
 
     }
 

@@ -61,7 +61,16 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
         binding.catRecycler.setLayoutManager(gridLayoutManager);
         localModel = UtilityApp.getLocalData();
         activity=getActivity();
-        getCategories(Integer.parseInt(localModel.getCityId()));
+
+        if(UtilityApp.getCategories()!=null&&UtilityApp.getCategories().size()>0){
+            categoryModelList=UtilityApp.getCategories();
+            initAdapter();
+
+        }
+        else {
+            getCategories(Integer.parseInt(localModel.getCityId()));
+
+        }
 
         binding.swipeDataContainer.setOnRefreshListener(() -> {
             binding.swipeDataContainer.setRefreshing(false);
@@ -161,6 +170,8 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
                             categoryModelList = result.getData();
 
                             Log.i(TAG, "Log productBestList" + categoryModelList.size());
+                            UtilityApp.setCategoriesData(categoryModelList);
+
                             initAdapter();
 
                         } else {
@@ -207,13 +218,7 @@ public class CategoryFragment extends FragmentBase implements CategoryAdapter.On
                 token.continuePermissionRequest();
 
             }
-        }).withErrorListener(new PermissionRequestErrorListener() {
-            @Override
-            public void onError(DexterError error) {
-                Toast.makeText(getActivityy(), "" + getString(R.string.error_in_data), Toast.LENGTH_SHORT).show();
-
-            }
-        }).onSameThread().check();
+        }).withErrorListener(error -> Toast.makeText(getActivityy(), "" + getString(R.string.error_in_data), Toast.LENGTH_SHORT).show()).onSameThread().check();
     }
 
 
