@@ -22,10 +22,11 @@ import com.ramez.shopp.databinding.ActivityConfirmBinding;
 
 public class ConfirmActivity extends ActivityBase {
     ActivityConfirmBinding binding;
-    String mobileStr, passwordStr;
-    Boolean verify_account, isStart = false;
+    String mobileStr="", passwordStr;
+    Boolean verify_account=false, isStart = false;
     String FCMToken;
     CountDownTimer downTimer = null;
+    boolean reset_account=false;
 
 
     @Override
@@ -47,6 +48,7 @@ public class ConfirmActivity extends ActivityBase {
         if (bundle != null) {
             mobileStr = getIntent().getStringExtra(Constants.KEY_MOBILE);
             verify_account = getIntent().getBooleanExtra(Constants.verify_account, false);
+            reset_account = getIntent().getBooleanExtra(Constants.reset_account, false);
             passwordStr = bundle.getString(Constants.KEY_PASSWORD);
 
         }
@@ -56,8 +58,8 @@ public class ConfirmActivity extends ActivityBase {
             SendOtp(mobileStr, true);
         });
 
-        if (verify_account) {
 
+        if (verify_account) {
             SendOtp(mobileStr, false);
 
         }
@@ -126,7 +128,17 @@ public class ConfirmActivity extends ActivityBase {
                     if (verify_account) {
                         loginUser();
 
-                    } else {
+                    }
+
+                    else if(reset_account){
+                        Intent intent = new Intent(getActiviy(), ChangePassActivity.class);
+                        intent.putExtra(Constants.KEY_MOBILE, mobileStr);
+                        intent.putExtra(Constants.reset_account, true);
+                        startActivity(intent);
+                        startActivity(intent);
+                    }
+
+                    else {
                         GeneralModel otpModel = (GeneralModel) obj;
                         Log.i("TAG", "Log otp verify " + otpModel.getMessage());
 

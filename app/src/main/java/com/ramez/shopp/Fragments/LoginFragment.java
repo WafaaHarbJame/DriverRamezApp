@@ -187,13 +187,13 @@ public class LoginFragment extends FragmentBase {
                     message = result.getMessage();
                 }
 
-                GlobalData.errorDialog(getActivityy(), R.string.fail_signin, message);
+                GlobalData.errorDialog(getActivityy(), R.string.text_login_login, message);
             } else if (func.equals(Constants.FAIL)) {
                 String message = getString(R.string.fail_signin);
                 if (result != null && result.getMessage() != null) {
                     message = result.getMessage();
                 }
-                GlobalData.errorDialog(getActivityy(), R.string.fail_signin, message);
+                GlobalData.errorDialog(getActivityy(), R.string.text_login_login, message);
             } else if (func.equals(Constants.NO_CONNECTION)) {
                 GlobalData.Toast(getActivityy(), R.string.no_internet_connection);
             } else {
@@ -206,14 +206,34 @@ public class LoginFragment extends FragmentBase {
                         intent.putExtra(Constants.KEY_PASSWORD, passwordStr);
                         startActivity(intent);
 
-                    } else {
+                    }
+
+                    else if(result.getStatus()==0){
+
+                        String message = getString(R.string.fail_signin);
+                        if (result != null && result.getMessage() != null) {
+                            message = result.getMessage();
+                        }
+
+                        GlobalData.errorDialog(getActivityy(), R.string.text_login_login, message);
+                    }
+
+                    else if(result.getStatus()==200) {
                         MemberModel user = result.data;
                         UtilityApp.setUserData(user);
-                        // user.setRegisterType(Constants.BY_PHONE);
-
                         if (UtilityApp.getUserData() != null) {
                             UpdateToken();
                         }
+                    }
+
+                    else {
+
+                        String message = getString(R.string.fail_signin);
+                        if (result != null && result.getMessage() != null) {
+                            message = result.getMessage();
+                        }
+
+                        GlobalData.errorDialog(getActivityy(), R.string.text_login_login, message);
                     }
 
 
@@ -236,7 +256,10 @@ public class LoginFragment extends FragmentBase {
     }
 
     private void startRestPassword() {
-        startActivity(new Intent(getActivityy(), ConfirmPhoneActivity.class));
+
+        Intent intent = new Intent(getActivityy(), ConfirmPhoneActivity.class);
+        intent.putExtra(Constants.reset_account, true);
+        startActivity(intent);
     }
 
     private void startLogin() {

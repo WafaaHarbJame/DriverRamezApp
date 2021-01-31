@@ -72,6 +72,10 @@
         android:id="@+id/failGetDataLY"
         layout="@layout/layout_fail_get_data" />
 
+    <include
+        android:id="@+id/noDataLY"
+        layout="@layout/layout_no_data" />
+
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/dataLY"
@@ -84,9 +88,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <include
-                android:id="@+id/noDataLY"
-                layout="@layout/layout_no_data" />
 
             <LinearLayout
                 android:layout_width="match_parent"

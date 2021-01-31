@@ -278,6 +278,28 @@ public class DataFeacher {
 
     }
 
+
+    public void UpdatePasswordHandle(MemberModel memberModel) {
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("mobile_number", memberModel.getMobileNumber());
+        params.put("password", memberModel.getPassword());
+        params.put("re_password", memberModel.getNew_password());
+
+        Log.i(TAG, "Log UpdatePasswordHandle");
+        Log.i(TAG, "Log headerMap " + headerMap);
+        Log.i(TAG, "Log mobile_number " +memberModel.getMobileNumber());
+        Log.i(TAG, "Log password " + memberModel.getPassword());
+        Log.i(TAG, "Log re_password " + memberModel.getNew_password());
+
+
+        Call call = apiService.updatePasswordHandle(headerMap, params);
+        call.enqueue(callbackApi);
+
+    }
+
+
+
     public void UpdateTokenHandle(MemberModel memberModel) {
 
         Map<String, Object> params = new HashMap<>();

@@ -175,6 +175,8 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
     @Override
     public void onCityClicked(int position, CityModel cityModel) {
         city_id = cityModel.getId();
+        localModel.setCityId(String.valueOf(city_id));
+        UtilityApp.setLocalData(localModel);
 
     }
 
@@ -222,11 +224,12 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
                     binding.dataLY.setVisibility(View.VISIBLE);
 
                     if (result.getData() != null && result.getData().size() > 0) {
-                        Log.i("TAG", "Log CityList size " + result.getData().size());
                         cityModelArrayList = result.getData();
+                        city_id=cityModelArrayList.get(0).getId();
+                        localModel.setCityId(String.valueOf(city_id));
+                        UtilityApp.setLocalData(localModel);
                         initCityAdapter();
                         cityAdapter.notifyDataSetChanged();
-
 
                     }
                 }
@@ -245,12 +248,23 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
         localModel.setShortname(countryModel.getShortname());
         localModel.setCurrencyCode(countryModel.getCurrencyCode());
         localModel.setFractional(countryModel.getFractional());
+        localModel.setPhonecode(countryModel.getPhonecode());
         UtilityApp.setLocalData(localModel);
         Log.i("tag", "Log click countryId" + countryId);
         Log.i("tag", "Log click oldCountry" + oldCountryName);
         Log.i("tag", "Log click newCountryName" + newCountryName);
         Log.i("tag", "Log click ShortName" + countryModel.getShortname());
         getCityList(countryId);
+
+        toggleLangButton = !toggleLangButton;
+        toggleButton = !toggleButton;
+
+        binding.countryContainer.setVisibility(View.GONE);
+        binding.countryLY.setBackground(ContextCompat.getDrawable(getActiviy(), R.drawable.spinner_style));
+
+        binding.branchContainer.setVisibility(View.VISIBLE);
+        binding.branchLY.setBackground(ContextCompat.getDrawable(getActiviy(), R.drawable.lang_style));
+
 
 
     }

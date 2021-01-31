@@ -73,6 +73,12 @@ ApiInterface {
     @POST("v3/Account/changePassword")
     Call<OtpModel> changePasswordHandle(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 
+
+
+    @POST("v3/Account/updatePassword")
+    Call<GeneralModel> updatePasswordHandle(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
+
+
     @POST("v3/Account/updateDeviceToken")
     Call<GeneralModel> UpdateTokenHandle(@HeaderMap() Map<String, Object> headerParams, @Body Map<String, Object> params);
 

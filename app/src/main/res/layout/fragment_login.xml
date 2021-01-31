@@ -56,6 +56,7 @@
                     android:paddingTop="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp"
                     android:paddingBottom="@dimen/_8sdp"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <com.ramez.shopp.SpichalViews.SEditText

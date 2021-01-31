@@ -93,47 +93,79 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/gray_view" />
-
-                <com.ramez.shopp.SpichalViews.SEditText
-                    android:id="@+id/edtPassword"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:drawableStart="@drawable/passward_icon"
-                    android:drawablePadding="@dimen/_8sdp"
-                    android:hint="@string/text_login_password"
-                    android:inputType="textPassword"
-                    android:paddingStart="@dimen/_8sdp"
-                    android:paddingTop="@dimen/_8sdp"
-                    android:paddingEnd="@dimen/_8sdp"
-                    android:paddingBottom="@dimen/_8sdp"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/colorLoginText"
-                    android:textColorHint="@color/colorTextHint"
-                    android:textSize="@dimen/_12ssp" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_height="wrap_content">
+
+                    <com.ramez.shopp.SpichalViews.SEditText
+                        android:id="@+id/edtPassword"
+                        android:background="@null"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableStart="@drawable/passward_icon"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:hint="@string/text_login_password"
+                        android:inputType="textPassword"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_8sdp"
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorLoginText"
+                        android:textColorHint="@color/colorTextHint"
+                        android:textSize="@dimen/_12ssp" />
+
+                    <ImageView
+                        android:id="@+id/showPassBut"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="ShowHidePass"
+                        android:src="@drawable/ic_visibility" />
+
+                </LinearLayout>
+
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/gray_view" />
 
-                <com.ramez.shopp.SpichalViews.SEditText
-                    android:id="@+id/edtConfirmPassword"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:drawableStart="@drawable/passward_icon"
-                    android:drawablePadding="@dimen/_8sdp"
-                    android:hint="@string/text_confirm_password"
-                    android:inputType="textPassword"
-                    android:paddingStart="@dimen/_8sdp"
-                    android:paddingTop="@dimen/_8sdp"
-                    android:paddingEnd="@dimen/_8sdp"
-                    android:paddingBottom="@dimen/_8sdp"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/colorLoginText"
-                    android:textColorHint="@color/colorTextHint"
-                    android:textSize="@dimen/_12ssp" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_height="wrap_content">
+
+                    <com.ramez.shopp.SpichalViews.SEditText
+                        android:id="@+id/edtConfirmPassword"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:drawableStart="@drawable/passward_icon"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:hint="@string/text_confirm_password"
+                        android:inputType="textPassword"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_8sdp"
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorLoginText"
+                        android:textColorHint="@color/colorTextHint"
+                        android:textSize="@dimen/_12ssp" />
+                    <ImageView
+                        android:id="@+id/showConfirmPassBut"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="ShowHidePass"
+                        android:src="@drawable/ic_visibility" />
+                </LinearLayout>
+
+
 
                 <View
                     android:layout_width="match_parent"

@@ -3,10 +3,13 @@ package com.ramez.shopp.Fragments;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.viewpager.widget.ViewPager;
 
@@ -59,6 +62,30 @@ public class RegisterFragment extends FragmentBase {
 
         });
 
+
+        binding.showPassBut.setOnClickListener(view1 -> {
+
+            if (binding.edtPassword.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
+                ((ImageView) (view1)).setImageResource(R.drawable.ic_visibility_off);
+                binding.edtPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            } else {
+                ((ImageView) (view1)).setImageResource(R.drawable.ic_visibility);
+                binding.edtPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            }
+        });
+
+
+
+        binding.showConfirmPassBut.setOnClickListener(view1 -> {
+
+            if (binding.edtConfirmPassword.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
+                ((ImageView) (view1)).setImageResource(R.drawable.ic_visibility_off);
+                binding.edtConfirmPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            } else {
+                ((ImageView) (view1)).setImageResource(R.drawable.ic_visibility);
+                binding.edtConfirmPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            }
+        });
 
         binding.registerBut.setOnClickListener(view1 -> {
             if (isValidForm()) {
@@ -116,17 +143,29 @@ public class RegisterFragment extends FragmentBase {
                 if (result != null && result.getMessage() != null) {
                     message = result.getMessage();
                 }
-                GlobalData.errorDialog(getActivityy(), R.string.fail_register, message);
+                GlobalData.errorDialog(getActivityy(), R.string.register, message);
             } else if (func.equals(Constants.NO_CONNECTION)) {
                 GlobalData.Toast(getActivityy(), R.string.no_internet_connection);
             } else {
                 if (IsSuccess) {
-                    if (result != null) {
-                        Log.i("TAG", "Log otp " + result.getOtp());
-                    }
-                    MemberModel user = result.data;
-                    UtilityApp.setUserData(user);
-                    SendOtp(mobileStr, passwordStr);
+                        Log.i("TAG", "Log getStatus " + result.getStatus());
+
+                        if (result.getStatus() == 200) {
+                            MemberModel user = result.data;
+                            UtilityApp.setUserData(user);
+                            SendOtp(mobileStr, passwordStr);
+
+                        } else {
+                            String message = getString(R.string.fail_register);
+                            if (result.getMessage() != null) {
+                                message = result.getMessage();
+                            }
+                            GlobalData.errorDialog(getActivityy(), R.string.register, message);
+
+
+                        }
+
+
                 } else {
                     Toast(getString(R.string.fail_register));
 
@@ -152,7 +191,10 @@ public class RegisterFragment extends FragmentBase {
 
         FormValidator formValidator = FormValidator.Companion.getInstance();
 
-        return formValidator.addField(binding.edtFirstName, new NonEmptyRule(getString(R.string.enter_name))).addField(binding.edtPhoneNumber, new NonEmptyRule(getString(R.string.enter_phone_number))).addField(binding.edtPassword, new NonEmptyRule(getString(R.string.enter_password))).addField(binding.edtConfirmPassword, new NonEmptyRule(getString(R.string.enter_confirm_password)), new EqualRule(String.valueOf(binding.edtPassword.getText()), R.string.password_confirm_not_match)).validate();
+        return formValidator.addField(binding.edtFirstName, new NonEmptyRule(getString(R.string.enter_name))).addField(binding.edtPhoneNumber, new NonEmptyRule(getString(R.string.enter_phone_number))).
+                addField(binding.edtPassword, new NonEmptyRule(getString(R.string.enter_password))).
+
+                addField(binding.edtConfirmPassword, new NonEmptyRule(getString(R.string.enter_confirm_password)), new EqualRule(String.valueOf(binding.edtPassword.getText()), R.string.password_confirm_not_match)).validate();
 
     }
 
