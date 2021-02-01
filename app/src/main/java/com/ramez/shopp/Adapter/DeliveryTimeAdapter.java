@@ -1,5 +1,6 @@
 package com.ramez.shopp.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ public class DeliveryTimeAdapter extends RecyclerView.Adapter<DeliveryTimeAdapte
     DataCallback dataCallback;
     private List<DeliveryTime> deliveryTimesList;
     private  Double deliveryFees;
+    private  int deliveryPrice;
 
 
     public DeliveryTimeAdapter(Context context, List<DeliveryTime> deliveryTimesList,Double deliveryFees, DataCallback dataCallback) {
@@ -47,18 +49,23 @@ public class DeliveryTimeAdapter extends RecyclerView.Adapter<DeliveryTimeAdapte
 
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int position) {
         DeliveryTime deliveryTimes = deliveryTimesList.get(position);
         viewHolder.binding.deliveryTime.setText(deliveryTimes.getTime());
-        viewHolder.binding.deliveryPrice.setText("1".concat(UtilityApp.getLocalData().getCurrencyCode()));
+
+        currency=UtilityApp.getLocalData().getCurrencyCode();
+        deliveryPrice=UtilityApp.getLocalData().getMinimum_order_amount();
 
         if(deliveryFees==0){
             viewHolder.binding.deliveryPrice.setText(context.getString(R.string.free));
 
         }
         else {
-            viewHolder.binding.deliveryPrice.setText(NumberHandler.formatDouble(Double.parseDouble(String.valueOf(1.0)), UtilityApp.getLocalData().getFractional()) + " " + currency);
+            viewHolder.binding.deliveryPrice.setText(NumberHandler
+                    .formatDouble(Double.parseDouble(String.valueOf(deliveryPrice)),
+                            UtilityApp.getLocalData().getFractional()) + " " + currency);
 
         }
 

@@ -24,6 +24,7 @@ import com.ramez.shopp.Models.AddressResultModel;
 import com.ramez.shopp.Models.AreasModel;
 import com.ramez.shopp.Models.AreasResultModel;
 import com.ramez.shopp.Models.CountryModel;
+import com.ramez.shopp.Models.LocalModel;
 import com.ramez.shopp.R;
 import com.ramez.shopp.Utils.MapHandler;
 import com.ramez.shopp.databinding.ActivityAddNewAddressBinding;
@@ -52,6 +53,7 @@ public class AddNewAddressActivity extends ActivityBase {
     private String phonePrefix = "973";
     private int CHOOSE_LOCATION = 3000;
     private int countryId;
+    private LocalModel localModel;
 
 
     @Override
@@ -65,6 +67,17 @@ public class AddNewAddressActivity extends ActivityBase {
         stateNames = new ArrayList<>();
 
         setTitle(R.string.new_address);
+        localModel=UtilityApp.getLocalData();
+
+        if(UtilityApp.getLocalData()!=null){
+            binding.codeSpinner.setText(localModel.getCountryName().concat( " " +"("+localModel.getPhonecode()+")"));
+            CountryCode= "+".concat(String.valueOf(localModel.getPhonecode()));
+            phonePrefix= String.valueOf(localModel.getPhonecode());
+
+        }
+
+
+
 
         binding.locationBut.setOnClickListener(view1 -> {
 

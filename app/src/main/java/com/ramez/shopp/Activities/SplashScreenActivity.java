@@ -37,6 +37,7 @@ public class SplashScreenActivity extends ActivityBase {
     MemberModel user;
     LocalModel localModel;
     int cartNumber;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +56,7 @@ public class SplashScreenActivity extends ActivityBase {
 
         localModel = UtilityApp.getLocalData();
 
-        if(UtilityApp.getLocalData()!=null){
+        if (UtilityApp.getLocalData() != null) {
             getCategories(Integer.parseInt(localModel.getCityId()));
 
         }
@@ -71,7 +72,7 @@ public class SplashScreenActivity extends ActivityBase {
                 if (UtilityApp.getUserData() != null) {
                     localModel = UtilityApp.getLocalData();
                     storeId = Integer.parseInt(localModel.getCityId());
-                    user=UtilityApp.getUserData();
+                    user = UtilityApp.getUserData();
                     userId = user.getId();
                     Log.i(TAG, "Log user_id " + userId);
                     Log.i(TAG, "Log storeId " + storeId);
@@ -124,21 +125,16 @@ public class SplashScreenActivity extends ActivityBase {
                 startActivity(intent);
 
 
-            }
+            } else if (func.equals(Constants.NO_CONNECTION)) {
+                //  Toasty.error(getActiviy(),R.string.no_internet_connection, Toast.LENGTH_SHORT, true).show();
 
-            else if (func.equals(Constants.NO_CONNECTION)) {
-              //  Toasty.error(getActiviy(),R.string.no_internet_connection, Toast.LENGTH_SHORT, true).show();
-
-            }
-
-
-           else if (IsSuccess) {
+            } else if (IsSuccess) {
                 MemberModel memberModel = UtilityApp.getUserData();
                 memberModel.setName(result.data.getName());
                 memberModel.setEmail(result.data.getEmail());
                 memberModel.setProfilePicture(result.data.getProfilePicture());
                 UtilityApp.setUserData(memberModel);
-                getCarts(storeId,userId);
+                getCarts(storeId, userId);
 
             } else {
                 Intent intent = new Intent(getActiviy(), MainActivity.class);
@@ -146,8 +142,6 @@ public class SplashScreenActivity extends ActivityBase {
                 startActivity(intent);
                 finish();
             }
-
-
 
 
         }).getUserDetails(user_id);
@@ -160,37 +154,32 @@ public class SplashScreenActivity extends ActivityBase {
 
             if (func.equals(Constants.ERROR)) {
 
-               // Toasty.error(getActiviy(),R.string.error_in_data, Toast.LENGTH_SHORT, true).show();
+                // Toasty.error(getActiviy(),R.string.error_in_data, Toast.LENGTH_SHORT, true).show();
 
             } else if (func.equals(Constants.FAIL)) {
 
                 //Toasty.error(getActiviy(),R.string.fail_to_get_data, Toast.LENGTH_SHORT, true).show();
 
 
-            }
-
-            else if (func.equals(Constants.NO_CONNECTION)) {
-             //   Toasty.error(getActiviy(),R.string.no_internet_connection, Toast.LENGTH_SHORT, true).show();
+            } else if (func.equals(Constants.NO_CONNECTION)) {
+                //   Toasty.error(getActiviy(),R.string.no_internet_connection, Toast.LENGTH_SHORT, true).show();
 
 
             }
 
             if (IsSuccess) {
                 SettingModel settingModel = new SettingModel();
-                if(result.data!=null){
+                if (result.data != null) {
                     settingModel.setAbout(result.data.getAbout());
                     settingModel.setConditions(result.data.getConditions());
                     settingModel.setPrivacy(result.data.getPrivacy());
                     UtilityApp.setSetting(settingModel);
                 }
 
-            }
-            else {
-               // Toasty.error(getActiviy(),R.string.error_in_data, Toast.LENGTH_SHORT, true).show();
+            } else {
+                // Toasty.error(getActiviy(),R.string.error_in_data, Toast.LENGTH_SHORT, true).show();
 
             }
-
-
 
 
         }).getSetting();
@@ -200,20 +189,18 @@ public class SplashScreenActivity extends ActivityBase {
 
         new DataFeacher(false, (obj, func, IsSuccess) -> {
 
-                CategoryResultModel result = (CategoryResultModel) obj;
+            CategoryResultModel result = (CategoryResultModel) obj;
 
-                    if (IsSuccess) {
-                        if (result.getData() != null && result.getData().size() > 0) {
-                            ArrayList<CategoryModel> categoryModelList= result.getData();
-                            UtilityApp.setCategoriesData(categoryModelList);
-                        }
+            if (IsSuccess) {
+                if (result.getData() != null && result.getData().size() > 0) {
+                    ArrayList<CategoryModel> categoryModelList = result.getData();
+                    UtilityApp.setCategoriesData(categoryModelList);
+                }
 
             }
 
         }).GetAllCategories(storeId);
     }
-
-
 
 
     public void getCarts(int storeId, int userId) {
@@ -224,15 +211,27 @@ public class SplashScreenActivity extends ActivityBase {
             String message = getString(R.string.fail_to_get_data);
 
             if (IsSuccess) {
-                if (cartResultModel.getData().getCartData() != null && cartResultModel.getData().getCartData().size() > 0) {
-                    cartNumber = cartResultModel.getCartCount();
-                    UtilityApp.setCartCount(cartNumber);
-                    Intent intent = new Intent(getActiviy(), MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
+                if (cartResultModel.getStatus() == 200) {
 
-                }
-                else {
+                    if (cartResultModel.getData() != null && cartResultModel.getData().getCartData() != null && cartResultModel.getData().getCartData().size() > 0) {
+                        cartNumber = cartResultModel.getCartCount();
+                        UtilityApp.setCartCount(cartNumber);
+                       int minimum_order_amount = cartResultModel.getMinimumOrderAmount();
+                        localModel.setMinimum_order_amount(minimum_order_amount);
+                        UtilityApp.setLocalData(localModel);
+
+                        Intent intent = new Intent(getActiviy(), MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+
+                    } else {
+                        UtilityApp.setCartCount(0);
+                        Intent intent = new Intent(getActiviy(), MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+
+                } else {
                     UtilityApp.setCartCount(0);
                     Intent intent = new Intent(getActiviy(), MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

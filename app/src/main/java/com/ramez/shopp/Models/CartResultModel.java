@@ -13,7 +13,7 @@ public class CartResultModel implements Serializable {
     private Data data;
     @SerializedName("delivery_charges")
     @Expose
-    private Integer deliveryCharges;
+    private Double deliveryCharges;
     @SerializedName("minimum_order_amount")
     @Expose
     private Integer minimumOrderAmount;
@@ -56,11 +56,11 @@ public class CartResultModel implements Serializable {
         this.data = data;
     }
 
-    public Integer getDeliveryCharges() {
+    public Double getDeliveryCharges() {
         return deliveryCharges;
     }
 
-    public void setDeliveryCharges(Integer deliveryCharges) {
+    public void setDeliveryCharges(Double deliveryCharges) {
         this.deliveryCharges = deliveryCharges;
     }
 

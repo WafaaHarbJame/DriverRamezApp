@@ -65,4 +65,6 @@
     <style name="tab_text" parent="@android:style/TextAppearance.Widget.TabWidget">
         <item name="android:fontFamily">@font/cairo</item>
     </style>
+
+
 </resources>

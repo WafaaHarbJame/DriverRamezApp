@@ -123,6 +123,7 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
         binding.saveBut.setOnClickListener(view1 -> {
             localModel.setCountryId(countryId);
             localModel.setCityId(String.valueOf(city_id));
+            localModel.setCountryName(newCountryName);
             UtilityApp.setLocalData(localModel);
             FirebaseMessaging.getInstance().subscribeToTopic(newCountryName)
 
@@ -176,6 +177,7 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
     public void onCityClicked(int position, CityModel cityModel) {
         city_id = cityModel.getId();
         localModel.setCityId(String.valueOf(city_id));
+        localModel.setCountryName(newCountryName);
         UtilityApp.setLocalData(localModel);
 
     }
@@ -227,6 +229,7 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
                         cityModelArrayList = result.getData();
                         city_id=cityModelArrayList.get(0).getId();
                         localModel.setCityId(String.valueOf(city_id));
+                        localModel.setCountryName(newCountryName);
                         UtilityApp.setLocalData(localModel);
                         initCityAdapter();
                         cityAdapter.notifyDataSetChanged();
@@ -249,6 +252,7 @@ public class ChangeCityBranchActivity extends ActivityBase implements CityAdapte
         localModel.setCurrencyCode(countryModel.getCurrencyCode());
         localModel.setFractional(countryModel.getFractional());
         localModel.setPhonecode(countryModel.getPhonecode());
+        localModel.setCountryName(countryModel.getName());
         UtilityApp.setLocalData(localModel);
         Log.i("tag", "Log click countryId" + countryId);
         Log.i("tag", "Log click oldCountry" + oldCountryName);
