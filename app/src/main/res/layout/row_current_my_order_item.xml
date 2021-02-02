@@ -65,6 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="اليوم "
+                    android:layout_marginStart="@dimen/_4sdp"
                     android:textSize="@dimen/_11ssp" />
 
                 <com.ramez.shopp.SpichalViews.STextView
@@ -224,7 +225,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_2sdp"
-                    android:text="تم الاستلام"
+                    android:text="@string/Completed"
                     android:textSize="@dimen/_11ssp" />
 
                 <ImageView
@@ -257,7 +258,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_2sdp"
-                    android:text="تجهيز"
+                    android:text="@string/processing"
                     android:textSize="@dimen/_11ssp"/>
 
                 <ImageView
@@ -291,7 +292,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_2sdp"
                     android:gravity="center"
-                    android:text="توصيل"
+                    android:text="@string/delivery"
                     android:textSize="@dimen/_11ssp" />
 
                 <ImageView
@@ -326,7 +327,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_2sdp"
                     android:gravity="center"
-                    android:text="تم التوصيل"
+                    android:text="@string/delivery_done"
                     android:textSize="@dimen/_11ssp"/>
 
                 <ImageView

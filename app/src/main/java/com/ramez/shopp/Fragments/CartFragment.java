@@ -111,6 +111,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
                     Bundle bundle = new Bundle();
                     bundle.putInt(Constants.CART_PRODUCT_COUNT, productsSize);
                     bundle.putString(Constants.CART_SUM, total);
+                    bundle.putDouble(Constants.delivery_charges, delivery_charges);
                     bundle.putSerializable(Constants.CART_MODEL, cartResultModel);
                     invoiceFragment.setArguments(bundle);
                     fragmentManager.beginTransaction().replace(R.id.mainContainer, invoiceFragment, "InvoiceFragment").commit();
@@ -150,7 +151,7 @@ public class CartFragment extends FragmentBase implements CartAdapter.OnCartItem
 
             }
             else {
-                total = NumberHandler.formatDouble(cartProcessModel.getTotal()+delivery_charges, fraction);
+                total = NumberHandler.formatDouble(cartProcessModel.getTotal(), fraction);
                 binding.totalTv.setText(total.concat(" " + currency));
 
             }

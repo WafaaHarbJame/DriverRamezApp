@@ -51,6 +51,7 @@ public class ChangePassActivity extends ActivityBase {
         if (reset_account) {
             binding.edtPassword.setVisibility(View.GONE);
             binding.oldView.setVisibility(View.GONE);
+            binding.oldShowPassBut.setVisibility(View.GONE);
             setTitle(getString(R.string.reset_pass));
         }
 

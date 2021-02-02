@@ -426,11 +426,15 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
             total = bundle.getString(Constants.CART_SUM);
             productsSize = bundle.getInt(Constants.CART_PRODUCT_COUNT, 0);
             cartResultModel = (CartResultModel) bundle.getSerializable(Constants.CART_MODEL);
-            deliveryFees = cartResultModel.getDeliveryCharges();
+            deliveryFees =bundle.getDouble(Constants.delivery_charges);
             productList = cartResultModel.getData().getCartData();
             binding.productsSizeTv.setText(total.concat(" " + currency));
+            total = NumberHandler.formatDouble( Double.parseDouble(total)+deliveryFees, fraction);
+            
             binding.totalTv.setText(total.concat(" " + currency));
             minimum_order_amount = cartResultModel.getMinimumOrderAmount();
+
+
         }
 
 
@@ -452,13 +456,24 @@ public class InvoiceFragment extends FragmentBase implements AddressCheckAdapter
                 GlobalData.errorDialog(getActivityy(), R.string.make_order, message);
             } else {
                 if (IsSuccess) {
+                    if(result.getStatus()==200){
+                        UtilityApp.setCartCount(0);
+                        AwesomeSuccessDialog successDialog = new AwesomeSuccessDialog(getActivityy());
+                        successDialog.setTitle(R.string.make_order).setMessage(R.string.sending_order).setColoredCircle(R.color.dialogSuccessBackgroundColor).setDialogIconAndColor(R.drawable.ic_check, R.color.white).show().setOnDismissListener(dialogInterface -> {
+                            startMain();
+                        });
+                        successDialog.show();
+                    }
+                    else {
+                        String message = getString(R.string.fail_to_send_order);
+                        if (result != null && result.getMessage() != null) {
+                            message = result.getMessage();
+                        }
+                        GlobalData.errorDialog(getActivityy(), R.string.make_order, message);
 
-                    UtilityApp.setCartCount(0);
-                    AwesomeSuccessDialog successDialog = new AwesomeSuccessDialog(getActivityy());
-                    successDialog.setTitle(R.string.make_order).setMessage(R.string.sending_order).setColoredCircle(R.color.dialogSuccessBackgroundColor).setDialogIconAndColor(R.drawable.ic_check, R.color.white).show().setOnDismissListener(dialogInterface -> {
-                        startMain();
-                    });
-                    successDialog.show();
+                    }
+
+
 
 
                 } else {

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class OrderProductModel implements Serializable {
     @SerializedName("weight")
     @Expose
-    private Integer weight;
+    private Double weight;
     @SerializedName("unit_name")
     @Expose
     private String unitName;
@@ -123,11 +123,11 @@ public class OrderProductModel implements Serializable {
         this.orderProductsDMS = orderProductsDMS;
     }
 
-    public Integer getWeight() {
+    public Double getWeight() {
         return weight;
     }
 
-    public void setWeight(Integer weight) {
+    public void setWeight(Double weight) {
         this.weight = weight;
     }
 

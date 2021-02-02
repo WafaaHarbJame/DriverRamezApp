@@ -317,5 +317,9 @@
     <string name="getFreeDelivery">مبروك لقد حصلت على التوصيل المجاني</string>
     <string name="no_default_address">لا يوجد عنوان افتراضي</string>
     <string name="no_products">لا يوجد منتجات مقترحة</string>
+    <string name="delivery_done">تم التوصيل</string>
+    <string name="processing">تجهيز</string>
+    <string name="delivery">توصيل</string>
+    <string name="Completed">تم الاستلام</string>
 
 </resources>

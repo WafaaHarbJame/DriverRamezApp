@@ -8,6 +8,7 @@ import android.util.Log;
 import com.ramez.shopp.Classes.Constants;
 import com.ramez.shopp.Classes.UtilityApp;
 
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -347,8 +348,12 @@ public class DateHandler {
     public static String FormatDate4(Object o, String inPattern, String outPattern, String locale) {
         SimpleDateFormat parser = new SimpleDateFormat(inPattern);
 
-        SimpleDateFormat parser2 = new SimpleDateFormat(outPattern, new Locale(locale != null ? locale : UtilityApp.getLanguage()));
-//        parser.setTimeZone(TimeZone.getTimeZone());
+        SimpleDateFormat parser2 = new SimpleDateFormat(outPattern,
+                new Locale(locale != null ? locale : UtilityApp.getLanguage()));
+//        parser.setTimeZone(TimeZone.getDefault());
+        parser.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+
         try {
             Date date = parser.parse(o.toString());
 

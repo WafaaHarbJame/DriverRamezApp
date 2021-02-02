@@ -28,7 +28,6 @@ public class DeliveryTimeAdapter extends RecyclerView.Adapter<DeliveryTimeAdapte
     DataCallback dataCallback;
     private List<DeliveryTime> deliveryTimesList;
     private  Double deliveryFees;
-    private  int deliveryPrice;
 
 
     public DeliveryTimeAdapter(Context context, List<DeliveryTime> deliveryTimesList,Double deliveryFees, DataCallback dataCallback) {
@@ -56,7 +55,6 @@ public class DeliveryTimeAdapter extends RecyclerView.Adapter<DeliveryTimeAdapte
         viewHolder.binding.deliveryTime.setText(deliveryTimes.getTime());
 
         currency=UtilityApp.getLocalData().getCurrencyCode();
-        deliveryPrice=UtilityApp.getLocalData().getMinimum_order_amount();
 
         if(deliveryFees==0){
             viewHolder.binding.deliveryPrice.setText(context.getString(R.string.free));
@@ -64,7 +62,7 @@ public class DeliveryTimeAdapter extends RecyclerView.Adapter<DeliveryTimeAdapte
         }
         else {
             viewHolder.binding.deliveryPrice.setText(NumberHandler
-                    .formatDouble(Double.parseDouble(String.valueOf(deliveryPrice)),
+                    .formatDouble(deliveryFees,
                             UtilityApp.getLocalData().getFractional()) + " " + currency);
 
         }
