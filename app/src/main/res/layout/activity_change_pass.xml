@@ -19,7 +19,6 @@
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:layout_marginTop="@dimen/_20sdp"
             android:padding="@dimen/_16sdp">
 
 
@@ -33,7 +32,7 @@
                     android:paddingBottom="@dimen/_8sdp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
-                 <com.ramez.shopp.SpichalViews.SEditText
+                 <com.ramez.driver.SpichalViews.SEditText
                      android:id="@+id/edtPassword"
                      android:layout_width="0dp"
                      android:layout_weight="1"
@@ -75,7 +74,7 @@
                     android:paddingBottom="@dimen/_8sdp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
-                   <com.ramez.shopp.SpichalViews.SEditText
+                   <com.ramez.driver.SpichalViews.SEditText
                        android:id="@+id/edtNewPassword"
                        android:layout_width="0dp"
                        android:layout_height="wrap_content"
@@ -114,7 +113,7 @@
                     android:paddingBottom="@dimen/_8sdp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
-                 <com.ramez.shopp.SpichalViews.SEditText
+                 <com.ramez.driver.SpichalViews.SEditText
                      android:id="@+id/edtConfirmPassword"
                      android:layout_width="0dp"
                      android:layout_weight="1"
@@ -145,7 +144,7 @@
                 android:background="#d8d8d8" />
 
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.ramez.driver.SpichalViews.STextViewBold
                 android:id="@+id/confirmBut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

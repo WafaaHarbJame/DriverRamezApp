@@ -25,7 +25,7 @@
                 android:layout_marginEnd="@dimen/_8sdp"
                 android:orientation="vertical">
 
-                <com.ramez.shopp.SpichalViews.SEditText
+                <com.ramez.driver.SpichalViews.SEditText
                     android:id="@+id/edtPhoneNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <com.ramez.shopp.SpichalViews.SEditText
+                    <com.ramez.driver.SpichalViews.SEditText
                         android:id="@+id/edtPassword"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <com.ramez.shopp.SpichalViews.STextView
+                    <com.ramez.driver.SpichalViews.STextView
                         android:id="@+id/textForgotPassword"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -104,7 +104,7 @@
                         android:text="@string/text_login_forgot_password"
                         android:textColor="@color/green" />
 
-                    <com.ramez.shopp.SpichalViews.SCheckBox
+                    <com.ramez.driver.SpichalViews.SCheckBox
                         android:id="@+id/rememberCB"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -115,7 +115,7 @@
                         android:theme="@style/checkBoxStyle" />
                 </LinearLayout>
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.ramez.driver.SpichalViews.STextView
                     android:id="@+id/skipButton"
                     android:layout_width="@dimen/_120sdp"
                     android:layout_height="wrap_content"
@@ -138,7 +138,7 @@
                     android:visibility="gone" />
 
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.ramez.driver.SpichalViews.STextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -183,7 +183,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.ramez.driver.SpichalViews.STextViewBold
                 android:id="@+id/loginBut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -204,7 +204,7 @@
                 android:layout_marginTop="@dimen/_16sdp"
                 android:orientation="horizontal">
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.ramez.driver.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -212,7 +212,7 @@
                     android:text="@string/new_member"
                     android:textColor="@color/colorLoginText" />
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.ramez.driver.SpichalViews.STextViewBold
                     android:id="@+id/registerBut"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

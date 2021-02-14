@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.ramez.shopp">
+    package="com.ramez.driver">
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -19,11 +19,19 @@
         android:icon="@drawable/ic_lunch_512"
         android:label="@string/app_name"
         android:largeHeap="true"
-        tools:replace="android:allowBackup"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:allowBackup">
+        <activity android:name=".Activities.NewChatActivity"    android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity android:name=".Activities.GetMyInvoiceInfoActivity" />
         <activity
-            android:name=".Activities.MapActivity"
+            android:name=".HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.SignInActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
@@ -33,33 +41,6 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity
-            android:name=".Activities.FullScannerActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity
-            android:name=".Activities.SuccessOrders"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity
-            android:name=".Activities.CategoryProductsActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity
-            android:name=".Activities.SearchActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysVisible|adjustPan" />
-        <activity android:name=".Activities.AllListActivity" />
-        <activity
-            android:name=".Activities.WelcomeActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/welcomeStyle"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".Activities.SplashScreenActivity"
             android:launchMode="singleTask"
@@ -87,28 +68,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity
             android:name=".Activities.NoBalanceActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity
-            android:name=".Activities.AddBalanceActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity
-            android:name=".Activities.AddCardActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity
-            android:name=".Activities.InvoiceInfoActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
@@ -131,42 +91,12 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/mapKey" />
+        <meta-data
+            android:name="com.onesignal.NotificationAccentColor.DEFAULT"
+            android:value="@color/colorPrimaryDark" />
 
-        <meta-data android:name="com.onesignal.NotificationAccentColor.DEFAULT" android:value="@color/colorPrimaryDark" />
-
-
-        <activity
-            android:name=".Activities.AddNewAddressActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity
-            android:name=".Activities.AddressActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".Activities.EditProfileActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity
-            android:name=".Activities.MyOrderActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity
-            android:name=".Activities.FavoriteActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity
-            android:name=".Activities.RateProductActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity
-            android:name=".Activities.RatingActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
@@ -176,27 +106,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
-            android:name=".Activities.ConditionActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity
-            android:name=".Activities.TermsActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity
-            android:name=".Activities.ProductDetailsActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity
             android:name=".Activities.ResetPasswordActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity
-            android:name=".Activities.RegisterLoginActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
@@ -207,11 +117,6 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".Activities.ChooseCityActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-        <activity
-            android:name=".Activities.ChangeLanguageActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
@@ -247,6 +152,14 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />
+
+
+        <activity
+            android:name=".Activities.ChangeLanguageActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+
     </application>
 
 </manifest>

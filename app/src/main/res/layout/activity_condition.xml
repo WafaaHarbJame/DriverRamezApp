@@ -23,7 +23,7 @@
             android:padding="@dimen/_16sdp">
 
 
-            <com.ramez.shopp.SpichalViews.STextView
+            <com.ramez.driver.SpichalViews.STextView
                 android:layout_width="match_parent"
                 android:id="@+id/textTv"
                 android:justificationMode="inter_word"

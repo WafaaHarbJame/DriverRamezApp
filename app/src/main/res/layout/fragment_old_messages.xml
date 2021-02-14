@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragments.WaitFragment">
+
+    <include
+        android:id="@+id/loadingProgressLY"
+        layout="@layout/layout_pre_loading" />
+
+    <include
+        android:id="@+id/failGetDataLY"
+        layout="@layout/layout_fail_get_data" />
+
+    <include
+        android:id="@+id/noDataLY"
+        layout="@layout/layout_no_data" />
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/dataLY"
+        android:layout_width="match_parent"
+        android:visibility="visible"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/row_myorder_ramez"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                />
+        </LinearLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+</LinearLayout>

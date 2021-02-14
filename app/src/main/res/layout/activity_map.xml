@@ -60,7 +60,7 @@
         android:orientation="vertical"
         android:padding="4dp">
 
-        <com.ramez.shopp.SpichalViews.STextView
+        <com.ramez.driver.SpichalViews.STextView
             android:id="@+id/tvPhysicalAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textColor="@color/black" />
 
-        <com.ramez.shopp.SpichalViews.SButton
+        <com.ramez.driver.SpichalViews.SButton
             android:id="@+id/pickLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

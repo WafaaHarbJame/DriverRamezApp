@@ -110,7 +110,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:orientation="horizontal">
 
-                                <com.ramez.shopp.SpichalViews.STextViewBold
+                                <com.ramez.driver.SpichalViews.STextViewBold
                                     android:id="@+id/tvName"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
@@ -123,7 +123,7 @@
 
                             </LinearLayout>
 
-                            <com.ramez.shopp.SpichalViews.STextView
+                            <com.ramez.driver.SpichalViews.STextView
                                 android:id="@+id/weight_unitTv"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -141,7 +141,7 @@
                                 android:orientation="horizontal">
 
 
-                                <com.ramez.shopp.SpichalViews.STextView
+                                <com.ramez.driver.SpichalViews.STextView
                                     android:id="@+id/deleteItemBut"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -150,7 +150,7 @@
                                     android:text="@string/delete"
                                     android:textSize="@dimen/_10ssp" />
 
-                                <com.ramez.shopp.SpichalViews.STextView
+                                <com.ramez.driver.SpichalViews.STextView
                                     android:id="@+id/markTv"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -160,7 +160,7 @@
                                     android:text="@string/info"
                                     android:textSize="@dimen/_10ssp" />
 
-                                <com.ramez.shopp.SpichalViews.STextView
+                                <com.ramez.driver.SpichalViews.STextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text=""
@@ -179,7 +179,7 @@
 
                                 android:paddingBottom="@dimen/_8sdp">
 
-                                <com.ramez.shopp.SpichalViews.STextViewBold
+                                <com.ramez.driver.SpichalViews.STextViewBold
                                     android:id="@+id/priceTv"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -190,7 +190,7 @@
                                     android:textColor="@color/colorPrimary"
                                     android:textSize="@dimen/_11ssp" />
 
-                                <com.ramez.shopp.SpichalViews.STextView
+                                <com.ramez.driver.SpichalViews.STextView
                                     android:id="@+id/currencyPriceTv"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -201,7 +201,7 @@
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/_11ssp" />
 
-                                <com.ramez.shopp.SpichalViews.STextView
+                                <com.ramez.driver.SpichalViews.STextView
                                     android:id="@+id/productPriceBeforeTv"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -237,7 +237,7 @@
                                         android:visibility="visible"
                                         app:srcCompat="@drawable/plus_cart" />
 
-                                    <com.ramez.shopp.SpichalViews.STextView
+                                    <com.ramez.driver.SpichalViews.STextView
                                         android:id="@+id/productCartQTY"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"

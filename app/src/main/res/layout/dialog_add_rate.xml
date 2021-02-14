@@ -16,7 +16,7 @@
 
 
 
-        <com.ramez.shopp.SpichalViews.STextView
+        <com.ramez.driver.SpichalViews.STextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_8sdp"
@@ -50,7 +50,7 @@
             app:cardCornerRadius="@dimen/_8sdp"
             app:cardUseCompatPadding="true">
 
-            <com.ramez.shopp.SpichalViews.SEditText
+            <com.ramez.driver.SpichalViews.SEditText
                 android:id="@+id/rateEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.ramez.driver.SpichalViews.STextViewBold
                 android:id="@+id/yesBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp" />
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.ramez.driver.SpichalViews.STextViewBold
                 android:id="@+id/noBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

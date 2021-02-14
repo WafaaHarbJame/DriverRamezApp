@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.ramez.driver.Fragments.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.ramez.driver.Fragments.ProfileFragment"
+        android:label="@string/profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/nav_change_pass"
+        android:name="com.ramez.driver.Fragments.ChangePassFragment"
+        android:label="@string/Change_Password"
+        tools:layout="@layout/fragment_chnage_pass" />
+
+
+    <fragment
+        android:id="@+id/nav_financial"
+        android:name="com.ramez.driver.Fragments.FinancialReportsFragment"
+        android:label="@string/FinancialReports"
+        tools:layout="@layout/fragment_financial_reports" />
+    <fragment
+        android:id="@+id/nav_change_country"
+        android:name="com.ramez.driver.Fragments.ChangeCountryFragment"
+        android:label="@string/change_country"
+        tools:layout="@layout/fragment_change_country" />
+    <fragment
+        android:id="@+id/nav_lang"
+        android:name="com.ramez.driver.Fragments.ChangeLangFragment"
+        android:label="@string/languages"
+        tools:layout="@layout/fragment_change_lang" />
+
+    <fragment
+        android:id="@+id/nav_messages"
+        android:name="com.ramez.driver.Fragments.MessagesFragment"
+        android:label="@string/Message"
+        tools:layout="@layout/fragment_messages" />
+
+
+    <fragment
+        android:id="@+id/nav_logout"
+        android:name="com.ramez.driver.Fragments.LogoutFragment"
+        tools:layout="@layout/fragment_logout"
+        android:label="@string/logout" />
+</navigation>

@@ -5,26 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
+
     <include
         android:id="@+id/tool_bar"
         layout="@layout/tool_bar"
-        android:layout_alignParentTop="true"
         android:layout_width="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_height="wrap_content"  />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
 
     <FrameLayout
         android:id="@+id/mainContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:background="@color/white"
+        android:layout_height="0dp"
         android:layout_above="@+id/nav_view"
         android:layout_below="@id/tool_bar"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:background="@color/white" />
 
-    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/nav_view"
@@ -32,42 +32,43 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom|center"
-        android:background="@color/gray10"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
-        android:padding="@dimen/_8sdp"
+        android:background="@color/gray10"
         android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/_8sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:orientation="horizontal">
+        app:layout_constraintRight_toRightOf="parent">
 
         <ImageView
             android:id="@+id/homeButn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/home_icon"/>
+            android:src="@drawable/home_icon" />
 
         <ImageView
             android:id="@+id/categoryBut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/category_icon"/>
+            android:src="@drawable/category_icon" />
 
         <ru.nikartm.support.ImageBadgeView
             android:id="@+id/cartBut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/cart_icon_before"/>
+            android:src="@drawable/cart_icon_before" />
+
         <ImageView
             android:id="@+id/offerBut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/offer_icon"/>
+            android:src="@drawable/offer_icon" />
 
 
         <ImageView
@@ -75,9 +76,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/myaccount_icon"/>
+            android:src="@drawable/myaccount_icon" />
 
-</LinearLayout>
+    </LinearLayout>
 
 
 </RelativeLayout>

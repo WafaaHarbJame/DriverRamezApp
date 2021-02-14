@@ -38,7 +38,7 @@
                 android:orientation="horizontal"
                 android:padding="@dimen/_8sdp">
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.ramez.driver.SpichalViews.STextViewBold
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -95,7 +95,7 @@
                     android:padding="@dimen/_8sdp">
 
 
-                    <com.ramez.shopp.SpichalViews.STextViewBold
+                    <com.ramez.driver.SpichalViews.STextViewBold
                         android:id="@+id/delivery"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -132,7 +132,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <com.ramez.shopp.SpichalViews.STextView
+                    <com.ramez.driver.SpichalViews.STextView
                         android:id="@+id/tvFullAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -143,7 +143,7 @@
                         android:paddingStart="@dimen/_8ssp"
                         android:textAlignment="viewStart" />
 
-                    <com.ramez.shopp.SpichalViews.STextViewBold
+                    <com.ramez.driver.SpichalViews.STextViewBold
                         android:id="@+id/acceptBtu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -175,7 +175,7 @@
                 android:orientation="horizontal"
                 android:padding="@dimen/_8sdp">
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.ramez.driver.SpichalViews.STextViewBold
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -210,7 +210,7 @@
                     android:paddingTop="@dimen/_4sdp"
                     android:paddingEnd="@dimen/_10sdp">
 
-                    <com.ramez.shopp.SpichalViews.STextViewBold
+                    <com.ramez.driver.SpichalViews.STextViewBold
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_8sdp"
@@ -220,7 +220,7 @@
                         android:textColor="@color/colorPrimary1"
                         android:textSize="@dimen/_12ssp" />
 
-                    <com.ramez.shopp.SpichalViews.STextView
+                    <com.ramez.driver.SpichalViews.STextView
                         android:layout_width="wrap_content"
                         android:id="@+id/freeDelivery"
                         android:layout_height="wrap_content"
@@ -230,7 +230,7 @@
                         android:text="@string/over"
                         android:textSize="@dimen/_10ssp" />
 
-                    <com.ramez.shopp.SpichalViews.STextViewBold
+                    <com.ramez.driver.SpichalViews.STextViewBold
                         android:id="@+id/freeBut"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -284,7 +284,7 @@
                 tools:itemCount="3"
                 tools:listitem="@layout/row_delivery_times" />
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.ramez.driver.SpichalViews.STextViewBold
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="end|center"
@@ -303,7 +303,7 @@
                 android:layout_margin="@dimen/_4sdp"
                 android:gravity="center_vertical">
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.ramez.driver.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="end|center"
@@ -311,7 +311,7 @@
                     android:text="@string/product_total"
                     android:textSize="@dimen/_10ssp" />
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.ramez.driver.SpichalViews.STextViewBold
                     android:id="@+id/productsSizeTv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -335,7 +335,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <com.ramez.shopp.SpichalViews.STextView
+                <com.ramez.driver.SpichalViews.STextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="end|center"
@@ -344,7 +344,7 @@
                     android:textColor="@color/text_color"
                     android:textSize="@dimen/_10ssp" />
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.ramez.driver.SpichalViews.STextViewBold
                     android:id="@+id/deliveryFees"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -372,7 +372,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.ramez.driver.SpichalViews.STextViewBold
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="end|center"
@@ -381,7 +381,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp" />
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.ramez.driver.SpichalViews.STextViewBold
                     android:id="@+id/totalTv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -406,7 +406,7 @@
                 app:indicatorName="LineSpinFadeLoaderIndicator" />
 
 
-            <com.ramez.shopp.SpichalViews.STextView
+            <com.ramez.driver.SpichalViews.STextView
                 android:id="@+id/noDeliveryTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -435,7 +435,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.ramez.driver.SpichalViews.STextViewBold
             android:id="@+id/saveBut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -448,7 +448,7 @@
             android:textColor="@color/white"
             android:visibility="gone" />
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.ramez.driver.SpichalViews.STextViewBold
             android:id="@+id/sendOrder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

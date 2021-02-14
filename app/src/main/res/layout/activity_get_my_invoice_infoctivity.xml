@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/tool_bar_with_back" />
+
+    <include
+        android:id="@+id/loadingProgressLY"
+        layout="@layout/layout_pre_loading" />
+
+    <include
+        android:id="@+id/failGetDataLY"
+        layout="@layout/layout_fail_get_data" />
+
+    <include
+        android:id="@+id/noDataLY"
+        layout="@layout/layout_no_data" />
+
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/dataLY"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:background="@color/white"
+            android:fillViewport="true"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:layout_gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <com.ramez.driver.SpichalViews.STextView
+                                android:id="@+id/name_user"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text=""
+                                android:textAlignment="viewStart"
+                                android:lines="1" />
+
+                            <ImageView
+                                android:id="@+id/phone_call"
+                                android:layout_width="@dimen/_20sdp"
+                                android:layout_height="@dimen/_20sdp"
+                                android:layout_margin="@dimen/_8sdp"
+                                android:minWidth="@dimen/_20sdp"
+                                android:minHeight="@dimen/_20sdp"
+                                android:src="@drawable/call" />
+
+                            <ImageView
+                                android:id="@+id/buttonContactWhatsUp"
+                                android:layout_width="@dimen/_20sdp"
+                                android:layout_height="@dimen/_20sdp"
+                                android:minWidth="@dimen/_20sdp"
+                                android:minHeight="@dimen/_20sdp"
+                                android:src="@drawable/whats_icon">
+
+                            </ImageView>
+
+                            <ImageView
+                                android:id="@+id/iv_orderLocation"
+                                android:layout_width="@dimen/_20sdp"
+                                android:layout_height="@dimen/_20sdp"
+                                android:layout_margin="8dp"
+                                android:minWidth="@dimen/_20sdp"
+                                android:minHeight="@dimen/_20sdp"
+                                app:srcCompat="@drawable/ic_location" />
+                        </LinearLayout>
+
+
+                        <com.ramez.driver.SpichalViews.STextView
+                            android:id="@+id/inv_id"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="15dp"
+                            android:lines="1"
+                            android:text=""
+                            android:textSize="@dimen/_14ssp" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_vertical"
+                            android:layout_height="wrap_content">
+
+                            <com.ramez.driver.SpichalViews.STextView
+                                android:id="@+id/total_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="15dp"
+                                android:lines="1"
+                                android:text=""
+                                android:textColor="@color/colorPrimaryDark"
+                                android:textSize="@dimen/_14ssp" />
+
+                            <com.ramez.driver.SpichalViews.STextView
+                                android:id="@+id/items"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <com.ramez.driver.SpichalViews.STextView
+                                android:id="@+id/Shipping"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginStart="5dp"
+                                android:src="@drawable/delivery_car" />
+
+                            <com.ramez.driver.SpichalViews.STextView
+                                android:id="@+id/created_at"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="10dp"
+                                android:gravity="start|center"
+                                android:text=""
+                                android:textSize="@dimen/_14ssp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/deliveryLy"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="4dp">
+
+                            <com.ramez.driver.SpichalViews.STextView
+                                android:id="@+id/deliveryDateTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/delivery_date"
+                                android:textSize="@dimen/_11ssp" />
+
+                            <com.ramez.driver.SpichalViews.STextView
+                                android:id="@+id/TvDeliveryDay"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingStart="@dimen/_4sdp"
+                                android:paddingEnd="@dimen/_4sdp"
+                                android:textSize="@dimen/_11ssp">
+
+                            </com.ramez.driver.SpichalViews.STextView>
+
+                            <com.ramez.driver.SpichalViews.STextView
+                                android:id="@+id/TvDeliveryTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingStart="@dimen/_4sdp"
+                                android:paddingEnd="@dimen/_4sdp"
+                                android:textSize="@dimen/_11ssp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/delayLy"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="4dp"
+                            android:visibility="gone">
+
+                            <com.ramez.driver.SpichalViews.STextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/Delay_time"
+                                android:textSize="@dimen/_11ssp" />
+
+                            <com.ramez.driver.SpichalViews.STextView
+                                android:id="@+id/delay_timeTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_6sdp"
+                                android:text=""
+                                android:textSize="@dimen/_11ssp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/gray_view" />
+
+                    <LinearLayout
+                        android:id="@+id/line1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center"
+                        android:orientation="vertical">
+
+                        <com.ramez.driver.SpichalViews.STextView
+                            android:id="@+id/statusTv"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:gravity="start"
+                            android:text="@string/status"
+                            android:textColor="#868686" />
+
+                        <com.ramez.driver.SpichalViews.STextView
+                            android:id="@+id/status"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
+                            android:gravity="start"
+                            android:text=" "
+                            android:textColor="@color/text_color" />
+
+
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/split_line"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@color/gray_view" />
+
+                    <include layout="@layout/row_products_my_order_log" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimaryDark"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/unPickedBtn"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <com.ramez.driver.SpichalViews.STextView
+                                android:id="@+id/unPickedTxt"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:paddingTop="@dimen/_10sdp"
+                                android:paddingBottom="@dimen/_10sdp"
+                                android:text="@string/unpicked_products"
+                                android:textColor="@color/colorAccent" />
+
+                            <View
+                                android:id="@+id/unPickedIndc"
+                                android:layout_width="match_parent"
+                                android:layout_height="3dp"
+                                android:background="@color/colorAccent"
+                                android:visibility="visible" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/pickedBtn"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <com.ramez.driver.SpichalViews.STextView
+                                android:id="@+id/pickedTxt"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:paddingTop="@dimen/_10sdp"
+                                android:paddingBottom="@dimen/_10sdp"
+                                android:text="@string/picked_products"
+                                android:textColor="@color/white" />
+
+                            <View
+                                android:id="@+id/pickedIndc"
+                                android:layout_width="match_parent"
+                                android:layout_height="3dp"
+                                android:background="@color/colorAccent"
+                                android:visibility="invisible" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/noProductsTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/_16ssp"
+                        android:visibility="gone">
+
+                        <com.ramez.driver.SpichalViews.STextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/no_products" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:background="@color/gray" />
+                    </LinearLayout>
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        tools:itemCount="3"
+                        tools:listitem="@layout/row_products_my_order_extra"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:orientation="vertical" />
+
+                    <LinearLayout
+                        android:id="@+id/linearRequest"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <com.ramez.driver.SpichalViews.STextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/request_product"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textStyle="bold" />
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/listRequest"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:nestedScrollingEnabled="false" />
+                    </LinearLayout>
+
+
+                    <com.ramez.driver.SpichalViews.STextView
+                        android:id="@+id/note"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp" />
+
+                    <ImageView
+                        android:id="@+id/image_prescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:src="@drawable/small_logo"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:id="@+id/line_4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <com.ramez.driver.SpichalViews.SEditText
+                            android:id="@+id/price"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="15dp"
+                            android:background="#f4f4f4"
+                            android:gravity="center"
+                            android:hint="@string/price_prescription"
+                            android:inputType="text"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:text="" />
+
+                        <com.ramez.driver.SpichalViews.SEditText
+                            android:id="@+id/item"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="15dp"
+                            android:background="#f4f4f4"
+                            android:gravity="center"
+                            android:hint="@string/item_number"
+                            android:inputType="text"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:text="" />
+
+                        <com.ramez.driver.SpichalViews.SButton
+                            android:id="@+id/send"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="5dp"
+                            android:background="@drawable/round_medium_corner_red"
+                            android:text="@string/Send_now"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+                    <com.ramez.driver.SpichalViews.SButton
+                        android:id="@+id/btn_acceptOrder"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/round_medium_corner_red"
+                        android:text="@string/AcceptOrder"
+                        android:textColor="@color/white"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <com.ramez.driver.SpichalViews.SButton
+                            android:id="@+id/btn_chat"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:background="@drawable/round_medium_corner_red"
+                            android:text="@string/Chat"
+                            android:textColor="@color/white"
+                            android:visibility="visible" />
+
+                        <Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                        </Space>
+
+                        <com.ramez.driver.SpichalViews.STextView
+                            android:id="@+id/countTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:background="@drawable/counter_style"
+                            android:gravity="center"
+                            android:minWidth="25dp"
+                            android:minHeight="25dp"
+                            android:padding="@dimen/_2sdp"
+                            android:text="@string/_0"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textSize="12sp"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</LinearLayout>

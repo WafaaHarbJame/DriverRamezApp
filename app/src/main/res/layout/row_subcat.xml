@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <com.ramez.shopp.SpichalViews.SButton
+    <com.ramez.driver.SpichalViews.SButton
         android:id="@+id/btnCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

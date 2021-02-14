@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp"
+        tools:targetApi="lollipop">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ivProfileImage"
+                android:layout_width="40dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="0dp"
+                android:src="@drawable/avatar" />
+
+
+            <LinearLayout
+                android:id="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/ivProfileImage"
+                android:gravity="start|center">
+
+
+                <com.ramez.driver.SpichalViews.STextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:lines="1"
+                    android:id="@+id/senderNameTv"
+                    android:text="senderName"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:visibility="visible" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                </Space>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:lines="1"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:id="@+id/dateTv"
+                    android:text="date"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/line2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/line1"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/ivProfileImage"
+                android:orientation="horizontal">
+
+                <com.ramez.driver.SpichalViews.STextView
+                    android:id="@+id/messageBody"
+                    android:layout_height="wrap_content"
+                    android:maxLines="4"
+                    android:textAlignment="viewStart"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:text="message" />
+
+
+                <com.ramez.driver.SpichalViews.STextView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/countTv"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:background="@drawable/counter_style"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/_4sdp"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:minWidth="25dp"
+                    android:visibility="visible"
+                    android:minHeight="25dp"
+                    android:textAllCaps="false"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/line3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/line2"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_toEndOf="@+id/ivProfileImage"
+                android:gravity="start|center"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/line4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/line3"
+                android:layout_marginTop="2dp"
+                android:gravity="start|center">
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray" />
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

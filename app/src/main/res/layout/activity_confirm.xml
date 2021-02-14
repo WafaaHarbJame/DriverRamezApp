@@ -26,7 +26,7 @@
                 android:layout_gravity="center_vertical"
                 android:gravity="center"
                 android:layout_height="wrap_content">
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.ramez.driver.SpichalViews.STextViewBold
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -130,7 +130,7 @@
 <!--            </LinearLayout>-->
 
 
-            <com.ramez.shopp.SpichalViews.PinEntryEditText
+            <com.ramez.driver.SpichalViews.PinEntryEditText
                 android:id="@+id/codeTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -149,7 +149,7 @@
                 android:textSize="@dimen/_15ssp"/>
 
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.ramez.driver.SpichalViews.STextViewBold
                 android:id="@+id/confirmBut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -166,7 +166,7 @@
                 />
 
 
-            <com.ramez.shopp.SpichalViews.STextView
+            <com.ramez.driver.SpichalViews.STextView
                 android:id="@+id/resendCodeTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

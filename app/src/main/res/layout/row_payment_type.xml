@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"/>
 
 
-    <com.ramez.shopp.SpichalViews.STextView
+    <com.ramez.driver.SpichalViews.STextView
         android:id="@+id/paymentTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

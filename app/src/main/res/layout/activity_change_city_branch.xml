@@ -39,7 +39,6 @@
                 android:id="@+id/countryLY"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
                 android:background="@drawable/spinner_style"
                 android:orientation="vertical">
 
@@ -51,7 +50,7 @@
                     android:orientation="horizontal"
                     android:padding="@dimen/_8sdp">
 
-                    <com.ramez.shopp.SpichalViews.STextView
+                    <com.ramez.driver.SpichalViews.STextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -113,7 +112,7 @@
                     android:orientation="horizontal"
                     android:padding="@dimen/_8sdp">
 
-                    <com.ramez.shopp.SpichalViews.STextView
+                    <com.ramez.driver.SpichalViews.STextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -159,7 +158,7 @@
 
             </LinearLayout>
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.ramez.driver.SpichalViews.STextViewBold
                 android:id="@+id/saveBut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <resources>
-    <string name="app_name">رامز</string>
+    <string name="app_name">رامز |درايفر</string>
     <string name="message_yes">نعم </string>
     <string name="message_no">لا</string>
     <string name="text_save">حفظ</string>
@@ -131,7 +131,6 @@
     <string name="total">المجموع</string>
     <string name="reorder_cart">إعادة طلب السلة </string>
     <string name="reorder_product">إعادة طلب المنتج</string>
-    <string name="price">السعر :</string>
     <string name="total1">الإجمالي :</string>
     <string name="pieces">الكمية : </string>
     <string name="product_count">عدد المنتجات </string>
@@ -319,7 +318,166 @@
     <string name="no_products">لا يوجد منتجات مقترحة</string>
     <string name="delivery_done">تم التوصيل</string>
     <string name="processing">تجهيز</string>
-    <string name="delivery">توصيل</string>
     <string name="Completed">تم الاستلام</string>
+    <string name="picker">مجمع طلبات </string>
+    <string name="driver">سائق </string>
+    <string name="login_as">الدخول كـ</string>
+    <string name="mobileOrPhone">رقم الهاتف /الايميل </string>
+    <string name="picking">الطلبات المجمعة </string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="change_country">تغير الدولة </string>
+    <string name="menu_home">الصفحة الرئيسية</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    //
+    <string name="Recover_my_password"> استعادة كلمة المرور الخاصة بي</string>
+    <string name="New_Membership"> عضوية جديدة</string>
+    <string name="Mobile_email"> الجوال / البريد الإلكتروني</string>
+    <string name="Password">كلمه السر</string>
+    <string name="Sign_in">تسجيل الدخول</string>
+    <string name="phone_">الهاتف المحمول </string>
+    <string name="Enter_Password_old">كلمة المرور الحالية</string>
+    <string name="Enter_Password_new">كلمة مرور جديدة</string>
+    <string name="user_Name">  الاسم </string>
+    <string name="alert">تنبيه </string>
+    <string name="empty_email">حقل البريد الإلكتروني مطلوب!</string>
+    <string name="empety_password">حقل كلمة المرور  مطلوب!</string>
 
+    <string name="Message">الرسائل</string>
+    <string name="textChooseAction">كيف تريد أن تأخذ الصورة ؟</string>
+    <string name="textConfirm">تأكيد</string>
+    <string name="textDiscard">تجاهل</string>
+    <string name="textUpdate">تحديث</string>
+    <string name="youAreNotUpdatedMessage">يتوفر إصدار جديد من زادك.\nتحديث الان.</string>
+    <string name="errorAccrued">حدث خطأ ما</string>
+
+
+    <!-- TODO: permissions messages -->
+    <string name="cameraPermissionExplain">لقد رفضت للتو الحصول على إذن الكاميرا ، لا يمكنك استخدام الكاميرا حتى تقبل الإذن</string>
+    <string name="galleryPermissionExplain">لقد رفضت للتو إذن المعرض ، لا يمكنك اختيار صورة من المعرض حتى تقبل الإذن</string>
+
+
+    <string name="no_result">لا يوجد نتيجة</string>
+    <string name="succeed">تم بنجاح</string>
+    <string name="E_mail">البريد الالكتروني </string>
+
+    <string name="Choose">أختر</string>
+    <string name="Save">حفظ</string>
+    <string name="Change_Password">تغيير كلمة السر</string>
+    <string name="textMessageHere">اكتب رساللتك هنا</string>
+    <string name="connection_error">خطأ في الإتصال</string>
+    <string name="Chat">دردشة</string>
+
+
+    <string name="EGP">دينار بحريني</string>
+    <string name="Orders">طلب</string>
+    <string name="textTrackProviderUnRecognized">لا يمكنك تتبع موقع الطلب لأنه غير معروف …</string>
+    <string name="FinancialReports">التقارير المالية</string>
+    <string name="Ok">حسنا</string>
+    <string name="status">حالة الطلب</string>
+    <string name="alart_do">هل أنت متاكد  ؟</string>
+    <string name="cancel">الغاء</string>
+    <string name="delivery">توصيل  </string>
+    <string name="date">التاريخ</string>
+    <string name="FromDate">من تاريخ</string>
+    <string name="ToDate">إلي تاريخ</string>
+    <string name="profile">الملف الشخصي</string>
+    <string name="editPassord">تعديل كلمة المرور</string>
+    <string name="InvoiceDetials">تفاصيل الفاتورة</string>
+    <string name="log_out">تسجيل الخروج</string>
+    <string name="PleaseTryAgain">حاول مرة اخرى!</string>
+    <string name="languages">اللغة</string>
+    <string name="Home">الرئيسية</string>
+    <string name="Notes_with_order">ملاحظات مع الطلب</string>
+    <string name="Shops">المتاجر</string>
+    <string name="AllShops">جميع المتاجر</string>
+    <string name="NumberOfApplications">عدد الطلبات</string>
+    <string name="Collected">المحصل</string>
+    <string name="Creditor">دائن</string>
+    <string name="Debtor">مدين</string>
+    <string name="QTY">الكمية</string>
+    <string name="ITEM">الوحدات</string>
+    <string name="price">السعر</string>
+    <string name="Wait">انتظر قليلا…</string>
+
+    <string name="Number_Order">رقم الطلب: </string>
+    <string name="waiting">جاري معالجة الطلب</string>
+    <string name="onway"> جاري توصيل الطلب </string>
+    <string name="done"> تم توصيل الطلب </string>
+    <string name="cancelled"> تم الغاء الطلب </string>
+    <string name="Delivery_expenses">مصاريف التوصيل   </string>
+    <string name="below_to_receive">أدخل البريد الإلكتروني / الجوال أدناه للحصول على رابط وإعداد كلمة مرور جديدة</string>
+    <string name="Send_now">ارسال الان</string>
+    <string name="AcceptOrder">قبول الطلب</string>
+    <string name="no_content">لا يوجد محتوي </string>
+    <string name="type">النوع</string>
+    <string name="Order_finshed"> منتهية </string>
+    <string name="order_on_way">جاري توصلها </string>
+    <string name="Delivery_orders">طلبات التوصيل</string>
+    <string name="confirm_procedure">يرجي التاكد من الاجراء قبل الموافقة علية</string>
+    <string name="order_Processing">معالجة الطلب</string>
+    <string name="Receiving_the_order">استلام الطلب </string>
+    <string name="back">رجوع </string>
+    <string name="finshed_order">تم التوصيل </string>
+    <string name="cancel_order">الغاء الطلب </string>
+    <string name="Reason_cancellation"> سبب الالغاء </string>
+    <string name="lan">English</string>
+    <string name="Access_alert">تنبية الوصول</string>
+    <string name="cancellation"> يجب كتابة سبب الالغاء </string>
+    <string name="Details">التفاصيل</string>
+    <string name="price_did_not_facet">السعر لم يحدد بعد  </string>
+    <string name="price_prescription"> سعر الروشتة </string>
+    <string name="done_c"> تم </string>
+    <string name="cancel_c"> الغاء </string>
+
+    <!-- TODO: Error Message -->
+    <string name="timeOutConnection">لم يتم الإرسال ، حاول  مرة أخرى</string>
+    <string name="authFailureError">خطأ في المصادقة</string>
+    <string name="serverError">خطأ في الخادم</string>
+    <string name="networkError">خطأ في الشبكة</string>
+    <string name="parseError">خطأ فى تحليل البيانات</string>
+    <string name="noInternetConnection">لا يوجد اتصال بالإنترنت</string>
+    <string name="textErrorMessage">حدث خطأ ما حاول مرة أخرى</string>
+    <string name="textCamera">الكاميرا</string>
+    <string name="textGallery">المعرض</string>
+    <string name="Attachment">مرفق</string>
+    <string name="barcode">barcode</string>
+    <string name="pick_alert">تجميع </string>
+    <string name="choose_lang">حدد اختيارك</string>
+    <string name="install_whats">الرجاء تنزيل تطبيق الواتس اب </string>
+    <string name="delivery_date">وقت التوصيل : </string>
+    <string name="accept_request"> لرؤية السعر اقبل الطلب </string>
+    <string name="xadox_request_type"> طلبات زادك</string>
+    <string name="ramez_request_type">طلبات رامز </string>
+    <string name="QuickDelivery">توصيل سريع</string>
+    <string name="Scheduleddelivery">توصيل مجدول</string>
+    <string name="delivery_type"> نوع التوصيل </string>
+    <string name="Delay_time"> مدة التأخير : </string>
+    <string name="minutes">دقيقة </string>
+    <string name="days">يوم  </string>
+    <string name="hours">ساعة  </string>
+    <string name="seconds">ثواني </string>
+    <string name="no_id">"لا يوجد لك رقم في رامز "</string>
+    <string name="support_ar">خدمة العملاء</string>
+    <string name="support_en">Cutomer Service</string>
+    <string name="old_messages">الرسائل القديمة </string>
+    <string name="New_Messages">الرسائل الحديثة</string>
+    <string name="customer_profile">ملف الزبون </string>
+    <string name="locationPermissionExplain">لقد رفضت للتو إذن الموقع ، لا يمكنك اختيار موقعك حتى تقبل الإذن</string>
+    <string name="request_product">المنتجات الخاصة   </string>
+    <string name="picked_products">المنتجات المجمعة</string>
+    <string name="unpicked_products">المنتجات الغيرالمجمعة</string>
+    <string name="fail_to_update_order">فشل تغير حالة الطلب </string>
+    <string name="change_order">تغير حالة الطلب </string>
+    <string name="_0">0</string>
+    <string name="change_product">تغير المنتج </string>
+    <string name="BHD">BHD</string>
+    <string name="city_id_bh">7263</string>
+    <string name="fail_to_update">فشل التغير</string>
 </resources>

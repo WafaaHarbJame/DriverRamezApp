@@ -24,7 +24,7 @@
             android:visibility="visible"
             tools:targetApi="m" />
 
-        <com.ramez.shopp.SpichalViews.STextViewBold
+        <com.ramez.driver.SpichalViews.STextViewBold
             android:id="@+id/mainTitleTxt"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_40sdp"

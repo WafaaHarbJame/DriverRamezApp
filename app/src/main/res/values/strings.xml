@@ -1,8 +1,9 @@
 <resources>
 
-    <string name="mapKey" templateMergeStrategy="preserve" translatable="false">AIzaSyA5uUx-4-7OvkBDOCVJyFu23Wp4TgYUTzA</string>
+    <!--    <string name="mapKey" templateMergeStrategy="preserve" translatable="false">AIzaSyA5uUx-4-7OvkBDOCVJyFu23Wp4TgYUTzA</string>-->
+    <string name="mapKey" templateMergeStrategy="preserve" translatable="false">AIzaSyCGhao5aYDhzVLZHHx49BGQWoeqGjuVP1c</string>
 
-    <string name="app_name">Ramez</string>
+    <string name="app_name">Ramez Driver</string>
     <string name="message_yes">Yes</string>
     <string name="message_no">No</string>
     <string name="text_save">Save</string>
@@ -351,5 +352,193 @@
     <string name="processing">Processing</string>
     <string name="Completed">Completed</string>
     <string name="delivery">Shipped</string>
+    <string name="picker">Picker</string>
+    <string name="driver">driver </string>
+    <string name="login_as">Login As</string>
+    <string name="mobileOrPhone">Mobile /E-mail</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="Order_finshed">Finished</string>
+    <string name="order_on_way">On Way</string>
+    <string name="Delivery_orders">Delivery Orders</string>
+    <string name="picking">Picking</string>
+    <string name="profile">Profile</string>
+    <string name="change_country">Change Country</string>
+
+
+    <string name="Recover_my_password"> Recover my password </string>
+    <string name="New_Membership">New Account ? Signup</string>
+    <string name="Mobile_email">Mobile / E-mail</string>
+    <string name="Password">Password</string>
+    <string name="Sign_in">Sign in</string>
+    <string name="phone_">Mobile</string>
+    <string name="Enter_Password_old">   Enter Old Password  </string>
+    <string name="Enter_Password_new">   Enter New Password  </string>
+    <string name="user_Name"> Enter User Name  </string>
+    <string name="alert">Alert </string>
+    <string name="empty_email">E-mail field is required !</string>
+    <string name="empety_password">Password field is required !!</string>
+    <string name="Message">Message</string>
+    <string name="Attachment">Attachment</string>
+    <string name="errorAccrued">Some error occurred</string>
+    <string name="no_result">No result</string>
+    <string name="succeed">succeed</string>
+    <string name="E_mail">E-mail</string>
+    <string name="Choose">Choose</string>
+    <string name="Save">Save</string>
+    <string name="Change_Password">Change Password</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="EGP">BHD</string>
+    <string name="Orders">Order</string>
+    <string name="textTrackProviderUnRecognized">You can not track order location because it is unrecognized…</string>
+    <string name="FinancialReports">Financial Reports</string>
+    <string name="Ok">Ok</string>
+    <string name="Details">Details</string>
+    <string name="status">Order status</string>
+    <string name="alart_do">Are you Sure ? </string>
+    <string name="cancel">Cancel</string>
+    <string name="date">Date</string>
+    <string name="FromDate">From Date</string>
+    <string name="ToDate">To Date</string>
+    <string name="editPassord">Edit Password</string>
+    <string name="InvoiceDetials">Invoice Details</string>
+    <string name="log_out"> Log out </string>
+    <string name="PleaseTryAgain">Please try again!</string>
+    <string name="languages">Language</string>
+    <string name="Home">Home</string>
+    <string name="Notes_with_order">Notes with order</string>
+    <string name="Shops">Shops</string>
+    <string name="AllShops">All Shops</string>
+    <string name="NumberOfApplications">Number of orders</string>
+    <string name="Collected">Collected</string>
+    <string name="Creditor">Creditor</string>
+    <string name="Debtor">Debtor</string>
+    <string name="QTY">Quantity</string>
+    <string name="ITEM">Items</string>
+    <string name="Wait">Wait…</string>
+
+    <string name="textMessageHere">Your message here</string>
+    <string name="connection_error">connection error</string>
+    <string name="Chat">Chat</string>
+
+
+    <string name="waiting">In Process</string>
+    <string name="onway">On Way</string>
+    <string name="done">Done </string>
+    <string name="cancelled">Cancelled </string>
+    <string name="Delivery_expenses"> Delivery expenses</string>
+    <string name="below_to_receive">Enter your e-mail / Mobile below to receive a link and set up a new password</string>
+    <string name="Send_now">Send now</string>
+    <string name="AcceptOrder">Accept Order</string>
+    <string name="no_content">There is no content </string>
+    <string name="type">Type</string>
+
+    <string name="confirm_procedure">Please confirm the procedure before approving it</string>
+    <string name="order_Processing">order Processing</string>
+    <string name="Receiving_the_order">Receiving the order </string>
+    <string name="back">Back </string>
+    <string name="finshed_order"> Finshed </string>
+    <string name="cancel_order"> cancel order </string>
+    <string name="Reason_cancellation"> Reason Cancellation </string>
+    <string name="lan">عربي</string>
+    <string name="Access_alert">Access alert</string>
+    <string name="cancellation">The cancellation must be written</string>
+    <string name="egyadv" translatable="false">Developed By EgyAdv.com</string>
+
+    <string name="Number_Order">Order Number: </string>
+    <string name="price_did_not_facet">Price not set yet   </string>
+    <string name="price_prescription">Price prescription</string>
+    <string name="item_number" translatable="false">Item number</string>
+    <string name="done_c"> Done </string>
+    <string name="cancel_c"> Cancel </string>
+    <string name="textChooseAction">How would you like to take the image</string>
+    <string name="textConfirm">Confirm</string>
+    <string name="textUpdate">Update</string>
+    <string name="textDiscard">Discard</string>
+    <string name="youAreNotUpdatedMessage">A new version of Xadox is available.\nUpdate now</string>
+    <string name="pick_alert">Pick </string>
+
+
+    <!-- TODO: permissions messages -->
+    <string name="cameraPermissionExplain">You have just denied camera permission,
+        You can\'t use camera until you accept the permission</string>
+    <string name="galleryPermissionExplain">You have just denied gallery permission,
+        You can\'t pick image from gallery until you accept the permission</string>
+
+
+    <!-- TODO: Error Message -->
+    <string name="timeOutConnection">Timeout connection</string>
+    <string name="authFailureError">Authentication failure error</string>
+    <string name="serverError">Server error</string>
+    <string name="networkError">Network error</string>
+    <string name="parseError">Parsing error</string>
+    <string name="noInternetConnection">No internet connection</string>
+    <string name="textErrorMessage">Something went wrong, try again</string>
+
+    <string name="textCamera">Camera</string>
+    <string name="textGallery">Gallery</string>
+
+    <string name="constantMessageTypeSender" translatable="false">Sender</string>
+    <string name="constantMessageTypeReceiver" translatable="false">Receiver</string>
+    <string name="constantSenderID" translatable="false">senderID</string>
+    <string name="constantReceiverID" translatable="false">receiverID</string>
+    <string name="constantMessageBody" translatable="false">messageBody</string>
+    <string name="constantSenderName" translatable="false">senderName</string>
+    <string name="constantReceiverName" translatable="false">receiverName</string>
+    <string name="constantSenderImage" translatable="false">senderImage</string>
+    <string name="constantReceiverImage" translatable="false">receiverImage</string>
+    <string name="constantMessageTime" translatable="false">messageTime</string>
+    <string name="constantInputType" translatable="false">inputType</string>
+    <string name="constantImageUrl" translatable="false">imageUrl</string>
+    <string name="constantLat" translatable="false">lat</string>
+    <string name="constantLng" translatable="false">lng</string>
+    <string name="constantLocation" translatable="false">location</string>
+
+    <string name="constantMessageText" translatable="false">Text</string>
+    <string name="constantMessageImage" translatable="false">Image</string>
+    <string name="barcode">barcode</string>
+    <string name="constantIsRead" translatable="false">is_read</string>
+    <string name="choose_lang">Make your selection</string>
+    <string name="install_whats">Please install whatsApp</string>
+    <string name="delivery_date">Delivery Time: </string>
+    <string name="accept_request">To show Price Accept Order </string>
+    <string name="xadox_request_type">Xadox Request</string>
+    <string name="ramez_request_type">Ramez Request</string>
+    <string name="QuickDelivery">Quick Delivery</string>
+    <string name="Scheduleddelivery">Scheduled delivery</string>
+    <string name="delivery_type"> Delivery Type </string>
+    <string name="Delay_time"> Delay Time : </string>
+    <string name="minutes">Minutes</string>
+    <string name="days">days</string>
+    <string name="hours">hours</string>
+    <string name="seconds">seconds</string>
+    <string name="no_id">No Id in Ramez</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="support_ar">\"خدمة العملاء</string>
+    <string name="support_en">Customer Service</string>
+    <string name="old_messages">Old Messages</string>
+    <string name="New_Messages">New Messages</string>
+    <string name="customer_profile">Customer Profile</string>
+    <string name="locationPermissionExplain">You have just denied location permission,
+        You can\'t pick your location until you accept the permission</string>
+    <string name="request_product">Extra Requested Products</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="picked_products">Picked Products</string>
+    <string name="unpicked_products">UnPicked Products</string>
+    <string name="fail_to_update_order">Fail To update Order</string>
+    <string name="change_order">"Change Order "</string>
+    <string name="BHD">BHD</string>
+    <string name="city_id_bh">7263</string>
+    <string name="_0">0</string>
+    <string name="change_product">Change Product</string>
+    <string name="fail_to_update">Fail to update</string>
 
 </resources>

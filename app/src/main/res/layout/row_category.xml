@@ -44,7 +44,7 @@
     </FrameLayout>
 
 
-    <com.ramez.shopp.SpichalViews.STextView
+    <com.ramez.driver.SpichalViews.STextView
         android:id="@+id/tvCatTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

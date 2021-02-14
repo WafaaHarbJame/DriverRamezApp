@@ -58,7 +58,7 @@
                 android:paddingBottom="@dimen/_6sdp"
                 android:paddingTop="@dimen/_6sdp">
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.ramez.driver.SpichalViews.STextViewBold
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
@@ -72,7 +72,7 @@
                     android:textColor="@color/white" />
 
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.ramez.driver.SpichalViews.STextViewBold
                     android:id="@+id/totalTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical"
-    tools:context=".Activities.ProductDetailsActivity">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,7 +32,7 @@
                 android:visibility="visible"
                 tools:targetApi="m" />
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.ramez.driver.SpichalViews.STextViewBold
                 android:id="@+id/mainTitleTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_40sdp"
@@ -132,7 +131,7 @@
                     android:paddingEnd="@dimen/_8sdp"
                     android:paddingBottom="@dimen/_8sdp">
 
-                    <com.ramez.shopp.SpichalViews.STextView
+                    <com.ramez.driver.SpichalViews.STextView
                         android:id="@+id/productNameTv"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -141,7 +140,7 @@
                         android:textAlignment="viewStart"
                         android:textColor="@color/black" />
 
-                    <com.ramez.shopp.SpichalViews.STextView
+                    <com.ramez.driver.SpichalViews.STextView
                         android:id="@+id/productPriceTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -149,7 +148,7 @@
                         android:textColor="@color/green"
                         android:textSize="@dimen/_12ssp" />
 
-                    <com.ramez.shopp.SpichalViews.STextView
+                    <com.ramez.driver.SpichalViews.STextView
                         android:id="@+id/productPriceBeforeTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -212,7 +211,7 @@
                     android:layout_height="1dp"
                     android:background="@color/gray_view" />
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.ramez.driver.SpichalViews.STextViewBold
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/_8sdp"
@@ -224,7 +223,7 @@
 
 
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.ramez.driver.SpichalViews.STextViewBold
                     android:layout_width="match_parent"
                     android:id="@+id/no_offers"
                     android:layout_height="wrap_content"
@@ -253,7 +252,7 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     android:background="@color/gray_view" />
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.ramez.driver.SpichalViews.STextViewBold
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/_8sdp"
@@ -271,7 +270,7 @@
                     android:paddingStart="@dimen/_8sdp"
                     android:paddingEnd="@dimen/_8sdp">
 
-                    <com.ramez.shopp.SpichalViews.STextView
+                    <com.ramez.driver.SpichalViews.STextView
                         android:id="@+id/productDescTv"
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -280,7 +279,7 @@
                         android:maxLines="2"
                         android:textAlignment="viewStart"
                         android:textColor="@color/gray3" />
-                    <com.ramez.shopp.SpichalViews.STextViewBold
+                    <com.ramez.driver.SpichalViews.STextViewBold
                         android:id="@+id/weight_unitTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -292,7 +291,7 @@
 
                 </LinearLayout>
 
-                <com.ramez.shopp.SpichalViews.STextViewBold
+                <com.ramez.driver.SpichalViews.STextViewBold
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="@dimen/_8sdp"
@@ -315,7 +314,7 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <com.ramez.shopp.SpichalViews.STextViewBold
+    <com.ramez.driver.SpichalViews.STextViewBold
         android:id="@+id/cartBut"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -360,7 +359,7 @@
             app:srcCompat="@drawable/plus"
             app:tint="@color/white" />
 
-        <com.ramez.shopp.SpichalViews.STextView
+        <com.ramez.driver.SpichalViews.STextView
             android:id="@+id/productCartQTY"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

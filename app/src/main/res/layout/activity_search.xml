@@ -60,7 +60,7 @@
                     android:paddingEnd="@dimen/_8sdp"
                     android:paddingBottom="@dimen/_8sdp">
 
-                    <com.ramez.shopp.SpichalViews.SAutoCompleteText
+                    <com.ramez.driver.SpichalViews.SAutoCompleteText
                         android:id="@+id/searchEt"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
                         android:textSize="@dimen/_12ssp"
                         tools:ignore="NestedWeights" />
 
-                    <com.ramez.shopp.SpichalViews.STextViewIcon
+                    <com.ramez.driver.SpichalViews.STextViewIcon
                         android:id="@+id/closeBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -135,7 +135,7 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <com.ramez.shopp.SpichalViews.STextView
+                    <com.ramez.driver.SpichalViews.STextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_10sdp"
@@ -144,7 +144,7 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12ssp" />
 
-                    <com.ramez.shopp.SpichalViews.STextView
+                    <com.ramez.driver.SpichalViews.STextView
                         android:id="@+id/categoriesCountTv"
                         android:layout_width="wrap_content"
                         android:visibility="gone"
@@ -155,7 +155,7 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/_10ssp" />
 
-                    <com.ramez.shopp.SpichalViews.STextView
+                    <com.ramez.driver.SpichalViews.STextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
@@ -164,7 +164,7 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/_12ssp" />
 
-                    <com.ramez.shopp.SpichalViews.STextView
+                    <com.ramez.driver.SpichalViews.STextView
                         android:id="@+id/offerCountTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -174,7 +174,7 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/_10ssp" />
 
-                    <com.ramez.shopp.SpichalViews.STextView
+                    <com.ramez.driver.SpichalViews.STextView
                         android:id="@+id/priceBut"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

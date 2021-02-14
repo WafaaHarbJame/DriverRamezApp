@@ -41,7 +41,7 @@
                     android:layout_height="@dimen/_15sdp"/>
             </FrameLayout>
 
-            <com.ramez.shopp.SpichalViews.STextView
+            <com.ramez.driver.SpichalViews.STextView
                 android:layout_width="match_parent"
                 android:id="@+id/userNameTv"
                 android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
                 android:textColor="@color/colorLoginText"
                 android:textColorHint="@color/colorTextHint"
                 android:textSize="@dimen/_12ssp" />
-            <com.ramez.shopp.SpichalViews.SEditText
+            <com.ramez.driver.SpichalViews.SEditText
                 android:id="@+id/edtUserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#d8d8d8" />
-            <com.ramez.shopp.SpichalViews.SEditText
+            <com.ramez.driver.SpichalViews.SEditText
                 android:id="@+id/etEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
                 android:layout_height="1dp"
                 android:background="#d8d8d8" />
 
-            <com.ramez.shopp.SpichalViews.STextView
+            <com.ramez.driver.SpichalViews.STextView
                 android:id="@+id/edtPhoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -121,7 +121,7 @@
                 android:background="#d8d8d8" />
 
 
-            <com.ramez.shopp.SpichalViews.STextViewBold
+            <com.ramez.driver.SpichalViews.STextViewBold
                 android:id="@+id/saveBut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

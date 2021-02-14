@@ -57,7 +57,7 @@
     </androidx.cardview.widget.CardView>
 
 
-   <com.ramez.shopp.SpichalViews.STextView
+   <com.ramez.driver.SpichalViews.STextView
         android:id="@+id/productNameTv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cardBut" />
 
-   <com.ramez.shopp.SpichalViews.STextView
+   <com.ramez.driver.SpichalViews.STextView
         android:id="@+id/discountTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -102,7 +102,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/discountTv">
 
-       <com.ramez.shopp.SpichalViews.STextView
+       <com.ramez.driver.SpichalViews.STextView
             android:id="@+id/productPriceTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -113,7 +113,7 @@
             android:textSize="@dimen/_10ssp"
             android:textStyle="bold" />
 
-       <com.ramez.shopp.SpichalViews.STextView
+       <com.ramez.driver.SpichalViews.STextView
             android:id="@+id/productPriceBeforeTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -166,7 +166,7 @@
             app:srcCompat="@drawable/plus"
             app:tint="@color/white" />
 
-       <com.ramez.shopp.SpichalViews.STextView
+       <com.ramez.driver.SpichalViews.STextView
             android:id="@+id/productCartQTY"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

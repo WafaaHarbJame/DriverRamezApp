@@ -17,7 +17,7 @@
             android:src="@drawable/avatar"
             app:siBorderWidth="1dp" />
 
-        <com.ramez.shopp.SpichalViews.STextView
+        <com.ramez.driver.SpichalViews.STextView
             android:id="@+id/btnCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
