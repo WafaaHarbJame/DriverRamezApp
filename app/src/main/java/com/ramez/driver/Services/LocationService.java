@@ -1,28 +1,20 @@
-package com.ramez.driver;
+package com.ramez.driver.Services;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
+import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
-import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.karumi.dexter.Dexter;
@@ -30,13 +22,12 @@ import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
-import com.ramez.driver.Activities.ActivityBase;
 import com.ramez.driver.ApiHandler.DataFetcherCallBack;
 import com.ramez.driver.Classes.UtilityApp;
 import com.ramez.driver.Dialogs.InfoDialog;
 import com.ramez.driver.Models.ApiLocationModel;
 import com.ramez.driver.Models.MemberModel;
-import com.ramez.driver.databinding.ActivityHomeBinding;
+import com.ramez.driver.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -48,55 +39,36 @@ import io.nlopez.smartlocation.location.config.LocationAccuracy;
 import io.nlopez.smartlocation.location.config.LocationParams;
 import io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesWithFallbackProvider;
 
-public class HomeActivity extends ActivityBase {
-
-    private AppBarConfiguration mAppBarConfiguration;
-    private ActivityHomeBinding binding;
+public class LocationService extends Service {
     DatabaseReference db_drivers;
-    private double lat = 0, lng = 0;
     MemberModel memberModel;
-    TextView navUsername;
-    TextView navMobile;
-    ImageView userImage;
+    Context context;
+    private double lat = 0, lng = 0;
+
+    public LocationService() {
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = ActivityHomeBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        setContentView(view);
+    public IBinder onBind(Intent intent) {
+        // TODO: Return the communication channel to the service.
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+    @Override
+    public void onCreate() {
+        context=this;
+        super.onCreate();
+    }
 
-        mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home,
-                R.id.nav_profile,R.id.nav_change_pass, R.id.nav_financial,
-                R.id.nav_change_country, R.id.nav_lang,R.id.nav_messages,
-                R.id.nav_logout).setOpenableLayout(drawer).build();
-
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
-
-        View headerView = navigationView.getHeaderView(0);
-         navUsername = headerView.findViewById(R.id.nameTxt);
-         navMobile = headerView.findViewById(R.id.mobileTxt);
-         userImage = headerView.findViewById(R.id.userImage);
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
 
         if (UtilityApp.getUserData() != null) {
-
-             memberModel = UtilityApp.getUserData();
-            navUsername.setText(memberModel.getName());
-            navMobile.setText(memberModel.getMobileNumber());
-            Picasso.get().load(memberModel.getProfilePicture()).placeholder(R.drawable.holder_image).error(R.drawable.small_logo_screen)
-                    .into(userImage);
-
+            memberModel = UtilityApp.getUserData();
 
             if (memberModel.getRole_id() == 4) {
                 db_drivers = FirebaseDatabase.getInstance().getReference().child("Drivers").child(String.valueOf(memberModel.getId()));
-                requestLocationPermission(getActiviy());
+                requestLocationPermission(context);
 
             }
 
@@ -104,15 +76,25 @@ public class HomeActivity extends ActivityBase {
         }
 
 
+        return START_STICKY;
+    }
+
+
+    private void saveDriversToFirebase(Double lat, Double lng) {
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put("lan_location", String.valueOf(lng));
+        childUpdates.put("lat_location", String.valueOf(lat));
+        db_drivers.updateChildren(childUpdates).addOnSuccessListener(aVoid ->
+                Log.i("tag","updated location")).addOnFailureListener(e -> {
+            Log.i("tag","failed to updated location");
+        });
+
+
     }
 
 
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
-    }
+
 
     void requestLocationPermission(final Context activity) {
         Log.d("tag ","Log requestLocationPermission");
@@ -126,12 +108,12 @@ public class HomeActivity extends ActivityBase {
                 public void onPermissionsChecked(MultiplePermissionsReport report) {
                     if (report.areAllPermissionsGranted()) {
 
-                        if (SmartLocation.with(getActiviy()).location().state().isGpsAvailable()) {
+                        if (SmartLocation.with(context).location().state().isGpsAvailable()) {
 
                             LocationParams.Builder builder = new LocationParams.Builder().setAccuracy(LocationAccuracy.HIGH).setDistance(12).setInterval(500);
 
-                            LocationGooglePlayServicesWithFallbackProvider provider = new LocationGooglePlayServicesWithFallbackProvider(getActiviy());
-                            SmartLocation.with(getActiviy()).location(provider).continuous().config(builder.build()).start(location -> {
+                            LocationGooglePlayServicesWithFallbackProvider provider = new LocationGooglePlayServicesWithFallbackProvider(context);
+                            SmartLocation.with(context).location(provider).continuous().config(builder.build()).start(location -> {
                                 lat = location.getLatitude();
                                 lng = location.getLongitude();
                                 memberModel.setLat_location(String.valueOf(lat));
@@ -150,7 +132,7 @@ public class HomeActivity extends ActivityBase {
 
 
                     } else if (report.isAnyPermissionPermanentlyDenied()) {
-                        InfoDialog infoDialog=new InfoDialog(getActiviy(), getString(R.string.locationPermissionExplain), false, new DataFetcherCallBack() {
+                        InfoDialog infoDialog=new InfoDialog((Activity) context, getString(R.string.locationPermissionExplain), false, new DataFetcherCallBack() {
                             @Override
                             public void Result(Object obj, String func, boolean IsSuccess) {
 
@@ -173,10 +155,18 @@ public class HomeActivity extends ActivityBase {
         }
     }
 
+
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        Intent restartServiceIntent = new Intent(getApplicationContext(), this.getClass());
+        restartServiceIntent.setPackage(getPackageName());
+        super.onTaskRemoved(rootIntent);
+    }
+
     public void showSettingsAlert() {
         Log.d("tag","Log showSettingsAlert ");
 
-        android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(getActiviy());
+        android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(context);
 
         // Setting Dialog Title
         alertDialog.setTitle("GPS Settings");
@@ -205,19 +195,8 @@ public class HomeActivity extends ActivityBase {
         alertDialog.show();
     }
 
-    private void saveDriversToFirebase(Double lat, Double lng) {
-        Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("lan_location", String.valueOf(lng));
-        childUpdates.put("lat_location", String.valueOf(lat));
-        db_drivers.updateChildren(childUpdates).addOnSuccessListener(aVoid ->
-                Log.i(getActiviy().getLocalClassName(),"updated location")).addOnFailureListener(e -> {
-            Log.i(getActiviy().getLocalClassName(),"failed to updated location");
-        });
-
-    }
-
     public void getLatAndLong() {
-        Log.i(getActiviy().getLocalClassName(),"Log getLatAndLong");
+        Log.i("tag","Log getLatAndLong");
 
         AndroidNetworking.get("http://ip-api.com/json/").setTag("test").setPriority(Priority.LOW).addQueryParameter("lang", "en").
                 build().getAsObject(ApiLocationModel.class, new ParsedRequestListener<ApiLocationModel>() {
@@ -243,18 +222,6 @@ public class HomeActivity extends ActivityBase {
             }
         });
 
-    }
-
-    @Override
-    public void onResume() {
-        if (UtilityApp.isLogin()) {
-            memberModel = UtilityApp.getUserData();
-            Picasso.get().load(memberModel.getProfilePicture()).placeholder(R.drawable.holder_image).error(R.drawable.small_logo_screen)
-                    .into(userImage);
-
-        }
-
-        super.onResume();
     }
 
 

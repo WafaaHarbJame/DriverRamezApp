@@ -27,6 +27,7 @@ import com.ramez.driver.Classes.UtilityApp;
 import com.ramez.driver.Dialogs.ShowImageDialog;
 import com.ramez.driver.HomeActivity;
 import com.ramez.driver.Models.DeliveryStatusResponse;
+import com.ramez.driver.Models.LocalModel;
 import com.ramez.driver.Models.MemberModel;
 import com.ramez.driver.Models.OrderItemDetail;
 import com.ramez.driver.Models.ResultAPIModel;
@@ -46,6 +47,7 @@ public class AdapterProductsOrder extends RecyclerView.Adapter<AdapterProductsOr
     private String LangCode;
     private List<OrderExtraAdapter> orderExtraAdapters;
     private RequestOptions requestOptions;
+   private String currency = "BHD";
 
 
     public AdapterProductsOrder(Context context, List<OrderItemDetail> myOrders) {
@@ -66,8 +68,8 @@ public class AdapterProductsOrder extends RecyclerView.Adapter<AdapterProductsOr
     @Override
     public void onBindViewHolder(final AdapterProductsOrder.MyViewHolder holder, final int position) {
         OrderItemDetail album = myOrders.get(position);
+        currency= UtilityApp.getLocalData().getCurrencyCode();
 
-        String EGP = context.getResources().getString(R.string.EGP);
         final String done = context.getResources().getString(R.string.done_c);
         final String cancelled = context.getResources().getString(R.string.cancel_c);
         final String alart_do = context.getResources().getString(R.string.alart_do);
@@ -77,7 +79,7 @@ public class AdapterProductsOrder extends RecyclerView.Adapter<AdapterProductsOr
         holder.en_item_text.setText(myOrders.get(position).getProductName());
         holder.item_barcode_text.setText(myOrders.get(position).getBarcode());
 
-        holder.price_text.setText(myOrders.get(position).getProductPrice() + " " + EGP);
+        holder.price_text.setText(myOrders.get(position).getProductPrice() + " " + currency);
 
 
         orderExtraAdapters.add(position, new OrderExtraAdapter(context, myOrders.get(position).getExtraDMS()));
@@ -109,42 +111,42 @@ public class AdapterProductsOrder extends RecyclerView.Adapter<AdapterProductsOr
         holder.close.setOnClickListener(v -> {
 
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-            builder.setMessage(alart_do);
-            builder.setCancelable(false);
-            builder.setPositiveButton(done, (dialog, which) -> {
-                Volley_DeliveryInvoiceUpdate(String.valueOf(myOrders.get(position).getProductId()));
-                notifyDataSetChanged();
-            });
-            builder.setNegativeButton(cancelled, (dialog, which) -> {
-
-            });
-            builder.show();
+//            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//
+//            builder.setMessage(alart_do);
+//            builder.setCancelable(false);
+//            builder.setPositiveButton(done, (dialog, which) -> {
+//                Volley_DeliveryInvoiceUpdate(String.valueOf(myOrders.get(position).getProductId()));
+//                notifyDataSetChanged();
+//            });
+//            builder.setNegativeButton(cancelled, (dialog, which) -> {
+//
+//            });
+//            builder.show();
 
 
         });
 
 
         holder.pickedBtn.setOnClickListener(v -> {
-            int status;
-            if (myOrders.get(position).getIs_picked() == 0) {
-                status = 0;
-            } else {
-                status = 1;
-            }
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setMessage(alart_do);
-            builder.setCancelable(false);
-            builder.setPositiveButton(done, (dialog, which) -> {
-                PickProducts(myOrders.get(position).getProductId(), status, myOrders.get(position).getOrderId());
-                notifyDataSetChanged();
-            });
-            builder.setNegativeButton(cancelled, (dialog, which) -> {
-
-            });
-            builder.show();
+//            int status;
+//            if (myOrders.get(position).getIs_picked() == 0) {
+//                status = 0;
+//            } else {
+//                status = 1;
+//            }
+//
+//            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//            builder.setMessage(alart_do);
+//            builder.setCancelable(false);
+//            builder.setPositiveButton(done, (dialog, which) -> {
+//                PickProducts(myOrders.get(position).getProductId(), status, myOrders.get(position).getOrderId());
+//                notifyDataSetChanged();
+//            });
+//            builder.setNegativeButton(cancelled, (dialog, which) -> {
+//
+//            });
+//            builder.show();
 
 
         });

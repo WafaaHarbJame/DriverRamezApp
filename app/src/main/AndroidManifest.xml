@@ -22,7 +22,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
-        <activity android:name=".Activities.NewChatActivity"    android:launchMode="singleTask"
+        <activity android:name=".Activities.CustomerActivity"></activity>
+
+        <service
+            android:name=".Services.LocationService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity
+            android:name=".Activities.NewChatActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity android:name=".Activities.GetMyInvoiceInfoActivity" />
@@ -153,13 +162,11 @@
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />
 
-
         <activity
             android:name=".Activities.ChangeLanguageActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
-
     </application>
 
 </manifest>

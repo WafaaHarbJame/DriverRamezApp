@@ -79,6 +79,10 @@ public class SignInActivity extends ActivityBase {
 
         });
 
+        binding.textForgotPassword.setOnClickListener(view1 -> {
+            startRestPassword();
+        });
+
 
         binding.showPassBut.setOnClickListener(view1 -> {
 

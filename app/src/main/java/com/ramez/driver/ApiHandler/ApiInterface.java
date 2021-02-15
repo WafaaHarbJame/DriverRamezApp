@@ -82,8 +82,8 @@ ApiInterface {
     @POST("v3/Account/getotp")
     Call<OtpModel> GetOptHandle(@HeaderMap() Map<String, Object> headerParams, @Query("mobile_number") String mobile_number);
 
-    @POST
-    Call<ResultAPIModel<ProfileData>> getUserDetail(@Url String url, @HeaderMap() Map<String, Object> headerParams, @Query("customer_id") int customer_id);
+    @POST("v3/Account/getUserDetail")
+    Call<ResultAPIModel<ProfileData>> getUserDetail(@HeaderMap() Map<String, Object> headerParams, @Query("user_id") int user_id);
 
 
     @POST("v3/Account/forgotPassword")

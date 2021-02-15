@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.UserInfo;
+import com.ramez.driver.Activities.CustomerActivity;
+import com.ramez.driver.Activities.EditProfileActivity;
 import com.ramez.driver.Activities.NewChatActivity;
 import com.ramez.driver.Classes.Constants;
 import com.ramez.driver.Classes.GlobalData;
@@ -120,7 +122,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.Holder> 
                 }
             });
             binding.ivProfileImage.setOnClickListener(view1 -> {
-                Intent intent = new Intent(mContext, ProfileFragment.class);
+                Intent intent = new Intent(mContext, CustomerActivity.class);
                 int position=getAdapterPosition();
                 intent.putExtra(Constants.user_id, chatMessageList.get(position).getSenderID() + "");
                 mContext.startActivity(intent);
@@ -129,7 +131,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.Holder> 
             });
 
             binding.senderNameTv.setOnClickListener(view1 -> {
-                Intent intent = new Intent(mContext, ProfileFragment.class);
+                Intent intent = new Intent(mContext, CustomerActivity.class);
                 int position=getAdapterPosition();
                 intent.putExtra(Constants.user_id, chatMessageList.get(position).getSenderID() + "");
                 mContext.startActivity(intent);

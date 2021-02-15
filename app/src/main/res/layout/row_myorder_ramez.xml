@@ -51,11 +51,12 @@
                     android:layout_alignParentTop="true"
                     android:layout_toEndOf="@+id/view"
                     android:layout_height="wrap_content">
-                    <TextView
+                    <com.ramez.driver.SpichalViews.STextView
                         android:id="@+id/tvInvID"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:gravity="start"
+                        android:textAlignment="viewStart"
                         android:lines="1"
                         android:layout_weight="2"
                         android:text="name shop" />
@@ -87,11 +88,9 @@
 
                 <com.ramez.driver.SpichalViews.STextView
                     android:id="@+id/name_shop"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/view"
-                    android:gravity="start"
+                    android:textAlignment="viewStart"
                     android:lines="1"
                     android:text="name shop" />
 
@@ -111,12 +110,10 @@
 
                 <com.ramez.driver.SpichalViews.STextView
                     android:id="@+id/payment_method"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/view"
-                    android:layout_weight=".1"
-                    android:gravity="start"
+                    android:layout_weight="1"
+                    android:textAlignment="viewStart"
                     android:maxLines="2"
                     android:text="payment_method" />
 

@@ -67,6 +67,25 @@ public class MemberModel implements Serializable {
     @Expose
     private String userType;
 
+    private String lat_location = "";
+    private  String lan_location = "";
+
+    public String getLat_location() {
+        return lat_location;
+    }
+
+    public void setLat_location(String lat_location) {
+        this.lat_location = lat_location;
+    }
+
+    public String getLan_location() {
+        return lan_location;
+    }
+
+    public void setLan_location(String lan_location) {
+        this.lan_location = lan_location;
+    }
+
     public String getUserType() {
         return userType;
     }

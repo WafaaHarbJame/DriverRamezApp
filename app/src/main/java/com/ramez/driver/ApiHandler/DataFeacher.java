@@ -807,12 +807,10 @@ public class DataFeacher {
         Log.i(TAG, "Log getUserDetails");
         Log.i(TAG, "Log headerMap " + headerMap);
         Log.i(TAG, "Log user_id " + user_id);
-        String url = "https://ristsys.store/api/CustomerInfo";
 
-        Call call = apiService.getUserDetail(url,headerMap, user_id);
+        Call call = apiService.getUserDetail(headerMap, user_id);
         call.enqueue(callbackApi);
     }
-
 
 
 

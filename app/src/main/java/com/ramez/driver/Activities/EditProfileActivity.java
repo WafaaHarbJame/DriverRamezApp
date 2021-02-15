@@ -50,6 +50,7 @@ public class EditProfileActivity extends ActivityBase {
     private ChoosePhotoHelper choosePhotoHelper;
     private Uri selectedPhotoUri;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +69,8 @@ public class EditProfileActivity extends ActivityBase {
         binding.edtPhoneNumber.setText(memberModel.getMobileNumber());
         Log.i("tag", "Log data" + memberModel.getProfilePicture());
 
-        Glide.with(getActiviy()).asBitmap().load(memberModel.getProfilePicture()).placeholder(R.drawable.avatar).into(binding.userImg);
+        Glide.with(getActiviy()).asBitmap().load(memberModel.getProfilePicture()).
+                placeholder(R.drawable.avatar).error(R.drawable.avatar).into(binding.userImg);
 
 
         binding.saveBut.setOnClickListener(view1 -> {
@@ -102,7 +104,7 @@ public class EditProfileActivity extends ActivityBase {
 
                     selectedPhotoFil = FileUtil.from(getActiviy(), selectedPhotoUri);
 
-                    Glide.with(getActiviy()).asBitmap().load(selectedPhotoUri).placeholder(R.drawable.avatar).into(binding.userImg);
+                    Glide.with(getActiviy()).asBitmap().load(selectedPhotoUri).error(R.drawable.avatar).placeholder(R.drawable.avatar).into(binding.userImg);
                     uploadPhoto(userId, selectedPhotoFil);
 
                 }
@@ -135,7 +137,7 @@ public class EditProfileActivity extends ActivityBase {
 
                         selectedPhotoFil = FileUtil.from(getActiviy(),uri);
 
-                        Glide.with(getActiviy()).asBitmap().load(selectedPhotoUri).placeholder(R.drawable.avatar).into(binding.userImg);
+                        Glide.with(getActiviy()).asBitmap().load(selectedPhotoUri).placeholder(R.drawable.avatar).error(R.drawable.avatar).into(binding.userImg);
 
                         selectedPhotoFil = new Compressor(getActiviy()).compressToFile(selectedPhotoFil);
 
@@ -311,6 +313,11 @@ public class EditProfileActivity extends ActivityBase {
             }
         });
     }
+
+
+
+
+
 
 
 //    @Override
